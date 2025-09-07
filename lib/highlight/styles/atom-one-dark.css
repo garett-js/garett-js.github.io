@@ -32,7 +32,7 @@ hue-6-2: #e6c07b
 .hljs-comment,
 .hljs-quote {
   color: black;
-  padding: 3px;
+  padding: 2px 5px;
   background-color: #88ff34;
   border-radius: 5px;
   font-style: italic
