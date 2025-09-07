@@ -10,11 +10,35 @@
             list-style-type: none;
             padding-left: 0;
         }
+        a {
+            color: #000;
+        }
         a.no-link {
             color: #888888;
             pointer-events: none;
             text-decoration: none;
             cursor: default;
+        }
+        summary {
+            font-weight: bold;
+        }
+        .marker-highlight {
+            position: relative;
+            display: inline-block;
+            padding: 2px 7px;
+            color: #000;
+        }
+        .marker-highlight::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #88ff34;
+            transform: skew(-15deg) rotate(-2deg);
+            z-index: -1;
+            border-radius: 0px;
         }
     </style>
 </head>
@@ -22,19 +46,20 @@
     <div class="container">
     <h1>Курс по языку Python</h1>
     <ul>
-        <li><a href="python-lesson-0.html">Вводное занятие</a></li>
-        <li><a href="404.html">Введение в Python</a></li>
-        <li><a href="404.html">Переменные и константы</a></li>
-        <li><a class="no-link">Типы данных</a></li>
-        <li><a class="no-link">Логика</a></li>
-        <li><a class="no-link">Условные конструкции</a></li>
-        <li><a class="no-link">Остаток от деления. Инкремент и Декремент</a></li>
-        <li><a class="no-link">Циклы</a></li>
-        <li><a class="no-link">Коллекции</a></li>
-        <li><a class="no-link">Срезы (Slice)</a></li>
-        <li><a class="no-link">Строки (String)</a></li>
-        <li><a class="no-link">Словари (Map)</a></li>
-        <li><a class="no-link">Множества (Set)</a></li>
+        <li><a href="python-lesson-0.html" class="marker-highlight">🔥 Вводное занятие</a></li>
+        <li><p></p></li>
+        <li><a href="404.html">1. Введение в Python</a></li>
+        <li><a href="404.html">2. Переменные и константы</a></li>
+        <li><a class="no-link">3. Типы данных</a></li>
+        <li><a class="no-link">4. Логика</a></li>
+        <li><a class="no-link">5. Условные конструкции</a></li>
+        <li><a class="no-link">6. Остаток от деления. Инкремент и Декремент</a></li>
+        <li><a class="no-link">7. Циклы</a></li>
+        <li><a class="no-link">8. Коллекции</a></li>
+        <li><a class="no-link">9. Срезы (Slice)</a></li>
+        <li><a class="no-link">10.Строки (String)</a></li>
+        <li><a class="no-link">11. Словари (Map)</a></li>
+        <li><a class="no-link">12.Множества (Set)</a></li>
     </ul>
     </div>
 </body>
