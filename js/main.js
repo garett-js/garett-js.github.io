@@ -3,7 +3,7 @@
 
  function toggleTheme(themeName) {
      var themeLink = document.getElementById('theme-style');
-     themeLink.href = "highlight/styles/" + themeName + ".css";
+     themeLink.href = "../../lib/highlight/styles/" + themeName + ".css";
      try {
          document.querySelectorAll('pre code').forEach((block) => {
              block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));

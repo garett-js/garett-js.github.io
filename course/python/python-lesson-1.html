@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Язык программирования Python</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <script src="highlight/highlight.min.js"></script>
+
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 1: Введение</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Основы Python и настройка окружения</h1>
+
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;">Что будем изучать</h2>
+    
+            <p>Программирование — это процесс создания инструкций (программного кода), по которым компьютер или другое устройство выполняет определённые задачи и операции.</p>
+                <p>Чтобы машина правильно поняла наши инструкции, программисты используют специальные языки программирования, на которых пишут код.</p>
+                <p>В основе программирования лежит составление алгоритмов — последовательностей действий, которые приводят к нужному результату. Программист переводит эти алгоритмы на язык, понятный компьютеру, используя правила синтаксиса выбранного языка программирования.</p>
+                <p>Компьютеры работают на машинном коде — последовательности из нулей и единиц. Такой код совершенно неудобен для восприятия человеком, ведь даже самое простое действие требует длинного набора бинарных команд. Например, чтобы отобразить на экране фразу «Привет, Мир!», в машинном коде это может выглядеть примерно так:</p>
+                <pre><code class="bash">
+    10111011 00010001 00000001 10111001 00001101 00000000 10110100
+    00001110 10001010 00000111 01000011 11001101 00010000 11100010 
+    11111001 11001101 00100000 01010000 01110010 01101001 01110110 
+    01100101 01110100 00101100 00100000 01001101 01101001 01110000 
+    00100001
+    </code></pre>
+                <p>Попробовать написать это вручную — задача почти невозможная для человека, особенно без специальных знаний. Именно поэтому и были созданы языки программирования высокого уровня. Они позволяют описывать действия с использованием слов и понятий, близких обычному человеческому мышлению.</p>
+                <p>Например, та же программа на языке Python выглядит просто и понятно:</p>
+    
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Python</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print("Привет, Мир!")</code></pre>
+                <p>Такой код может прочитать даже тот, кто никогда раньше не сталкивался с программированием. Программные языки служат своего рода переводчиком между человеком и машиной — они превращают понятные нам слова в команды, которые способен выполнить компьютер.</p>
+                <p>Сейчас технологии шагнули ещё дальше — ИИ умеет интерпретировать команды, написанные обычным человеческим языком. Однако на текущем этапе всё ещё крайне важно разбираться в основах программирования, чтобы понимать, что именно генерирует искусственный интеллект и как это работает под капотом.</p>
+    
+                <div class="note">
+                    <p><strong>Prompt:</strong><br> Напиши в консоль фразу "Привет, Мир!" на 5 разных языках программирования</p>
+                </div>
+    
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Python</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print("Привет, Мир!")</code></pre>
+    
+                <div class="code-block-header">
+                    <h5 class="code-block-title">JavaScript</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-javascript">console.log("Привет, Мир!");</code></pre>
+    
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Java</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-dart">public class Main {
+        public static void main(String[] args) {
+            System.out.println("Привет, Мир!");
+        }
+    }</code></pre>
+    
+                <div class="code-block-header">
+                    <h5 class="code-block-title">C++</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-cpp">#include <iostream>
+    
+    int main() {
+        std::cout << "Привет, Мир!" << std::endl;
+        return 0;
+    }</code></pre>
+    
+                <div class="code-block-header">
+                    <h5 class="code-block-title">C#</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-csharp">using System;
+    
+    class Program {
+        static void Main() {
+            Console.WriteLine("Привет, Мир!");
+        }
+    }</code></pre>
+                <div class="note">
+                    <p>Круто, ИИ написал ... что-то, но мы сейчас не понимаем что это и тем более как это применить запустить! Поэтому изучение базы это обязательный и важный этап, перед использованием более крутых инструментов.</p>
+                </div>
+    
+                <p><strong>Основные задачи программирования:</strong></p>
+                <ul>
+                    <li>Автоматизация рутинных процессов и создание программного обеспечения (приложения, сайты, игры, «умная» техника).</li>
+                    <li>Решение технических и логических задач через написание кода и работу с данными.</li>
+                    <li>Улучшение и оптимизация работы оборудования, сервисов и интерфейсов.</li>
+                    <li>Работа с ИИ для ещё большей автоматизации</li>
+                </ul>
+    
+                <p><strong>Работа программиста включает:</strong></p>
+                <ul>
+                    <li>Анализ и проектирование логики программы.</li>
+                    <li>Написание и отладку кода.</li>
+                    <li>Тестирование и устранение ошибок.</li>
+                    <li>Поддержку и развитие созданных решений.</li>
+                    <li>Использование ИИ</li>
+                </ul>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;">Язык программирования Python</h2>
+                <div class="note">
+                    <!-- <p><strong>Python</strong></p> -->
+                    <div style="display: flex; align-items: flex-start; gap: 15px;">
+                        <img src="images/l1/python.png" alt="Python Logo" width="80" style="flex-shrink: 0;">
+                        <div>
+                            <p>Язык <code class="code">Python</code> - это высокоуровневый язык программирования общего назначения с динамической типизацией и автоматическим управлением памятью.</p>
+                            <p>Используется для создания веб-приложений, анализа данных, машинного обучения, автоматизации и многого другого.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+                <img src="images/l1/python-tyan.png" alt="Python Logo" width="250">
+
+                <p>Язык <strong>Python</strong> разработал голландский программист <strong>Гвидо Ван Россум</strong> (Guido van Rossum) в 1991 году. Гвидо был фанатом британского комедийного сериала «Monty Python’s Flying Circus», откуда и пришло название языка. (Почему логотип потом стала змея, не понятно)</p>
+                <div style="display: flex; justify-content: space-around;">
+                    <figure>
+                        <img src="images/l1/Guido_van_Rossum.jpg" width="200" style="height: 350px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <figcaption>Гвидо Ван Россум</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/l1/monty-pythons-flying-circus.webp" width="200" style="height: 350px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <figcaption>Monty Python's Flying Circus</figcaption>
+                    </figure>
+                </div>
+        
+                <h3>Преимущества Python</h3>
+                <ul>
+                    <li>Простота и читаемость кода</li>
+                    <li>Огромное количество библиотек и фреймворков</li>
+                    <li>Большое и активное сообщество</li>
+                    <li>Широкое применение в различных областях (создавать сайты, игры, анализировать данные, тренировать нейросети и многое другое )</li>
+                    <li>Подходит для новичков</li>
+                </ul>
+                <h3>Недостатки Python</h3>
+                <ul>
+                    <li><strong>Низкая скорость выполнения</strong> по сравнению с другими компилируемыми языками</li>
+                    <li>Динамическая типизация языка, это боль при написании сложных программ.</li>
+                </ul>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;">Python Интерпретатор</h2>
+                <p>Языки программирования делятся на два вида</p>
+                <ol>
+                    <li><strong>компилируемые</strong></li>
+                    <li><strong>интерпретируемые</strong></li>
+                </ol>
+                <p>Программу на компилируемом языке (<strong>Например, C++ или Dart</strong>) перед выполнением нужно проверить на наличие синтаксических ошибок и уже после этого перевести в понятную для компьютера форму — <strong>машинный код</strong>. Это делает специальная программа, которая называется <strong>компилятором</strong>.</p>
+                <p>Программа на интерпретируемом языке (<strong>Например Python, JavaScript или Ruby</strong>), не переводится в машинный код. Вместо этого специальная программа, которая называется <strong>интерпретатором</strong>, идет по коду, анализирует его и выполняет каждую отдельную команду <code class="code">строчка за строчкой</code>.</p>
+                <p>Существуют языки, совмещающие оба подхода (<strong>Например C# или Java</strong>).  Исходной код программы сначала компилируется в промежуточный код (<strong>байт-код</strong>), а уже потом, во время выполнения, переводится в машинный код.</p>
+        
+                <h3>Где скачать Python Интерпретатор</h3>
+                <p>Переходим на официальный сайт <a href="https://www.python.org/">https://www.python.org/</a></p>
+                <p>Скачиваем и устанавливаем Python для своей ОС</p>
+                <img src="images/l1/inter.png" alt="Download Python" width="700">
+                <p>Запускаем установщик</p>
+                <img src="images/l1/download.png" alt="Python Installer 1" width="400">
+                <ul>
+                    <li>Поставьте галочку “Add Python to PATH” — это добавит интерпретатор в системные переменные, и вы сможете запускать Python из любой папки.</li>
+                    <li>Нажмите “Install Now”, оставив параметры по умолчанию.</li>
+                </ul>
+                <img src="images/l1/python-install-1.png" alt="Python Installer 2" width="500">
+                <img src="images/l1/python-install-2.png" alt="Python Installer 3" width="500">
+                <img src="images/l1/python-install-3.png" alt="Python Installer 4" width="500">
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;">Где будем программировать</h2>
+                <div class="note">
+                    <p><strong>Что такое программа?</strong></p>
+                    <p>Программа — это набор инструкций, которые компьютер выполняет по порядку.</p>
+                    <p>(Вспоминаем бутербродный алгоритм)</p>
+                </div>
+                <div class="note">
+                    <p><strong>Что такое редактор кода?</strong></p>
+                    <p>Редактор кода — это специальная программа, которая помогает писать код. Он имеет дополнительные функции:</p>
+                    <ul>
+                        <li><code class="code">Подсветка синтаксиса</code> : разные части кода выделяются разными цветами для лучшей читаемости.</li>
+                        <li><code class="code">Автодополнение</code> : редактор предлагает варианты продолжения кода, что ускоряет процесс написания.</li>
+                        <li><code class="code">Проверка ошибок</code> : редактор сразу же показывает, где ты допустил ошибку.</li>
+                    </ul>
+                </div>
+                <p>Для программирования на Python есть множество редакторов кода, самые удобные на данный момент это <code class="code">Visual Studio Code</code> и <code class="code">PyCharm</code></p>
+                <p>Сейчас мы познакомимся с самым популярным редактором кода <code class="code">Visual Studio Code</code></p>
+                <p>Скачать <code class="code">Visual Studio Code</code> нужно по этой <a href="https://code.visualstudio.com/">ссылке</a></p>
+                <img src="images/l1/vscode.png" alt="VSCode Download Page" width="700">
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;">Запуск и настройка VSCode</h2>
+                <p>При открытии VSCode мы попадаем на экран приветствия. Здесь можно увидеть команды для создания новых документов, открытия файлов и папок, а также прошлые открытые проекты.</p>
+                <img src="images/l1/vsc1.png" alt="VSCode Welcome Screen" width="700">
+                <p>Прежде чем начать учиться программировать на языке Python, необходимо <code class="code">VSCode</code> настроить для работы.</p>
+                <ol>
+                    <li>Нужно установить интерпретатор языка <code class="code">Python</code></li>
+                    <li>Нужно установить плагины для работы c <code class="code">Python</code></li>
+                </ol>
+                <p>Нажимаем на вот эту кнопку с левой стороны окна, открывается список установленных и список не установленных расширений для нашего редактора (их очень много).<br>В строке поиска нужно набрать <code class="code">Python</code></p>
+                <img src="images/l1/vsc2.png" alt="VSCode Extensions" width="700">
+                <img src="images/l1/vsc3.png" alt="VSCode Python Extension" width="700">
+                <p>После установки расширения, создайте новую папку для проекта, например <code class="code">python_base</code>, и откройте ее в VSCode. Затем создайте файл с названием <code class="code">main.py</code>.</p>
+                <img src="images/l1/vsc4.png" alt="Create main.py" width="700">
+                <p>В этом файле напишем классическое <code class="code">hello world</code> приложение</p>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">main.py</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print("Привет, Python")</code></pre>
+                <img src="images/l1/vsc5.png" alt="Hello World in VSCode" width="700">
+                <p>Способы запустить приложение :</p>
+                <ol>
+                    <li>Нажать на клавиатуре клавишу <code class="code">F5</code></li>
+                    <li>Нажать на значок запуска (треугольник) на верхней панеле справа</li>
+                </ol>
+                <img src="images/l1/vsc6.png" alt="Run Python file in VSCode" width="700">
+                <img src="images/l1/vsc7.png" alt="Python output in terminal" width="700">
+                <p>Когда вы нажимаете «Выполнить», запускается целый процесс. Код на языке программирования <code class="code">Python</code> разработан так, чтобы быть понятным для людей, облегчая чтение и написание. Однако компьютер ещё не может понять этот код.</p>
+                <div class="note">
+                    <p><strong>Интерпретатор</strong></p>
+                    <p>Для этого нужен специальный инструмент — <code class="code">интерпретатор</code>. Он переводит написанный вами код с языка, понятного человеку, на язык, понятный компьютеру, просматривая его построчно. Этот процесс называется <code class="code">интерпретацией</code>.</p>
+                </div>
+                <p>Если интерпретация проходит успешно, программа запускается. Когда компьютер выполняет вашу программу, он последовательно исполняет каждую из ваших инструкций.</p>
+                <div class="note">
+                    <p><strong>Окончание инструкции</strong></p>
+                    <p>В Python для разделения инструкций используется перенос строки. Точка с запятой <code class="code">;</code> не требуется.</p>
+                </div>
+                <h3>Объяснение <code class="code">hello world</code> программы</h3>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">hello_world.py</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print("Hello, world!")</code></pre>
+                <ul>
+                    <li><code class="code">print()</code> - это встроенная функция в Python, которая выводит указанное сообщение на экран (в консоль).</li>
+                    <li>Текст <code class="code">"Hello, world!"</code> - это аргумент, который мы передаем функции <code class="code">print()</code>.</li>
+                </ul>
+                <div class="note">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="images/l1/important.png" alt="" width="170">
+                        <div>
+                            <h3>Инструкция</h3>
+                            <p>Это команда для компьютера выполнить что-то.</p>
+                            <p>Код на языке программирования — это <code class="code">набор инструкций</code>.</p>
+                            <p>Инструкции обязательно выполняются <strong>последовательно</strong>, сверху ⬇️ вниз</p>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Последовательное выполнение</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+<pre>
+<code class="language-python"># Все новые инструкции принято писать с новой строки
+print("Изучаю язык программирования Python")
+print("Иногда туплю")
+</code>
+</pre>
+                <div class="note">                   
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="images/l1/important.png" alt="" width="170">
+                        <div>
+                            <h3>Кавычки</h3>
+                            <p>Всё что записано в <strong>двойные</strong> или <strong>одинарные кавычки</strong> является обычным <code class="code">текстом / строкой</code></p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2 style="display: inline;">Основные литералы: числа и строки</h2>
+                <p>Независимо от сложности, все программы выполняют операции с числами, строками и другими значениями. Эти значения называются <code class="code">литералами</code>.</p>
+                <div class="note">
+                    <p><strong>Целые числа <code class="code">Integer</code></strong></p>
+                    <p>Мы используем целые числа, например, для подсчета вещей в реальном мире.</p>
+                    <p>Например <code class="code">0</code>, <code class="code">1</code>, <code class="code">2</code>, <code class="code">10</code>, <code class="code">11</code>, <code class="code">100</code></p>
+                </div>
+                <div class="note">
+                    <p><strong>Строки <code class="code">String</code></strong></p>
+                    <p>Строка это последовательность любых символов заключенных в двойные или одинарные кавычки.</p>
+                    <p>Например <code class="code">"text"</code>, <code class="code">'Я изучаю Python'</code>, <code class="code">"123456"</code>, <code class="code">'e-mail@yandex.ru'</code>, <code class="code">" "</code></p>
+                    <p>Строки могут включать буквы, цифры, пробелы и другие символы.</p>
+                </div>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2 style="display: inline;">Комментарии</h2>
+                <p>Комментарии в коде нужны, чтобы объяснять, что делает каждая часть программы. Они помогают понять, как работает код, и облегчают его чтение. Когда кто-то другой (или даже вы сами позже) будет смотреть на ваш код, комментарии подскажут, что именно вы хотели сделать.</p>
+                <p>При интерпретации комментарии игнорируются, не влияя на выполнение программы и её размер. В языке Python существуют <code class="code">два вида</code> комментариев:</p>
+                <div class="note">
+                    <p><strong>Однострочные комментарии <code class="code">#</code></strong></p>
+                    <p>Всё, что написано после <code class="code">#</code> до конца строки, считается комментарием</p>
+                </div>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Однострочный комментарий</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python"># Это однострочный комментарий
+print("Привет, Python!") # Вывести на экран строку</code></pre>
+        
+                <div class="note">
+                    <p><strong>Многострочные комментарии <code class="code">"""  """</code> или <code class="code">'''  '''</code></strong></p>
+                    <p>Такие комментарии могут занимать несколько строк, заключенные между тройными двойными или тройными одинарными кавычками.</p>
+                </div>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Многострочный комментарий</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">"""Это
+Многострочный
+Комментарий
+"""
+print("Привет, Python!")</code></pre>
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2 style="display: inline;">Арифметические операции → бинарные операторы</h2>
+                <p>В <code class="code">Python</code> существует несколько основных арифметических операторов:</p>
+                <ul>
+                    <li>Сложение <code class="code">+</code></li>
+                    <li>Вычитание <code class="code">-</code></li>
+                    <li>Умножение <code class="code">*</code></li>
+                    <li>Деление <code class="code">/</code> - всегда возвращает float</li>
+                    <li>Целочисленное деление <code class="code">//</code></li>
+                    <li>Остаток от деления <code class="code">%</code></li>
+                    <li>Возведение в степень <code class="code">**</code></li>
+                </ul>
+                <p>Эти операторы являются <code class="code">бинарными</code>, то есть они оперируют <code class="code">двумя</code> значениями (операндами). <code class="code">Операнд</code> - это значение или переменная, к которой применяется оператор.</p>
+                <div class="note important">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="images/l1/important.png" alt="" width="150">
+                        <div>
+                            <h3>Операторы и Операнды</h3>
+                            <p>В выражении <code class="code">1 + 3</code> числа 1 и 3 являются операндами, а <code class="code">+</code> является оператором.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Примеры операций</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print(12 + 42) # 54
+print(10 - 70) # -60
+print(21 * 30) # 630
+print(20 / 20) # 1.0
+print(18 % 10) # 8
+print(2 ** 3) # 8
+print(20 // 6) # 3</code></pre>
+        </section>
+
+        <section id="section-9" class="lesson-section">
+            <h2 style="display: inline;">Сложные выражения</h2>
+                <img src="images/l1/q.png" alt="Order of operations" width="350">
+                <p>Арифметические операции можно комбинировать для создания сложных выражений:</p>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Сложное выражение</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print(1 + 3 * 4 - 2) # печатает 11</code></pre>
+                <p>Порядок вычислений совпадает с обычными правилами арифметики. Сначала скобки, потом возведение в степень, затем умножение/деление, и в конце сложение/вычитание.</p>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Выражение со скобками</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print((1 + 3) * (4 - 2)) # печатает 8</code></pre>
+                <p>Скобки могут быть вложенными</p>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Вложенные скобки</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print(((54 // 10) % 10) * 2) # печатает 10</code></pre>
+        </section>
+
+        <section id="section-10" class="lesson-section">
+            <h2 style="display: inline;">Ошибки в коде и их исправление</h2>
+                <p>Ошибки или баги в программах бывают двух видов:</p>
+                <ol>
+                    <li>Ошибки <code class="code">синтаксиса</code> (ошибки не дают запуститься программе)</li>
+                    <li>Ошибки <code class="code">исполнения</code> (ошибки возникают во время работы программы)</li>
+                </ol>
+                <p>Рассмотрим пример с ошибками синтаксиса и то как их исправить.</p>
+                <div class="note">
+                    <p><strong>Ошибки синтаксиса</strong></p>
+                    <p>Когда код <strong>не запускается</strong>, это означает, что где-то возникла <strong>синтаксическая ошибка</strong>.</p>
+                </div>
+                <p>Запустите этот код, что вы увидите?</p>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Код с ошибкой</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print("Сегодня дождь</code></pre>
+                <p>При запуске программы появится сообщение об ошибке:
+                    <br> 
+                    <code class="code">SyntaxError: unterminated string literal (detected at line 1)</code>
+                </p>
+                
+                <img src="images/l1/error.png" alt="Error" width="500">
+
+                <p>Это означает, что интерпретатор дошел до конца строки, но так и не нашел закрывающую кавычку для строки.</p>
+
+                <p>В редакторе VSCode ошибка будет выделена красным цветом.</p>
+                <p>Если навести мышкой на ошибку, то появится подсказка с описанием ошибки.</p>
+                <img src="images/l1/error-vsc.png" alt="Error" width="500">
+
+                <p>Исправим этот код и запустим снова на выполнение</p>
+                <div class="code-block-header">
+                    <h5 class="code-block-title">Исправленный код</h5>
+                    <div class="code-block-controls">
+                        <span class="code-block-control" onclick="toggleTheme('github')">
+                            <img class="icon" src="images/light.png" alt="Светлая тема">
+                        </span>
+                        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                            <img class="icon" src="images/dark.png" alt="Темная тема">
+                        </span>
+                    </div>
+                </div>
+                <pre><code class="language-python">print("Сегодня дождь")</code></pre>
+                <p>Теперь код выполнится без ошибок.</p>
+        </section>
+
+        <section id="section-11" class="lesson-section">
+            <h2 style="display: inline;">Стиль программирования на языке Python</h2>
+            
+                <img src="images/l1/python-style.png" alt="Python Style Guide" width="500">
+                <ul>
+                    <li>Имена функций и переменных должны быть написаны в стиле <code class="code">snake_case</code> (слова разделяются нижним подчеркиванием).</li>
+                    <li>Каждое выражение должно находиться на отдельной строке.</li>
+                    <li>Отступ в 4 пробела используется для обозначения блока кода. Не используйте символ табуляции для отступов.</li>
+                    <li>Между функциями и классами верхнего уровня оставляйте две пустые строки.</li>
+                    <li>Старайтесь, чтобы длина строки не превышала 79 символов.</li>
+                </ul>
+        </section>
+
+        <section id="section-12" class="lesson-section">
+            <h2 style="display: inline;">The Zen of Python</h2>
+                <p>Разработчики языка Python придерживаются определённой философии программирования, называемой «The Zen of Python». Её текст выдаётся интерпретатором Python по команде <code class="code">import this</code> (работает один раз за сессию). Автором этой философии считается Тим Петерс (Tim Peters).</p>
+
+                <img src="images/l1/zen.png" alt="The Zen of Python" width="500">
+
+                <h3>В оригинале</h3>
+                <ol>
+                    <li>Beautiful is better than ugly;</li>
+                    <li>Explicit is better than implicit;</li>
+                    <li>Simple is better than complex;</li>
+                    <li>Complex is better than complicated;</li>
+                    <li>Flat is better than nested;</li>
+                    <li>Sparse is better than dense;</li>
+                    <li>Readability counts;</li>
+                    <li>Special cases aren't special enough to break the rules;</li>
+                    <li>Although practicality beats purity;</li>
+                    <li>Errors should never pass silently;</li>
+                    <li>Unless explicitly silenced;</li>
+                    <li>In the face of ambiguity, refuse the temptation to guess;</li>
+                    <li>There should be one — and preferably only one — obvious way to do it;</li>
+                    <li>Although that way may not be obvious at first unless you're Dutch;</li>
+                    <li>Now is better than never;</li>
+                    <li>Although never is often better than *right* now;</li>
+                    <li>If the implementation is hard to explain, it's a bad idea;</li>
+                    <li>If the implementation is easy to explain, it may be a good idea;</li>
+                    <li>Namespaces are one honking great idea — let's do more of those!</li>
+                </ol>
+        
+                <h3>Перевод на русский язык</h3>
+                <ol>
+                    <li>Красивое лучше, чем уродливое;</li>
+                    <li>Явное лучше, чем неявное;</li>
+                    <li>Простое лучше, чем сложное;</li>
+                    <li>Сложное лучше, чем запутанное;</li>
+                    <li>Плоское лучше, чем вложенное;</li>
+                    <li>Разреженное лучше, чем плотное;</li>
+                    <li>Читаемость имеет значение;</li>
+                    <li>Особые случаи не настолько особые, чтобы нарушать правила;</li>
+                    <li>При этом практичность важнее безупречности;</li>
+                    <li>Ошибки никогда не должны замалчиваться;</li>
+                    <li>Если не замалчиваются явно;</li>
+                    <li>Встретив двусмысленность, отбрось искушение угадать;</li>
+                    <li>Должен существовать один — и, желательно, только один — очевидный способ сделать это;</li>
+                    <li>Хотя он поначалу может быть и не очевиден, если вы не голландец;</li>
+                    <li>Сейчас лучше, чем никогда;</li>
+                    <li>Хотя никогда зачастую лучше, чем прямо сейчас;</li>
+                    <li>Если реализацию сложно объяснить — идея плоха;</li>
+                    <li>Если реализацию легко объяснить — идея, возможно, хороша;</li>
+                    <li>Пространства имён — отличная вещь! Давайте будем делать их больше!</li>
+                </ol>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            // Re-highlight code blocks after changing theme
+             // Use try-catch just in case hljs hasn't loaded? Unlikely here.
+             try {
+                 document.querySelectorAll('pre code').forEach((block) => {
+                     // Remove previous highlighting classes if they exist
+                     block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                     // Remove the 'data-highlighted' attribute if present
+                     block.removeAttribute('data-highlighted');
+                     // Re-apply highlighting
+                     hljs.highlightElement(block);
+                 });
+             } catch (e) {
+                 console.error("Highlight.js error:", e);
+             }
+        }
+
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                const menuLinks = document.querySelectorAll('#side-menu ul a');
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+
+            menu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (sections.length > 0) {
+                const firstNavigableSection = document.querySelector('#side-menu ul a');
+                if (firstNavigableSection) {
+                    showSection(firstNavigableSection.dataset.sectionId);
+                } else if (sections[0]) {
+                    sections[0].classList.add('active');
+                }
+            }
+        });
+    </script>
+
+</body>
+</html> 

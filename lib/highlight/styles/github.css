@@ -65,7 +65,11 @@ code.hljs {
 .hljs-code,
 .hljs-formula {
   /* prettylights-syntax-comment */
-  color: #6a737d
+  color: black;
+  padding: 3px;
+  background-color: #88ff34;
+  border-radius: 5px;
+  font-style: italic
 }
 .hljs-name,
 .hljs-quote,

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс по Flutter</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        a {
+            color: #000;
+        }
+        a.no-link {
+            color: #888888;
+            pointer-events: none;
+            text-decoration: none;
+            cursor: default;
+        }
+        summary {
+            font-weight: bold;
+        }
+        .marker-highlight {
+            position: relative;
+            display: inline-block;
+            padding: 2px 3px;
+            color: #000;
+        }
+        .marker-highlight::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #88ff34;
+            transform: skew(-15deg) rotate(-2deg);
+            z-index: -1;
+            border-radius: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Курс по Flutter</h1>
+
+    <a href="flutter-lesson-0.html" class="marker-highlight">🔥 Вводное занятие (Проектный модуль)</a>
+    <p></p>
+
+    <details>
+        <summary>3. Flutter. Вёрстка</summary>
+        <ul>
+            <li><a href="404.html">3.1 Flutter. Установка и настройка окружения</a></li>
+            <li><a href="404.html">3.2 Виджеты. Что это?</a></li>
+            <li><a href="404.html">3.3 Виджеты. Цветовая тема приложения. ThemeData</a></li>
+            <li><a href="404.html">3.4 Виджеты. Декомпозиция. Иконка приложения</a></li>
+            <li><a href="404.html">3.5 Виджеты. Column Row Container</a></li>
+            <li><a href="404.html">3.6 Виджеты. Text Image Icon</a></li>
+            <li><a href="404.html">3.7 Виджеты. Color Border</a></li>
+            <li><a href="404.html">3.8 Виджеты. Способы скругления изображений</a></li>
+            <li><a href="404.html">3.9 Виджеты. Container Особенности</a></li>
+            <li><a href="404.html">3.10 Виджеты. Spacer Expanded</a></li>
+            <li><a href="404.html">3.11 Виджеты. Card</a></li>
+            <li><a href="404.html">3.12 Виджеты. ListView GridView</a></li>
+            <li><a href="404.html">3.13 Figma. Практика по вёрстке</a></li>
+        </ul>
+    </details>
+
+    <details open>
+        <summary>4. Flutter. Состояние State</summary>
+        <ul>
+            <li><a href="404.html">4.1 Виджеты. Stateless и Stateful</a></li>
+            <li><a href="404.html">4.2 Виджеты. Buttons GestureDetector</a></li>
+            <li><a href="404.html">4.3 Виджеты. Stack и Positioned</a></li>
+            <li><a href="404.html">4.4 Виджеты. Checkbox FAB AlertDialog Switch</a></li>
+            <li><a href="404.html">4.5 Навигация между экранами</a></li>
+            <li><a href="404.html">4.6 Навигация. Передача данных. TextField</a></li>
+            <li><a href="404.html">4.7 Разработка приложения Sushi App. Часть 1</a></li>
+            <li><a href="flutter-lesson-4.8.html" class="marker-highlight">4.8 Виджеты. Текстовые поля и Формы</a></li>
+            <li><a href="404.html">4.9 Разработка приложения Sushi App. Часть 2</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>5. Ядро работы Flutter</summary>
+        <ul>
+            <li><a class="no-link">5.1 Stateless Виджет</a></li>
+            <li><a class="no-link">5.2 Константные конструкторы</a></li>
+            <li><a class="no-link">5.3 Stateful Виджет</a></li>
+            <li><a class="no-link">5.4 Stateful. Как происходит обновление виджетов</a></li>
+            <li><a class="no-link">5.5 Stateful. Жизненный цикл виджета</a></li>
+            <li><a class="no-link">5.6 Context</a></li>
+            <li><a class="no-link">5.7 InheritedWidget. Проблема</a></li>
+            <li><a class="no-link">5.8 InheritedWidget. Решение</a></li>
+            <li><a class="no-link">5.9 InheritedModel</a></li>
+            <li><a class="no-link">5.10 InheritedNotifier и ChangeNotifier</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>6. Ключи Keys</summary>
+        <ul>
+            <li><a class="no-link">6.1 Keys + Stateless Widget</a></li>
+            <li><a class="no-link">6.2 Keys + Stateful Widget</a></li>
+            <li><a class="no-link">6.3 ValueKey. Виды ключей. Удаления элементов списка</a></li>
+            <li><a class="no-link">6.4 GlobalKey Глобальные ключи</a></li>
+            <li><a class="no-link">6.5 PageStorageKey + Прокручиваемые списки</a></li>
+            <li><a class="no-link">6.6 ReorderableListView + ValueKey</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>7. Provider</summary>
+        <ul>
+            <li><a class="no-link">7.1 Provider. Как управлять State</a></li>
+            <li><a class="no-link">7.2 MultiProvider. Управление несколькими провайдерами</a></li>
+            <li><a class="no-link">7.3 Provider и Navigation</a></li>
+            <li><a class="no-link">7.4 ProxyProvider</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>8. Асинхронное программирование</summary>
+        <ul>
+            <li><a class="no-link">8.1 Основы Future и EventLoop</a></li>
+            <li><a class="no-link">8.2 Подробней про Future</a></li>
+            <li><a class="no-link">8.3 Основы HTTP</a></li>
+            <li><a class="no-link">8.4 Обработка ошибок</a></li>
+            <li><a class="no-link">8.5 HTTP CRUD (HttpClient)</a></li>
+            <li><a class="no-link">8.6 HTTP CRUD (Пакет http)</a></li>
+            <li><a class="no-link">8.7 HTTP CRUD (Пакет Dio)</a></li>
+            <li><a class="no-link">8.8 🔥 Flutter. Разработка погодного приложения</a></li>
+            <li><a class="no-link">8.9 🔥 Flutter. Разработка приложения с покемонами</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>9. Flutter. Работа данными. Локальное хранилище</summary>
+        <ul>
+            <li><a class="no-link">9.1 Список Задач + SharedPreference (настройки)</a></li>
+            <li><a class="no-link">9.2 Список Задач + SharedPreference (задачи)</a></li>
+            <li><a class="no-link">9.3 Список Задач + Оптимизация приложения</a></li>
+            <li><a class="no-link">9.4 Список Задач + Dependency Inversion Principle</a></li>
+            <li><a class="no-link">9.5 Список Задач + SQLite + Interface + DI</a></li>
+            <li><a class="no-link">9.6 Безопасное хранение. FlutterSecureStorage</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>10. Углубленные техники работы. Доделываем SushiApp</summary>
+        <ul>
+            <li><a class="no-link">10.1 Пакет json_serializable</a></li>
+            <li><a class="no-link">10.2 Pattern Matching (Сопоставление с образцом)</a></li>
+            <li><a class="no-link">10.3 State Модель. Часть 1</a></li>
+            <li><a class="no-link">10.4 State Модель. Часть 2</a></li>
+            <li><a class="no-link">10.5 🔥 Разработка приложения Sushi App. Часть 3</a></li>
+            <li><a class="no-link">10.6 🔥 Разработка приложения Sushi App. Часть 4</a></li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>11. Flutter AI LLM</summary>
+        <ul>
+            <li><a class="no-link">11.1 Что такое AI и LLM (много текста)</a></li>
+            <li><a class="no-link">11.2 Prompt Engineering. База общего промптинга</a></li>
+            <li><a class="no-link">11.3 Prompt Enginering. Программирование</a></li>
+            <li><a class="no-link">11.4 Prompt Engineering. Flutter</a></li>
+            <li><a class="no-link">11.5 🔥 Разработка погодного приложения через AI LLM</a></li>
+            <li><a class="no-link">11.6 Топ ИИ инструментов для IDE</a></li>
+            <li><a class="no-link">11.7 🔥 Windsurf для VS Code</a></li>
+            <li><a class="no-link">11.8 🔥 Cursor IDE + Rules + MCP</a></li>
+            <li><a class="no-link">11.9 Обзор Trae IDE</a></li>
+            <li><a class="no-link">11.10 Обзор Augment AI + Android Studio</a></li>
+            <li><a class="no-link">11.11 WEB Агенты - replit, lovable, v0</a></li>
+            <li><a class="no-link">11.12 🔥 Разработка Flutter приложения «Умный помощник» с AI</a></li>
+        </ul>
+    </details>
+    </div>
+</body>
+</html> 
