@@ -1,0 +1,107 @@
+.slideshow-container {
+    position: relative;
+    margin: 40px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: #ffffff;
+    padding-bottom: 20px;
+}
+
+.slideshow-wrapper {
+    overflow: hidden;
+    position: relative;
+    transition: height 0.5s ease-in-out; /* Плавное изменение высоты */
+}
+
+.slideshow {
+    position: relative;
+    height: 100%;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    display: flex; /* Для центрирования изображения */
+    align-items: center; /* Вертикальное центрирование */
+    justify-content: center; /* Горизонтальное центрирование */
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slide img {
+    width: auto; /* Ширина будет подстраиваться под контейнер */
+    max-width: 100%; /* Но не будет больше контейнера */
+    height: auto; /* Высота будет изменяться пропорционально */
+    max-height: 90vh; /* Ограничение по высоте, чтобы не выходить за пределы экрана */
+    display: block;
+    border-radius: 15px 15px 0 0;
+    padding: 40px 0 20px 0; /* Добавляем отступы сверху и снизу */
+    box-sizing: border-box; /* Чтобы padding не влиял на общую ширину/высоту */
+}
+
+.slideshow-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.slideshow-btn {
+    background-color: transparent; /* Убираем фон */
+    color: #333; /* Делаем цвет темным */
+    border: none;
+    font-size: 36px; /* Увеличиваем иконку */
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slideshow-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Легкий фон при наведении */
+    transform: scale(1.1); /* Убираем translateY */
+}
+
+.slideshow-btn:disabled {
+    color: #bbb; /* Цвет неактивной кнопки */
+    cursor: not-allowed;
+    background-color: transparent; /* Убираем фон у неактивной кнопки */
+    transform: scale(1); /* Убираем translateY */
+}
+
+.dots-container {
+    text-align: center;
+    padding: 0 15px; /* Добавляем отступы по бокам */
+}
+
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s;
+}
+
+.dot.active, .dot:hover {
+    background-color: #717171;
+    transform: scale(1.2);
+}
