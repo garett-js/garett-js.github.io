@@ -1,0 +1,78 @@
+/* Container for the interactive code block controls */
+.interactive-code-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-top: -50px;
+    position: sticky;
+    bottom: 0px;
+    z-index: 10;
+    box-shadow: 0 0px 5px rgba(0,0,0,0.1);
+}
+
+/* Style for the control buttons */
+.interactive-code-controls button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+    transition: background-color 0.3s;
+}
+
+.interactive-code-controls button:hover {
+    background-color: #45a049;
+}
+
+.interactive-code-controls button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Style for the step counter */
+.interactive-code-step-counter {
+    font-size: 14px;
+    margin: 0 10px;
+    color: #333;
+    font-family: monospace;
+}
+
+/* Hide elements that are part of a step */
+.code-step-hidden {
+    display: none;
+}
+
+/* Typing cursor animation */
+.typing-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background-color: #333;
+    animation: blink 1s infinite;
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+/* Next step indicator cursor */
+.next-step-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background-color: #4CAF50; /* Green */
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}

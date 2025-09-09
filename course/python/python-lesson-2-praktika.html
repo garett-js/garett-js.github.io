@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 2: Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="python-lesson-2.html" class="back-link">←</a> Практика: Урок 2</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 2: Переменные и константы</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.py</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Приветствие</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Создайте переменную для хранения имени пользователя, а затем используйте её для вывода приветствия. Используйте функцию <code class="code">input()</code> для получения имени.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="bash">Введите ваше имя: Гаретт
+Привет, Гаретт!</code></pre>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Площадь треугольника</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Используя переменные и шаблонные строки (f-строки), найдите площадь треугольника. Задайте основание и высоту в переменных.</p>
+            <ul>
+                <li>Основание треугольника: <strong>5</strong></li>
+                <li>Высота треугольника: <strong>10</strong></li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Ожидаемый вывод</h5>
+            </div>
+            <pre><code class="bash">Площадь треугольника с основанием 5 и высотой 10 равна 25.0</code></pre>
+            <div class="note">
+                <p><strong>Подсказка:</strong> Формула площади треугольника: (основание * высота) / 2.</p>
+            </div>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Обмен значений переменных</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Создайте две переменные <code class="code">a</code> и <code class="code">b</code>, присвойте им начальные значения. Затем поменяйте их значения местами, используя <strong>"НЕ питонический"</strong> и <strong>"Питонический"</strong> способ, и выведите результат.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">До обмена: a = 15, b = 30
+После обмена: a = 30, b = 15</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Средний балл оценок</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Создайте три переменные для хранения оценок по разным предметам (например, математика, физика, информатика). Рассчитайте и выведите среднюю оценку, используя f-строку для форматирования вывода.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Оценки: Математика=5, Физика=4, Информатика=5
+Средний балл: 4.66666...</code></pre>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Характеристики персонажа</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Создайте программу, которая запрашивает у пользователя имя, класс и уровень игрового персонажа. Затем рассчитайте и выведите его базовые характеристики.</p>
+            <ol>
+                <li>Используйте <code class="code">input()</code>, чтобы получить имя, класс и уровень.</li>
+                <li>Уровень нужно преобразовать в число.</li>
+                <li>Определите константу <code class="code">BASE_HEALTH</code> со значением 100.</li>
+                <li>Рассчитайте здоровье персонажа по формуле: <code class="code">здоровье = BASE_HEALTH + уровень * 10</code>.</li>
+                <li>Выведите итоговую информацию о персонаже в виде анкеты с помощью f-строки.</li>
+            </ol>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите имя персонажа: Артас
+Введите класс персонажа: Паладин
+Введите уровень: 12
+--- Анкета Персонажа ---
+Имя: Артас
+Класс: Паладин
+Уровень: 12
+Здоровье: 220
+-----------------------</code></pre>
+        </section>
+        
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Калькулятор лута</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Игрок нашел сокровище! Напишите программу, которая подсчитывает общую стоимость добычи в медных монетах.</p>
+            <ol>
+                <li>Используйте <code class="code">input()</code>, чтобы спросить, сколько золотых, серебряных и медных монет нашел игрок.</li>
+                <li>Определите константы для обменного курса: <code class="code">SILVER_PER_GOLD = 10</code>, <code class="code">COPPER_PER_SILVER = 100</code>.</li>
+                <li>Рассчитайте общую стоимость всей добычи в медных монетах.</li>
+                <li>Выведите результат с поясняющим сообщением.</li>
+            </ol>
+             <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Сколько золотых монет найдено? 3
+Сколько серебряных монет найдено? 15
+Сколько медных монет найдено? 75
+Общая стоимость добычи: 4575 медных монет.</code></pre>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2>Задача № 7: Расчет урона в бою</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Создайте программу, имитирующую расчет урона в ролевой игре. У героя есть базовый урон, а у монстра — броня.</p>
+            <ol>
+                <li>С помощью множественного присваивания задайте базовый урон героя и броню монстра (например, 25 и 10).</li>
+                <li>Определите константу для множителя критического удара <code class="code">CRIT_MULTIPLIER = 1.5</code>.</li>
+                <li>Рассчитайте урон от критического удара.</li>
+                <li>Рассчитайте итоговый урон, который получит монстр (урон от крита минус броня).</li>
+                <li>Выведите весь лог боя (информацию о базовых параметрах, расчете крита и итоговом уроне) с помощью нескольких <code class="code">print()</code> и f-строк.</li>
+            </ol>
+             <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Герой атакует с базовым уроном 25.
+У монстра 10 единиц брони.
+Критический удар! Урон увеличен в 1.5 раз и составляет 37.5.
+Монстр получает 27.5 урона.</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

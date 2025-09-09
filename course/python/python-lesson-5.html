@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Условные конструкции в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 5: Условные конструкции</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Условные конструкции</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Управление потоком</h2>
+            <img src="images/l5/if-else.png" alt="Условные конструкции" width="600px">
+            <p>Обычно программный код выполняется последовательно <code class="code">сверху вниз</code>, строчка за строчкой, как мы его написали (поток выполнения).</p>
+            <p>Бывают ситуации, когда этим последовательным потоком нужно управлять. Например, при каком-то условии поток нужно направить в другом направлении, или вернуться и повторить какие-то действия. Для этого существуют операторы управления потоком.</p>
+            <p>Условные выражения позволяют программе выполнять различные вычисления в зависимости от значения логического выражения. Для того чтобы компьютер мог менять порядок действий и выполнять их не только в том порядке, в котором они напечатаны, используются условные выражения.</p>
+            <p>Условные операторы позволяют в зависимости от условия одну часть кода выполнить, а другую часть кода, наоборот, не трогать.</p>
+
+            <img src="images/l5/if.png" width="600px">
+            <img src="images/l5/logic-anim.gif" alt="Логика if-else" width="600px">
+            
+
+            <p></p>
+
+        <img src="images/l1/important.png" alt="" width="150">
+        <p style="text-align: center; font-size: 20px;">Главная фишка Python это обязательные <code class="code">Отступы</code></p>
+
+
+             <div class="note">
+                 <p><strong>Отступы в Python</strong></p>
+                 <p>В Python блоки кода после <code class="code">if</code>, <code class="code">elif</code>, <code class="code">else</code> и других конструкций определяются <strong>отступами</strong> (обычно 4 пробела), а не фигурными скобками <code class="code">{}</code> как во всех остальных нормальных языках программирования</p>
+             </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условие Если (if)</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Простое условие if</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">time: int = 45
+
+# Если условие Истина, то выполнить код с отступом
+if time == 45:
+    print("Делаем перерыв")
+</code></pre>
+
+<p>В результате будет <code class="code">"Делаем перерыв"</code></p>
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Если условие ложное</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+    </div>
+</div>
+<pre><code class="language-python">time: int = 5
+
+# Если условие Истина, то выполнить код с отступом
+if time == 45:
+    print("Делаем перерыв")
+</code></pre>
+
+<p>В результате код внутри условия <code class="code">никогда не выполнится</code> потому что условие ложное</p>
+
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условие Если-Иначе (if-else)</h2>
+            <p>Выполняется <code class="code">только один</code> из блоков кода в зависимости от условия.</p>
+            <img src="images/l5/if-else-example-light.png" alt="if-else" width="500">
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Конструкция if-else</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">time: int = 15
+
+# Если условие ИСТИНА, то выполнить первый блок с отступом
+# А иначе (если Ложь) выполнить блок после else:
+
+if time < 45:
+    print("Изучаем теорию")
+else:
+    print("Либо отдыхаем, либо практикуемся")
+</code></pre>
+            <p>В результате будет <code class="code">"Изучаем теорию"</code></p>
+            
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условие Если-ИначеЕсли-Иначе (if-elif-else)</h2>
+
+            <div class="slideshow-container" >
+                <div class="slideshow-wrapper">
+                    <div class="slideshow">
+                        <div class="slide active">
+                            <img src="images/l5/if-elif-else-1.png" alt="Переменная - шаг 1">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-2.png" alt="Переменная - шаг 2">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-3.png" alt="Переменная - шаг 3">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-4.png" alt="Переменная - шаг 4">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-5.png" alt="Переменная - шаг 5">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-6.png" alt="Переменная - шаг 6">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-7.png" alt="Переменная - шаг 7">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-8.png" alt="Переменная - шаг 8">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-9.png" alt="Переменная - шаг 9">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-10.png" alt="Переменная - шаг 10">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-11.png" alt="Переменная - шаг 11">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l5/if-elif-else-12.png" alt="Переменная - шаг 12">
+                        </div>
+             
+                    </div>
+                </div>
+                <div class="slideshow-controls">
+                    <button class="slideshow-btn prev-btn">‹</button>
+                    <div class="dots-container"></div>
+                    <button class="slideshow-btn next-btn">›</button>
+                </div>
+            </div>
+
+            
+
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Конструкция if-elif-else</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">time: int = 60
+
+# Если первое условие ИСТИНА, то выполнить первый блок.
+# Иначе, если второе условие (elif) ИСТИНА, выполнить второй блок.
+# Если ни одно из условий не выполнилось, выполнить блок else.
+
+if time < 45:
+    print("Изучаем теорию")
+elif time > 45:
+    print("Выполняем практику")
+else: # time == 45
+    print("Отдыхаем")
+</code></pre>
+            <p>В результате будет <code class="code">"Выполняем практику"</code></p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условная проверка диапазонов</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Проверка диапазона в условии</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">time: int = 14
+
+# Используем цепочку сравнений для проверки диапазона
+if 8 <= time <= 22:
+    print("Пятёрочка открыта 😁")
+else:
+    print("Пятёрочка закрыта 😒")
+</code></pre>
+            <p>В результате будет <code class="code">"Пятёрочка открыта 😁"</code></p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Тернарный оператор</h2>
+            <p>Тернарный оператор в Python — это <code class="code">условное выражение в одну строку</code>, которое возвращает одно из двух значений в зависимости от условия..</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Тернарный оператор</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">time: int = 10
+
+# [значение_если_истина] if [условие] else [значение_если_ложь]
+result: str = "Открыто" if 8 <= time <= 22 else "Закрыто"
+
+print(result) # Открыто
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условные конструкции <code class="code">match-case</code></h2>
+            <div class="note">
+                <p><strong><code class="code">match-case</code></strong></p>
+                <p>Начиная с Python 3.10, в языке появилась конструкция <code class="code">match-case</code>, которая является мощным аналогом <code class="code">switch-case</code> из других языков. Она позволяет сопоставлять значение переменной с одним из нескольких шаблонов.</p>
+            </div>
+            <p><strong>Простая конструкция <code class="code">match-case</code></strong></p>
+            <p>Здесь проверяется значение переменной <code class="code">day</code>, и выполняется соответствующий блок кода.</p>
+            <p>Блок <code class="code">case _:</code> (с подчеркиванием) является "шаблоном по умолчанию" и выполняется, если ни один из <code class="code">case</code> выше не сработал.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Простой match-case</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">day: int = int(input("Введите день недели: "))
+
+match day:
+    case 1:
+        print("Понедельник")
+    case 2:
+        print("Вторник")
+    case 3:
+        print("Среда")
+    case 4:
+        print("Четверг")
+    case 5:
+        print("Пятница")
+    case 6:
+        print("Суббота")
+    case 7:
+        print("Воскресенье")
+    case _:  # Аналог default
+        print("Неверный день")
+</code></pre>
+            <blockquote>В результате будет "Среда"</blockquote>
+            <p><strong>Объединение нескольких <code class="code">case</code></strong></p>
+            <p>Можно сопоставить одно действие сразу с несколькими значениями, используя оператор <code class="code">|</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Объединение case с помощью |</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">day: str = "Суббота"
+
+match day:
+    case "Суббота" | "Воскресенье":
+        print("Выходной день")
+    case "Понедельник" | "Вторник" | "Среда" | "Четверг" | "Пятница":
+        print("Рабочий день")
+    case _:
+        print("Неизвестный день")
+</code></pre>
+            <blockquote>В результате будет "Выходной день"</blockquote>
+            <p>Конструкция <code class="code">match-case</code> также поддерживает более сложные шаблоны, включая условия, но об этом мы поговорим в продвинутых уроках.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

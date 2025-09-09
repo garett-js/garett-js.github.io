@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Циклы в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 7: Циклы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Циклы</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Зачем нужны циклы</h2>
+            <div class="note">
+                <p>Компьютеры круче людей в том, что могут делать одни и же действия много раз, но быстро и без усталости!</p>
+                <p>Иногда, определенную часть кода, нужно <code class="code">повторить множество раз</code>.</p>
+                <p>Можно, конечно, <strong>скопировать и вставить</strong> это выражение... А что делать, если нужно его повторить, например, <strong>10 тысяч раз</strong>?</p>
+                <p>Копирование-Вставка в этом случае - боль 😵‍💫🥴</p>
+            </div>
+
+            <img src="images/l7/loops-1.png" alt="Циклы" width="500px">
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Повторение кода</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print("Как правильно учить программирование?")
+
+print("1 Практика !")
+print("2 Практика !")
+print("3 Практика !")
+print("4 Практика !")
+print("5 Практика !")
+
+# …и так ещё 9 995 раз ⛔️⛔️⛔️
+print("10000 Практика !")
+</code></pre>
+            <div class="note">
+                <p><strong>Многократное повторение кода</strong></p>
+                <p>В языках программирования для многократного повторения кода используются <strong>циклы</strong>.</p>
+                <p>Любой цикл состоит из <code class="code">условия</code> и <code class="code">тела цикла</code>. Код в теле цикла выполняется много раз, пока условие остаётся <code class="code">True</code>.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Цикл <code class="code">for</code></h2>
+            <div class="note">
+                <p><strong>Цикл <code class="code">for</code> в Python</strong></p>
+                <p>Используется, когда заранее известно, <strong>сколько</strong> раз нужно повторить код.</p>
+                <p>Самый простой способ ― функция <code class="code">range(start, stop, step)</code>.</p>
+                <ul>
+                    <li><code class="code">start</code> ― с какого числа начать (по умолчанию 0).</li>
+                    <li><code class="code">stop</code> ― до какого числа (<code class="code">НЕ включая его!</code>).</li>
+                    <li><code class="code">step</code> ― шаг изменения счётчика (по умолчанию 1).</li>
+                </ul>
+                <p>Такой цикл ещё называют <strong>счётчиком</strong>.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Цикл for</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for i in range(1, 10001):    # от 1 до 10000 включительно
+    # тело цикла (одна «итерация»)
+    print(f"{i} Практика !")
+</code></pre>
+            
+<div class="slideshow-container" data-width="700px">
+    <div class="slideshow-wrapper">
+        <div class="slideshow">
+                <div class="slide active">
+                    <img src="images/l7/for1.png" alt="Переменная - шаг 1">
+                </div>  
+            <div class="slide">
+                <img src="images/l7/for2.png" alt="Переменная - шаг 2">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for3.png" alt="Переменная - шаг 3">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for4.png" alt="Переменная - шаг 4">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for5.png" alt="Переменная - шаг 5">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for6.png" alt="Переменная - шаг 6">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for7.png" alt="Переменная - шаг 7">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for8.png" alt="Переменная - шаг 8">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for9.png" alt="Переменная - шаг 9">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for10.png" alt="Переменная - шаг 10">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for11.png" alt="Переменная - шаг 11">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for12.png" alt="Переменная - шаг 12">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for13.png" alt="Переменная - шаг 13">
+            </div>
+            <div class="slide">
+                <img src="images/l7/for14.png" alt="Переменная - шаг 14">
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <button class="slideshow-btn prev-btn">‹</button>
+        <div class="dots-container"></div>
+        <button class="slideshow-btn next-btn">›</button>
+    </div>
+</div>
+
+            <ul>
+                <li>Инициализация переменной-счётчика <code class="code">i = 1</code> происходит внутри <code class="code">range()</code>.</li>
+                <li>Цикл выполняется, пока <code class="code">i < 10001</code>.</li>
+                <li>После каждой итерации Python сам увеличивает <code class="code">i</code> на 1.</li>
+            </ul>
+            <img src="images/l7/loops-2.png" alt="Схема цикла for" width="400">
+        </section>
+
+        <section class="lesson-section">
+            <h2>Цикл <code class="code">while</code></h2>
+            <div class="note">
+                <p><strong>Цикл <code class="code">while</code></strong></p>
+                <p>Повторяет код <strong>пока</strong> условие истинно. Проверяет условие <strong>до</strong> выполнения тела, поэтому это цикл <em>с предусловием</em>.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Цикл while</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">coin: int = 5   # начальное значение — 5 монеток
+
+# Выполнять цикл ПОКА монеток больше 0
+while coin > 0:
+    print(f"Осталось собрать монеток {coin}")
+    coin -= 1      # уменьшить счётчик
+</code></pre>
+            
+<div class="slideshow-container">
+    <div class="slideshow-wrapper">
+        <div class="slideshow">
+            <div class="slide active">
+                <img src="images/l7/w1.png" alt="Переменная - шаг 1">
+            </div>  
+            <div class="slide">
+                <img src="images/l7/w2.png" alt="Переменная - шаг 2">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w3.png" alt="Переменная - шаг 3">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w4.png" alt="Переменная - шаг 4">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w5.png" alt="Переменная - шаг 5">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w6.png" alt="Переменная - шаг 6">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w7.png" alt="Переменная - шаг 7">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w8.png" alt="Переменная - шаг 8">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w9.png" alt="Переменная - шаг 9">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w10.png" alt="Переменная - шаг 10">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w11.png" alt="Переменная - шаг 11">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w12.png" alt="Переменная - шаг 12">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w13.png" alt="Переменная - шаг 13">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w14.png" alt="Переменная - шаг 14">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w15.png" alt="Переменная - шаг 15">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w16.png" alt="Переменная - шаг 16">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w17.png" alt="Переменная - шаг 17">
+            </div>
+            <div class="slide">
+                <img src="images/l7/w18.png" alt="Переменная - шаг 18">
+            </div>
+   
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <button class="slideshow-btn prev-btn">‹</button>
+        <div class="dots-container"></div>
+        <button class="slideshow-btn next-btn">›</button>
+    </div>
+</div>
+
+
+
+            <p>Можно написать <strong>бесконечный</strong> цикл, если условие всегда <code class="code">True</code>:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Бесконечный цикл while</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">while True:
+    # тело цикла: делать что-то бесконечно
+    ...
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2>Операторы <code class="code">continue</code> и <code class="code">break</code></h2>
+            <div class="note">
+                <p><strong><code class="code">break</code> и <code class="code">continue</code></strong></p>
+                <ul>
+                    <li><strong><code class="code">break</code></strong> — полностью прерывает выполнение цикла.</li>
+                    <li><strong><code class="code">continue</code></strong> — пропускает оставшуюся часть тела цикла и переходит к <strong>следующей</strong> итерации.</li>
+                </ul>
+            </div>
+            <p>Пример с <code class="code">break</code> — остановимся на числе 13:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Оператор break</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for i in range(1, 21):
+    if i == 13:
+        break # досрочно выходим
+    print(f"Пятница {i}")
+</code></pre>
+            <p>После «Пятница 12» цикл завершится, и в консоль больше ничего не выведется.</p>
+            <img src="images/l7/break.png" alt="Оператор break" width="150px">
+
+            <p>Пример с <code class="code">continue</code> — пропустим число 13:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Оператор continue</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for i in range(1, 21):
+    if i == 13:
+        continue # пропускаем эту итерацию
+    print(f"Пятница {i}")
+</code></pre>
+            <p>Когда <code class="code">i == 13</code>, строка не печатается, затем цикл продолжается с 14.</p>
+            <img src="images/l7/continue.png" alt="Оператор continue" width="150px">
+        </section>
+
+        <section class="lesson-section">
+            <h2>Сценарии использования циклов</h2>
+            <!-- <h3>Цикл <code class="code">for</code> в <em>обратном порядке</em></h3> -->
+            <div class="code-block-header">
+                <h5 class="code-block-title">Цикл <code class="code">for</code> в <em>обратном порядке</em></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <p>Делаем шаг <code class="code">-1</code> это третий парметр в <code class="code">range()</code>:</p>
+            <pre><code class="language-python">for i in range(5, 0, -1):   
+    print(i) # 5 4 3 2 1
+</code></pre>
+<br>
+            <!-- <h3>Шаг цикла <code class="code">for</code></h3> -->
+            <div class="code-block-header">
+                <h5 class="code-block-title">Шаг цикла <code class="code">for</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <p>Например, вместо <code class="code">+1</code> зададим шаг <code class="code">+2</code>, чтобы получить только <strong>чётные</strong> значения счётчика:</p>
+            <pre><code class="language-python">for i in range(0, 10, 2):   
+    print(i) # 0 2 4 6 8
+</code></pre>
+<br>
+            <!-- <h3>Вложенные циклы</h3> -->
+            <div class="code-block-header">
+                <h5 class="code-block-title">Вложенные циклы</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <p>Выведем <strong>таблицу умножения</strong> (матрицу 9×9):</p>
+            <p><code class="code">\t</code> это табуляция (отступ)</p>
+            <p><code class="code">end=""</code> это параметр, который говорит, что не нужно переходить на новую строку</p>
+            <pre><code class="language-python">for i in range(1, 10):
+    for j in range(1, 10):
+        print(f"{i * j}\t", end="")
+    print()   # перенос строки после внутреннего цикла
+</code></pre>
+            <img src="images/l7/matrix.png" alt="Таблица умножения" width="500">
+            <br>
+            <!-- <h3>Подсчёт количества</h3> -->
+            <div class="code-block-header">
+                <h5 class="code-block-title">Подсчёт количества</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <p>Посчитаем, сколько чётных чисел встречается от 0 до 10:</p>
+            <pre><code class="language-python">count = 0 # объявляем переменную ЗА пределами цикла!
+for i in range(0, 11):
+    if i % 2 == 0:
+        count += 1
+print(count) # 6 штук (0 2 4 6 8 10)
+</code></pre>
+<br>
+            <!-- <h3>Подсчёт суммы</h3> -->
+            <div class="code-block-header">
+                <h5 class="code-block-title">Подсчёт суммы</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <p>Классическая задача — найти сумму элементов. Найдём сумму всех чисел от 0 до 10:</p>
+            <pre><code class="language-python">sum = 0
+for i in range(0, 11):
+    sum += i
+print(sum_) # 55
+# 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Остаток от деления. Инкремент и Декремент</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 6: Остаток от деления. Инкремент и Декремент</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Остаток от деления. Инкремент и Декремент</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Инкремент и Декремент</h2>
+            <p>Одна их самых частых операций это <code class="code">увеличить</code> или <code class="code">уменьшить</code> значение переменной.</p>
+            <p>Это можно сделать, изменив значение переменной, и новое значение присвоить в ту же самую переменную.</p>
+
+            <div class="slideshow-container" data-width="600px">
+                <div class="slideshow-wrapper">
+                    <div class="slideshow">
+                            <div class="slide active">
+                                <img src="images/l6/var-1.png" width="250px" alt="Переменная - шаг 1">
+                            </div>             
+                            <div class="slide">
+                                <img src="images/l6/var-2.png" width="250px" alt="Переменная - шаг 2">
+                            </div>
+                            <div class="slide">
+                                <img src="images/l6/var-3.png" width="250px" alt="Переменная - шаг 3">
+                            </div>
+                            <div class="slide">
+                                <img src="images/l6/var-4.png" width="250px" alt="Переменная - шаг 4">
+                            </div>
+                    </div>
+                </div>
+                <div class="slideshow-controls">
+                    <button class="slideshow-btn prev-btn">‹</button>
+                    <div class="dots-container"></div>
+                    <button class="slideshow-btn next-btn">›</button>
+                </div>
+            </div>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Изменение значения переменной</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value: int = 42
+
+value = value + 7  # 49
+value = value - 7  # 42
+
+# value = 42 + 7 = 49
+# value = 49 - 7 = 42
+</code></pre>
+            
+            <p>Эти операции встречаются настолько часто, что для них придумали специальные сокращенные (комбинированные) операторы.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Комбинированные операторы</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value: int = 42
+
+value += 7  # value = value + 7
+value -= 7  # value = value - 7
+value *= 7  # value = value * 7
+value /= 7  # value = value / 7 (результат будет float)
+value //= 7 # value = value // 7 (целочисленное деление)
+value %= 7  # value = value % 7
+</code></pre>
+
+            <div class="note">
+                <p><strong>Отсутствие инкремента и декремента в Python</strong></p>
+                <p>В отличие от многих других языков (включая Dart, C++, Java), в Python <strong>нет</strong> операторов инкремента (<code class="code">++</code>) и декремента (<code class="code">--</code>).</p>
+                <p>Вместо этого для увеличения или уменьшения переменной на единицу используются стандартные комбинированные операторы:</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Эмуляция инкремента и декремента</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value = 10
+# Увеличение на 1
+value += 1  # Теперь value равно 11
+
+# Уменьшение на 1
+value -= 1  # Теперь value равно 10
+
+# Записи value++ или value-- вызовут синтаксическую ошибку в Python!
+</code></pre>
+            <div class="note">
+                <p>Поскольку в Python нет операторов <code class="code">++</code> и <code class="code">--</code>, то и понятий <strong>префиксной</strong> и <strong>постфиксной</strong> форм для них не существует. Это избавляет от целого класса потенциальных ошибок и делает код более предсказуемым.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Сценарии использования оператора остатка от деления (<code class="code">%</code>)</h2>
+            
+            <div class="note">
+                <p><strong>Проверка на целочисленное деление</strong></p>
+                <p>Очень часто необходимо проверить, делится ли одно число на другое без остатка. В этом помогает операция остатка от деления (<code class="code">%</code>). 
+                Если <code class="code">остаток от деления</code> равен <code class="code">0</code>, то число делится нацело.</p>
+            </div>
+
+            <p>Например, проверим, кратно ли число пяти.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Проверка кратности 5</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value: int = 25
+
+if value % 5 == 0:
+  print(f"Число {value} кратно 5")
+else:
+  print(f"Число {value} не делится на 5 нацело")
+</code></pre>
+            
+            <p>Например, проверим, делится ли число на 5 и на 3 одновременно.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Проверка кратности 5 и 3</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value: int = 15
+ 
+if (value % 5 == 0) and (value % 3 == 0):
+  print(f"Число {value} кратно 5 и 3 одновременно")
+else:
+  print(f"Число {value} не делится на 5 и 3 одновременно")
+</code></pre>
+            
+            <p>Например, проверим, является ли число чётным (т.е. делится ли оно на 2 без остатка).</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Проверка на четность</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value: int = 42
+
+if value % 2 == 0:
+  print(f"Число {value} чётное")
+else:
+  print(f"Число {value} нечётное")
+</code></pre>
+            
+            <div class="note">
+                <p><strong>Получение числовых разрядов</strong></p>
+                <p>С помощью операторов <code class="code">%</code> и <code class="code">//</code> (целочисленное деление) можно легко получать отдельные цифры числа.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Получение разрядов числа</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">value: int = 2354
+
+# Получить каждую цифру по отдельности
+# Для целочисленного деления в Python используется оператор //
+
+thousands = value // 1000      # 2354 // 1000 = 2
+hundreds = (value // 100) % 10 # (2354 // 100) = 23; 23 % 10 = 3
+tens = (value // 10) % 10      # (2354 // 10) = 235; 235 % 10 = 5
+units = value % 10             # 2354 % 10 = 4
+
+print(f"Тысячи: {thousands}")    # 2
+print(f"Сотни: {hundreds}")      # 3
+print(f"Десятки: {tens}")        # 5
+print(f"Единицы: {units}")      # 4
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

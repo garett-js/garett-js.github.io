@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Типы данных и аннотации в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 3: Типы данных</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Типы данных в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Что такое типы данных?</h2>
+            <p>Язык программирования <code class="code">Python</code> является <strong>динамически</strong> и <strong>строго</strong> типизированным.</p>
+            <ul>
+                <li><strong>Динамическая типизация</strong> означает, что вам не нужно заранее объявлять тип переменной. Python сам определяет тип в момент присваивания значения.</li>
+                <li><strong>Строгая типизация</strong> означает, что Python не позволяет смешивать типы в операциях, где это может привести к неоднозначности. Например, нельзя сложить число и строку без явного преобразования.</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Динамическая и строгая типизация</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Python определяет тип number как int
+number = 42
+
+# Ошибка! Нельзя сложить число и строку
+# print(number + "Двадцать восемь") 
+# TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+# Переменной можно присвоить значение другого типа,
+# но это изменит тип самой переменной.
+number = "Двадцать восемь" # Теперь number - это str
+print(number)
+
+number = 0.09 # А теперь - float
+print(number)
+</code></pre>
+            <div class="note">
+                <p><strong>Строгая, но динамическая типизация</strong></p>
+                <p>Вы можете менять тип переменной, присваивая ей значение другого типа. Однако в каждый конкретный момент времени переменная имеет четкий тип, и операции с ней должны соответствовать этому типу.</p>
+            </div>
+            <p>Предположим, что на складе магазина есть коробки:</p>
+            <ul>
+                <li>с меткой <code class="code">Конфеты</code> (тип данных <code class="code">Конфеты</code>)</li>
+                <li>с меткой <code class="code">Гвозди</code> (тип данных <code class="code">Гвозди</code>)</li>
+            </ul>
+            <img src="images/l3/boxes.png" alt="Коробки">
+            <p>Мы ожидаем, что в коробке с конфетами должны быть только конфеты, а не что-то иное.<br>Будет крайне грустно и неожиданно, если в этой коробке мы обнаружим гвозди.</p>
+            <img src="images/l3/surprise_nails.png" alt="Неожиданность">
+            <p>Так же работает и со строгой типизацией. Если у вас есть число, вы не можете просто "сложить" его со строкой. Python остановит вас и укажет на ошибку, предотвращая путаницу.</p>
+            <img src="images/l3/type_error_1.png" alt="Ошибка типов">
+            <img src="images/l3/type_error_2.png" alt="Ошибка типов 2">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Основные типы данных</h2>
+            <p>Тип данных определяет, какие именно значения может хранить переменная.</p>
+            <ul>
+                <li><strong>int</strong>: Целые числа (<code class="code">1</code>, <code class="code">42</code>, <code class="code">-100</code>). В Python размер целых чисел ограничен только доступной памятью.</li>
+                <li><strong>float</strong>: Дробные числа, или числа с плавающей точкой (<code class="code">3.14</code>, <code class="code">-0.01</code>, <code class="code">2.0</code>).</li>
+                <li><strong>str</strong>: Строки (<code class="code">"Привет"</code>, <code class="code">'Python'</code>).</li>
+                <li><strong>bool</strong>: Логические значения (<code class="code">True</code> или <code class="code">False</code>).</li>
+                <li><strong>NoneType</strong>: Специальный тип, имеющий всего одно значение — <code class="code">None</code> (означает "ничего" или отсутствие значения).</li>
+            </ul>
+            <img src="images/l3/basic_data_types.png" alt="Основные типы данных" width="500">
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Основные типы данных</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">int_value = 42           # Целое число
+float_value = 3.14       # Дробное число
+love_name = "Юля"        # Строка
+is_happy = True          # Логическое значение
+empty_value = None       # Пустое значение (None)
+</code></pre>
+            <blockquote>
+                <p>Зачем нужна типизация?</p>
+                <ol>
+                    <li>Обеспечивает предсказуемость: мы знаем, какие операции можно совершать с переменной.</li>
+                    <li>Помогает отлавливать ошибки: IDE и интерпретатор могут указать на некорректное использование типов.</li>
+                    <li>Оптимизация: интерпретатор понимает, как эффективно хранить данные и работать с ними.</li>
+                </ol>
+            </blockquote>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Округление чисел</h2>
+            <p>Для округления в Python есть встроенная функция <code class="code">round()</code> и функции из модуля <code class="code">math</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Округление чисел</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import math # Импортируем модуль для доступа к математическим функциям
+
+# round() - математическое округление до ближайшего целого
+print(round(3.25))   # 3
+print(round(3.5))    # 4 (округляет до ближайшего четного числа в .5 случаях)
+print(round(3.75))   # 4
+print(round(-3.5))   # -4
+
+# math.floor() всегда округляет в меньшую сторону (к -∞)
+print(math.floor(1.99))    # 1
+print(math.floor(2.99))    # 2
+print(math.floor(-2.01))   # -3
+
+# math.ceil() всегда округляет в большую сторону (к +∞)
+print(math.ceil(1.01)) # 2
+print(math.ceil(2.001)) # 3
+print(math.ceil(-1.99)) # -1
+
+# int() просто отбрасывает дробную часть
+print(int(2.99)) # 2
+print(int(-2.99)) # -2
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Арифметика с разными числовыми типами</h2>
+            <div class="note">
+                <p><strong><code class="code">int</code> и <code class="code">float</code></strong></p>
+                <p>В языке Python между переменными типа <code class="code">int</code> и <code class="code">float</code> можно выполнять арифметические операции.</p>
+                <p>Результат будет автоматически преобразован к типу <code class="code">float</code>, чтобы сохранить точность вычислений.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Арифметика с int и float</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">x = 1
+y = 2.2
+
+print(x + y) # 3.2
+print(x * y) # 2.2
+print(x / y) # 0.45454545454545453
+print(x % y) # 1.0
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Явное приведение типов</h2>
+            <div class="note">
+                <p><strong>Явное приведение типов</strong></p>
+                <p>Для преобразования данных одного типа в другой можно использовать встроенные функции-конструкторы: <code class="code">int()</code>, <code class="code">str()</code>, <code class="code">float()</code>, <code class="code">bool()</code>.</p>
+                <img src="images/l3/type_casting.png" alt="Приведение типов" width="400">
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Явное приведение типов</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">count = 2
+	
+int_value = int(count)         # Число 2
+string_value = str(count)      # Строка "2"
+float_value = float(count)     # Дробное 2.0
+
+print(int_value)
+print(string_value)
+print(float_value)
+</code></pre>
+            <div class="note">
+                <p><strong>Приведение строки в число</strong></p>
+                <p>Чтобы преобразовать строку в число, можно использовать функции <code class="code">int()</code> или <code class="code">float()</code>.</p>
+                <p>Важно: строка должна содержать только числовые символы, иначе произойдет ошибка.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Приведение строки к числу</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">text = "123"
+int_value = int(text)
+
+print(int_value * 2) # 123 * 2 = 246
+
+# text_with_error = "123a"
+# int_value_error = int(text_with_error) # ValueError: invalid literal for int()
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Объекты и вызов через точку</h2>
+            <div class="note">
+                <p><strong>Объект</strong></p>
+                <p>В Python всё является объектом (<em>число, строка, переменная, функция</em>).</p>
+                <p>Объект из реальной жизни обладает двумя важными характеристиками:</p>
+                <ol>
+                    <li><strong>АТРИБУТЫ (СВОЙСТВА)</strong> (Количественно-Качественная характеристика)</li>
+                    <li><strong>МЕТОДЫ</strong> (Действия которые этот объект может делать)</li>
+                </ol>
+            </div>
+            <p>Например:</p>
+            <p>Студент это <code class="code">Объект</code><br>
+            У него есть <code class="code">атрибуты</code>: возраст, рост, цвет глаз, …<br>
+            У него есть <code class="code">методы</code>: учиться, спать, играть в настолки, …</p>
+            <p>Переносим эти понятия в мир программирования.<br>
+            у <code class="code">str</code> (строк) есть атрибуты и методы<br>
+            у <code class="code">int</code> (чисел) тоже есть атрибуты и методы, потому что это тоже объекты</p>
+            <div class="note">
+                <p><strong>Точечная нотация</strong></p>
+                <p>Доступ к атрибутам и методам объекта осуществляется через точку <code class="code">.</code></p>
+                <p>Пишем имя объекта (переменной), потом ставим точку и выбираем нужные операции.</p>
+                <img src="images/l3/objects.png" alt="Точечная нотация" width="500">
+            </div>
+
+                <p>Атрибут вызывается <code class="code">без круглых</code> скобок. <br>
+                    Метод обязательно <code class="code">с круглыми</code> скобками <code class="code">()</code>.</p>
+
+            <img src="images/l3/attributes_and_methods.png" alt="Атрибуты и методы" width="500">
+            <img src="images/l3/props-methods.png" alt="Атрибуты и методы" width="400">
+            <p>Рассмотрим несколько свойств и методов. Однако их великое множество, и все они изучаются на практике при решении конкретных проблем.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Методы и атрибуты объектов</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">my_string_object = 'String is an Object'
+my_num_object = -42.42
+
+# ? Встроенные функции для работы с объектами
+print(len(my_string_object)) # Длина строки (это функция, а не метод)
+print(type(my_string_object)) # Тип объекта (тоже функция)
+
+# ? Методы строки
+print('is' in my_string_object) # Содержит ли строка подстроку 'is' (оператор in)
+print(my_string_object.upper()) # Сделать все буквы заглавными
+print(my_string_object.startswith('Str')) # Начинается ли строка с 'Str'
+
+# ? Встроенные функции для чисел
+print(abs(my_num_object)) # Вернуть модуль числа
+
+# ? Методы float (у int их нет)
+print(my_num_object.is_integer()) # Является ли число целым (False)
+print((10.0).is_integer()) # Является ли число целым (True)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Аннотации типов в Python</h2>
+            <p>На прошлом уроке мы узнали, что Python — язык с динамической типизацией. Это значит, что нам не нужно объявлять тип переменной, и одна и та же переменная может хранить данные разных типов в разное время.</p>
+            <p>Однако у такого подхода есть и обратная сторона:</p>
+            <ul>
+                <li>Иногда бывает сложно понять, какой тип данных ожидает функция.</li>
+                <li>Редактор кода не всегда может дать точные подсказки.</li>
+                <li>Ошибки, связанные с неверным типом данных, могут проявиться только во время выполнения программы.</li>
+            </ul>
+            <p>Чтобы решить эти проблемы, в Python были введены <strong>аннотации типов</strong> (type hints).</p>
+            <div class="note">
+                <p><strong>Аннотации типов</strong></p>
+                <p>Аннотации типов — это специальный синтаксис, который позволяет "подсказать", какой тип данных мы ожидаем увидеть в переменной, аргументе функции или в качестве возвращаемого значения.</p>
+            </div>
+            <p><strong>Важно:</strong> Сами по себе аннотации <strong>не делают</strong> Python статически типизированным. Интерпретатор Python по-прежнему игнорирует их при выполнении кода. Их главная цель — помочь разработчикам и специальным инструментам анализа кода.</p>
+            
+            <h3>Зачем нужны аннотации типов?</h3>
+            <ol>
+                <li><strong>Читаемость кода:</strong> Сразу видно, какие данные использует функция.</li>
+                <li><strong>Помощь от редактора (IDE):</strong> Редакторы, как VS Code, используют аннотации для более точного автодополнения и подсветки ошибок.</li>
+                <li><strong>Статический анализ:</strong> Инструменты, такие как <code class="code">mypy</code>, могут проверить ваш код <em>до запуска</em> и найти потенциальные ошибки с типами.</li>
+            </ol>
+
+            <h3>Как использовать аннотации</h3>
+            <p><strong>1. Аннотации переменных</strong></p>
+            <p>Синтаксис простой: после имени переменной ставится двоеточие и указывается тип.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Аннотации переменных</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Вместо:
+player_name = "Gandalf"
+player_level = 20
+
+# С аннотациями:
+player_name: str = "Gandalf"
+player_level: int = 20
+can_cast_spells: bool = True
+</code></pre>
+
+            <p><strong>2. Аннотации функций</strong></p>
+            <p>Это самое полезное применение аннотаций. Мы можем указать типы для аргументов и для возвращаемого значения (после символов <code class="code">-></code>).</p>
+            <p>Подробно про функции будем изучать на следующих уроках.</p>
+
+</section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Модуль `typing` для сложных типов</h2>
+            <p>Базовых типов (<code class="code">int</code>, <code class="code">str</code>, <code class="code">bool</code>, <code class="code">float</code>) не всегда достаточно. Для описания более сложных структур, таких как списки или словари, используется модуль <code class="code">typing</code>.</p>
+            <p><strong><code class="code">List</code></strong></p>
+            <p>Для аннотации списка нужно указать тип элементов, которые в нем содержатся.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Аннотация List</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import List
+
+inventory: List[str] = ["меч", "щит", "зелье"]
+enemy_healths: List[int] = [100, 120, 80]
+</code></pre>
+            <p><strong><code class="code">Dict</code></strong></p>
+            <p>Для словарей указываются типы ключа и значения.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Аннотация Dict</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Dict
+
+player_stats: Dict[str, int] = {
+    "здоровье": 100,
+    "мана": 80,
+    "сила": 15
+}
+</code></pre>
+            <p><strong><code class="code">Union</code> и <code class="code">Optional</code></strong></p>
+            <ul>
+                <li><code class="code">Union[X, Y]</code> означает, что переменная может быть одного из нескольких типов (X или Y).</li>
+                <li><code class="code">Optional[X]</code> — это короткая запись для <code class="code">Union[X, None]</code>. Она означает, что переменная может иметь тип X или быть <code class="code">None</code>.</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Аннотации Union и Optional</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Union, Optional
+
+# ID может быть числом или строкой
+user_id: Union[int, str] = "user-123" 
+user_id = 456
+
+# У персонажа может быть питомец (имя), а может и не быть
+pet_name: Optional[str] = "Hedwig"
+pet_name = None # Тоже валидное значение
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Статическая проверка с `mypy`</h2>
+            <p>Чтобы аннотации приносили максимальную пользу, можно использовать статический анализатор типов, например, <code class="code">mypy</code>.</p>
+            <ol>
+                <li>Установите его: <code class="code">pip install mypy</code></li>
+                <li>Напишите код с аннотациями и сохраните в файл (например, <code class="code">game.py</code>).</li>
+                <li>Запустите проверку из терминала: <code class="code">mypy game.py</code></li>
+            </ol>
+            <p>Если <code class="code">mypy</code> найдет несоответствие типов, он укажет на ошибку.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Пример для mypy (game.py)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># game.py
+def deal_damage(health: int, damage: int) -> int:
+    return health - damage
+
+# mypy найдет здесь ошибку, так как мы передаем строку вместо числа
+new_health = deal_damage(100, "пятьдесят") 
+print(new_health)
+</code></pre>
+            <p>Запустив <code class="code">mypy game.py</code>, вы увидите ошибку, похожую на:<br>
+            <code class="code">error: Argument 2 to "deal_damage" has incompatible type "str"; expected "int"</code></p>
+            <p>Это позволяет отлавливать баги еще до того, как вы запустите программу!</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Альтернатива: `pyright` (Pylance в VS Code)</h2>
+            <p>Кроме <code class="code">mypy</code>, существует еще один популярный и очень мощный анализатор типов — <code class="code">pyright</code>, разработанный Microsoft.</p>
+            <p>Если вы используете Visual Studio Code, то вы уже с ним работаете! Расширение <code class="code">Pylance</code>, которое обеспечивает интеллектуальную подсветку синтаксиса, автодополнение и проверку ошибок для Python, основано именно на <code class="code">pyright</code>.</p>
+            <h3>Основные преимущества `pyright`:</h3>
+            <ul>
+                <li><strong>Скорость:</strong> Он значительно быстрее, чем <code class="code">mypy</code>, что особенно заметно на больших проектах.</li>
+                <li><strong>Интеграция с VS Code:</strong> Ошибки типов подсвечиваются прямо в редакторе в реальном времени, без необходимости запускать отдельную команду.</li>
+                <li><strong>Строгость:</strong> По умолчанию <code class="code">pyright</code> может быть более строгим в некоторых проверках, что помогает писать более надежный код.</li>
+            </ul>
+            <p>Вам не нужно ничего дополнительно устанавливать, если у вас уже есть VS Code с расширением Pylance. Просто добавляйте аннотации, и редактор сразу начнет их проверять.</p>
+            <img src="images/l3/pyright-vscode.png" alt="Pyright в VS Code">
+            <p>На изображении выше видно, как <code class="code">pyright</code> (Pylance) прямо в редакторе подсвечивает ту же ошибку, что мы рассматривали в примере с <code class="code">mypy</code>.</p>
+            <div class="note">
+                <p><strong>Какой инструмент выбрать?</strong></p>
+                <p>Для начала, возможностей Pylance в VS Code более чем достаточно. Он обеспечивает отличный опыт "из коробки". <code class="code">mypy</code> полезен, когда вам нужно запускать проверку типов отдельно, например, в системах непрерывной интеграции (CI/CD) или если вы используете другой редактор кода.</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

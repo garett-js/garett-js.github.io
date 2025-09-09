@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Срезы (Slice) в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 9: Срезы (Slice)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Срезы (Slice) в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Что такое срез</h2>
+            <div class="note">
+                <p><strong>Что такое «срез»</strong></p>
+                <p>Срез (<strong>slice</strong>) — это способ получить <strong>под-последовательность</strong> элементов списка, строки или другого индексируемого типа.</p>
+                <p>Синтаксис: <code class="code">seq[start:stop:step]</code></p>
+                <ul>
+                    <li><strong><code class="code">start</code></strong> — индекс, с которого начинается срез (включительно).</li>
+                    <li><strong><code class="code">stop</code></strong> — индекс, на котором срез заканчивается (<strong>не включая</strong> его!).</li>
+                    <li><strong><code class="code">step</code></strong> — шаг перебора (по умолчанию <code class="code">1</code>).</li>
+                </ul>
+                <p>Любой параметр можно опустить — Python подставит значение «по умолчанию».</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Почему срезы удобны</h2>
+            <ol>
+                <li>Получить фрагмент данных без циклов и условных конструкций.</li>
+                <li>Заменить / удалить диапазон элементов одной операцией.</li>
+                <li>Клонировать список простым <code class="code">[:]</code>.</li>
+                <li>Перевернуть последовательность: <code class="code">[::-1]</code>.</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Базовый синтаксис</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">heroes = ["Геральт", "Трисс", "Йен", "Золтан", "Цири"]
+
+print(heroes[1:4])   # ['Трисс', 'Йен', 'Золтан']
+print(heroes[:3])    # ['Геральт', 'Трисс', 'Йен']   (с начала)
+print(heroes[2:])    # ['Йен', 'Золтан', 'Цири']     (до конца)
+print(heroes[:])     # Копия списка
+</code></pre>
+            <div class="note">
+                <p><strong>Индекс `stop` не включается!</strong></p>
+                <p><code class="code">heroes[1:4]</code> берёт элементы 1,2,3; элемент с индексом 4 <strong>не</strong> попадает в результат.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Отрицательные индексы</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">nums = [10, 20, 30, 40, 50]
+print(nums[-3:])   # [30, 40, 50]
+print(nums[:-2])   # [10, 20, 30]
+</code></pre>
+            <ul>
+                <li><code class="code">-1</code> — последний элемент, <code class="code">-2</code> — предпоследний и т. д.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметр `step`</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">week = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+
+print(week[::2])   # ['Пн', 'Ср', 'Пт', 'Вс']  (через один)
+print(week[::-1])  # ['Вс', 'Сб', 'Пт', ...]   (обратный порядок)
+</code></pre>
+            <div class="note">
+                <p><strong>Совет:</strong> <code class="code">[::-1]</code> — быстрый способ перевернуть список / строку.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Срезы строк</h2>
+            <p>Строка — это последовательность символов, поэтому правила те же:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">spell = "Expelliarmus"
+print(spell[:4])     # 'Expe'
+print(spell[-4:])    # 'rmus'
+print(spell[::-1])   # 'sumraillepxE'
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Изменение части списка (Slice assignment)</h2>
+            <p>Списки <strong>изменяемы</strong>, поэтому можно присваивать по срезу:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">numbers = [1, 2, 3, 4, 5]
+
+numbers[1:4] = [20, 30]   # заменяем 3 элемента двумя
+print(numbers)            # [1, 20, 30, 5]
+
+numbers[:0] = [-2, -1, 0] # вставка в начало
+print(numbers)            # [-2, -1, 0, 1, 20, 30, 5]
+</code></pre>
+            <p>Удалить диапазон можно так:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">del numbers[2:5]
+print(numbers)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Объект `slice`</h2>
+            <p>Для сложных случаев удобно создавать объект <code class="code">slice</code> и применять его многократно:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = slice(1, 5, 2)  # элементы 1,3
+
+items = ["a", "b", "c", "d", "e", "f"]
+print(items[s])  # ['b', 'd']
+
+text = "abcdef"
+print(text[s])   # 'bd'
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Срезы и память</h2>
+            <ul>
+                <li>Срезы <strong>не копируют</strong> данные в Python 3 для <code class="code">bytes</code>, <code class="code">memoryview</code>, <code class="code">array</code> и других «буферных» типов — возвращают «view».</li>
+                <li>Для списков и строк создаётся <strong>новый объект</strong> (копия!), поэтому большие срезы стоят O(k) памяти.</li>
+            </ul>
+            <div class="note warning">
+                <p>Изменяя копию строки, вы не меняете оригинал — строки неизменяемы.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практические примеры</h2>
+            <h3>Проверка палиндрома</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">word = input("Введите слово: ")
+print(word == word[::-1])
+</code></pre>
+
+            <h3>Формат ‘дд-мм-гггг’ → ‘гггг-мм-дд’</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">date = "24-12-2025"
+parts = date.split('-')
+reversed_date = "-".join(parts[::-1])
+print(reversed_date)   # 2025-12-24
+</code></pre>
+
+            <h3>Каждый второй элемент</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">loot = ["меч", "щит", "зелье", "свиток", "ключ"]
+print(loot[::2])   # ['меч', 'зелье', 'ключ']
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <p>Теперь вы умеете:</p>
+            <ul>
+                <li>брать подсписки/подстроки с помощью <code class="code">[:]</code>;</li>
+                <li>использовать отрицательные индексы и шаг <code class="code">step</code>;</li>
+                <li>быстро переворачивать последовательности <code class="code">[::-1]</code>;</li>
+                <li>заменять, вставлять и удалять диапазоны значений.</li>
+            </ul>
+            <p>Срезы делают работу с коллекциями в Python гибкой и лаконичной — используйте их, чтобы писать меньше кода и избегать лишних циклов.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

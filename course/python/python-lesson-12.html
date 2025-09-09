@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Множества (Set) в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 12: Множества (Set)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Множества (Set) в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Введение в множества (Set)</h2>
+            <p>Коллекция <code class="code">set</code> (множество) в <strong>Python</strong> — это структура данных, которая хранит <strong>только уникальные элементы</strong>.  
+            Если вы попытаетесь добавить один и тот же элемент несколько раз, <code class="code">set</code> сохранит его только один раз.  
+            Это делает множества очень полезными, когда нужно исключить дубликаты и работать только с уникальными значениями.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Проблема дублирования данных</h2>
+            <ul>
+                <li><strong>Система голосования:</strong> Каждый человек должен иметь только один голос. Если бы дублирование было разрешено, результаты голосования были бы искажены.</li>
+                <li><strong>Уникальные идентификаторы (ID):</strong> В любой системе (паспортные данные, номера счетов в банке) каждому объекту присваивается уникальный ID. Дублирование ID приведёт к путанице и потере данных.</li>
+                <li><strong>Билеты на концерт:</strong> Каждый билет должен быть уникальным и использоваться только один раз. Дублирование билетов приведёт к тому, что на одно место могут претендовать несколько человек.</li>
+            </ul>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Как решали проблему раньше без `set`?</h2>
+            <p>Писали «велосипеды».</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">unique_votes: list[str] = []
+
+def add_vote(email: str) -> None:
+    # Медленно: O(n) каждой проверки
+    if email not in unique_votes:
+        unique_votes.append(email)
+
+add_vote('artem@ya.ru')
+add_vote('artem@ya.ru')
+add_vote('anna@ya.ru')
+add_vote('natasha@ya.ru')
+
+print(unique_votes)
+# ['artem@ya.ru', 'anna@ya.ru', 'natasha@ya.ru']
+</code></pre>
+            <p><strong>Проблемы такого подхода:</strong></p>
+            <ul>
+                <li>Сложность O(n) для каждой проверки.</li>
+                <li>Риск ошибок в ручной реализации.</li>
+                <li>Нет гарантии уникальности при параллельном доступе.</li>
+                <li>Требуется дополнительная память для временных переменных.</li>
+            </ul>
+
+            <h3>То же решение с использованием множества:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">unique_votes: set[str] = set()  # пустое множество
+
+unique_votes.add('artem@ya.ru')
+unique_votes.add('artem@ya.ru')
+unique_votes.add('anna@ya.ru')
+unique_votes.add('natasha@ya.ru')
+
+print(unique_votes)
+# {'artem@ya.ru', 'anna@ya.ru', 'natasha@ya.ru'}
+</code></pre>
+            <p><strong>Достоинства</strong></p>
+            <ul>
+                <li>Хеш-таблица со временем доступа O(1).</li>
+                <li>Гарантированная уникальность элементов.</li>
+                <li>Встроенные операции: объединение, пересечение, разность, симметрическая разность.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Подробно про множества `set`</h2>
+            <p>Множества особенно эффективны, когда:</p>
+            <ul>
+                <li>Требуется уникальность элементов.</li>
+                <li>Порядок элементов не важен (в CPython ≥3.7 сохраняется <strong>порядок вставки</strong>, но это побочный эффект, на который лучше не полагаться).</li>
+                <li>Нужно быстро проверять наличие элемента.</li>
+                <li>Требуется выполнять операции над наборами данных (объединение, пересечение, разность).</li>
+            </ul>
+            <h3>Пример простого множества</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">games = {
+    'Witcher',
+    'MTGA',
+    'GTA6',
+    'HSR',
+    'LostArk',
+    'LostArk',  # дубликаты будут отброшены!
+}
+print(games)  # {'Witcher', 'MTGA', 'GTA6', 'HSR', 'LostArk'}
+</code></pre>
+            
+            <h3>Типы множеств в Python</h3>
+            <p>Python предоставляет две основные разновидности:</p>
+            <ol>
+                <li><strong><code class="code">set</code></strong> — изменяемое множество (можно добавлять/удалять элементы).</li>
+                <li><strong><code class="code">frozenset</code></strong> — неизменяемое (хешируемое) множество, полезно как ключ словаря или элемент другого множества.</li>
+            </ol>
+             <blockquote>
+                <p>В Dart существуют <code class="code">HashSet</code>, <code class="code">LinkedHashSet</code>, <code class="code">SplayTreeSet</code>. <br>
+                В Python всё проще: стандартный <code class="code">set</code> реализован на основе хеш-таблицы.<br>
+                Для <em>отсортированных</em> множеств используют <code class="code">sorted(set_obj)</code> ➜ <code class="code">list</code> <strong>или</strong> сторонние библиотеки (например, <code class="code">sortedcontainers</code>).</p>
+            </blockquote>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание множеств</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Литерал
+games = {'Witcher', 'Gwint'}
+
+# ⚠️ {} без элементов создаёт пустой СЛОВАРЬ!
+empty_set = set()
+
+# Из списка (удаляются дубликаты)
+game_list = ['Witcher', 'MTGA', 'GTA6', 'Witcher']
+unique_games = set(game_list)
+
+# Неизменяемое множество
+constant_games = frozenset({'Witcher', 'Gwint', 'DMC'})
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Основные свойства и методы `set`</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">games = {'Witcher', 'Gwint', 'DMC', 'FF', 'LostArk'}
+
+print(len(games))        # 5
+print('Witcher' in games) # True — проверка наличия
+
+# Без «first/last»: множества не индексируются.
+first_elem = next(iter(games))     # взять «первый» элемент
+print(first_elem)
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Добавление элементов
+games.add('TES')                   # один элемент
+games.update({'Langrisser', 'TES'}) # несколько (аналог addAll)
+
+# Удаление
+games.remove('TES')    # ValueError, если элемента нет
+games.discard('TES')   # безопасно, ничего не делает, если нет
+games.clear()          # удалить всё
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операции над множествами</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">set_a = {'Witcher', 'Gwint', 'DMC', 'FF', 'LostArk'}
+set_b = {'Warcraft', 'Witcher', 'Gwint', 'Diablo'}
+
+print(set_a - set_b)   # разность        ➜ {'DMC', 'FF', 'LostArk'}
+print(set_a & set_b)   # пересечение     ➜ {'Witcher', 'Gwint'}
+print(set_a | set_b)   # объединение     ➜ {...}
+print(set_a ^ set_b)   # симметр. разн.  ➜ элементы только в одном из множеств
+</code></pre>
+
+            <h3>Отношения между множествами</h3>
+             <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">set_a = {'Witcher', 'Gwint', 'DMC'}
+set_b = {'Witcher', 'Gwint'}
+set_c = {'Warcraft', 'Diablo'}
+
+print(set_b.issubset(set_a))     # True  — подмножество
+print(set_a.issuperset(set_b))   # True  — надмножество
+print(set_a.isdisjoint(set_c))   # True  — не пересекаются
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">«Spread-операторы» по-Питоновски</h2>
+            <p>В Python для объединения можно использовать:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">basic_games      = {'Witcher', 'Gwint'}
+additional_games = {'DMC', 'FF'}
+
+# Способ 1. Оператор | (Python 3.9+)
+all_games = basic_games | additional_games
+
+# Способ 2. Распаковка * (PEP 448)
+all_games = { *basic_games, *additional_games }
+print(all_games)  # {'Witcher', 'Gwint', 'DMC', 'FF'}
+</code></pre>
+            <p><em>«Null-aware spread»</em> в Dart (<code class="code">...?</code>) не нужен: в Python можно сделать так:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">nullable_games: set[str] | None = None
+safe_games = basic_games | (nullable_games or set())
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условные конструкции и циклы внутри литералов</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_rpg_fan = True
+adventure_games = {'Tomb Raider', 'Uncharted'}
+
+games = {
+    'Witcher',
+    'DMC',
+    *({'Final Fantasy'} if is_rpg_fan else set()),  # условное добавление
+    *(f'Adventure: {g}' for g in adventure_games),  # «for» в set-comprehension
+}
+print(games)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Особенности и ограничения в Python</h2>
+            <ol>
+                <li><strong>Производительность:</strong> <code class="code">set</code> быстрее <code class="code">list</code> при проверке членства, особенно на больших коллекциях.</li>
+                <li><strong>Заказан ли порядок?</strong> В CPython ≥3.7 порядок вставки <em>сохраняется</em>, но спецификация этого не гарантирует.  Не полагайтесь на порядок.</li>
+                <li><strong>Хешируемость:</strong> элементы множества должны быть хешируемыми (т.е. неизменяемыми).  Нельзя добавить <code class="code">list</code> или другой изменяемый объект.</li>
+            </ol>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практическое применение</h2>
+            <h3>Удаление дубликатов из списка</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">list_with_duplicates = ['A', 'B', 'A', 'C', 'B']
+unique_items = list(set(list_with_duplicates))
+print(unique_items)  # ['C', 'A', 'B'] (порядок не гарантирован!)
+</code></pre>
+            
+            <h3>Проверка уникальности элементов</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def has_unique_elements(seq: list) -> bool:
+    return len(seq) == len(set(seq))
+</code></pre>
+            
+            <h3>Фильтрация данных</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">all_users    = {'Анна', 'Артём', 'Настя', 'Антон'}
+active_users = {'Анна', 'Настя'}
+
+inactive_users = all_users - active_users
+print(inactive_users)  # {'Антон', 'Артём'}
+</code></pre>
+            
+            <h3>Нахождение общих элементов</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">team_a = {'Анна', 'Юля', 'Наташа'}
+team_b = {'Юля', 'Антон', 'Артём'}
+
+in_both = team_a & team_b
+print(in_both)  # {'Юля'}
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+             <div class="note">
+                <p>В Python множества — один из самых удобных инструментов для работы с уникальными коллекциями и быстрого анализа данных.</p>
+            </div>
+        </section>
+
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

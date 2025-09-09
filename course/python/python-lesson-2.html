@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переменные и константы в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 2: Переменные и константы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Переменные и константы в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Зачем нужны переменные</h2>
+            <p>На прошлом занятии мы практиковались с <code class="code">арифметическими операциями</code>. Но любая операция с числами не имеет смысла, если невозможно получить результат в виде значения.</p>
+            <p>Для хранения любых данных, в том числе и результата арифметических операций, в программировании используют <code class="code">переменные</code>.</p>
+            <div class="note">
+                <p><strong>Переменная</strong></p>
+                <p>Переменная - это область памяти, где можно хранить и изменять данные.</p>
+                <p>У переменной всегда есть название (<code class="code">имя переменной</code>)</p>
+            </div>
+            <div class="note">
+                <p><strong>Переменная как коробка</strong></p>
+                <p>Можно представить переменную как <code class="code">коробку</code>, внутри которой находится значение.</p>
+                <p>У этой коробки есть ярлык - <code class="code">имя переменной</code>. Обращаясь к коробке по её имени, вы получаете доступ к хранящемуся в ней значению.</p>
+            </div>
+            <img src="images/l2/variable_as_box.png" alt="Переменная как коробка" width="300">
+            <p>Эта схема иллюстрирует, как переменная может хранить данные, подобно тому, как коробка может содержать какой-то предмет. На коробке написано <code class="code">Имя</code>. Снаружи коробки находится метка <code class="code">Данные</code>, указывающая на значение. Стрелка показывает, что это значение помещается внутрь коробки.</p>
+            
+                <em>Зачем нужно использовать коробку с именем, чтобы хранить значение, а не просто использовать значения напрямую?</em>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">print(42) # Целое число 42
+print(42 + 7) # Сложим два целых числа
+print("Привет, Python") # Напечатаем строку
+</code></pre>
+            <p>Рассмотрим аналогию</p>
+            
+            <em>Письмо для человека, с которым мы недавно познакомились</em>
+            
+            <div class="note">
+                <p><strong>Аналогия</strong></p>
+                <p><em>Привет, Артем, было приятно встретиться с тобой сегодня на конференции разработчиков. С нетерпением жду встречи в пятницу. Хорошего дня!</em></p>
+            </div>
+            <p>Такое письмо прекрасно подходит для случая именно с <em>Артем</em>. Но что, если вам нужно будет писать такие письма многим людям, с небольшими изменениями?</p>
+            <blockquote>
+                <p><em>Привет, <strong>Юля</strong>, было приятно встретиться с тобой сегодня <strong>на конференции разработчиков</strong>. С нетерпением жду встречи в <strong>пятницу</strong>. Хорошего дня!</em></p>
+                <p><em>Привет, <strong>Андрей</strong>, было приятно встретиться с тобой сегодня <strong>на мероприятии по настольным играм</strong>. С нетерпением жду встречи в <strong>субботу</strong>. Хорошего дня!</em></p>
+                <p><em>Привет, <strong>Настя</strong>, было приятно встретиться с тобой сегодня <strong>на курсах</strong>.<br>С нетерпением жду встречи в <strong>понедельник</strong>. Хорошего дня!</em></p>
+            </blockquote>
+            <p>Было бы гораздо эффективнее создать шаблон письма, оставив пробелы для изменяющихся данных.</p>
+            <div class="note">
+                <p><strong>Шаблон письма</strong></p>
+                <p><em>Привет { <code class="code">имя</code> } , было приятно встретиться с тобой сегодня в { <code class="code">место встречи</code> }.<br>С нетерпением жду встречи в { <code class="code">дата</code> } . Хорошего дня!</em></p>
+            </div>
+            <p>Создание приложения похоже на этот процесс. Некоторые данные заменяются переменными, тогда как другие части приложения остаются неизменными.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Определение переменной и её использование</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">name = "Наташа" # Объявляем строковую переменную
+print(name) # Вызываем переменную
+</code></pre>
+            <img src="images/l2/code_execution_result.png" alt="Результат выполнения кода" width="500">
+            <div class="note">
+                <p><strong>Объявление переменной в Python</strong></p>
+                <p>В Python переменные объявляются в момент присваивания им значения.</p>
+                <p><code class="code">Тип данных</code> указывать не обязательно - Python определит его автоматически.
+                </p> 
+                <p>Этот процесс называется <strong>динамической типизацией</strong>.</p>
+                <p>Но я рекомендую в будущем указывать <code class="code">Тип данных</code> для того, чтобы было понятно, какой тип данных хранится в переменной.</p>
+            </div>
+            <div class="note">
+
+                
+                <p><strong>Оператор присваивания</strong></p>
+                <p>В объявлении переменной после имени переменной следует символ равно <code class="code">=</code></p>
+                <p>Этот символ называется <code class="code">оператором присваивания</code>.</p>
+                <p>Оператор присваивания сохраняет значение в переменную.</p>
+            </div>
+
+            <img src="images/l2/types.png" alt="Типы данных" width="400">
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">count: int = 2 # Объявляем целочисленную переменную
+print(count) # Вызываем переменную
+</code></pre>
+
+
+            <div class="slideshow-container" data-width="600px">
+                <div class="slideshow-wrapper">
+                    <div class="slideshow">
+                        <div class="slide active">
+                            <img src="images/l2/var1.png" alt="Переменная - шаг 1">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var2.png" alt="Переменная - шаг 2">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var3.png" alt="Переменная - шаг 3">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var4.png" alt="Переменная - шаг 4">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var5.png" alt="Переменная - шаг 5">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var6.png" alt="Переменная - шаг 6">
+                        </div>
+                    </div>
+                </div>
+                <div class="slideshow-controls">
+                    <button class="slideshow-btn prev-btn">‹</button>
+                    <div class="dots-container"></div>
+                    <button class="slideshow-btn next-btn">›</button>
+                </div>
+            </div>
+
+            
+            <img src="images/l2/boxes.png" alt="Переменная как коробка" width="300">
+            <div class="note">
+                <p><strong>Инициализация переменной</strong></p>
+                <p>Фраза: <code class="code">переменная count инициализирована значением 2</code> означает, что <code class="code">2</code> это <code class="code">первое</code> значение, сохраненное в переменной при её создании.</p>
+            </div>
+            <p>В переменную значения присваиваются справа налево</p>
+            <img src="images/l2/right-to-left.png" alt="Направление присваивания" width="250">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Наименование переменных</h2>
+            <p>Что самое сложное в программировании? Придумать название переменной 🤣</p>
+            <div class="note">
+                <p><strong>Правило snake_case</strong></p>
+                <p>Имена переменных в Python должны следовать правилу <code class="code">snake_case</code>.</p>
+                <p>Все слова пишутся в нижнем регистре и разделяются символом нижнего подчеркивания <code class="code">_</code>.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">number_of_messages = 7384
+city_name = "Бийск"
+</code></pre>
+            <div class="note">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <img src="images/l1/important.png" alt="" width="125">
+                    <div>
+                        <p><strong>Регистр символов имеет значение!</strong></p>
+                        <p>Регистр символов (прописные и строчные буквы) имеет значение! Например, <code class="code">language</code> не то же самое, что <code class="code">Language</code></p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Это три разных переменных!
+# Регистр имеет значение!
+
+language = "Python"
+Language = "Python"
+LANGUAGE = "Python"
+</code></pre>
+<img src="images/l2/different_variables_1.png" alt="Разные переменные 1" width="400">
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Пример плохих имён переменных</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')">
+            <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+        </span>
+        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+            <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+        </span>
+    </div>
+</div>
+<pre><code class="language-python"># Пример плохих имён переменных
+    
+kolichestvo = 2
+opisanie = "Игра в жанре RPG"
+cena = 2000
+magazin = "Steam"
+</code></pre>
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Пример хороших имён переменных</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')">
+            <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+        </span>
+        <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+            <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+        </span>
+    </div>
+</div>
+<pre><code class="language-python"># Пример хороших имён переменных
+
+quantity: int = 2
+description: str = "Игра в жанре RPG"
+price: float = 2000
+shop: str = "Steam"
+</code></pre>
+
+
+            
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Изменение переменной</h2>
+
+            <p>Объявим <code class="code">изменяемую</code> переменную с именем <code class="code">day_of_week</code> и распечатаем её значение до и после изменения</p>
+           
+                
+            
+            <div class="note">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <img src="images/l1/important.png" alt="" width="100">
+                    <div>
+                        <h3>Обновление значения переменной</h3>
+                        <p>Для изменения значения переменной не нужно объявлять её заново!<br>Просто присвойте ей новое значение с помощью оператора <code class="code">=</code></p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">day_of_week = "Понедельник"
+print(day_of_week) # "Понедельник"
+
+day_of_week = "Среда" # Обновляем значение переменной
+print(day_of_week) # "Среда"
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Множественное присваивание и обмен значениями</h2>
+            <p>Python позволяет делать некоторые вещи очень изящно. Давайте посмотрим на один из таких "фокусов", который упрощает код.</p>
+            
+            <p>Вы можете присвоить значения сразу нескольким переменным в одной строке, экономя место и делая код чище.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Множественное присваивание</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Раскладываем "значения" по "коробкам" одним движением
+name, city, age = "Алиса", "Москва", 25
+
+print(f"Имя: {name}")
+print(f"Город: {city}")
+print(f"Возраст: {age}")
+</code></pre>
+
+            <h3>Магия Python: меняем значения местами (Swap)</h3>
+            <p>А теперь задачка: у вас есть две переменные, скажем, <code class="code">a</code> и <code class="code">b</code>. Как поменять их значения местами?</p>
+            <p>В большинстве языков для этого нужна третья, временная переменная. Это как иметь две чашки с разными напитками и хотеть их поменять — нужна третья, пустая чашка.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Классический способ обмена</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">a = 5
+b = 10
+
+# Нужна временная "чашка"
+temp = a
+a = b
+b = temp
+
+print(f"a теперь: {a}") // a теперь: 10
+print(f"b теперь: {b}") // b теперь: 5
+</code></pre>
+
+            <div class="note">
+                <p><strong>Фишка Python</strong></p>
+                <p>Но Python — язык с изюминкой! Он позволяет сделать это элегантно и без лишних переменных. Это одна из маленьких "фишек", которую любят разработчики.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - "Питонический" способ обмена (Swap)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">a = 5
+b = 10
+
+# Магия Python!
+a, b = b, a
+
+print(f"a теперь: {a}") // a теперь: 10
+print(f"b теперь: {b}") // b теперь: 5
+</code></pre>
+            <p><strong>Как это работает?</strong> На самом деле, это просто более хитрое использование множественного присваивания. Python сначала "вычисляет" значения справа (берёт текущие значения <code class="code">b</code> и <code class="code">a</code>), а потом присваивает их переменным слева. Всё происходит как бы одновременно, поэтому временная переменная не нужна.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Переменные и оперативная память</h2>
+            <div class="note">
+                <p><strong>Данные в памяти</strong></p>
+                <p>Для того чтобы программа могла воспользоваться данными, эти данные нужно где-то хранить.</p>
+                <p>Хранятся они в специальных <code class="code">ячейках памяти</code> (<code class="code">оперативной памяти</code>)</p>
+                <p>... не в красных стаканчиках конечно 😅</p>
+                <p>Когда мы в программе пишем значение просто <code class="code">42</code> или <code class="code">Привет Python</code>, то не понятно что это за данные, где они находятся, откуда взялись и как с ними работать потом.</p>
+                <p>Это какие-то <code class="code">магические значения</code></p>
+            </div>
+            <img src="images/l2/magic_values.png" alt="Магические значения" width="600">
+
+                <p>Переменные помогают контролировать данные, с помощью переменной мы можем сохранить данные в <code class="code">оперативной памяти</code> и потом ими воспользоваться</p>
+
+            <img src="images/l2/variables_and_memory.png" alt="Переменные и память" width="600">
+
+                <p>Чисто технически в самой переменной не находятся данные, в ней находится <code class="code">ссылка</code> на область памяти, где хранятся данные.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">day_of_week = "Понедельник"
+print(day_of_week) # "Понедельник"
+
+day_of_week = "Вторник" # Обновляем значение переменной
+print(day_of_week) # "Вторник"
+</code></pre>
+            <img src="images/l2/var-ram.png" alt="Схема изменения переменной" width="700">
+
+
+            <div class="note">
+            <p>Старый объект "Понедельник" остается в памяти, но на него больше не указывает ни один стикер. 
+            Через некоторое время "сборщик мусора" Python увидит, что объект больше не используется, и удалит его, освободив память.</p>
+            </div>
+
+            <strong>Ключевой вывод:</strong> 
+            <p>Мы не изменили старый объект. Мы заставили имя <code class="code">ссылаться на новый объект</code>.</p>
+
+            <p>Неизменяемые (<code class="code">immutable</code>) типы данных: <code class="code">int</code>, <code class="code">float</code>, <code class="code">str</code>, <code class="code">tuple</code>. С ними всегда создается новый объект, а имя-ссылка перенаправляется.</p>
+
+            <div class="note">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <img src="images/l1/important.png" alt="" width="125">
+                    <div>
+                        <p>В Python переменные — это имена-ярлыки, которые ссылаются на объекты в памяти.</p>
+
+                        <p>Когда вы присваиваете новое значение переменной неизменяемого типа (как строка), вы не меняете старый объект, а создаете новый и перенаправляете имя на него.</p>
+                    </div>
+                </div>
+            </div>
+
+<h3>Данные в ячейках памяти</h3>
+
+            <div class="note">
+                <p><strong>Ячейки памяти</strong></p>
+                <p>Технически хранение переменных можно представить как <code class="code">ячейки памяти</code> (оперативной) в виде таблицы.</p>
+                <p>Столбцы и строки этой таблицы пронумерованы, т.е. представляют из себя адреса, и вот по этому адресу в память можно записать какие-то данные.</p>
+            </div>
+            <img src="images/l2/memory_work_diagram.png" alt="Схема работы с памятью">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Константы</h2>
+            <div class="note">
+                <p><strong>Константы</strong></p>
+                <p>Это переменные значения которых нельзя изменить</p>
+            </div>
+            <p>В Python <code class="code">нет констант</code>, как в более серьезных и строгих языках программирования. Однако, по соглашению (PEP 8), переменные, которые не должны изменяться, именуются заглавными буквами в стиле <code class="code">UPPER_SNAKE_CASE</code>.</p>
+            <p>Это не мешает программисту изменить значение такой "константы", но служит сигналом для других разработчиков, что это значение менять не предполагается и не желательно 😞</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">PI = 3.14 # Объявляем "константу"
+# PI = 4 # Так делать не рекомендуется!
+print(PI)
+
+# Пример "константы"
+PLAYER_MAX_HEALTH = 100
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Шаблонные строки (f-строки)</h2>
+            <p>Рассмотрим пример, когда вывод простого числа не очень информативен. Было бы полезнее вывести сообщение, поясняющее, что означает число</p>
+            <pre><code class="code">У вас 2 непрочитанных сообщения
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">count = 2
+print("У вас count непрочитанных сообщений")
+
+# У вас count непрочитанных сообщений
+</code></pre>
+            <p>Можно взять и объединить несколько строчек друг с другом и с переменной c помощью оператора <code class="code">+</code>. Но … код получается плохо читаемый и многословный 😥</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">count = 2
+    
+# Такой подход называется КОНКАТЕНАЦИЯ строк
+print("У вас " + str(count) + " непрочитанных сообщений")
+</code></pre>
+            <p>Обратите внимание, что мы преобразовали число <code class="code">count</code> в строку с помощью <code class="code">str()</code>, потому что в Python нельзя напрямую складывать строки и числа.</p>
+            <div class="note">
+                <p><strong>f-строки</strong></p>
+                <p>Чтобы это безобразие исправить нужно использовать <strong>f-строки</strong> (форматированные строковые литералы).</p>
+                <p>Поставьте букву <code class="code">f</code> перед открывающей кавычкой строки, а имя переменной заключите в фигурные скобки <code class="code">{}</code>.</p>
+                <p><img src="images/l2/f_strings.png" alt="f-строки" width="400"></p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">count = 2
+    
+# Такой подход называется ИНТЕРПОЛЯЦИЯ строк
+print(f"У вас {count} непрочитанных сообщений")
+    
+# У вас 2 непрочитанных сообщения
+</code></pre>
+            <blockquote>
+                <p>Если нужно выполнить более сложное выражение внутри f-строки, его также можно поместить в фигурные скобки.</p>
+            </blockquote>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">unread_count = 5
+read_count = 100
+    
+print(f"Всего у вас {unread_count + read_count} сообщений")
+    
+# Всего у вас 105 сообщений 
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Ввод и вывод данных через консоль</h2>
+            <div class="note">
+                <p><strong>Быстрый I/O в Python</strong></p>
+                <ul>
+                    <li><strong><code class="code">print()</code></strong> — основной способ вывода данных в консоль.</li>
+                    <li><strong><code class="code">input()</code></strong> — основной способ получения строковых данных от пользователя.</li>
+                </ul>
+                <p>Эти функции просты, кроссплатформенны и не требуют дополнительных библиотек, поэтому идеально подходят для учебных примеров и задач.</p>
+            </div>
+            <h3>Расширенные возможности <code class="code">print()</code></h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">print("Hello", "world", sep="--", end="!\n")  # Hello--world!
+</code></pre>
+            <ul>
+                <li><code class="code">sep</code> — разделитель между аргументами (по умолчанию пробел).</li>
+                <li><code class="code">end</code> — символ(ы), добавляемые в конец (по умолчанию <code class="code">\n</code>).</li>
+                <li><code class="code">flush=True</code> — принудительно сбросить буфер (актуально при долгих вычислениях).</li>
+            </ul>
+
+            <p>Вызов команды <code class="code">print()</code> с пустыми скобками делает перевод строки</p>
+
+<pre><code class="language-python">print("Hello")
+print()
+print("World")
+</code></pre>
+
+Будет
+<pre><code class="language-python">Hello
+    
+World</code></pre>
+
+            <h3>Функция <code class="code">input()</code></h3>
+
+            <p>Программы могут не только выводить заранее известный текст, но и работать с данными, которые пользователь вводит во время выполнения.
+            </p>
+                <p>В Python для этого используется команда <code class="code">input()</code>. Она позволяет программе считывать введённые данные, чтобы затем их использовать.</p>
+
+            <p>Программа будет ждать от пользователя ввода данных. Ввод данных реализуется с помощью команды <code class="code">input()</code></p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">name = input("Введите имя героя: ")
+print(f"Привет, {name}!")
+</code></pre>
+            <div class="note warning">
+                <p><strong>Преобразование типов</strong></p>
+                <p>Так как <code class="code">input()</code> всегда возвращает строку, для работы с числами необходимо ЯВНО преобразовать тип:</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">level_str = input("Введите уровень персонажа: ") # '12'
+level = int(level_str) # 12 (int)
+level += 2 # 14 (int)
+
+# или короче:
+level = int(input("Введите уровень персонажа: "))
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

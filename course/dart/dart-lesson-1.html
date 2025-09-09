@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Язык программирования Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 1: Язык программирования Dart</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Язык программирования Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Что будем изучать</h2>
+            <div class="note">
+                <p><strong>Dart</strong></p>
+                <p>Язык <code class="code">Dart</code> - это современный и мощный язык программирования. Объектно-ориентированный со статической типизацией.</p>
+                <p>Используется для создания мультиплатформенных приложений (<code class="code">Flutter</code>). Может применяться как для frontend так и для backend разработки.</p>
+            </div>
+            <img src="images/l1/dart-logo-with-flutter.png" alt="Dart и Flutter" width="500">
+            
+            <h3>Преимущества Dart</h3>
+            <ul>
+                <li>Удобство</li>
+                <li>Простота освоения</li>
+                <li>Широкие возможности</li>
+                <li>Высокая производительность</li>
+                <li>Популярность на РФ рынке</li>
+                <li>Поддержка Google</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Где будем программировать</h2>
+            <div class="note">
+                <p><strong>Что такое программа?</strong></p>
+                <p>Программа — это набор инструкций, которые компьютер выполняет по порядку.</p>
+                <p>(Вспоминаем бутербродный алгоритм)</p>
+                <p>В разработке программ инструкции записываются на специальном языке программирования, например, <code class="code">Dart</code> <code class="code">Python</code> <code class="code">Kotlin</code> <code class="code">JavaScript</code></p>
+            </div>
+            <div class="note">
+                <p><strong>Что такое редактор кода?</strong></p>
+                <p>Редактор кода — это специальная программа, которая помогает писать код. Он имеет дополнительные функции:</p>
+                <ul>
+                    <li><code class="code">Подсветка синтаксиса</code> : разные части кода выделяются разными цветами для лучшей читаемости.</li>
+                    <li><code class="code">Автодополнение</code> : редактор предлагает варианты продолжения кода, что ускоряет процесс написания.</li>
+                    <li><code class="code">Проверка ошибок</code> : редактор сразу же показывает, где ты допустил ошибку.</li>
+                </ul>
+            </div>
+            <p>Сейчас мы познакомимся с самым популярным редактором кода <code class="code">Visual Studio Code</code></p>
+            <p>Скачать <code class="code">Visual Studio Code</code> нужно по этой <a href="https://code.visualstudio.com/">ссылке</a>.</p>
+            <img src="images/l1/vscode-download-page.png" alt="Страница загрузки VSCode" width="700">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Запуск и настройка VSCode</h2>
+            <p>При открытии VSCode мы попадаем на экран приветствия. Здесь можно увидеть команды для создания новых документов, открытия файлов и папок, а также прошлые открытые проекты.</p>
+            <img src="images/l1/vscode-welcome-screen.png" alt="Экран приветствия VSCode" width="700">
+            <p>Прежде чем начать учиться программировать на языке Dart, необходимо <code class="code">VSCode</code> настроить для работы.</p>
+            <ol>
+                <li>Нужно установить компилятор языка <code class="code">Dart</code></li>
+                <li>Нужно установить плагины для работы c <code class="code">Dart</code> и <code class="code">Flutter</code></li>
+            </ol>
+            <p>Нажимаем на вот эту кнопку с левой стороны окна, открывается список установленных и список не установленных расширений для нашего редактора (их очень много). В строке поиска нужно набрать <code class="code">Dart</code></p>
+            <img src="images/l1/vscode-extensions-tab.png" alt="Вкладка расширений в VSCode">
+            <img src="images/l1/vscode-install-dart-extension.png" alt="Установка расширения Dart">
+            <img src="images/l1/vscode-install-flutter-extension.png" alt="Установка расширения Flutter">
+            <img src="images/l1/vscode-command-palette.png" alt="Командная палитра VSCode">
+            <img src="images/l1/vscode-new-project.png" alt="Создание нового проекта">
+            <img src="images/l1/vscode-select-template.png" alt="Выбор шаблона проекта">
+            <p>Потом указываем путь где будет находится папка с проектом и придумываем название для проекта, например <code class="code">dart_base</code></p>
+            <img src="images/l1/vscode-select-project-folder.png" alt="Выбор папки для проекта">
+            <img src="images/l1/vscode-project-name.png" alt="Имя проекта">
+            <p>Проект был создан и перед нами открылась его структура и файл с кодом. В этом файле нужно всё удалить и написать следующий код</p>
+            <img src="images/l1/vscode-project-structure.png" alt="Структура проекта">
+            
+            <div class="note">
+                <p><strong>Входная точка программы</strong></p>
+                <p>Любая программа в языке <code class="code">Dart</code> начинается с функции <code class="code">main()</code> - это входная точка программы</p>
+            </div>
+            
+            <p>Напишем классическое <code class="code">hello world</code> приложение</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Hello World</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+  print("Привет, Dart");
+}
+            </code></pre>
+            
+            <p>Способы запустить приложение:</p>
+            <ol>
+                <li>Нажать на клавиатуре клавишу <code class="code">F5</code></li>
+                <li>Или нажать кнопку <code class="code">Run</code> (перед <code class="code">main</code> функцией)</li>
+                <li>Или нажать на значок запуска (треугольник) на верхней панеле справа</li>
+            </ol>
+            <img src="images/l1/vscode-run-program.png" alt="Запуск программы в VSCode" width="700">
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Компилятор и объяснение <code class="code">hello world</code> программы</h2>
+
+            <p>
+                Когда вы нажимаете <code class="code">«Выполнить»</code>, запускается целый процесс. Код на языке программирования <code class="code">>Dart</code> разработан так, чтобы быть понятным для людей, облегчая чтение и написание. Однако компьютер ещё не может понять этот код.
+            </p>
+
+            <p>Для этого нужен специальный инструмент — <code class="code">компилятор</code>. Он переводит написанный вами код с языка, понятного человеку, на язык, понятный компьютеру, просматривая его построчно. Этот процесс называется <code class="code">компиляцией</code>.</p>
+
+            <p>Если компиляция проходит успешно, программа запускается. Когда компьютер выполняет вашу программу, он последовательно исполняет каждую из ваших инструкций.</p>
+
+            
+            <div class="note">
+                <h3>Завершение инструкции</h3>
+                <p>Обратите внимание!</p>
+                <p></p>Каждая инструкция в языке Dart заканчивается точкой с запятой ;</p>
+            </div>
+            
+            <img src="images/l1/semi.png" width="400px">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Hello World</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+             <pre><code class="language-dart">void main() {
+  print("Hello, world!");
+}</code></pre>
+             <ul>
+                <li>Ключевое слово&nbsp;<code class="code">void</code>&nbsp;определяет функцию, которая не возвращает ни какого значения</li>
+                <li>Эта&nbsp;функция&nbsp;имеет специальное имя&nbsp;<code class="code">main</code>. Она указывает точку входа в программу</li>
+                <li>Тело функции заключено в фигурные скобки <code class="code">{ }</code></li>
+                <li>Имя этой функции всегда должно быть одним и тем же: <code class="code">main</code></li>
+                <li>Если вы назовете её <code class="code">Main</code>, <code class="code">MAIN</code> или как-то еще, программа не запустится</li>
+            </ul>
+            <p>Инструкция <code class="code">print("Hello, world!")</code> является оператором, который выполняет действие — выводит текст <code class="code">"Hello, world!"</code> в консоль.</p>
+            
+            <div class="note">
+                <p><strong>Инструкция</strong></p>
+                <p>Это команда для компьютера выполнить что-то.</p>
+                <p>Код на  языке программирования — это <code class="code">набор инструкций</code> которые отделяются друг от друга символом <code class="code">точка с запятой</code> <code class="code"> ; </code></p>
+                <p>Инструкции обязательно выполняются <strong>последовательно</strong>, сверху ⬇ вниз</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Последовательное выполнение</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  // Все новые операторы/команды принято писать с новой строки
+	
+  print("Изучаю язык программирования Dart");
+  print("Иногда туплю");
+}</code></pre>
+
+            <div class="note">
+                <p><strong>Двойные кавычки</strong></p>
+                <p><strong>Запомните!</strong></p>
+                <p>Всё что записано в <strong>двойные кавычки</strong> является обычным текстом / строкой</p>
+            </div>
+
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Основные литералы: числа и строки</h2>
+            <p>Независимо от сложности, все программы выполняют операции с числами, строками и другими значениями. Эти значения называются&nbsp;<code class="code">литералами</code></p>
+            <div class="note">
+                <p><strong>Целые числа <code class="code">Integer</code></strong></p>
+                <p>Мы используем целые числа, например, для подсчета вещей в реальном мире.</p>
+                <p>Например&nbsp;<code class="code">0</code>,&nbsp;<code class="code">1</code>,&nbsp;<code class="code">2</code>,&nbsp;<code class="code">10</code>,&nbsp;<code class="code">11</code>,&nbsp;<code class="code">100</code></p>
+            </div>
+            <div class="note">
+                <p><strong>Строки <code class="code">String</code></strong></p>
+                <p>Строка это последовательность любых символов заключенных в двойные или одинарные кавычки.</p>
+                <p>Например <code class="code">"text"</code>&nbsp;<code class="code">"Я изучаю Dart"</code> <code class="code">"123456"</code> <code class="code">"e-mail@yandex.ru"</code>  <code class="code">" "</code></p>
+                <p>Строки могут включать буквы, цифры, пробелы и другие символы.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Комментарии</h2>
+            <p>Комментарии в коде нужны, чтобы объяснять, что делает каждая часть программы. Они помогают понять, как работает код, и облегчают его чтение. Когда кто-то другой (или даже вы сами позже) будет смотреть на ваш код, комментарии подскажут, что именно вы хотели сделать.</p>
+            <p>При компиляции комментарии игнорируются, не влияя на выполнение программы и её размер. В языке Dart существуют <code class="code">два вида</code> комментариев:</p>
+            <div class="note">
+                <p><strong>Однострочные комментарии <code class="code">//</code></strong></p>
+                <p>Всё, что написано после <code class="code">//</code> до конца строки, считается комментарием.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title"></h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Определение функции main
+void main() {  // Начало функции
+  print("Привет, Dart!"); // Вывод строки в консоль
+} // Конец функции</code></pre>
+
+            <div class="note">
+                <p><strong>Многострочные комментарии <code class="code">/*  */</code></strong></p>
+                <p>Такие комментарии могут занимать несколько строк, заключенные между символами <code class="code">/*</code> и <code class="code">*/</code></p>
+            </div>
+
+        <div class="code-block-header">
+            <h4 class="code-block-title"></h4>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')">
+                    <img class="icon" src="images/light.png" alt="Светлая тема">
+                </span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                    <img class="icon" src="images/dark.png" alt="Темная тема">
+                </span>
+            </div>
+        </div>
+        <pre><code class="language-dart">void main() {
+  /*
+  Это многострочный комментарий
+  Можно писать много текста
+  Очень много ... но зачем?
+  */
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Арифметические операции → бинарные операторы</h2>
+            <p>В <code class="code">Dart</code> существует пять основных арифметических операторов:</p>
+            <ul>
+                <li>Сложение (<code class="code">+</code>)</li>
+                <li>Вычитание (<code class="code">-</code>)</li>
+                <li>Умножение (<code class="code">*</code>)</li>
+                <li>Деление (<code class="code">/</code>)</li>
+                <li>Остаток от деления (<code class="code">%</code>)</li>
+            </ul>
+            <p>Эти операторы являются <code class="code">бинарными</code>, то есть они оперируют <code class="code">двумя</code> значениями (операндами). <code class="code">Операнд</code> - это значение или переменная, к которой применяется оператор.</p>
+            <p>В выражении <code class="code">1 + 3</code> числа 1 и 3 являются операндами, а <code class="code">+</code> - оператором.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Арифметические операторы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  print(12 + 42); // 54
+  print(10 - 70); // -60
+  print(21 * 30); // 630
+  print(20 / 20); // 1.0
+  print(18 % 10); // 8
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Сложные выражения</h2>
+            <img src="images/l1/arithmetic-precedence.png" width="300px" alt="Порядок арифметических операций">
+            <p>Арифметические операции можно комбинировать для создания сложных выражений:</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Порядок операций</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print(1 + 3 * 4 - 2); // будет 11</code></pre>
+            <p>Порядок вычислений совпадает с обычными правилами арифметики. Сначала скобки, потом умножение/деление, потом сложение/вычитание</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Порядок операций со скобками</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print((1 + 3) * (4 - 2)); // будет 8</code></pre>
+            <p>Скобки могут быть вложенными</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Вложенные скобки</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print((54 / 10) % 10); // будет 5</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Ошибки в коде и их исправление</h2>
+            <p>Ошибки или баги в программах бывают двух видов:</p>
+            <ol>
+                <li>Ошибки <code class="code">компиляции</code> (ошибки не дают скомпилироваться программе)</li>
+                <li>Ошибки <code class="code">рантайма</code> (ошибки возникают во время работы программы)</li>
+            </ol>
+            <p>Рассмотрим пример с ошибками компиляции и то как их исправить.</p>
+            <div class="note">
+                <p><strong>Ошибки компиляции</strong></p>
+                <p>Когда код <strong>не компилируется</strong>, это означает, что где-то возникла <strong>ошибка</strong>.</p>
+            </div>
+            <p>Запустите этот код, что вы увидите?</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Ошибка компиляции</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-kotlin">void main() {
+  print("Сегодня дождь)
+}</code></pre>
+            <p>При запуске программы появятся несколько сообщений об ошибках.</p>
+            <img src="images/l1/compilation-error.png" alt="Ошибка компиляции" width="700">
+            <p>Причина в том, что компилятор Dart "ожидает" чего-то, чего нет в коде.</p>
+            <p>В данном случае компилятор ожидает точку с запятой в конце команды. Закрывающую кавычку для строки и закрывающую скобку во второй строке программы.</p>
+            <p>Исправим этот код и запустим снова на выполнение</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Исправленный код</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  print("Сегодня дождь");
+}</code></pre>
+            <img src="images/l1/compilation-success.png" alt="Успешная компиляция" width="700">
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Стиль программирования на языке Dart</h2>
+            <img src="images/l1/dart-style-guide.png" alt="Стиль кода Dart" width="700">
+            <ul>
+                <li>Имена функций должны быть написаны в стиле <code class="code">camelCase</code> и представлять собой глаголы или глагольные фразы.</li>
+                <li>Каждое выражение должно находиться на отдельной строке.</li>
+                <li>Открывающая фигурная скобка должна располагаться в конце строки, где начинается функция, и перед ней должен быть пробел.</li>
+                <li>Тело функции должно иметь отступ в 2 пробела. Не используйте символ табуляции для отступов, а вводите именно 2 пробела.</li>
+                <li>Закрывающая фигурная скобка должна находиться на отдельной строке после последней строки кода в теле функции</li>
+            </ul>
+        </section>
+        
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

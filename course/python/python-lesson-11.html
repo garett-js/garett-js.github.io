@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Словари (Map) в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 11: Словари (Map)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Словари (Map) в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Почему нужен словарь (dict)</h2>
+            <p>Возьмём обычный школьный журнал. Список учеников и их оценки по предметам.<br>Как связать ученика с его оценками?</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Попытка 1 — два списка</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">students = ['Аня', 'Боря', 'Наташа', 'Глеб', 'Даша']
+student_grades = [
+    [5, 4, 5],  # Аня
+    [3, 5, 4],  # Боря
+    [5, 5, 5],  # Наташа
+    [4, 3, 4],  # Глеб
+    [5, 4, 3],  # Даша
+]
+
+student = 'Наташа'
+
+if student in students:
+    idx = students.index(student)
+    print(f"{student}: {student_grades[idx]}")
+else:
+    print(f"Ученик {student} не найден.")
+</code></pre>
+            <blockquote><p>Проблемы: линейный поиск O(n) + риск рассинхронизации двух списков.</p></blockquote>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Попытка 2 — список списков (вложенных)</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">students = [
+    ['Аня', [5, 4, 5]],
+    ['Боря', [3, 5, 4]],
+    ['Наташа', [5, 5, 5]],
+    ['Глеб', [4, 3, 4]],
+    ['Даша', [5, 4, 3]],
+]
+student = 'Наташа'
+
+for name, grades in students:
+    if name == student:
+        print(f"{student}: {grades}")
+        break
+else:
+    print("Ученик не найден")
+</code></pre>
+            <blockquote><p>Поиск всё ещё O(n). Нужно приведение типов? Нет, но читать и обновлять неудобно.</p></blockquote>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Решение: `dict` (словарь)</h2>
+            <p>В Python словарь — коллекция <strong>пар <code class="code">ключ: значение</code></strong> с <strong>уникальными ключами</strong>.<br>Поиск по ключу ≈ O(1) благодаря хеш-таблице.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">students: dict[str, list[int]] = {
+    'Аня':    [5, 4, 5],
+    'Боря':   [3, 5, 4],
+    'Наташа': [5, 5, 5],
+    'Глеб':   [4, 3, 4],
+    'Даша':   [5, 4, 3],
+}
+print(students['Наташа'])  # [5, 5, 5]
+</code></pre>
+            <p>Если ключа нет — выбросится <code class="code">KeyError</code>. Безопасно:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print(students.get('Федя'))      # None
+print(students.get('Федя', []))  # []  (значение по умолчанию)
+</code></pre>
+            <div class="note">
+                <p><strong>Производительность</strong></p>
+                <p>Поиск / вставка / удаление по ключу в среднем O(1).</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">CRUD-операции со словарём</h2>
+            <h3>Create / Update</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">phone_book = {
+    'Маша':  '+7 911 987 65 43',
+    'Артём': '+7 922 555 11 22',
+}
+
+phone_book['Юля']  = '+7 933 444 00 11'   # добавить
+phone_book['Маша'] = '+7 900 777 88 99'   # обновить
+</code></pre>
+            <p><code class="code">setdefault</code> — «добавь, если нет»:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">phone_book.setdefault('Юля', '+7 000 000 00 00')  # не изменит, т.к. уже есть
+</code></pre>
+
+            <h3>Read</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print(phone_book['Маша'])          # значение
+print('Юля' in phone_book)         # True
+print(phone_book.keys())           # dict_keys([...])
+print(phone_book.values())         # dict_values([...])
+print(phone_book.items())          # пары (key, value)
+</code></pre>
+
+            <h3>Delete</h3>
+             <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">removed = phone_book.pop('Маша', None)  # вернуть и удалить
+phone_book.popitem()   # удалить последнюю пару (Python >=3.7 сохраняет порядок)
+phone_book.clear()     # удалить всё
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Итерация по словарю</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for name, phone in phone_book.items():
+    print(f"{name}: {phone}")
+</code></pre>
+            <p>Только ключи:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for name in phone_book:
+    ...
+</code></pre>
+            <p>Только значения:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for phone in phone_book.values():
+    ...
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Типизированные словари (`typing`)</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Dict, List
+Grades = Dict[str, List[int]]
+</code></pre>
+            <p><code class="code">dict[str, int]</code> синтаксис поддерживается начиная с Python 3.9.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Вложенные словари</h2>
+             <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">products: dict[str, dict[str, object]] = {
+    '123456': {
+        'name': 'iPhone 20',
+        'price': 170_000,
+        'stock': 15,
+        'category': 'Электроника',
+    },
+    '987654': {
+        'name': 'Клавиатура FlutterSwitch',
+        'price': 40_000,
+        'stock': 50,
+        'category': 'Периферия',
+    },
+}
+
+phone = products.get('123456')
+if phone:
+    print(phone['name'], phone['price'])
+</code></pre>
+            <p>Обновление/добавление:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">products['123456']['stock'] -= 1
+products['963258'] = {
+    'name': 'Монитор UltraView 120"',
+    'price': 100_000,
+    'stock': 10,
+    'category': 'Электроника',
+}
+</code></pre>
+            <p>Итерация:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for pid, info in products.items():
+    print(f"ID {pid}: {info['name']} — {info['price']} руб.")
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Spread-оператор и условная сборка (Python 3.9+)</h2>
+            <p>В Python можно объединять словари через оператор «распаковки» <code class="code">**</code>:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">basic_breakfast = {'Молоко': 1, 'Хлопья': 1}
+extras = {'Ягоды': 5}
+
+is_holiday = True
+super_breakfast = {
+    **basic_breakfast,
+    **extras,
+    **({'Торт': 1} if is_holiday else {}),
+    **{f'Ложек_Сахара_{i}': i for i in range(1, 4)},
+}
+print(super_breakfast)
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полезные методы</h2>
+             <table>
+                <thead>
+                    <tr>
+                        <th>Метод</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code class="code">dict.fromkeys(seq, value)</code></td>
+                        <td>создать словарь из ключей последовательности</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">update(other)</code></td>
+                        <td>добавить пары из другого словаря</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">pop(key, default)</code></td>
+                        <td>удалить и вернуть значение</td>
+                    </tr>
+                     <tr>
+                        <td><code class="code">get(key, default)</code></td>
+                        <td>безопасно получить значение</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практические задачи</h2>
+            <ol>
+                <li><strong>Частотный словарь слов</strong> — посчитать, сколько раз каждое слово встречается в тексте (используйте <code class="code">dict</code> + <code class="code">split()</code> + <code class="code">lower()</code>).</li>
+                <li><strong>Система регистрации</strong> — словарь пользователей с вложенными словарями (<code class="code">password</code>, <code class="code">email</code>). Реализуйте функции <code class="code">register</code>, <code class="code">login</code>, <code class="code">update_email</code>.</li>
+                <li><strong>Каталог товаров</strong> — CRUD-операции с вложенным <code class="code">dict</code> (см. пример <code class="code">products</code>).</li>
+            </ol>
+            <p>Словари — мощный инструмент для быстрых поисков, хранения JSON-подобных структур и удобной группировки данных. Используйте их, когда нужно ассоциировать «ключ → значение» и получать результат за микросекунды, независимо от объёма коллекции.</p>
+        </section>
+
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

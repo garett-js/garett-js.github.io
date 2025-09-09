@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Логика</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 4: Логика</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Логика</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Логические выражения</h2>
+            <p>Как вы принимаете решения в повседневной жизни?</p>
+            <p>Давайте начнем с логики. Логика — это наука о правильном рассуждении, и она играет важнейшую роль в нашем повседневном мышлении и, конечно, в программировании. Когда мы пишем программы, мы не просто пишем код; мы создаем систему, которая принимает решения на основе заданных условий.</p>
+            <p></p>
+            <p>Представьте, что вы хотите создать программу, которая помогает вам принимать решения. <br><br>Например, <em>"Если на улице идёт дождь, то я возьму зонт, иначе если нет дождя, пойду гулять в солнечных очках"</em>. <br><br> Это выражение — пример логического рассуждения. Мы можем формализовать это в терминах логических операций.</p>
+
+            <div class="note">
+            <p>Булева алгебра — это раздел математики, названный в честь Джорджа Буля, работает с двумя основными значениями: <strong>истина</strong> (<code class="code">True</code>) и <strong>ложь</strong> (<code class="code">False</code>). Мы можем использовать булеву алгебру для построения логических выражений, которые формируют базу программирования.</p>
+        </div>
+            <figure>
+                <img src="../4 Управление потоком/images/boll.png" alt="Джордж Буль" width="300">
+                <figcaption>Английский математик Джордж Буль</figcaption>
+            </figure>
+            <div class="note">
+                <p><strong>Логический тип данных</strong></p>
+                <p>В языке Python булевый тип данных обозначается как <code class="code">bool</code>. Его значения — <code class="code">True</code> и <code class="code">False</code> (обязательно с большой буквы).</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Булев тип данных</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_complete: bool = True
+is_admin: bool = False
+
+print(is_complete)  # Выведет: True
+print(is_admin)     # Выведет: False
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Логические операции</h2>
+            <p>В булевой алгебре есть три основные логические операции: <strong>И</strong>, <strong>ИЛИ</strong> и <strong>НЕ</strong>. В Python они представлены ключевыми словами <code class="code">and</code>, <code class="code">or</code> и <code class="code">not</code>.</p>
+            
+            <div class="note">
+                <p><strong>Математическая аналогия для логики</strong></p>
+                <p>Чтобы было легче понять, как работают логические операции, давайте представим, что:</p>
+                <ul>
+                    <li><code class="code">True</code> — это число <strong>1</strong> (есть сигнал)</li>
+                    <li><code class="code">False</code> — это число <strong>0</strong> (нет сигнала)</li>
+                </ul>
+                <p>Тогда логические операции можно представить как простые математические действия:</p>
+                <ul>
+                    <li><strong>И (and)</strong> — это <strong>умножение (*)</strong>. Результат будет 1, только если оба множителя равны 1. <br><code class="code">1 and 1</code> => <code class="code">1 * 1 = 1</code><br><code class="code">1 and 0</code> => <code class="code">1 * 0 = 0</code></li>
+                    <li><strong>ИЛИ (or)</strong> — это <strong>сложение (+)</strong>, но с одним правилом: <code class="code">1 + 1 = 1</code>. Результат будет 1, если хотя бы одно слагаемое равно 1.<br><code class="code">1 or 0</code> => <code class="code">1 + 0 = 1</code><br><code class="code">0 or 0</code> => <code class="code">0 + 0 = 0</code></li>
+                </ul>
+                <p>Эта аналогия поможет вам быстро вычислять результат сложных логических выражений.</p>
+            </div>
+
+            <h3>Операция И (<code class="code">and</code>)</h3>
+            <div class="note">
+                <p><strong>Логическое И (and)</strong></p>
+                <p>Логическое <strong>И</strong> возвращает <strong>True</strong>, только если <strong>оба</strong> операнда истинны.</p>
+                <p><em>Ключевое слово</em>: <code class="code">and</code></p>
+            </div>
+            <p>Это похоже на ситуацию, когда вам нужно, чтобы два события произошли одновременно, чтобы получить желаемый результат.</p>
+            <table>
+<thead>
+<tr>
+<th style="text-align:center">A</th>
+<th style="text-align:center">B</th>
+<th style="text-align:center">A and B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+            <p>Например: <code class="code">Я пойду гулять, если погода солнечная И сегодня выходной</code></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Логическое И (and)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_sunny: bool = True    # Допустим сегодня солнечно
+is_weekend: bool = False # Допустим сегодня не выходной
+
+can_go_for_a_walk = is_sunny and is_weekend
+print(can_go_for_a_walk) # False, погулять не вышло
+
+# Потому что 
+# True and False => False
+# 1 * 0 => 0
+</code></pre>
+
+            <h3>Операция ИЛИ (<code class="code">or</code>)</h3>
+            <div class="note">
+                <p><strong>Логическое ИЛИ (or)</strong></p>
+                <p>Логическое <strong>ИЛИ</strong> возвращает <strong>True</strong>, если хотя бы один из операндов истинен.</p>
+                <p><em>Ключевое слово</em>: <code class="code">or</code></p>
+            </div>
+            <p>Это похоже на выбор между двумя альтернативами — если хотя бы одна из них подходит, мы можем считать, что условие выполнено.</p>
+            <table>
+<thead>
+<tr>
+<th style="text-align:center">A</th>
+<th style="text-align:center">B</th>
+<th style="text-align:center">A or B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+            <p>Например: <code class="code">Я пойду гулять, если сделана домашка ИЛИ сегодня выходной</code></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Логическое ИЛИ (or)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_homework_done: bool = False # Домашка не сделана
+is_weekend: bool = True        # Сегодня выходной
+
+can_go_for_a_walk = is_homework_done or is_weekend
+print(can_go_for_a_walk) # True, идём гулять, домашка не сделана, но сегодня же выходной
+
+# Потому что 
+# False or True => True
+# 0 + 1 => 1
+</code></pre>
+
+            <h3>Операция НЕ (<code class="code">not</code>)</h3>
+            <div class="note">
+                <p><strong>Логическое НЕ (not)</strong></p>
+                <p>Логическое <strong>НЕ</strong> инвертирует значение (т.е. заменяет на противоположное).</p>
+                <p>Если значение истинно, оно становится ложным, и наоборот.</p>
+                <p><em>Ключевое слово</em>: <code class="code">not</code></p>
+            </div>
+            <table>
+<thead>
+<tr>
+<th style="text-align:center">A</th>
+<th style="text-align:center">not A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+            <p>Например:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Логическое НЕ (not)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_weekend: bool = True # Сегодня выходной
+
+print(not is_weekend) # False, НЕ выходной
+# not True => False
+# not 1 => 0
+</code></pre>
+
+            <h3>Исключающее ИЛИ (<code class="code">^</code>)</h3>
+            <p>Это бинарный оператор, который возвращает <code class="code">True</code>, если булевы операнды имеют разные значения. В противном случае он возвращает <code class="code">False</code>. В Python для этого используется оператор битового "исключающего ИЛИ" <code class="code">^</code>.</p>
+            <table>
+                <thead>
+                <tr>
+                <th style="text-align:center">A</th>
+                <th style="text-align:center">B</th>
+                <th style="text-align:center">A ^ B</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">0</td>
+                </tr>
+                <tr>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">1</td>
+                <td style="text-align:center">1</td>
+                </tr>
+                <tr>
+                <td style="text-align:center">1</td>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">1</td>
+                </tr>
+                <tr>
+                <td style="text-align:center">1</td>
+                <td style="text-align:center">1</td>
+                <td style="text-align:center">0</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Исключающее ИЛИ (XOR)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print(False ^ False) # False (0 ^ 0 => 0)
+print(False ^ True)  # True  (0 ^ 1 => 1)
+print(True ^ False)  # True  (1 ^ 0 => 1)
+print(True ^ True)   # False (1 ^ 1 => 0)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Комбинирование операций</h2>
+            <p>Сложные логические выражения можно строить, комбинируя <strong>and</strong>, <strong>or</strong> и <strong>not</strong>.</p>
+            <p><code class="code">Приоритет логических операторов</code> в Python:</p>
+            <ol>
+                <li><code class="code">not</code> (наивысший приоритет)</li>
+                <li><code class="code">and</code></li>
+                <li><code class="code">or</code> (наинизший приоритет)</li>
+            </ol>
+            <p>Для изменения порядка вычислений используются круглые скобки <code class="code">()</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Комбинирование логических операторов</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_cold = False    # предположим, сейчас не холодно
+is_dry = True      # cухо, без дождя
+is_summer = False  # предположим, сейчас осень
+go_hiking = is_dry and (not is_cold or is_summer)
+
+print(go_hiking)   # True, можно идти в поход!
+</code></pre>
+
+
+<div class="slideshow-container" data-width="700px">
+    <div class="slideshow-wrapper">
+        <div class="slideshow">
+            <div class="slide active">
+                <img src="images/l4/complex-logic-1.png" alt="Переменная - шаг 1">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-2.png" alt="Переменная - шаг 2">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-3.png" alt="Переменная - шаг 3">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-4.png" alt="Переменная - шаг 4">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-5.png" alt="Переменная - шаг 5">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-6.png" alt="Переменная - шаг 6">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-7.png" alt="Переменная - шаг 7">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-8.png" alt="Переменная - шаг 8">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-9.png" alt="Переменная - шаг 9">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-10.png" alt="Переменная - шаг 10">
+            </div>
+            <div class="slide">
+                <img src="images/l4/complex-logic-11.png" alt="Переменная - шаг 11">
+            </div>
+ 
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <button class="slideshow-btn prev-btn">‹</button>
+        <div class="dots-container"></div>
+        <button class="slideshow-btn next-btn">›</button>
+    </div>
+</div>
+
+            <p>Таблицы истинности используются для анализа и построения логических выражений. Рассмотрим пример выражения <code class="code">(A and B) or not C</code></p>
+            <table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>(A and B) or not C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+            <ol>
+                <li>Сначала посчитаем действие в скобках <code class="code">A and B</code> это будет <code class="code">0 and 0 = 0</code></li>
+                <li>Далее делаем логическое отрицание <code class="code">not C</code> это будет <code class="code">not 0 = 1</code></li>
+                <li>Осталось выполнить логическое сложение между этими двумя результатами <code class="code">0 or 1 = 1</code></li>
+            </ol>
+            <div class="note">
+                <p><strong>Практика</strong></p>
+                <p>Составьте таблицу истинности для всех значений</p>
+                <p>Напишите результат для логического выражения<br><code class="code">(A and B) or not C</code></p>
+            </div>
+            <table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>( A and B ) or not C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операторы сравнения</h2>
+            <p>Операторы сравнения возвращают логическое значение (<code class="code">True</code> или <code class="code">False</code>).</p>
+            <table>
+<thead>
+<tr>
+<th>Операция</th>
+<th>Объяснение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==</td>
+<td>равно</td>
+</tr>
+<tr>
+<td><code class="code">!=</code></td>
+<td>не равно</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>больше</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>больше или равно</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>меньше</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>меньше или равно</td>
+</tr>
+</tbody>
+</table>
+
+
+            <div class="note">
+                <img src="images/l1/important.png" alt="" width="125" style="float: left; margin-right: 15px;">
+                <p><strong>Запомните!</strong> <br>
+                    Для проверки равенства <strong>два знака</strong> <code class="code">==</code> <br>
+                    Один знак <code class="code">=</code> это присваивание</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Операторы сравнения</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print(1 == 1) # True
+print(1 < 2)  # True
+print(1 > 2)  # False
+print(1 != 2) # True
+print(3 >= 3) # True
+print(1 <= 2) # True
+</code></pre>
+            <h3>Соединение операций сравнения</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Цепочки операторов сравнения</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">age = 12
+# В Python можно элегантно соединять сравнения в цепочку
+print(0 < age < 18)
+# True - возраст находится в пределах от 0 до 18 
+
+age2 = 20
+print(0 < age2 < 18)
+# False - возраст выходит за пределы [0; 18]
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

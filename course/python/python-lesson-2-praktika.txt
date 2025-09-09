@@ -1,0 +1,74 @@
+# Задача 1: Приветствие
+user_name = input("Введите ваше имя: ")
+print(f"Привет, {user_name}!")
+
+print("-" * 20)
+
+# Задача 2: Площадь треугольника
+base = 5
+height = 10
+area = (base * height) / 2
+print(f"Площадь треугольника с основанием {base} и высотой {height} равна {area}")
+
+print("-" * 20)
+
+# Задача 3: Обмен значений переменных
+a = 15
+b = 30
+print(f"До обмена: a = {a}, b = {b}")
+a, b = b, a
+print(f"После обмена: a = {a}, b = {b}")
+
+print("-" * 20)
+
+# Задача 4: Средний балл оценок
+math_grade = 5
+physics_grade = 4
+it_grade = 5
+average_grade = (math_grade + physics_grade + it_grade) / 3
+print(f"Оценки: Математика={math_grade}, Физика={physics_grade}, Информатика={it_grade}")
+print(f"Средний балл: {average_grade}")
+
+print("-" * 20)
+
+# Задача 5: Характеристики персонажа
+BASE_HEALTH = 100
+character_name = input("Введите имя персонажа: ")
+character_class = input("Введите класс персонажа: ")
+character_level = int(input("Введите уровень: "))
+character_health = BASE_HEALTH + character_level * 10
+
+print("--- Анкета Персонажа ---")
+print(f"Имя: {character_name}")
+print(f"Класс: {character_class}")
+print(f"Уровень: {character_level}")
+print(f"Здоровье: {character_health}")
+print("-----------------------")
+
+print("-" * 20)
+
+# Задача 6: Калькулятор лута
+SILVER_PER_GOLD = 10
+COPPER_PER_SILVER = 100
+
+gold_coins = int(input("Сколько золотых монет найдено? "))
+silver_coins = int(input("Сколько серебряных монет найдено? "))
+copper_coins = int(input("Сколько медных монет найдено? "))
+
+total_copper = (gold_coins * SILVER_PER_GOLD * COPPER_PER_SILVER) + (silver_coins * COPPER_PER_SILVER) + copper_coins
+print(f"Общая стоимость добычи: {total_copper} медных монет.")
+
+print("-" * 20)
+
+# Задача 7: Расчет урона в бою
+CRIT_MULTIPLIER = 1.5
+hero_damage, monster_armor = 25, 10
+
+print(f"Герой атакует с базовым уроном {hero_damage}.")
+print(f"У монстра {monster_armor} единиц брони.")
+
+crit_damage = hero_damage * CRIT_MULTIPLIER
+print(f"Критический удар! Урон увеличен в {CRIT_MULTIPLIER} раз и составляет {crit_damage}.")
+
+final_damage = crit_damage - monster_armor
+print(f"Монстр получает {final_damage} урона.")

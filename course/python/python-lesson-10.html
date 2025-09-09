@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Строки (String) в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 10: Строки (String)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Строки (String) в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">1. Общая информация по работе со строками</h2>
+
+            <h3 style="margin-top: 20px;">Создание строк</h3>
+            <div class="note">
+                <p><strong>Строка</strong></p>
+                <p>Это <code class="code">последовательность символов</code>, заключённая в кавычки <code class="code">двойные</code> <strong>""</strong> или <code class="code">одинарные</code> <strong>''</strong>.</p>
+                <p>Важно выбрать один стиль кавычек и придерживаться его для читаемости кода (PEP-8 рекомендует одинарные или двойные — на ваш вкус).</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">str1 = "Обычная строка в двойных кавычках"
+str2 = 'Обычная строка в одинарных кавычках'
+</code></pre>
+            <div class="note">
+                <p>Совет: многие команды Python-сообщества используют <strong>одинарные</strong> кавычки по умолчанию.</p>
+            </div>
+            
+            <h3>Многострочные строки</h3>
+            <p>В Python для многострочных строк также используются <strong>тройные кавычки</strong>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">mult_str = """
+Это многострочная строка,
+которая продолжается на несколько строк.
+Довольно удобно!
+"""
+</code></pre>
+
+            <h3>Пустые строки</h3>
+            <p>Все строки, включая пустые, имеют тип <code class="code">str</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">text1 = "Привет"
+text2 = ""       # Пустая строка (длина 0)
+text3 = " "      # Один пробел (длина 1)
+text4 = "12345"
+text5 = "😎🧐"   # Строка может содержать эмодзи!
+</code></pre>
+
+            <h3>Повторение строк</h3>
+            <p>В Python, как и в Dart, используется оператор умножения <code class="code">*</code>:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print("Привет! " * 3)  # Привет! Привет! Привет!
+</code></pre>
+
+            <h3>Конкатенация строк</h3>
+             <div class="note">
+                <p><strong>Конкатенация</strong></p>
+                <p>Объединение нескольких строк в одну.</p>
+            </div>
+            <p>В Python строки тоже можно складывать при помощи <code class="code">+</code>, но чаще используют <strong>f-строки</strong> (см. ниже).</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">text1 = "Привет, "
+text2 = "Юля"
+result = text1 + text2
+print(result)  # Привет, Юля
+</code></pre>
+
+            <h3>Интерполяция строк (f-строки)</h3>
+            <p>Вместо ручной конкатенации используйте форматированные литералы — f-строки (Python 3.6+):</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">count_message = 10
+print(f"У вас {count_message} сообщений")  # У вас 10 сообщений
+
+# Сложное выражение внутри { }
+print(f"У вас {count_message + 1} сообщений")  # У вас 11 сообщений
+</code></pre>
+            <p><em>В Dart использовался символ <code class="code">$</code>. В Python — буква <strong>f</strong> перед кавычкой и фигурные скобки для выражений.</em></p>
+            
+            <h3>Экранирование символов</h3>
+            <p>Спецсимволы экранируются обратным слешем <code class="code">\</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print("\'H\' – первая буква строки \"Hello world!\"")
+print("Первая строка\nВторая строка")
+</code></pre>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Escape</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code class="code">\n</code></td>
+                        <td>новая строка</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">\t</code></td>
+                        <td>табуляция</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">\'</code></td>
+                        <td>одинарная кавычка</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">\"</code></td>
+                        <td>двойная кавычка</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Работа с отдельными символами строки</h3>
+            <blockquote><p>В Python строка — <strong>последовательность</strong> (итерируемый тип), доступ к символу возможен по индексу.</p></blockquote>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">text = "Привет"
+print(text[0])  # П
+print(text[1])  # р
+# ...
+</code></pre>
+
+            <h3>Ограничения — строки неизменяемы</h3>
+            <p>Строки в Python также <strong>immutable</strong>. Нельзя изменить символ по индексу:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">text = "Привет"
+# text[0] = 'п'   # TypeError: 'str' object does not support item assignment
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">2. Методы и функции для работы со строками</h2>
+
+            <h3 style="margin-top: 20px;">Проверка длины строки и пустоты</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = "Hello, Python!"
+print(len(s))      # 14
+print(s == "")    # False  (проверка пустоты)
+print(not s)       # False  (пустая строка — False в логическом контексте)
+</code></pre>
+            <blockquote><p>Пустая строка <code class="code">""</code> имеет длину 0; строка из одного пробела <code class="code">" "</code> пустой <strong>не считается</strong>.</p></blockquote>
+
+            <h3>Преобразование регистра</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = "Hello, Python!"
+print(s.upper())  # HELLO, PYTHON!
+print(s.lower())  # hello, python!
+</code></pre>
+
+            <h3>Удаление пробелов</h3>
+            <p>Методы <code class="code">strip()</code>, <code class="code">lstrip()</code>, <code class="code">rstrip()</code> аналогичны Dart-методам <code class="code">trim*</code>:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = "  Hello, Python!  "
+print(s.strip())      # "Hello, Python!"
+print(s.lstrip())     # "Hello, Python!  "
+print(s.rstrip())     # "  Hello, Python!"
+</code></pre>
+
+            <h3>Извлечение подстроки (срезы)</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = "Hello, Python!"
+print(s[0:5])     # Hello
+print(s[:5])      # Hello (от начала)
+print(s[7:])      # Python! (до конца)
+</code></pre>
+
+            <h3>Поиск в строке</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">name = 'IT-Квантум'
+print('Квантум' in name)          # True
+print(name.startswith('IT'))      # True
+print(name.endswith('ум'))        # True
+print(name.find('Ква'))           # 3  (−1 если не найдено)
+</code></pre>
+
+            <h3>Разделение и объединение строк</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = "Hello Python"
+parts = s.split(" ")
+print(len(parts))  # 2
+print(parts)       # ['Hello', 'Python']
+
+joined = "-".join(parts)
+print(joined)      # Hello-Python
+</code></pre>
+            
+            <h3>Замена подстроки</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">s = "Hello Python"
+result = s.replace("Python", "World")
+print(result)  # Hello World
+</code></pre>
+            
+            <h3>Преобразование типов</h3>
+            <h4 style="margin-top: 15px;">Преобразование строки в число</h4>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">digit  = int("42")       # 42
+fdigit = float("3.14")   # 3.14
+
+# Безопасное преобразование
+try:
+    value = int("abc")
+except ValueError:
+    value = None
+print(value)  # None
+</code></pre>
+            
+            <h4>Преобразование числа в строку</h4>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">num = 42
+pi  = 3.14159
+print(str(num))          # "42"
+print(f"{pi:.2f}")       # 3.14  (формат до 2-х знаков)
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">3. Дополнительные возможности</h2>
+
+            <h3 style="margin-top: 20px;">Быстрая конкатенация многих строк</h3>
+            <p>В Python для эффективного склеивания множества мелких строк используют:</p>
+            <ol>
+                <li>Список + <code class="code">"".join(list)</code> (рекомендуется).</li>
+                <li>Класс <code class="code">io.StringIO</code> (аналог <code class="code">StringBuffer</code>).</li>
+            </ol>
+             <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from io import StringIO
+
+fragments = ["a", "b", "c", "d", "e", "f", "g"]
+
+buf = StringIO()
+buf.write('!')
+for part in fragments:
+    buf.write(part)
+buf.write('.')
+full_string = buf.getvalue()
+print(full_string)  # !abcdefg.
+</code></pre>
+        
+            <h3>Регулярные выражения (модуль `re`)</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import re
+
+pattern = re.compile(r'\d+')
+all_chars   = 'Python & Flask'
+some_digits = 'Python 3.11 & Flask 2.3.0'
+
+print(bool(pattern.search(all_chars)))   # False
+print(bool(pattern.search(some_digits))) # True
+
+exed_out = pattern.sub('XX', some_digits)
+print(exed_out)  # Python XX.XX & Flask XX.XX.XX
+
+for match in pattern.finditer(some_digits):
+    print(match.group())
+</code></pre>
+
+            <h3>Unicode-символы и кодовые точки</h3>
+            <p>В Python каждая руна (кодовая точка) — тип <code class="code">int</code>. Функции:</p>
+            <ul>
+                <li><code class="code">ord(char)</code> → код символа.</li>
+                <li><code class="code">chr(code)</code> → символ по коду.</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">clef     = '\U0001D11E'  # 𝄞 (музыкальный ключ-соль)
+pumpkin  = '🎃'
+print(ord(clef))     # 119070 (0x1D11E)
+print(clef.encode('utf-16'))  # b'\xff\xfe4\xd8\x1e\xdd'
+print(len(pumpkin))  # 1 (одна кодовая точка)
+</code></pre>
+            <blockquote><p>В отличие от Dart, в Python <code class="code">len()</code> возвращает количество <strong>кодовых точек</strong>, а не UTF-16-код-юнитов.</p></blockquote>
+        </section>
+        
+        <section class="lesson-section">
+            <p>Теперь урок о строках полностью адаптирован к Python, сохранив оригинальные пояснения и добавив подробности там, где поведение Python отличается от Dart.</p>
+        </section>
+        
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 
