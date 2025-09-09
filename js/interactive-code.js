@@ -20,10 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         codeBlock.style.opacity = '1';
     });
 
-    // After setting up interactive blocks, highlight all other non-managed code blocks
-    document.querySelectorAll('pre code:not(.interactive-code-managed)').forEach((block) => {
-        hljs.highlightElement(block);
-    });
 });
 
 class InteractiveCode {

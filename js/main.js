@@ -30,6 +30,15 @@
  };
 
  document.addEventListener('DOMContentLoaded', function() {
+     // Initialize Highlight.js
+     try {
+         document.querySelectorAll('pre code:not(.interactive-code-managed)').forEach((block) => {
+             hljs.highlightElement(block);
+         });
+     } catch (e) {
+         console.error("Highlight.js error:", e);
+     }
+     
      const menu = document.querySelector('#side-menu ul');
      const sections = document.querySelectorAll('.lesson-section');
      const headers = document.querySelectorAll('#main-content h2');
