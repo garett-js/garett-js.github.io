@@ -303,7 +303,7 @@ class _TextFieldExampleState extends State<TextFieldExample> {
       ],  
     );  
   }  
-}
+} 
 </code></pre>
 
 <div style="display: flex; align-items: center; gap: 5px;">
@@ -656,69 +656,453 @@ class _TextFieldExampleState extends State<TextFieldExample> {
             <img src="images/com.png" width="500px" alt="">
 
             <div class="code-block-header">
-                <h5 class="code-block-title">Файл <code class="code">text_field_form.dart</code></h5>
-                <div class="code-block-controls">
-                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-                </div>
-            </div>
-            <pre><code class="language-dart">import 'package:flutter/material.dart';  
-  
-class TextFieldFormExample extends StatefulWidget {  
-  const TextFieldFormExample({super.key});  
-  
-  @override  
-  State<TextFieldFormExample> createState() => _TextFieldFormExampleState();  
-}  
-  
-class _TextFieldFormExampleState extends State<TextFieldFormExample> {  
-  // Контроллер для управления текстовым полем: получения и изменения его значения
-  final TextEditingController _textController = TextEditingController();  
-  
-  // Глобальный ключ для идентификации и управления состоянием нашей формы
-  // Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
-  final _formKey = GlobalKey<FormState>();   
-  
-  @override  
-  void dispose() {  
-    // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
-    _textController.dispose();  
-    super.dispose();  
-  }  
-  
-  @override  
-  Widget build(BuildContext context) {  
-    return ListView(  
-      padding: const EdgeInsets.all(16.0),  
-      children: [  
-        Text(  
-          "Форма с валидацией",  
-          style: TextStyle(fontSize: 18),  
-        ),  
-        // Form это виджет-контейнер, который группирует несколько полей ввода (TextFormField)
-        Form( 
-          key: _formKey, // Привязываем глобальный ключ к форме 
-           
-          child: Column(  
-            crossAxisAlignment: CrossAxisAlignment.start,  
-            children: <Widget>[  
-              // Это само поле для ввода текст
-              TextFormField(  
-                decoration: InputDecoration(  
-                  labelText: 'Имя', 
-                  hintText: 'Введите ваше имя',
-                  border: OutlineInputBorder(),  
-                ),  
-                keyboardType: TextInputType.name,   
+              <h5 class="code-block-title">Файл <code class="code">text_form_field.dart</code> (ШАГИ 0–6)</h5>
+              <div class="code-block-controls">
+                  <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                  <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+              </div>
+          </div>
+          <pre><code class="language-dart">// ----- ШАГ 0 -----
+import 'package:flutter/material.dart';  
 
-                onFieldSubmitted: (value) {  }  
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+
+    ],  
+  );  
+}  
+}
+
+// ----- ШАГ 1 -----
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+
+    ],  
+  );  
+}  
+}
+
+// ----- ШАГ 2 -----
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        
+      )
+
+    ],  
+  );  
+}  
+}
+
+
+// ----- ШАГ 3 -----
+
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        key: _formKey, // 3 Привязываем глобальный ключ к форме
+
+        
+      )
+    ],  
+  );  
+}  
+}
+
+// ----- ШАГ 4 -----
+
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        key: _formKey, // 3 Привязываем глобальный ключ к форме
+
+        // 4 Добавляем колонку 
+        child: Column(  
+          crossAxisAlignment: CrossAxisAlignment.start,  
+          children: [  
+
+          ],  
+        ), 
+
+      )
+    ],  
+  );  
+}  
+}
+
+// ----- ШАГ 5 -----
+
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        key: _formKey, // 3 Привязываем глобальный ключ к форме
+
+        // 4 Добавляем колонку 
+        child: Column(  
+          crossAxisAlignment: CrossAxisAlignment.start,  
+          children: [ 
+            // 5 Добавляем TextFormField
+            TextFormField(
+              
+            
+            )
+
+          ],  
+        ), 
+
+      )
+    ],  
+  );  
+}  
+}
+
+
+// ----- ШАГ 6 -----
+
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        key: _formKey, // 3 Привязываем глобальный ключ к форме
+
+        // 4 Добавляем колонку 
+        child: Column(  
+          crossAxisAlignment: CrossAxisAlignment.start,  
+          children: [ 
+            // 5 Добавляем TextFormField
+            TextFormField(
+              // 6 Добавляем оформление, тип клавиатуры и обработчик события
+              decoration: InputDecoration(  
+                labelText: 'Имя', 
+                hintText: 'Введите ваше имя',
+                border: OutlineInputBorder(),  
               ),  
-            ],  
-          ),  
-        ),  
-      ],  
-    );  
-  }  
+
+            )
+          ],  
+        ), 
+
+      )
+    ],  
+  );  
+}  
+}
+
+// ----- ШАГ 7 -----
+
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        key: _formKey, // 3 Привязываем глобальный ключ к форме
+
+        // 4 Добавляем колонку 
+        child: Column(  
+          crossAxisAlignment: CrossAxisAlignment.start,  
+          children: [ 
+            // 5 Добавляем TextFormField
+            TextFormField(
+              // 6 Добавляем оформление, тип клавиатуры и обработчик события
+              decoration: InputDecoration(  
+                labelText: 'Имя', 
+                hintText: 'Введите ваше имя',
+                border: OutlineInputBorder(),  
+              ),  
+              keyboardType: TextInputType.name,   
+
+
+            )
+          ],  
+        ), 
+
+      )
+    ],  
+  );  
+}  
+}
+
+// ----- ШАГ 8 -----
+
+import 'package:flutter/material.dart';  
+
+class TextFieldFormExample extends StatefulWidget {  
+const TextFieldFormExample({super.key});  
+
+@override  
+State createState() => _TextFieldFormExampleState();  
+}  
+
+class _TextFieldFormExampleState extends State {  
+// Контроллер для управления текстовым полем: получения и изменения его значения
+final TextEditingController _textController = TextEditingController();  
+
+// 1 Добавляем глобьльный ключ
+// Глобальный ключ нужен для идентификации и управления состоянием нашей формы
+// Позволяет нам проверять (валидировать) и сохранять все поля формы одновременно 
+final _formKey = GlobalKey(); 
+
+@override  
+void dispose() {  
+  // Освобождаем ресурсы контроллера, когда виджет удаляется из дерева
+  _textController.dispose();  
+  super.dispose();  
+}  
+
+@override  
+Widget build(BuildContext context) {  
+  return ListView(  
+    padding: const EdgeInsets.all(16.0),  
+    children: [  
+      // 2 Добавляем форму
+      Form(
+        key: _formKey, // 3 Привязываем глобальный ключ к форме
+
+        // 4 Добавляем колонку 
+        child: Column(  
+          crossAxisAlignment: CrossAxisAlignment.start,  
+          children: [ 
+            // 5 Добавляем TextFormField
+            TextFormField(
+              // 6 Добавляем оформление, тип клавиатуры и обработчик события
+              decoration: InputDecoration(  
+                labelText: 'Имя', 
+                hintText: 'Введите ваше имя',
+                border: OutlineInputBorder(),  
+              ),  
+              keyboardType: TextInputType.name,   
+
+              onFieldSubmitted: (value) {  }
+            )
+          ],  
+        ), 
+
+      )
+    ],  
+  );  
+}  
 }
 </code></pre>
 
@@ -748,19 +1132,20 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
                     <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
                 </div>
             </div>
-            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+            <pre><code class="language-dart">// ----- ШАГ 0 -----
+import 'package:flutter/material.dart';  
   
 class TextFieldFormExample extends StatefulWidget {  
   const TextFieldFormExample({super.key});  
   
   @override  
-  State<TextFieldFormExample> createState() => _TextFieldFormExampleState();  
+  State createState() => _TextFieldFormExampleState();  
 }  
   
-class _TextFieldFormExampleState extends State<TextFieldFormExample> {  
+class _TextFieldFormExampleState extends State {  
   final TextEditingController _textController = TextEditingController();  
   
-  final _formKey = GlobalKey<FormState>();  
+  final _formKey = GlobalKey();  
   
   @override  
   void dispose() {  
@@ -768,23 +1153,10 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
     super.dispose();  
   }  
   
-  // --- ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ ---
-  
-  // Метод для обработки отправки формы с валидацией  
+ 
+  // 1 🔥 Добавляем метод для обработки отправки формы с валидацией  
   void _submitForm() {  
-    // Проверяем валидность всех полей в форме, используя ключ  
-    if (_formKey.currentState!.validate()) {  
-      // Если метод validate() вернул true (нет ошибок валидации), то  
-      // можно выполнять дальнейшие действия  
-      ScaffoldMessenger.of(context).showSnackBar(  
-        SnackBar(content: Text('Форма валидна!')),  
-      );  
-    } else {  
-      // Если validate() вернул false, ошибки уже отобразятся под полями  
-      ScaffoldMessenger.of(context).showSnackBar(  
-        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
-      );  
-    }  
+
   }  
   
   @override  
@@ -800,7 +1172,7 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
           key: _formKey, // Привязываем глобальный ключ к форме  
           child: Column(  
             crossAxisAlignment: CrossAxisAlignment.start,  
-            children: <Widget>[  
+            children: [  
               TextFormField(  
                 decoration: InputDecoration(  
                   labelText: 'Имя', // Метка поля  
@@ -809,7 +1181,221 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
                 ),  
                 keyboardType: TextInputType.name, // Тип клавиатуры для имени  
   
-                // --- ДОБАВЛЯЕМ ВАЛИДАТОР ---
+                onFieldSubmitted: (value) {  }  
+  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 1 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  
+  final _formKey = GlobalKey();  
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+  
+ 
+  // 1 🔥 Добавляем метод для обработки отправки формы с валидацией  
+  void _submitForm() {  
+    // 2 🔥 Проверяем валидность всех полей в форме, используя ключ  
+    if (_formKey.currentState!.validate()) {  
+      // Если метод validate() вернул true (нет ошибок валидации), то  
+      // можно выполнять дальнейшие действия  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Форма валидна!')),  
+      );  
+    } 
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey, // Привязываем глобальный ключ к форме  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя', // Метка поля  
+                  hintText: 'Введите ваше имя', // Подсказка  
+                  border: OutlineInputBorder(), // Граница  
+                ),  
+                keyboardType: TextInputType.name, // Тип клавиатуры для имени  
+  
+                onFieldSubmitted: (value) {  }  
+  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 2 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  
+  final _formKey = GlobalKey();  
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+  
+ 
+  // 1 🔥 Добавляем метод для обработки отправки формы с валидацией  
+  void _submitForm() {  
+    // 2 🔥 Проверяем валидность всех полей в форме, используя ключ  
+    if (_formKey.currentState!.validate()) {  
+      // Если метод validate() вернул true (нет ошибок валидации), то  
+      // можно выполнять дальнейшие действия  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Форма валидна!')),  
+      );  
+    } else {  
+      // 3 🔥 Если validate() вернул false, ошибки уже отобразятся под полями  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      );  
+    }  
+  }   
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey, // Привязываем глобальный ключ к форме  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя', // Метка поля  
+                  hintText: 'Введите ваше имя', // Подсказка  
+                  border: OutlineInputBorder(), // Граница  
+                ),  
+                keyboardType: TextInputType.name, // Тип клавиатуры для имени  
+  
+                onFieldSubmitted: (value) {  }  
+  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 3 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  
+  final _formKey = GlobalKey();  
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+  
+ 
+  // 1 🔥 Добавляем метод для обработки отправки формы с валидацией  
+  void _submitForm() {  
+    // 2 🔥 Проверяем валидность всех полей в форме, используя ключ  
+    if (_formKey.currentState!.validate()) {  
+      // Если метод validate() вернул true (нет ошибок валидации), то  
+      // можно выполнять дальнейшие действия  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Форма валидна!')),  
+      );  
+    } else {  
+      // 3 🔥 Если validate() вернул false, ошибки уже отобразятся под полями  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      );  
+    }  
+  }   
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey, // Привязываем глобальный ключ к форме  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя', // Метка поля  
+                  hintText: 'Введите ваше имя', // Подсказка  
+                  border: OutlineInputBorder(), // Граница  
+                ),  
+                keyboardType: TextInputType.name, // Тип клавиатуры для имени  
+
+                // 4 🔥 Добавляем валидатор
                 validator: (value) {  
                   // Валидатор получает текущее значение поля (может быть null)  
                   if (value == null || value.trim().isEmpty || value.length < 2) { 
@@ -818,8 +1404,90 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
                   return null;  
                 },  
   
-                // При нажатии на Enter вызываем метод _submitForm  
-                onFieldSubmitted: (value) { _submitForm(); }  
+                onFieldSubmitted: (value) {  }  
+  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 4 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  
+  final _formKey = GlobalKey();  
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+  
+ 
+  // 1 🔥 Добавляем метод для обработки отправки формы с валидацией  
+  void _submitForm() {  
+    // 2 🔥 Проверяем валидность всех полей в форме, используя ключ  
+    if (_formKey.currentState!.validate()) {  
+      // Если метод validate() вернул true (нет ошибок валидации), то  
+      // можно выполнять дальнейшие действия  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Форма валидна!')),  
+      );  
+    } else {  
+      // 3 🔥 Если validate() вернул false, ошибки уже отобразятся под полями  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      );  
+    }  
+  }   
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey, // Привязываем глобальный ключ к форме  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя', // Метка поля  
+                  hintText: 'Введите ваше имя', // Подсказка  
+                  border: OutlineInputBorder(), // Граница  
+                ),  
+                keyboardType: TextInputType.name, // Тип клавиатуры для имени  
+
+                // 4 🔥 Добавляем валидатор
+                validator: (value) {  
+                  // Валидатор получает текущее значение поля (может быть null)  
+                  if (value == null || value.trim().isEmpty || value.length < 2) { 
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+  
+                // 5 🔥 При нажатии на Enter вызываем метод _submitForm  
+                onFieldSubmitted: (value) { _submitForm(); }   
   
               ),  
             ],  
@@ -889,60 +1557,32 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
                     <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
                 </div>
             </div>
-            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+            <pre><code class="language-dart">// ----- ШАГ 0 -----
+import 'package:flutter/material.dart';  
   
 class TextFieldFormExample extends StatefulWidget {  
   const TextFieldFormExample({super.key});  
   
   @override  
-  State<TextFieldFormExample> createState() => _TextFieldFormExampleState();  
+  State createState() => _TextFieldFormExampleState();  
 }  
   
-class _TextFieldFormExampleState extends State<TextFieldFormExample> {  
+class _TextFieldFormExampleState extends State {  
   final TextEditingController _textController = TextEditingController();  
-  final _formKey = GlobalKey<FormState>();  
+  final _formKey = GlobalKey();  
   
-  // Переменные для хранения данных формы  
+  // 1 Добавим переменные для хранения данных формы  
   String _savedName = '';  
   String _savedEmail = '';  
+
+
   
   @override  
   void dispose() {  
     _textController.dispose();  
     super.dispose();  
   }  
-  
-  // --- ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ ---  
-  
-  // Метод для обработки отправки формы с валидацией и сохранением данных  
-  void _submitForm() {  
-    if (_formKey.currentState!.validate()) {  
-      // Если все поля валидны, вызываем метод save() у формы  
-      // Это вызовет onSaved у каждого TextFormField в форме     
-      _formKey.currentState!.save();  
-  
-      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
-      // Можно их использовать (например, отправить на сервер)      
-      ScaffoldMessenger.of(context).showSnackBar(  
-        SnackBar(  
-          content:  
-              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
-        ),  
-      );  
-  
-      // Очистить форму после успешной отправки  
-      _formKey.currentState!.reset();  
-      setState(() {  
-        _savedName = '';  
-        _savedEmail = '';  
-      });  
-    } else {  
-      ScaffoldMessenger.of(context).showSnackBar(  
-        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
-      );  
-    }  
-  }  
-  
+    
   @override  
   Widget build(BuildContext context) {  
     return ListView(  
@@ -956,7 +1596,7 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
           key: _formKey,  
           child: Column(  
             crossAxisAlignment: CrossAxisAlignment.start,  
-            children: <Widget>[ 
+            children: [ 
              
               // ПОЛЕ ДЛЯ ИМЕНИ  
               TextFormField(  
@@ -974,17 +1614,658 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
                   }  
                   return null;  
                 },  
+                
+              ),  
   
-                // --- ДОБАВЛЯЕМ СОХРАНЕНИЕ ДАННЫХ ---
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 1 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+
+    } else { }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+                
+              ),  
+  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 2 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+    } else { }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+                
+              ),  
+  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 3 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
+      // Можно их использовать (например, отправить на сервер)      
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
+        ),  
+      ); 
+
+    } else { }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+                
+              ),  
+  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 4 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
+      // Можно их использовать (например, отправить на сервер)      
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
+        ),  
+      ); 
+
+      // Очистить форму после успешной отправки  
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = '';  
+        _savedEmail = '';  
+      });
+
+    } else { }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+                
+              ),  
+  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 5 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
+      // Можно их использовать (например, отправить на сервер)      
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
+        ),  
+      ); 
+
+      // Очистить форму после успешной отправки  
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = '';  
+        _savedEmail = '';  
+      });
+
+    } else {
+        // Если форма не валидна, показываем ошибку
+        ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      ); 
+    }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+                
+              ),  
+  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 6 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
+      // Можно их использовать (например, отправить на сервер)      
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
+        ),  
+      ); 
+
+      // Очистить форму после успешной отправки  
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = '';  
+        _savedEmail = '';  
+      });
+
+    } else {
+        // Если форма не валидна, показываем ошибку
+        ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      ); 
+    }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+
+                // ДОБАВЛЯЕМ СОХРАНЕНИЕ ДАННЫХ
                 onSaved: (newValue) {  
                   // Сохраняем значение в переменную состояния  
                   _savedName = newValue ?? '';  
-                },               
+                }, 
               ),  
   
-              SizedBox(height: 20),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 7 -----
+import 'package:flutter/material.dart';  
   
-              // ПОЛЕ ДЛЯ EMAIL  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
+      // Можно их использовать (например, отправить на сервер)      
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
+        ),  
+      ); 
+
+      // Очистить форму после успешной отправки  
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = '';  
+        _savedEmail = '';  
+      });
+
+    } else {
+        // Если форма не валидна, показываем ошибку
+        ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      ); 
+    }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+
+                // ДОБАВЛЯЕМ СОХРАНЕНИЕ ДАННЫХ
+                onSaved: (newValue) {  
+                  // Сохраняем значение в переменную состояния  
+                  _savedName = newValue ?? '';  
+                }, 
+              ),  
+
+              // ДОБАВЛЯЕМ ПОЛЕ ДЛЯ EMAIL
               TextFormField(  
                 decoration: InputDecoration(  
                   labelText: 'Email',  
@@ -1008,17 +2289,147 @@ class _TextFieldFormExampleState extends State<TextFieldFormExample> {
                   // Сохраняем значение Email  
                   _savedEmail = newValue ?? '';  
                 },  
+              ), 
+  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+
+
+// ----- ШАГ 8 -----
+import 'package:flutter/material.dart';  
+  
+class TextFieldFormExample extends StatefulWidget {  
+  const TextFieldFormExample({super.key});  
+  
+  @override  
+  State createState() => _TextFieldFormExampleState();  
+}  
+  
+class _TextFieldFormExampleState extends State {  
+  final TextEditingController _textController = TextEditingController();  
+  final _formKey = GlobalKey();  
+  
+  // 1 Добавим переменные для хранения данных формы  
+  String _savedName = '';  
+  String _savedEmail = '';  
+
+  // 2 ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ
+  
+  // Метод для обработки отправки формы с валидацией и сохранением данных  
+  void _submitForm() {  
+    if (_formKey.currentState!.validate()) {  
+      // Если все поля валидны, вызываем метод save() у формы  
+      // Это вызовет onSaved у каждого TextFormField в форме     
+      _formKey.currentState!.save(); 
+
+      // Теперь переменные _savedName и _savedEmail содержат введенные данные  
+      // Можно их использовать (например, отправить на сервер)      
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text('Всё ок! Имя: $_savedName, Email: $_savedEmail'),  
+        ),  
+      ); 
+
+      // Очистить форму после успешной отправки  
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = '';  
+        _savedEmail = '';  
+      });
+
+    } else {
+        // Если форма не валидна, показываем ошибку
+        ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text('Пожалуйста, исправьте ошибки в форме')),  
+      ); 
+    }  
+  }
+  
+  @override  
+  void dispose() {  
+    _textController.dispose();  
+    super.dispose();  
+  }  
+    
+  @override  
+  Widget build(BuildContext context) {  
+    return ListView(  
+      padding: const EdgeInsets.all(16.0),  
+      children: [  
+        Text(  
+          "Форма с валидацией",  
+          style: TextStyle(fontSize: 18),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: [ 
+             
+              // ПОЛЕ ДЛЯ ИМЕНИ  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Имя',  
+                  hintText: 'Введите ваше имя',  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  if (value == null ||  
+                      value.trim().isEmpty ||  
+                      value.length < 2) {  
+                    return 'Укажите имя размером не менее 2 символа';  
+                  }  
+                  return null;  
+                },  
+
+                // ДОБАВЛЯЕМ СОХРАНЕНИЕ ДАННЫХ
+                onSaved: (newValue) {  
+                  // Сохраняем значение в переменную состояния  
+                  _savedName = newValue ?? '';  
+                }, 
               ),  
-  
-              SizedBox(height: 20),  
-  
-              // КНОПКА ДЛЯ ОТПРАВКИ ФОРМЫ  
+
+              // ДОБАВЛЯЕМ ПОЛЕ ДЛЯ EMAIL
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: 'Email',  
+                  hintText: 'Введите ваш email',  
+                  border: OutlineInputBorder(),  
+                  prefixIcon: Icon(Icons.email),  
+                ),  
+                keyboardType: TextInputType.emailAddress, 
+                 
+                validator: (value) {  
+                  if (value == null || value.isEmpty) {  
+                    return 'Пожалуйста, введите email';  
+                  }  
+                  // Простая проверка формата Email  
+                  if (!value.contains('@') || !value.contains('.')) {  
+                    return 'Введите корректный email';  
+                  }  
+                  return null;  
+                },  
+                onSaved: (newValue) {  
+                  // Сохраняем значение Email  
+                  _savedEmail = newValue ?? '';  
+                },  
+              ), 
+
+              // ДОБАВЛЯЕМ КНОПКУ ДЛЯ ОТПРАВКИ ФОРМЫ
               Center(  
                 child: ElevatedButton(  
                   onPressed: _submitForm,  
                   child: Text('Отправить'),  
                 ),  
               ),  
+  
             ],  
           ),  
         ),  
@@ -1592,6 +3003,7 @@ class PhoneNumberFormatter extends TextInputFormatter {
     <script src="../../js/main.js"></script>
     <script src="../../js/slideshow.js"></script>
     <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
 
 </body>
 </html> 
