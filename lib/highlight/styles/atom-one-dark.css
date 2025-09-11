@@ -33,9 +33,9 @@ hue-6-2: #e6c07b
 .hljs-quote {
   color: black;
   padding: 2px 5px;
-  /* background-color: #88ff34; */
+  background-color: #89ff34e7;
   /* background-color: #7fd144; */
-  background-color: #40c3ff;
+  /* background-color: #40c3ff; */
   border-radius: 5px;
   font-style: italic
 }

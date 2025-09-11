@@ -152,6 +152,13 @@ code {
 .hljs-function { color: #795e26; }
 /* Add more classes as needed based on the chosen highlighting theme */
 
+/* Hide comment highlighting when comments-off class is applied */
+.comments-off .hljs-comment {
+    color: inherit;
+    font-style: normal;
+    opacity: inherit;
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -468,6 +475,14 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.newly-typed {
+    background-color: rgba(4, 170, 109, 0.12); /* Muted teal background */
+    border-radius: 4px;
+    /* This property ensures that background and borders are applied to each line of a multi-line span */
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
 }
 
 pre .hljs {

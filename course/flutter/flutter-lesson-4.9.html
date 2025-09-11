@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка приложения Sushi App. Часть 2</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Разработка приложения Sushi App. Часть 2</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Разработка приложения Sushi App. Часть 2</h1>
+        
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Форма авторизации</strong></h2>
+            
+            <div class="note-block">
+                <p>Продолжаем дорабатывать приложение по заказу роллов и суши. Сейчас мы создадим один из самых важных экранов любого приложения – <strong>экран входа (или авторизации)</strong></p>
+            </div>
+
+            <p>Что сделаем и чему научимся:</p>
+            <ol>
+                <li>Создадим новый экран <code class="code">login_screen.dart</code></li>
+                <li>Разместим на нем поля для ввода логина и пароля, а также кнопки "Войти" и "Зарегистрироваться".</li>
+                <li>Научимся "читать" данные из полей ввода.</li>
+                <li>Добавим проверку (валидацию): если поля пустые или данные неверны, пользователь не сможет войти.</li>
+                <li>При успешном входе – перенаправим пользователя на главный экран приложения.</li>
+            </ol>
+
+            <ul>
+                <li>Добавим в папку screens новый файл <code class="code">login_screen.dart</code></li>
+                <li>Добавим в него <code class="code">StatefulWidget</code> и назовём <code class="code">LoginScreen</code> это будет экран авторизации.</li>
+                <li>Сделаем первоначальную вёрстку. Добавим по центру экрана, <code class="code">SingleChildScrollView</code> в котором будет форма содержащая иконку-логотип, текстовое поле для логина, текстовое поле для пароля, кнопка войти и кнопка зарегистрироваться.</li>
+            </ul>
+
+            <img src="images/l4.9/form1.png" width="250" alt="1">
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">screens/login_screen.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart'; 
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key}); 
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState(); 
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  Widget build(BuildContext context) {
+    // Здесь мы будем описывать, как выглядит наш экран
+    // Пока что вернем простой контейнер
+    return Container();
+  }
+}
+</code></pre>
+
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Создание базовой структуры экрана</strong></h2>
+            
+            <p>Теперь давайте набросаем основные элементы на нашем экране. Мы хотим видеть:</p>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <img src="images/logo.png" width="100px" alt="Логотип приложения">
+                <ul style="margin: 0;">
+                    <li>Заголовок "Суши Shop" сверху.</li>
+                    <li>По центру: иконку-логотип (пока поставим стандартную), поля для логина и пароля, и две кнопки.</li>
+                </ul>
+            </div>
+
+
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">screens/login_screen.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// ----- ШАГ 0 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+
+        ),
+      ),
+    );
+  }
+}
+
+
+// ----- ШАГ 1 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          // Добавляем форму
+          child: Form(
+
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// ----- ШАГ 2 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          // Добавляем форму
+          child: Form(
+            // Добавляем Column
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// ----- ШАГ 3 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          // Добавляем форму
+          child: Form(
+            // Добавляем Column
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // Добавляем логотип
+                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                const SizedBox(height: 30), // Добавляем отступ
+
+
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// ----- ШАГ 4 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          // Добавляем форму
+          child: Form(
+            // Добавляем Column
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // Добавляем логотип
+                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                const SizedBox(height: 30), // Добавляем отступ
+
+                // Добавляем TextFormField для логина
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Логин',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// ----- ШАГ 5 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          // Добавляем форму
+          child: Form(
+            // Добавляем Column
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // Добавляем логотип
+                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                const SizedBox(height: 30), // Добавляем отступ
+
+                // Добавляем TextFormField для логина
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Логин',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                
+                // Добавляем TextFormField для пароля
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20),
+
+  
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// ----- ШАГ 6 -----
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Добавляем Scaffold и AppBar
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true, // Заголовок по центру
+        title: const Text('Суши Shop'),
+        // Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false, 
+      ),
+      // По центру будет прокручиваемый список
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          // Добавляем форму
+          child: Form(
+            // Добавляем Column
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // Добавляем логотип
+                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                const SizedBox(height: 30), // Добавляем отступ
+
+                // Добавляем TextFormField для логина
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Логин',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                
+                // Добавляем TextFormField для пароля
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20),
+
+                // Добавляем кнопки "Войти" и "Зарегистрироваться"
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    textStyle: const TextStyle(fontSize: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    )
+                  ),
+                  onPressed: () {},
+                  child: const Text('Войти'),
+                ),
+                const SizedBox(height: 10),
+
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('Зарегистрироваться'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>Обновление маршрутизации</strong></h2>
+            
+            <div class="note-block">
+                <h4>Обновление маршрутов</h4>
+                <p>В файле <code class="code">main.dart</code> исправим маршруты в таблице маршрутизации</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() => runApp(const RollApp());  
+  
+class RollApp extends StatelessWidget {  
+  const RollApp({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return MaterialApp(  
+      title: "Суши Shop", // Название приложения  
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+      ),  
+      initialRoute: '/login',  // ⭠ Начинаем с экрана входа 
+      routes: {  
+        '/login': (context) => const LoginScreen(), // ⭠ Вот наш экран входа
+        '/main': (context) => MainScreen(), 
+        '/detail': (context) => DetailRollScreen(), 
+        '/cart': (context) => CartScreen(), 
+      },  
+    );  
+  }  
+}
+</code></pre>
+
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Добавление логики авторизации</strong></h2>
+            
+            <p>Оживляем форму входа:</p>
+            <ul>
+                <li>Добавим контроллеры для управления текстовыми полями</li>
+                <li>Добавим глобальный ключ для всей формы (нужно для валидации)</li>
+                <li>Добавим тестовые временные логин и пароль</li>
+                <li>Сделаем методы валидаторы</li>
+            </ul>
+
+            <p>Для проверки мы временно создадим "правильные" логин и пароль прямо в коде.</p>
+
+            <div class="warning-block">
+                <h4>ВАЖНО</h4>
+                <p>Хранить логины и пароли вот так, прямо в коде (<code class="code">_correctLogin = "123";</code>), в настоящих, серьезных приложениях – это <strong>ОГРОМНАЯ ДЫРА В БЕЗОПАСНОСТИ!</strong></p>
+                <p>😱 Так делать <strong>категорически нельзя</strong> для приложений, которые будут использовать реальные люди.</p>
+                <p>Мы делаем это сейчас <strong>ТОЛЬКО для учебных целей</strong>, чтобы упростить пример. В реальном мире для аутентификации используются серверы и специальные безопасные протоколы.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">screens/login_screen.dart</code> - Добавление контроллеров и логики</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:sushi_shop_app/screens/main_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+@c_start_1
+  // ⟶ Создаем контроллеры для текстовых полей
+  // Каждый контроллер "привязывается" к своему TextFormField
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+@c_end_1
+@c_start_2
+  // ⟶ Создаем ключ для формы. Он позволит нам обращаться к состоянию Form.
+  final _formKey = GlobalKey<FormState>();
+@c_end_2
+@c_start_3
+  // ⟶ Переменная для хранения сообщения об ошибке. 
+  // Знак '?' означает, что _errorMessage может быть null
+  String? _errorMessage;
+@c_end_3
+@c_start_4
+  // ⟶  Для простоты, "правильные" логин и пароль
+  final String _correctLogin = "123";
+  final String _correctPassword = "123";
+@c_end_4
+@c_start_5
+  // ⟶ Функция для проверки введенных данных
+  void _login() {
+    setState(() {
+      _errorMessage = null; // Сброс сообщения об ошибке
+    });
+
+    if (_formKey.currentState!.validate()) {
+      if (_loginController.text.trim() == _correctLogin &&
+          _passwordController.text.trim() == _correctPassword) {
+        // Успешный вход
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      } else {
+        // Неверный логин или пароль
+        setState(() {
+          _errorMessage = "Неверный логин или пароль";
+        });
+      }
+    }
+  }
+@c_end_5
+@c_start_6
+  // ⟶ Функция для регистрации
+  void _register() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Регистрация ещё не реализована')),
+    );
+  }
+@c_end_6
+@c_start_7
+  // ⟶ Не забываем очистить контроллеры при закрытии экрана
+  @override
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+@c_end_7
+
+  @override
+  Widget build(BuildContext context) {
+   // ... весь остальной код ...
+  }
+
+}
+</code></pre>
+
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>Функция _login() - объяснение</strong></h2>
+            
+            <p><strong>Что делает функция _login()</strong></p>
+            <p>Функция, которая будет срабатывать при нажатии кнопки "Войти". Эта функция:</p>
+
+            <ol>
+                <li>Сбросит предыдущее сообщение об ошибке.</li>
+                <li>Запустит валидацию всех полей формы.</li>
+                <li>Если валидация прошла успешно:
+                    <ul>
+                        <li>Сравнит введенные данные с нашими "секретными" <code class="code">_correctLogin</code> и <code class="code">_correctPassword</code>.</li>
+                        <li>Если все совпало – ура! Переходим на главный экран. Для этого используем <code class="code">Navigator.pushReplacement</code>. Почему <code class="code">pushReplacement</code>? Он <em>заменяет</em> текущий экран (логина) новым (главным). Это значит, что пользователь не сможет нажать кнопку "назад" на телефоне и вернуться на экран логина после успешного входа.</li>
+                        <li>Если не совпало – покажем сообщение об ошибке.</li>
+                    </ul>
+                </li>
+                <li>Чтобы пользователь увидел изменения (например, новое сообщение об ошибке), нам нужно вызывать <code class="code">setState(() { ... })</code>. Эта команда говорит Flutter: "Эй, тут кое-что изменилось, перерисуй-ка экран!"</li>
+            </ol>
+
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2 style="display: inline;"><strong>Связываем все вместе в UI</strong></h2>
+            
+            <p>Мы подготовили всю логику, теперь нужно "привязать" ее к виджетам в методе <code class="code">build()</code>:</p>
+
+            <ol>
+                <li>Присвоить <code class="code">_formKey</code> нашему виджету <code class="code">Form</code>.</li>
+                <li>Присвоить <code class="code">_loginController</code> и <code class="code">_passwordController</code> соответствующим <code class="code">TextFormField</code>.</li>
+                <li>Добавить функции-валидаторы (<code class="code">validator</code>) для каждого <code class="code">TextFormField</code>.
+                    <ul>
+                        <li><strong>Как работает <code class="code">validator</code>?</strong> Это функция, которая принимает текущее значение поля (<code class="code">value</code>). Если значение корректно, функция должна вернуть <code class="code">null</code>. Если некорректно – она должна вернуть строку с текстом ошибки, которая отобразится под полем.</li>
+                    </ul>
+                </li>
+                <li>Отобразить наше сообщение <code class="code">_errorMessage</code> (если оно есть).</li>
+                <li>Привязать методы <code class="code">_login</code> и <code class="code">_register</code> к событиям <code class="code">onPressed</code> наших кнопок.</li>
+            </ol>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">screens/login_screen.dart</code> - Полная реализация UI</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Sushi Shop'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+@c_start_1
+            key: _formKey, // -> Добавляем ключ для формы
+@c_end_1
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Icon(
+                  Icons.food_bank_outlined,
+                  size: 100,
+                  color: Theme.of(context).primaryColor,
+                ),
+                const SizedBox(height: 30),
+
+                TextFormField(
+@c_start_2
+                  //-> Добавляем контроллер для текстового поля
+                  controller: _loginController,
+@c_end_2
+                  decoration: const InputDecoration(
+                    labelText: 'Логин',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+@c_start_3
+                  // -> Добавляем валидатор для текстового поля
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Пожалуйста, введите логин';
+                    }
+                    return null;
+                  },
+@c_end_3
+                ),
+
+                const SizedBox(height: 20),
+
+                TextFormField(
+@c_start_4
+                  // -> Добавляем контроллер для текстового поля
+                  controller: _passwordController,
+@c_end_4
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+@c_start_5
+                  // -> Добавляем валидатор для текстового поля
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Пожалуйста, введите пароль';
+                    }
+                    return null;
+                  },
+@c_end_5
+                ),
+
+                const SizedBox(height: 10),
+@c_start_6
+                // -> Выводим сообщение об ошибке, если оно есть
+                if (_errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Text(
+                      _errorMessage!,
+                      style: const TextStyle(color: Colors.red, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+@c_end_6
+                
+                const SizedBox(height: 20),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    textStyle: const TextStyle(fontSize: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+@c_start_7
+                  onPressed: _login, // -> Проверка авторизации
+@c_end_7
+                  child: const Text('Войти'),
+                ),
+
+                const SizedBox(height: 10),
+
+                TextButton(
+@c_start_8
+                  onPressed: _register, // -> Регистрация
+@c_end_8
+                  child: const Text('Зарегистрироваться'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+</code></pre>
+
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2 style="display: inline;"><strong>Демонстрация работы приложения</strong></h2>
+            
+            <p>Теперь можно протестировать наше приложение:</p>
+            <ul>
+                <li>Попробуй нажать "Войти", не вводя ничего. Должны появиться сообщения под полями.</li>
+                <li>Введи только логин, но не пароль.</li>
+                <li>Введи неверный логин/пароль (например, "test" / "test"). Должно появиться красное сообщение "Неверный логин или пароль".</li>
+                <li>Введи правильные данные ("123" / "123"). Ты должен перейти на другой экран (если <code class="code">MainScreen</code> настроен и существует, иначе приложение может выдать ошибку или ничего не сделать – это нормально на данном этапе, если <code class="code">MainScreen</code> еще не готов).</li>
+                <li>Нажми "Зарегистрироваться". Должно появиться сообщение внизу экрана.</li>
+            </ul>
+
+            <img src="images/l4.9/rolls-2.gif" width="250px" alt="Демонстрация формы авторизации">
+
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2 style="display: inline;"><strong>Полный код экрана авторизации</strong></h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">screens/login_screen.dart</code> - Финальная версия</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:sushi_shop_app/screens/main_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // ⟶ Создаем контроллеры для текстовых полей
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // ⟶ Создаем ключ для формы и переменную для сообщения об ошибке
+  final _formKey = GlobalKey<FormState>();
+  String? _errorMessage;
+
+  // ⟶  Для простоты, "правильные" логин и пароль
+  final String _correctLogin = "123";
+  final String _correctPassword = "123";
+
+  // ⟶ Функция для проверки введенных данных
+  void _login() {
+    setState(() {
+      _errorMessage = null; // Сброс сообщения об ошибке
+    });
+
+    if (_formKey.currentState!.validate()) {
+      if (_loginController.text.trim() == _correctLogin &&
+          _passwordController.text.trim() == _correctPassword) {
+        // Успешный вход
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      } else {
+        // Неверный логин или пароль
+        setState(() {
+          _errorMessage = "Неверный логин или пароль";
+        });
+      }
+    }
+  }
+
+  // ⟶ Функция для регистрации
+  void _register() {
+    // TODO: Реализовать логику регистрации
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Функция регистрации пока не реализована')),
+    );
+  }
+
+  // ⟶ Не забываем очистить контроллеры при закрытии экрана
+  @override
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Sushi Shop'),
+        // ⟶ Убираем кнопку назад, если это начальный экран
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+
+            key: _formKey, // ⟶ Добавляем ключ для формы
+
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Image.asset('assets/images/logo.png', width: 200, height: 200),
+                const SizedBox(height: 30),
+
+                TextFormField(
+                  // ⟶ Добавляем контроллер для текстового поля
+                  controller: _loginController,
+                  decoration: const InputDecoration(
+                    labelText: 'Логин',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                  // ⟶ Добавляем валидатор для текстового поля
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Пожалуйста, введите логин';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                TextFormField(
+                  // ⟶ Добавляем контроллер для текстового поля
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                    labelText: 'Пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+                  // ⟶ Добавляем валидатор для текстового поля
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Пожалуйста, введите пароль';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+                // ⟶ Выводим сообщение об ошибке, если оно есть
+                if (_errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Text(
+                      _errorMessage!,
+                      style: const TextStyle(color: Colors.red, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                const SizedBox(height: 20),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    textStyle: const TextStyle(fontSize: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: _login, // ⟶ Добавляем функцию провеки авторизации
+                  child: const Text('Войти'),
+                ),
+
+                const SizedBox(height: 10),
+
+                TextButton(
+                  onPressed: _register, // ⟶ Добавляем функцию регистрации
+                  child: const Text('Зарегистрироваться'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html> 

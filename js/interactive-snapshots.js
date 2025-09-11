@@ -28,6 +28,7 @@ class InteractiveSnapshots {
         this.currentStepIndex = 0;
         this.isAnimating = false;
         this.fullCodeRendered = false;
+        this.highlightedRange = null;
 
         // кнопки/счётчик
         this.prevButton = null;
@@ -126,43 +127,60 @@ class InteractiveSnapshots {
         return { insertAt: i, added };
     }
 
-    _renderHighlighted(text) {
-        this.element.innerHTML = hljs.highlight(text, { language: this.language, ignoreIllegals: true }).value;
+    _renderHighlighted(text, highlightRange = null) {
+        if (!highlightRange || highlightRange.from === highlightRange.to) {
+            this.element.innerHTML = hljs.highlight(text, { language: this.language, ignoreIllegals: true }).value;
+            return;
+        }
+        
+        const startLine = (text.slice(0, highlightRange.from).match(/\n/g) || []).length;
+        const endLine = (text.slice(0, highlightRange.to).match(/\n/g) || []).length;
+
+        const highlightedHtml = hljs.highlight(text, { language: this.language, ignoreIllegals: true }).value;
+        const lines = highlightedHtml.split('\n');
+
+        for (let i = startLine; i <= endLine; i++) {
+            if (lines[i] !== undefined) {
+                // Wrap the entire line content to apply background
+                lines[i] = `<span class="newly-typed">${lines[i]}</span>`;
+            }
+        }
+        this.element.innerHTML = lines.join('\n');
     }
 
-    _renderWithNextCursor(prevText, nextText) {
-        // 1) Определяем глобальную позицию начала вставки и ведущие whitespace добавляемого фрагмента
-        const { insertAt, added } = this._diffAddOnly(prevText, nextText);
-        const beforeInsert = prevText.slice(0, insertAt);
+    // Символьная разница: индекс первого расхождения
+    _findFirstDiffIndex(a, b) {
+        const minLen = Math.min(a.length, b.length);
+        for (let i = 0; i < minLen; i++) {
+            if (a.charAt(i) !== b.charAt(i)) return i;
+        }
+        return a.length === b.length ? -1 : minLen;
+    }
 
-        // Ведущий whitespace до первой видимой буквы добавления (под курсор)
-        // Разрешаем много переносов и пробельных символов (включая табы)
+    // Вычисляем позицию курсора с учётом ведущих переносов и отступов нового куска
+    _computeCursorPlacement(prevText, nextText) {
+        const { insertAt, added } = this._diffAddOnly(prevText, nextText);
         let leadingForCursor = '';
         for (let i = 0; i < added.length; i++) {
             const ch = added[i];
-            if (ch === '\n' || ch === ' ' || ch === '\t') {
-                leadingForCursor += ch;
-            } else {
-                break;
-            }
+            if (ch === '\n' || ch === ' ' || ch === '\t') leadingForCursor += ch; else break;
         }
-
-        // 2) Вычисляем итоговую позицию курсора после применения leadingForCursor к исходному тексту до вставки
-        const composite = beforeInsert + leadingForCursor;
-        const pointerLineIdx = composite.split('\n').length - 1;
+        const composite = prevText.slice(0, insertAt) + leadingForCursor;
+        const pointerLineIdx = (composite.match(/\n/g) || []).length;
         const lastNl = composite.lastIndexOf('\n');
         const pointerColumn = lastNl === -1 ? composite.length : (composite.length - lastNl - 1);
-
-        // Индент после последнего переноса в leadingForCursor (для новой строки)
         let indentAfterLastNewline = 0;
         {
             const parts = leadingForCursor.split('\n');
             const tail = parts.length > 1 ? parts[parts.length - 1] : (leadingForCursor.includes('\n') ? '' : leadingForCursor);
-            // tail содержит символы после последнего переноса, оставляем только пробелы/табы
             indentAfterLastNewline = (tail.match(/[ \t]+$/) || [''])[0].length;
         }
+        return { pointerLineIdx, pointerColumn, indentAfterLastNewline };
+    }
 
-        // 3) Рендерим исходный текст, вставляя курсор на pointerLineIdx/pointerColumn
+    _renderWithNextCursor(prevText, nextText) {
+        const { pointerLineIdx, pointerColumn, indentAfterLastNewline } = this._computeCursorPlacement(prevText, nextText);
+
         const prevLines = prevText.split('\n');
         const fragment = document.createDocumentFragment();
 
@@ -172,8 +190,7 @@ class InteractiveSnapshots {
             const lineSpan = document.createElement('span');
             lineSpan.style.whiteSpace = 'pre';
 
-            if (idx === pointerLineIdx && pointerLineIdx < prevLines.length) {
-                // Курсор внутри существующей строки
+            if (idx === pointerLineIdx) {
                 const col = Math.max(0, Math.min(pointerColumn, lineText.length));
                 const left = lineText.slice(0, col);
                 const right = lineText.slice(col);
@@ -184,12 +201,9 @@ class InteractiveSnapshots {
                     lineSpan.appendChild(leftSpan);
                 }
 
-                // Если курсор уходит правее конца строки из-за пробелов (без переноса), добавим недостающие пробелы
                 if (pointerColumn > lineText.length) {
                     const extraSpacesCount = pointerColumn - lineText.length;
-                    if (extraSpacesCount > 0) {
-                        lineSpan.appendChild(document.createTextNode(' '.repeat(extraSpacesCount)));
-                    }
+                    if (extraSpacesCount > 0) lineSpan.appendChild(document.createTextNode(' '.repeat(extraSpacesCount)));
                 }
 
                 const cursor = document.createElement('span');
@@ -202,7 +216,6 @@ class InteractiveSnapshots {
                     lineSpan.appendChild(rightSpan);
                 }
             } else {
-                // Обычная строка без курсора
                 const highlighted = hljs.highlight(lineText, { language: this.language, ignoreIllegals: true }).value;
                 const contentSpan = document.createElement('span');
                 contentSpan.innerHTML = highlighted.length ? highlighted : '\u200B';
@@ -212,14 +225,92 @@ class InteractiveSnapshots {
             fragment.appendChild(lineSpan);
         }
 
-        // 4) Если курсор должен быть на НОВОЙ строке (после последней исходной), добавим эту строку
+        // Курсор на новой строке после последней исходной
         if (pointerLineIdx >= prevLines.length) {
             fragment.appendChild(document.createTextNode('\n'));
             const newLine = document.createElement('span');
             newLine.style.whiteSpace = 'pre';
-            if (indentAfterLastNewline > 0) {
-                newLine.appendChild(document.createTextNode(' '.repeat(indentAfterLastNewline)));
+            if (indentAfterLastNewline > 0) newLine.appendChild(document.createTextNode(' '.repeat(indentAfterLastNewline)));
+            const cursor = document.createElement('span');
+            cursor.className = 'next-step-cursor';
+            newLine.appendChild(cursor);
+            fragment.appendChild(newLine);
+        }
+
+        this.element.innerHTML = '';
+        this.element.appendChild(fragment);
+    }
+
+    // Рендер текущего текста с подсветкой новых строк и курсором следующего шага
+    _renderHighlightedWithNextCursor(currentText, nextText, highlightRange = null) {
+        const { pointerLineIdx, pointerColumn, indentAfterLastNewline } = this._computeCursorPlacement(currentText, nextText);
+
+        const lines = currentText.split('\n');
+        const fragment = document.createDocumentFragment();
+
+        // Определим диапазон строк для подсветки
+        let startLine = -1;
+        let endLine = -1;
+        if (highlightRange && highlightRange.from !== undefined && highlightRange.to !== undefined) {
+            startLine = (currentText.slice(0, highlightRange.from).match(/\n/g) || []).length;
+            endLine = (currentText.slice(0, highlightRange.to).match(/\n/g) || []).length;
+        }
+
+        for (let idx = 0; idx < lines.length; idx++) {
+            if (idx > 0) fragment.appendChild(document.createTextNode('\n'));
+            const lineText = lines[idx];
+
+            const baseLine = document.createElement('span');
+            baseLine.style.whiteSpace = 'pre';
+
+            if (idx === pointerLineIdx) {
+                const col = Math.max(0, Math.min(pointerColumn, lineText.length));
+                const left = lineText.slice(0, col);
+                const right = lineText.slice(col);
+
+                if (left.length > 0) {
+                    const leftSpan = document.createElement('span');
+                    leftSpan.innerHTML = hljs.highlight(left, { language: this.language, ignoreIllegals: true }).value;
+                    baseLine.appendChild(leftSpan);
+                }
+
+                if (pointerColumn > lineText.length) {
+                    const extraSpacesCount = pointerColumn - lineText.length;
+                    if (extraSpacesCount > 0) baseLine.appendChild(document.createTextNode(' '.repeat(extraSpacesCount)));
+                }
+
+                const cursor = document.createElement('span');
+                cursor.className = 'next-step-cursor';
+                baseLine.appendChild(cursor);
+
+                if (right.length > 0) {
+                    const rightSpan = document.createElement('span');
+                    rightSpan.innerHTML = hljs.highlight(right, { language: this.language, ignoreIllegals: true }).value;
+                    baseLine.appendChild(rightSpan);
+                }
+            } else {
+                const highlighted = hljs.highlight(lineText, { language: this.language, ignoreIllegals: true }).value;
+                const contentSpan = document.createElement('span');
+                contentSpan.innerHTML = highlighted.length ? highlighted : '\u200B';
+                baseLine.appendChild(contentSpan);
             }
+
+            if (startLine !== -1 && endLine !== -1 && idx >= startLine && idx <= endLine) {
+                const wrap = document.createElement('span');
+                wrap.className = 'newly-typed';
+                wrap.appendChild(baseLine);
+                fragment.appendChild(wrap);
+            } else {
+                fragment.appendChild(baseLine);
+            }
+        }
+
+        // Курсор на новой строке после последней
+        if (pointerLineIdx >= lines.length) {
+            fragment.appendChild(document.createTextNode('\n'));
+            const newLine = document.createElement('span');
+            newLine.style.whiteSpace = 'pre';
+            if (indentAfterLastNewline > 0) newLine.appendChild(document.createTextNode(' '.repeat(indentAfterLastNewline)));
             const cursor = document.createElement('span');
             cursor.className = 'next-step-cursor';
             newLine.appendChild(cursor);
@@ -272,19 +363,35 @@ class InteractiveSnapshots {
                 const ch = document.createTextNode(added.charAt(i));
                 typingContainer.insertBefore(ch, cursor);
                 i++;
-                setTimeout(type, 5);
+                
+                // Прокручиваем к курсору во время печати каждые несколько символов
+                if (i % 10 === 0 || added.charAt(i - 1) === '\n') {
+                    this._ensureVisible();
+                }
+                
+                setTimeout(type, 1);
             } else {
                 // Удаляем курсор и перерисовываем целиком целевой шаг с подсветкой
                 typingContainer.remove();
-                this._renderHighlighted(nextText);
+
+                const highlightRange = { from: insertAt, to: insertAt + added.length };
+                this.highlightedRange = highlightRange;
+                
+                // Увеличиваем индекс ПЕРЕД проверкой следующего шага
                 this.currentStepIndex++;
+                
+                // Рендерим подсвеченный шаг и сразу добавляем курсор следующего шага поверх
+                if (this.currentStepIndex < this.steps.length - 1) {
+                    // Теперь используем правильный индекс для следующего шага
+                    this._renderHighlightedWithNextCursor(nextText, this.steps[this.currentStepIndex + 1], highlightRange);
+                } else {
+                    this._renderHighlighted(nextText, highlightRange);
+                }
+
                 this.isAnimating = false;
                 this._updateControls();
-                // Показать курсор для следующего шага, если он есть
-                if (this.currentStepIndex < this.steps.length - 1) {
-                    this._renderWithNextCursor(this.steps[this.currentStepIndex], this.steps[this.currentStepIndex + 1]);
-                }
-                this._ensureVisible();
+                // Убираем вызов _ensureVisible() в конце анимации
+                // this._ensureVisible();
             }
         };
         type();
@@ -293,6 +400,7 @@ class InteractiveSnapshots {
 
     previousStep() {
         if (this.isAnimating || this.currentStepIndex <= 0) return;
+        this.highlightedRange = null;
         this.currentStepIndex--;
         // Вернуться к предыдущему и показать курсор следующего
         this._renderStep(this.currentStepIndex, { placeCursorForNext: true });
@@ -301,11 +409,13 @@ class InteractiveSnapshots {
     reset() {
         this.isAnimating = false;
         this.fullCodeRendered = false;
+        this.highlightedRange = null;
         this._renderStep(0, { placeCursorForNext: true });
     }
 
     showAll() {
         this.fullCodeRendered = true;
+        this.highlightedRange = null;
         const finalText = this.steps[this.steps.length - 1];
         this._renderHighlighted(finalText);
         this.currentStepIndex = this.steps.length - 1;
@@ -313,14 +423,24 @@ class InteractiveSnapshots {
     }
 
     _ensureVisible() {
-        const pre = this.element.parentElement; // <pre>
-        if (!pre) return;
-        const rect = pre.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const buffer = 20;
-        if (rect.bottom > vh - buffer) {
-            pre.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+        // Ищем активный курсор печати
+        const typingCursor = this.element.querySelector('.typing-cursor');
+        if (typingCursor) {
+            // Прокручиваем к активному курсору печати
+            const cursorRect = typingCursor.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const buffer = 100; // Увеличиваем буфер для лучшей видимости
+            
+            // Проверяем, виден ли курсор на экране
+            if (cursorRect.top < buffer || cursorRect.bottom > vh - buffer) {
+                typingCursor.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center', 
+                    inline: 'nearest' 
+                });
+            }
         }
+        // Убираем fallback к прокрутке всего блока кода
     }
 }
 

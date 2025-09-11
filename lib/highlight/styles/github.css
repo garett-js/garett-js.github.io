@@ -67,9 +67,9 @@ code.hljs {
   /* prettylights-syntax-comment */
   color: black;
   padding: 2px 5px;
-  /* background-color: #88ff34; */
+  background-color: #89ff34be;
   /* background-color: #7fd144; */
-  background-color: #40c3ffb6;
+  /* background-color: #40c3ffb6; */
   border-radius: 5px;
   font-style: italic
 }

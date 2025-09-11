@@ -57,7 +57,7 @@
         
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.checked = true; // Comments are on by default
+        checkbox.checked = false; // Comments are off by default
 
         const slider = document.createElement('span');
         slider.className = 'slider round';
@@ -70,9 +70,12 @@
 
         // --- Tooltip for comment switch ---
         const updateTooltip = () => {
-            switchContainer.title = checkbox.checked ? 'Выкл. подсветку комментариев' : 'Вкл. подсветку комментариев';
+            switchContainer.title = checkbox.checked ? 'Скрыть комментарии' : 'Показать комментарии';
         };
         updateTooltip(); // Set initial tooltip
+
+        // Apply initial state - comments off by default
+        preBlock.classList.toggle('comments-off', !checkbox.checked);
 
         checkbox.addEventListener('change', () => {
             preBlock.classList.toggle('comments-off', !checkbox.checked);

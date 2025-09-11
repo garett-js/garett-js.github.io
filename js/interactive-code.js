@@ -35,6 +35,7 @@ class InteractiveCode {
         this.isAnimating = false;
         this.fullCodeRendered = false;
         this.nextStepCursorEl = null;
+        this.highlightedStepElement = null; // To track the currently highlighted step
 
         // Prevent highlight.js from auto-processing this block, as we'll handle it manually.
         this.element.classList.add('hljs');
@@ -290,7 +291,17 @@ class InteractiveCode {
             this.isAnimating = false;
             this.updateControls();
             this.addNextStepCursor();
-            this.ensureCodeVisible();
+            // Убираем вызов ensureCodeVisible() в конце анимации
+            // this.ensureCodeVisible();
+
+            // --- Highlighting Logic ---
+            // Remove highlight from the previous step
+            if (this.highlightedStepElement) {
+                this.highlightedStepElement.classList.remove('newly-typed');
+            }
+            // Add highlight to the current step
+            targetElement.classList.add('newly-typed');
+            this.highlightedStepElement = targetElement;
         };
 
         if (step.type === 'step') {
@@ -328,16 +339,24 @@ class InteractiveCode {
     }
 
     ensureCodeVisible() {
-        const preElement = this.element.parentElement;
-        if (!preElement) return;
-
-        const preRect = preElement.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        const buffer = 20; 
-
-        if (preRect.bottom > viewportHeight - buffer) {
-            preElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+        // Ищем активный курсор печати
+        const typingCursor = this.element.querySelector('.typing-cursor');
+        if (typingCursor) {
+            // Прокручиваем к активному курсору печати
+            const cursorRect = typingCursor.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const buffer = 100; // Увеличиваем буфер для лучшей видимости
+            
+            // Проверяем, виден ли курсор на экране
+            if (cursorRect.top < buffer || cursorRect.bottom > vh - buffer) {
+                typingCursor.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center', 
+                    inline: 'nearest' 
+                });
+            }
         }
+        // Убираем fallback к прокрутке всего блока кода
     }
 
     getShellContent(stepNode) {
@@ -357,6 +376,12 @@ class InteractiveCode {
             return;
         }
         
+        // Remove highlight from the step we are leaving
+        if (this.highlightedStepElement) {
+            this.highlightedStepElement.classList.remove('newly-typed');
+            this.highlightedStepElement = null;
+        }
+
         const step = this.steps[this.currentStepIndex];
         const targetElement = document.getElementById(step.elementId);
         targetElement.innerHTML = '';
@@ -370,6 +395,13 @@ class InteractiveCode {
         this.isAnimating = false;
         this.fullCodeRendered = false;
         this.removeNextStepCursor();
+
+        // Clear any existing highlight
+        if (this.highlightedStepElement) {
+            this.highlightedStepElement.classList.remove('newly-typed');
+        }
+        this.highlightedStepElement = null;
+
         this.parseAndRenderInitialState();
         this.addNextStepCursor();
     }
@@ -378,6 +410,12 @@ class InteractiveCode {
         this.fullCodeRendered = true;
         this.isAnimating = false;
         this.removeNextStepCursor();
+
+        // Clear any existing highlight
+        if (this.highlightedStepElement) {
+            this.highlightedStepElement.classList.remove('newly-typed');
+        }
+        this.highlightedStepElement = null;
 
         let finalCode = '';
         const buildFinalCode = (nodes) => {
@@ -415,7 +453,13 @@ class InteractiveCode {
                 const charNode = document.createTextNode(text.charAt(i));
                 element.insertBefore(charNode, cursor);
                 i++;
-                setTimeout(typing, 10); // typing speed
+                
+                // Прокручиваем к курсору во время печати каждые несколько символов
+                if (i % 10 === 0 || text.charAt(i - 1) === '\n') {
+                    this.ensureCodeVisible();
+                }
+                
+                setTimeout(typing, 1); // typing speed
             } else {
                 element.removeChild(cursor);
                 
