@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Практические задания - Урок 2: Python</title>
+    <title>Решения к практическим заданиям - Урок 2: Python</title>
     <link rel="icon" type="image/png" href="images/ico.svg">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
@@ -13,17 +13,17 @@
 <body>
 
     <nav id="side-menu">
-        <h3><a href="python-lesson-2.html" class="back-link">←</a> Практика: Урок 2</h3>
+        <h3><a href="python-lesson-2-praktika.html" class="back-link">←</a> Решения: Урок 2</h3>
         <ul>
             <!-- Ссылки будут добавлены сюда динамически -->
         </ul>
     </nav>
 
     <div id="main-content">
-        <h1>Практические задания - Урок 2: Переменные и константы</h1>
+        <h1>Решения к практическим заданиям - Урок 2: Переменные и константы</h1>
 
         <div class="note">
-            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.py</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+            <p><strong>Инструкция:</strong> Ниже представлены возможные решения для практических задач. Сравните их со своим кодом, чтобы проверить себя и узнать новые подходы.</p>
         </div>
 
         <section id="section-1" class="lesson-section">
@@ -44,6 +44,16 @@
             </div>
             <pre><code class="bash">Введите ваше имя: Гаретт
 Привет, Гаретт!</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python"># Запрашиваем имя пользователя
+user_name = input("Введите ваше имя: ")
+
+# Выводим приветствие, используя f-строку
+print(f"Привет, {user_name}!")
+</code></pre>
         </section>
 
         <section id="section-2" class="lesson-section">
@@ -62,6 +72,20 @@
             <div class="note">
                 <p><strong>Подсказка:</strong> Формула площади треугольника: (основание * высота) / 2.</p>
             </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python"># Задаем основание и высоту
+base = 5
+height = 10
+
+# Рассчитываем площадь
+area = (base * height) / 2
+
+# Выводим результат
+print(f"Площадь треугольника с основанием {base} и высотой {height} равна {area}")
+</code></pre>
         </section>
 
         <section id="section-3" class="lesson-section">
@@ -74,6 +98,29 @@
             </div>
             <pre><code class="bash">До обмена: a = 15, b = 30
 После обмена: a = 30, b = 15</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python"># Исходные значения
+a = 15
+b = 30
+print(f"До обмена: a = {a}, b = {b}")
+
+# Способ 1: "Не питонический" (через временную переменную)
+temp = a
+a = b
+b = temp
+print(f"После обмена (не питонический): a = {a}, b = {b}")
+
+# Вернем значения для второго способа
+a = 15
+b = 30
+
+# Способ 2: "Питонический" (множественное присваивание)
+a, b = b, a
+print(f"После обмена (питонический): a = {a}, b = {b}")
+</code></pre>
         </section>
 
         <section id="section-4" class="lesson-section">
@@ -86,6 +133,22 @@
             </div>
             <pre><code class="bash">Оценки: Математика=5, Физика=4, Информатика=5
 Средний балл: 4.66666...</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python"># Оценки по предметам
+math_grade = 5
+physics_grade = 4
+informatics_grade = 5
+
+# Расчет среднего балла
+average_grade = (math_grade + physics_grade + informatics_grade) / 3
+
+# Вывод результатов
+print(f"Оценки: Математика={math_grade}, Физика={physics_grade}, Информатика={informatics_grade}")
+print(f"Средний балл: {average_grade}")
+</code></pre>
         </section>
 
         <section id="section-5" class="lesson-section">
@@ -96,6 +159,24 @@
             <div class="note">
                 <p><strong>Подсказка:</strong> Используйте арифметические операции <code class="code">+</code> для сложения.</p>
             </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python"># Объявляем первую переменную
+var1 = 10
+
+# Вторая переменная на 3 больше первой
+var2 = var1 + 3
+
+# Третья переменная - сумма первых двух
+var3 = var1 + var2
+
+# Выводим значения всех переменных
+print(f"Первая переменная: {var1}")
+print(f"Вторая переменная: {var2}")
+print(f"Третья переменная: {var3}")
+</code></pre>
         </section>
 
         <section id="section-6" class="lesson-section">
@@ -110,6 +191,49 @@
             <div class="note">
                 <p><strong>Подсказка:</strong> Используйте дополнительные переменные для временного хранения значений. Выведите значения переменных до и после обмена.</p>
             </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python"># Исходные значения
+a = 10
+b = 20
+c = 30
+print(f"Исходные значения: a={a}, b={b}, c={c}\n")
+
+# --- Схема А ---
+# b -> c, a -> b, c -> a (новые b,a,c получают значения старых c,b,a)
+# Чтобы сохранить исходные значения, используем временные переменные
+old_a = a
+old_b = b
+old_c = c
+
+a_a = old_b
+b_a = old_c
+c_a = old_a
+print(f"Схема А (через доп. переменные): a={a_a}, b={b_a}, c={c_a}")
+
+# Питонический способ для схемы А
+a_py, b_py, c_py = 10, 20, 30
+a_py, b_py, c_py = b_py, c_py, a_py
+print(f"Схема А (питонический способ):    a={a_py}, b={b_py}, c={c_py}\n")
+
+
+# --- Схема Б ---
+# b -> a, c -> b, a -> c (новые b,c,a получают значения старых a,b,c)
+old_a = a
+old_b = b
+old_c = c
+
+b_b = old_a
+c_b = old_b
+a_b = old_c
+print(f"Схема Б (через доп. переменные): a={a_b}, b={b_b}, c={c_b}")
+
+# Питонический способ для схемы Б
+a_py, b_py, c_py = 10, 20, 30
+a_py, b_py, c_py = c_py, a_py, b_py
+print(f"Схема Б (питонический способ):    a={a_py}, b={b_py}, c={c_py}")
+</code></pre>
         </section>
 
         <section id="section-7" class="lesson-section">
@@ -125,6 +249,40 @@
             <div class="note">
                 <p><strong>Подсказка:</strong> Используйте промежуточные переменные для хранения результатов умножения. Например, для <code class="code">a⁴</code>: сначала <code class="code">a²</code>, затем <code class="code">(a²)²</code>.</p>
             </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            <pre><code class="python">a = 2
+print(f"Исходное число a = {a}\n")
+
+# а) a^4 за 2 операции
+# a^2 = a * a
+# a^4 = a^2 * a^2
+a2 = a * a      # Операция 1
+a4 = a2 * a2    # Операция 2
+print(f"a^4 = {a4} (за 2 операции)")
+
+# б) a^6 за 3 операции
+# a^2 = a * a
+# a^3 = a^2 * a
+# a^6 = a^3 * a^3
+a2 = a * a      # Операция 1
+a3 = a2 * a     # Операция 2
+a6 = a3 * a3    # Операция 3
+print(f"a^6 = {a6} (за 3 операции)")
+
+# в) a^7 за 4 операции
+# a^2 = a * a
+# a^4 = a^2 * a^2
+# a^6 = a^4 * a^2
+# a^7 = a^6 * a
+a2 = a * a      # Операция 1
+a4 = a2 * a2    # Операция 2
+a6_v2 = a4 * a2 # Операция 3
+a7 = a6_v2 * a  # Операция 4
+print(f"a^7 = {a7} (за 4 операции)")
+</code></pre>
         </section>
 
         <button id="scrollToTop" title="Наверх"></button>
