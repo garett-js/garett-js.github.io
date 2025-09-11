@@ -33,7 +33,9 @@ hue-6-2: #e6c07b
 .hljs-quote {
   color: black;
   padding: 2px 5px;
-  background-color: #88ff34;
+  /* background-color: #88ff34; */
+  /* background-color: #7fd144; */
+  background-color: #40c3ff;
   border-radius: 5px;
   font-style: italic
 }
@@ -90,4 +92,14 @@ hue-6-2: #e6c07b
 }
 .hljs-link {
   text-decoration: underline
+}
+
+/* Custom toggle for comment highlighting */
+pre.comments-off .hljs-comment,
+pre.comments-off .hljs-quote {
+  background-color: transparent !important;
+  color: #818896 !important; /* mono-2 */
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-style: italic !important;
 }

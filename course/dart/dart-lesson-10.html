@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 10: Словари (Map) в Dart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <link rel="stylesheet" href="slideshow.css">
+    <script src="highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 10: Словари (Map)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Словари (Map) в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Проблема хранения связанных данных в списках</h2>
+            <p>Возьмём обычный школьный журнал. В нем есть список учеников, и для каждого ученика оценки по разным предметам. Как можно связать ученика с его оценками, используя списки и переменные?</p>
+            
+            <h4>Пробуем хранить данные в списках:</h4>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Поиск оценок в списках</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  List<String> students = ['Аня', 'Боря', 'Наташа', 'Глеб', 'Даша'];
+  List<List<int>> studentGrades = [
+    [5, 4, 5], // Оценки Ани по Математике, Физике, Информатике
+    [3, 5, 4], // Оценки Бори
+    [5, 5, 5], // Оценки Наташи
+    [4, 3, 4], // Оценки Глеба
+    [5, 4, 3], // Оценки Даши
+  ];
+
+  String student = 'Наташа';
+
+  // Узнать оценки ученика
+  int indexOfStudent = -1; // Переменная для хранения индекса
+  for (int i = 0; i < students.length; i++) {
+    if (students[i] == student) {
+      indexOfStudent = i;
+      break; // Если нашли, то выходим из цикла
+    }
+  }
+
+  if (indexOfStudent != -1) {
+    print('$student: ${studentGrades[indexOfStudent]}');
+  } else {
+    print('Ученик $student не найден.');
+  }
+}</code></pre>
+            <p>Результат: <code>Наташа: [5, 5, 5]</code></p>
+            
+            <div class="note">
+                <p><strong>Почему это "плохо"?</strong></p>
+                <p>На первый взгляд это работает. Но давайте подумаем о <strong>производительности</strong> и <strong>удобстве</strong>.</p>
+                <ol>
+                    <li><strong>Производительность (Скорость поиска):</strong> Когда мы ищем "Наташу", нам приходится перебирать весь список `students` элемент за элементом. Если учеников 5, это быстро, а если 5 000 000? Это очень долго и не производительно!</li>
+                    <li><strong>Связь данных:</strong> Приходится поддерживать два отдельных списка, где соответствие держится только за счет одинаковых индексов. Это хрупко и подвержено ошибкам.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Введение в Map (Словари)</h2>
+            <p>Сейчас мы погрузимся в одну из самых мощных и часто используемых структур данных – <strong>Map, или словари (хеши, карты)</strong>.</p>
+            <div class="note">
+                <h4>Словари (Map)</h4>
+                <p><strong>Map</strong> это объект, который представляет собой коллекцию пар <strong><code>ключ</code>-<code>значение</code></strong>. Представьте себе Телефонные Контакты: у каждого телефона (уникального ключа) есть свое определение (значение). Ключ уникален, и по нему вы можете быстро найти соответствующее значение.</p>
+            </div>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Пример телефонной книги</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  // Представьте себе телефонную книгу: 
+  // Имя (ключ) -> Номер телефона (значение)
+  Map<String, String> phoneBook = {
+    'Маша': '+7 911 987 65 43',
+    'Артём': '+7 922 555 11 22',
+  };
+    
+  // Получаем значение по ключу
+  print('Телефон Маши: ${phoneBook['Маша']}'); 
+    
+  // Обновляем номер Маши
+  phoneBook['Маша'] = '+7 900 777 88 99';
+  print('Новый телефон Маши: ${phoneBook['Маша']}');
+  
+  // Добавляем новый контакт
+  phoneBook['Юля'] = '+7 933 444 00 11'; 
+  print('Телефон Юли: ${phoneBook['Юля']}');
+  
+  // Если нет значения в словаре, то будет null
+  print('Телефон Джигана: ${phoneBook['Джиган']}');
+
+  print('Вся телефонная книга: $phoneBook');
+}</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Производительность и Хеш-таблицы</h2>
+            <div class="note">
+                <p><strong>Очень быстрый поиск, добавление и удаление данных.</strong></p>
+                <p>В отличие от списков (List), Map позволяет найти нужное значение практически мгновенно! Это называется <strong>O(1) – Константное время</strong>. Время поиска не зависит от количества элементов.</p>
+            </div>
+            <p>Map в Dart реализован на основе <strong>хеш-таблиц</strong>. При добавлении пары "ключ-значение", Dart вычисляет **хеш-код (hashCode)** ключа, находит на его основе индекс во внутреннем массиве и помещает туда данные. Это обеспечивает мгновенный доступ.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Вложенные Map: Map внутри Map</h2>
+            <p>Представьте, что нужно хранить не просто один кусок информации, связанный с ключом, а целую группу связанных данных. В таком случае используются <strong>вложенные Map</strong>. Это когда значением одной Map является другая Map.</p>
+            <p>Допустим, у нас есть интернет-магазин, и мы хотим хранить информацию о различных товарах. Для каждого товара нам нужен артикул - уникальный идентификатор (ID), а затем для этого ID набор характеристик: название, цена, количество на складе и категория.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Каталог товаров</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Map<String, Map<String, dynamic>> products = {
+    '123456': {
+      'name': 'iPhone 20',
+      'price': 170000,
+      'stock': 15,
+      'category': 'Электроника',
+    },
+    '987654': {
+      'name': 'Механическая клавиатура FlutterSwitch',
+      'price': 40000,
+      'stock': 50,
+      'category': 'Периферия',
+    },
+    '741258': {
+      'name': 'Игровая мышь GigaClick',
+      'price': 5000,
+      'stock': 30,
+      'category': 'Периферия',
+    },
+  };
+
+  // Доступ к данным
+  Map<String, dynamic>? phone = products['123456'];
+  if (phone != null) {
+    print('Название: ${phone['name']}');
+  }
+
+  // Обновление
+  products['123456']!['stock'] = 14;
+
+  // Добавление
+  products['963258'] = {
+    'name': 'Монитор UltraView 120"',
+    'price': 100000,
+    'stock': 10,
+    'category': 'Электроника',
+  };
+}</code></pre>
+            <img src="images/l10/map-in-json.png" alt="JSON и Map" width="300">
+            <div class="note">
+                <h4>Где это применяется?</h4>
+                <ol>
+                    <li><strong>JSON-данные (очень часто!):</strong> Стандарт для обмена данными в вебе через API.</li>
+                    <li><strong>Файлы с настройками.</strong></li>
+                    <li><strong>Базы данных "ключ-значение" (NoSQL).</strong></li>
+                    <li><strong>Сложные объекты без создания классов.</strong></li>
+                </ol>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="slideshow.js"></script>
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            try {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                    block.removeAttribute('data-highlighted');
+                    hljs.highlightElement(block);
+                });
+            } catch (e) {
+                console.error("Highlight.js error:", e);
+            }
+        }
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const menuLinks = document.querySelectorAll('#side-menu a');
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            menu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (sections.length > 0) {
+                showSection(sections[0].id);
+            }
+        });
+    </script>
+
+</body>
+</html> 

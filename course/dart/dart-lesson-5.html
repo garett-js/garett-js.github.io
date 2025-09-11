@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Условные конструкции в Dart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <link rel="stylesheet" href="slideshow.css">
+    <script src="highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 5: Условные конструкции</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Условные конструкции в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условные конструкции if-else</h2>
+            <img src="images/l5/control-flow.png" alt="Поток выполнения">
+            <p>Обычно программный код выполняется последовательно `сверху вниз`, строчка за строчкой, как мы его написали (поток выполнения).</p>
+            <p>Бывают ситуации, когда этим последовательным потоком нужно управлять. Например, при каком-то условии поток нужно направить в другом направлении, или вернуться и повторить какие-то действия. Для этого существуют операторы управления потоком.</p>
+            
+            <h3>Условные конструкции `if-else`</h3>
+            <p>Условные выражения позволяют программе выполнять различные вычисления в зависимости от значения логического выражения.</p>
+            <p>Для того чтобы компьютер мог менять порядок действий и выполнять их не только в том порядке, в котором они напечатаны, используются условные выражения.</p>
+            <p>Условные операторы позволяют в зависимости от условия, одну часть кода выполнить, а другую часть кода, наоборот, не трогать.</p>
+            <img src="images/l5/if-else-if-schema.png" alt="Схема if-else-if">
+            <img src="images/l5/logic-3.gif" alt="Логика if-else">
+
+            <h4>Условие `Если То`</h4>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Условие if</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int time = 45;
+
+// Если условие Истина, то выполнить код внутри { }
+
+if (time == 45) {
+  print("Делаем перерыв");
+}
+            </code></pre>
+            <pre><code>В результате будет "Делаем перерыв"</code></pre>
+
+            <h4>Условие `Если Иначе`</h4>
+            <p>Выполняется `только один` из блоков кода в зависимости от условия.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Условие if-else</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int time = 15;
+
+// Если условие ИСТИНА, то выполнить блок в { }
+// А иначе выполнить блок в else { }
+
+if (time < 45) {
+  print("Изучаем теорию");
+} else {
+  print("Либо отдыхаем либо практикуемся");
+}
+            </code></pre>
+            <pre><code>В результате будет "Изучаем теорию"</code></pre>
+            <img src="images/l5/if-else-diagram.png" alt="Диаграмма if-else" width="500">
+            <img src="images/l5/if-else-example.png" alt="Пример if-else" width="500">
+
+            <h4>Условие `Если Иначе Если`</h4>
+            <img src="images/l5/if-else.gif" alt="Гифка if-else">
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Условие if-else-if</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int time = 60;
+
+// Если условие ИСТИНА, то выполнить блок в { }
+// А иначе если новое условие, то выполнить блок там
+// и т.д. для всех подобных блоков
+
+if (time < 45) {
+  print("Изучаем теорию");
+} else if (time > 45) {
+  print("Выполняем практику");
+} else {
+  print("Отдыхаем");
+}
+            </code></pre>
+            <pre><code>В результате будет "Выполняем практику"</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условная проверка диапазонов</h2>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проверка диапазона</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int time = 14;
+
+// Истина - время в диапазоне от 8 до 22
+
+if (time >= 8 && time <= 22) {
+  print("Пятёрочка открыта 😁");
+} else {
+  print("Пятёрочка закрыта 😒");
+}
+            </code></pre>
+            <pre><code>В результате будет "Пятёрочка открыта 😁"</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Тернарный оператор</h2>
+            <img src="images/l5/ternary-operator.png" alt="Тернарный оператор">
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Тернарный оператор</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int time = 10;
+
+String res = (time >= 8 && time <= 22) ? "Открыто" : "Закрыто";
+
+print(res); // Открыто
+            </code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Конструкция switch-case</h2>
+            <div class="note">
+                <p><strong>switch-case</strong></p>
+                <p>Предоставляет удобный способ выбрать один из нескольких возможных вариантов выполнения кода в зависимости от значения выражения.</p>
+                <p>Это особенно полезно, когда нужно обработать множество альтернативных вариантов для значения <code>одной</code> переменной.</p>
+            </div>
+            <p><strong>Простая конструкция `switch-case` для целых чисел</strong></p>
+            <p>Здесь проверяется значение переменной `day`, и выполняется соответствующий блок кода в зависимости от дня недели.</p>
+            <p>Блок `default` выполняется, если ни одно из условий не выполнено. Это полезно для обработки всех оставшихся случаев.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - switch-case для чисел</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+  int day = 3;
+
+  switch (day) {
+    case 1:
+      print("Понедельник");
+    case 2:
+      print("Вторник");
+    case 3:
+      print("Среда");
+    case 4:
+      print("Четверг");
+    case 5:
+      print("Пятница");
+    case 6:
+      print("Суббота");
+    case 7:
+      print("Воскресенье");
+    default:
+      print("Неверный день");
+  }
+}
+            </code></pre>
+            <pre><code>В результате будет "Среда"</code></pre>
+            <p>Сопоставить несколько значений в case, пройти сквозь значения.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - switch-case для строк</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+  String day = "Суббота";
+  
+  // Сопоставить несколько значений в case, пройти сквозь значения
+  
+  switch (day) {
+    case "Суббота":
+    case "Воскресенье":
+      print("Выходной день");
+    case "Понедельник":
+    case "Вторнк":
+    case "Среда":
+    case "Четверг":
+    case "Пятница":
+      print("Рабочий день");
+    default:
+      print("Неизвестный день");
+  }
+}
+            </code></pre>
+            <pre><code>В результате будет "Выходной день"</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            try {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                    block.removeAttribute('data-highlighted');
+                    hljs.highlightElement(block);
+                });
+            } catch (e) {
+                console.error("Highlight.js error:", e);
+            }
+        }
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const menuLinks = document.querySelectorAll('#side-menu a');
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            menu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (sections.length > 0) {
+                showSection(sections[0].id);
+            }
+        });
+    </script>
+    <script src="slideshow.js"></script>
+
+</body>
+</html> 

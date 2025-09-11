@@ -39,6 +39,40 @@
          console.error("Highlight.js error:", e);
      }
      
+     // Add comment toggle switches to all <pre> blocks
+    document.querySelectorAll('pre > code').forEach(codeBlock => {
+        const preBlock = codeBlock.parentElement;
+        
+        preBlock.style.position = 'relative';
+
+        const switchContainer = document.createElement('div');
+        switchContainer.className = 'comment-switch-container';
+
+        const switchText = document.createElement('span');
+        switchText.textContent = 'Подсветка комментариев';
+        switchContainer.appendChild(switchText);
+
+        const switchLabel = document.createElement('label');
+        switchLabel.className = 'comment-switch';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = true; // Comments are on by default
+
+        const slider = document.createElement('span');
+        slider.className = 'slider round';
+
+        switchLabel.appendChild(checkbox);
+        switchLabel.appendChild(slider);
+        switchContainer.appendChild(switchLabel);
+
+        preBlock.appendChild(switchContainer);
+
+        checkbox.addEventListener('change', () => {
+            preBlock.classList.toggle('comments-off', !checkbox.checked);
+        });
+    });
+
      const menu = document.querySelector('#side-menu ul');
      const sections = document.querySelectorAll('.lesson-section');
      const headers = document.querySelectorAll('#main-content h2');

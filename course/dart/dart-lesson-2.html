@@ -13,7 +13,7 @@
 <body>
 
     <nav id="side-menu">
-        <h3>Урок 2: Переменные и константы</h3>
+        <h3><a href="index.html" class="back-link">←</a> Урок 2: Переменные и константы</h3>
         <ul>
             <!-- Ссылки будут добавлены сюда динамически -->
         </ul>
@@ -31,6 +31,7 @@
                 <p>Переменная - это область памяти, где можно хранить и изменять данные.</p>
                 <p>У переменной всегда есть название (<code class="code">имя переменной</code>)</p>
             </div>
+            <img src="images/l2/var.png" alt="Шаблон письма" >
             <div class="note">
                 <p><strong>Переменная как коробка</strong></p>
                 <p>Можно представить переменную как <code class="code">коробку</code>, внутри которой находится значение.</p>
@@ -52,13 +53,11 @@
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
   print(42); // Целое число 42
   print(42 + 7); // Сложим два целых числа
   print("Привет, Dart"); // Напечатаем строку
-}
-            </code></pre>
+}</code></pre>
             <p>Рассмотрим аналогию</p>
             
             <p><em>Письмо для человека, с которым мы недавно познакомились</em></p>
@@ -78,6 +77,8 @@ void main() {
                 <p><strong>Шаблон письма</strong></p>
                 <p><em>Привет { <code class="code">имя</code> } , было приятно встретиться с тобой сегодня в { <code class="code">место встречи</code> }.<br>С нетерпением жду встречи в { <code class="code">дата</code> } . Хорошего дня!</em></p>
             </div>
+
+            <img src="images/l2/var_template.png" alt="Шаблон письма">
             <p>Создание приложения похоже на этот процесс. Некоторые данные заменяются переменными, тогда как другие части приложения остаются неизменными.</p>
         </section>
 
@@ -94,25 +95,27 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
   String name = "Юля"; // Объявляем строковую переменную
   print(name); // Вызываем переменную
-}
-            </code></pre>
-            <img src="images/l2/code_execution_result.png" alt="Результат выполнения кода" width="500">
+}</code></pre>
+            <img src="images/l2/code_execution_result.png" alt="Результат выполнения кода" width="600">
             <div class="note">
                 <p><strong>Объявление переменной</strong></p>
-                <p>При определении переменной присваиваем ей <code>уникальное имя</code> для идентификации.</p>
-                <p>Указываем <code>тип данных</code>, который она может хранить.</p> 
-                <p>Задаем <code>начальное значение</code>, которое будет сохранено в переменной.</p>
+                <p>При определении переменной присваиваем ей <code class="code">уникальное имя</code> для идентификации.</p>
+                <p>Указываем <code class="code">тип данных</code>, который она может хранить.</p> 
+                <p>Задаем <code class="code">начальное значение</code>, которое будет сохранено в переменной.</p>
             </div>
+            
+            <img src="images/l2/var_declaration.png" alt="Объявление переменной" width="250">
+
             <div class="note">
                 <p><strong>Оператор присваивания</strong></p>
                 <p>В объявлении переменной после имени переменной следует символ равно <code class="code">=</code></p>
                 <p>Этот символ называется <code class="code">оператором присваивания</code>.</p>
                 <p>Оператор присваивания сохраняет значение в переменную.</p>
             </div>
+
 
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Целочисленная переменная</h4>
@@ -125,21 +128,54 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
   int count = 2; // Объявляем целочисленную переменную
   print(count); // Вызываем переменную
-}
-            </code></pre>
+}</code></pre>
+
+            <div class="slideshow-container" data-width="600px">
+                <div class="slideshow-wrapper">
+                    <div class="slideshow">
+                        <div class="slide active">
+                            <img src="images/l2/var1.png" alt="Переменная - шаг 1">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var2.png" alt="Переменная - шаг 2">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var3.png" alt="Переменная - шаг 3">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var4.png" alt="Переменная - шаг 4">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var5.png" alt="Переменная - шаг 5">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var6.png" alt="Переменная - шаг 6">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l2/var7.png" alt="Переменная - шаг 7">
+                        </div>
+                    </div>
+                </div>
+                <div class="slideshow-controls">
+                    <button class="slideshow-btn prev-btn">‹</button>
+                    <div class="dots-container"></div>
+                    <button class="slideshow-btn next-btn">›</button>
+                </div>
+            </div>
             
-            <img src="images/l2/var-1.gif" alt="Объявление переменной" width="500">
-            <img src="images/l2/boxes.png" alt="Переменная как коробка" width="300">
+
             <div class="note">
                 <p><strong>Инициализация переменной</strong></p>
                 <p>Фраза: <code class="code">переменная count инициализирована значением 2</code> означает, что <code class="code">2</code> это <code class="code">первое</code> значение, сохраненное в переменной при её создании.</p>
             </div>
+            
+            <img src="images/l2/var-init.png" alt="">
+            
             <p>В переменную значения присваиваются справа налево</p>
-            <img src="images/l2/var-2.gif" alt="Присваивание значения" width="300">
+            <img src="images/l2/var-init.gif" width="300" alt="Присваивание значения">
         </section>
 
         <section class="lesson-section">
@@ -161,16 +197,17 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
   int numberOfMessage = 7384;
   String cityName = "Бийск";
-} 
-            </code></pre>
+}</code></pre>
             <div class="note">
                 <p><strong>Регистр символов имеет значение!</strong></p>
                 <p>Регистр символов (прописные и заглавные буквы) имеет значение! Например, <code class="code">language</code> не то же самое, что <code class="code">Language</code></p>
             </div>
+
+            <img src="images/l2/registr-symbols.png" alt="">
+
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Чувствительность к регистру</h4>
                 <div class="code-block-controls">
@@ -182,16 +219,14 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
   // Это три разных переменных!
   // Регистр имеет значение!
 
   String language = "Dart";
   String Language = "Dart";
   String LANGUAGE = "Dart";
-}
-            </code></pre>
+}</code></pre>
             <img src="images/l2/different_variables_1.png" alt="Разные переменные 1" width="500">
             <img src="images/l2/bad_variable_names.png" alt="Плохие имена переменных" width="500">
             <img src="images/l2/good_variable_names.png" alt="Хорошие имена переменных" width="500">
@@ -215,15 +250,13 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
     String dayOfWeek = "Понедельник";
     print(dayOfWeek); // "Понедельник"
 
     dayOfWeek = "Среда"; // Обновляем значение переменной
     print(dayOfWeek); // "Среда"
-}
-            </code></pre>
+}</code></pre>
         </section>
 
         <section class="lesson-section">
@@ -236,9 +269,9 @@ void main() {
                 <p>Когда мы в программе пишем значение просто <code class="code">42</code> или <code class="code">Привет Dart</code>, то не понятно что это за данные, где они находятся, откуда взялись и как с ними работать потом.</p>
                 <p>Это какие-то <code class="code">магические значения</code></p>
             </div>
-            <img src="images/l2/magic_values.png" alt="Магические значения" width="600">
+            <img src="images/l2/magic_values.png" width="500" alt="Магические значения">
             <p>Переменные помогают контролировать данные, с помощью переменной мы можем сохранить данные в <code class="code">оперативной памяти</code> и потом ими воспользоваться</p>
-            <img src="images/l2/variables_and_memory.png" alt="Переменные и память" width="600">
+            <img src="images/l2/variables_and_memory.png"  width="500" alt="Переменные и память">
             <p>Чисто технически в самой переменной не находятся данные, в ней находится <code class="code">ссылка</code> на область памяти, где хранятся данные.</p>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Переменные и память</h4>
@@ -251,24 +284,21 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-void main() {
+            <pre><code class="language-dart">void main() {
     String dayOfWeek = "Понедельник";
     print(dayOfWeek); // "Понедельник"
 
     dayOfWeek = "Вторник"; // Обновляем значение переменной
     print(dayOfWeek); // "Вторник"
-}
-            </code></pre>
-            <img src="images/l2/var-ram.png" alt="Схема изменения переменной" width="700">
+}</code></pre>
+            <img src="images/l2/var-ram.png" alt="Схема изменения переменной">
 
             <div class="note">
                 <p><strong>Ячейки памяти</strong></p>
                 <p>Технически хранение переменных можно представить как <code class="code">ячейки памяти</code> (оперативной) в виде таблицы.</p>
                 <p>Столбцы и строки этой таблицы пронумерованы, т.е. представляют из себя адреса, и вот по этому адресу в память можно записать какие-то данные.</p>
-                <img src="images/l2/memory_cells.png" alt="Ячейки памяти" width="350">
             </div>
-            <img src="images/l2/memory_work_diagram.png" alt="Схема работы с памятью">
+            <img src="images/l2/memory_work_diagram.png" width="500" alt="Схема работы с памятью">
         </section>
 
         <section class="lesson-section">
@@ -279,8 +309,8 @@ void main() {
             </div>
             <p>В Dart есть два вида констант</p>
             <ol>
-                <li><code>final</code> - является константной времени выполнения (<code>run-time constant</code>)</li>
-                <li><code>const</code> - является константной времени компиляции (<code>compile-time constant</code>)</li>
+                <li><code class="code">final</code> - является константной времени выполнения (<code class="code">run-time constant</code>)</li>
+                <li><code class="code">const</code> - является константной времени компиляции (<code class="code">compile-time constant</code>)</li>
             </ol>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Константа final</h4>
@@ -293,13 +323,11 @@ void main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
+            <pre><code class="language-dart">main() {
     final double pi = 3.14; // Объявляем final константу
     pi = 4; // Ошибка! 
     print(pi);
-}
-            </code></pre>
+}</code></pre>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Константа const</h4>
                 <div class="code-block-controls">
@@ -311,13 +339,11 @@ main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
-    const name = "Юля"; // Объявляем const константу
-    name = 'Маша'; // ! Ошибка - Constant variables can't be assigned a value
-}
-            </code></pre>
-            <p>Отличие в том, что <code>const</code> всегда должна иметь определенное значение!</p>
+            <pre><code class="language-dart">main() {
+  const name = "Юля"; // Объявляем const константу
+  name = 'Маша'; // ! Ошибка - Constant variables can't be assigned a value
+}</code></pre>
+            <p>Отличие в том, что <code class="code">const</code> всегда должна иметь определенное значение!</p>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Особенности const</h4>
                 <div class="code-block-controls">
@@ -329,24 +355,22 @@ main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
-    // Нельзя оставить const без инициализации!
-    const value; // Ошибка!
-    value = 42 // Ошибка!
+            <pre><code class="language-dart">main() {
+  // Нельзя оставить const без инициализации!
+  const value; // Ошибка!
+  value = 42 // Ошибка!
 
-    // Нельзя в const присвоить вычисляемое выражение!
-    const today = DateTime.now(); // Ошибка!
-    print('Today: $today'); // Ошибка!
-}
-            </code></pre>
-            <p>Использование <code>const</code> полезно для производительности в некоторых местах, особенно при написании кода на <code>Flutter</code>.  А пока что будем пользоваться константой <code>final</code></p>
+  // Нельзя в const присвоить вычисляемое выражение!
+  const today = DateTime.now(); // Ошибка!
+  print('Today: $today'); // Ошибка!
+}</code></pre>
+            <p>Использование <code class="code">const</code> полезно для производительности в некоторых местах, особенно при написании кода на <code class="code">Flutter</code>.  А пока что будем пользоваться константой <code class="code">final</code></p>
         </section>
 
         <section class="lesson-section">
             <h2 style="display: inline;">Шаблонные строки</h2>
             <p>Рассмотрим пример, когда вывод простого числа не очень информативен. Было бы полезнее вывести сообщение, поясняющее, что означает число</p>
-            <pre><code>У вас 2 непрочитанных сообщения</code></pre>
+            <pre><code class="code">У вас 2 непрочитанных сообщения</code></pre>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Вывод без интерполяции</h4>
                 <div class="code-block-controls">
@@ -358,14 +382,12 @@ main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
-    int count = 2;
-    print("У вас count непрочитанных сообщений");
+            <pre><code class="language-dart">main() {
+  int count = 2;
+  print("У вас count непрочитанных сообщений");
 
-    // У вас count непрочитанных сообщений
-}
-            </code></pre>
+  // У вас count непрочитанных сообщений
+}</code></pre>
             <p>Можно взять и объединить несколько строчек друг с другом и с переменной. Но … код получается плохо читаемый и многословный 😥</p>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Конкатенация строк</h4>
@@ -378,19 +400,18 @@ main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
-    int count = 2;
+            <pre><code class="language-dart">main() {
+  int count = 2;
     
-    // Такой подход называется КОНКАТЕНАЦИЯ строк
-    print("У вас " + count.toString() + " непрочитанных сообщений");
-}
-            </code></pre>
+  // Такой подход называется КОНКАТЕНАЦИЯ строк
+  print("У вас " + count.toString() + " непрочитанных сообщений");
+}</code></pre>
             <div class="note">
                 <p><strong>Шаблонные строки</strong></p>
-                <p>Чтобы это безобразие исправить нужно использовать <strong>шаблонные строки</strong>.</p>
-                <p>Добавьте знак доллара <code>$</code> перед именем переменной <code>count</code>.</p>
-                <p>В этом случае выражение-шаблон <code>$count</code> вычисляется как число 2.</p>
+                <p>
+                Чтобы это безобразие исправить нужно использовать <strong>шаблонные строки</strong><br>
+                Добавьте знак доллара <code class="code">$</code> перед именем переменной <code class="code">count</code><br>
+                В этом случае выражение-шаблон <code class="code">$count</code> вычисляется как число 2</p>
                 <img src="images/l2/string_interpolation.png" alt="Интерполяция строк" width="400">
             </div>
             <div class="code-block-header">
@@ -404,17 +425,15 @@ main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
-    int count = 2;
+            <pre><code class="language-dart">main() {
+  int count = 2;
     
-    // Такой подход называется ИНТЕРПОЛЯЦИЯ строк
-    print("У вас $count непрочитанных сообщений");
+  // Такой подход называется ИНТЕРПОЛЯЦИЯ строк
+  print("У вас $count непрочитанных сообщений");
     
-    // У вас 2 непрочитанных сообщения
-}
-            </code></pre>
-            <p>Если нужно выполнить более сложное выражение внутри строки то используем <code>{ }</code></p>
+  // У вас 2 непрочитанных сообщения
+}</code></pre>
+            <p>Если нужно выполнить более сложное выражение внутри строки то используем <code class="code">{ }</code></p>
             <div class="code-block-header">
                 <h4 class="code-block-title">Dart - Сложная интерполяция</h4>
                 <div class="code-block-controls">
@@ -426,16 +445,103 @@ main() {
                     </span>
                 </div>
             </div>
-            <pre><code class="language-dart">
-main() {
-    int unreadCount = 5;
-    int readCount = 100;
+            <pre><code class="language-dart">main() {
+  int unreadCount = 5;
+  int readCount = 100;
     
-    print("У вас ${unreadCount + readCount} непрочитанных сообщений");
+  print("У вас ${unreadCount + readCount} непрочитанных сообщений");
     
-    // У вас 105 сообщений 
-}
-            </code></pre>
+  // У вас 105 сообщений 
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Модуль Random: Генерация случайных чисел</h2>
+            <p>В программировании часто возникает необходимость использовать случайные числа, например, для создания непредсказуемого поведения в играх, для тестирования или в криптографии. В Dart для этого используется класс <code class="code">Random</code> из библиотеки <code class="code">dart:math</code>.</p>
+
+            <div class="note">
+                <p><strong>Подключение библиотеки</strong></p>
+                <p>Чтобы использовать класс <code class="code">Random</code>, необходимо импортировать библиотеку <code class="code">dart:math</code> в начале вашего файла.</p>
+            </div>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Импорт dart:math</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'dart:math';
+
+void main() {
+  // Код...
+}</code></pre>
+
+            <h3>Создание генератора случайных чисел</h3>
+            <p>Сначала нужно создать экземпляр класса <code class="code">Random</code>. Этот объект будет предоставлять методы для генерации различных случайных значений.</p>
+            <pre><code class="language-dart">final random = Random();</code></pre>
+
+            <h3>Генерация случайных целых чисел</h3>
+            <p>Метод <code class="code">nextInt(max)</code> генерирует случайное целое число от 0 (включительно) до <code class="code">max</code> (не включительно).</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Случайное целое число</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'dart:math';
+
+void main() {
+  final random = Random();
+  
+  // Случайное число от 0 до 9
+  int diceRoll = random.nextInt(10); 
+  print("Случайное число от 0 до 9: $diceRoll");
+
+  // Чтобы получить число в диапазоне, например от 1 до 6 (как на кубике)
+  int cube = random.nextInt(6) + 1;
+  print("Выпало на кубике: $cube");
+}</code></pre>
+
+            <h3>Генерация случайных дробных чисел и булевых значений</h3>
+            <p>Метод <code class="code">nextDouble()</code> возвращает случайное число с плавающей точкой между 0.0 (включительно) и 1.0 (не включительно). Метод <code class="code">nextBool()</code> возвращает случайное булево значение: <code class="code">true</code> или <code class="code">false</code>.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Случайные double и bool</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'dart:math';
+
+void main() {
+  final random = Random();
+
+  // Случайное дробное число от 0.0 до 1.0
+  double chance = random.nextDouble();
+  print("Шанс критического удара: $chance");
+
+  // Случайное булево значение
+  bool isHeads = random.nextBool();
+  if (isHeads) {
+    print("Выпал орёл!");
+  } else {
+    print("Выпала решка!");
+  }
+}</code></pre>
+            <p>Класс <code class="code">Random</code> является мощным инструментом, который вы будете часто использовать, особенно при создании игр, чтобы сделать их более динамичными и непредсказуемыми.</p>
         </section>
 
         <button id="scrollToTop" title="Наверх"></button>

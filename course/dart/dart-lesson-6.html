@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Остаток от деления, инкремент и декремент в Dart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <link rel="stylesheet" href="slideshow.css">
+    <script src="highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 6: Остаток от деления, инкремент и декремент</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Остаток от деления, инкремент и декремент в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операции присваивания</h2>
+            <p>Одна из самых частых операций — <code class="code">увеличить</code> или <code class="code">уменьшить</code> значение переменной. Это можно сделать, изменив значение переменной и присвоив новое значение обратно в ту же переменную.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Базовое присваивание</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int value = 42;
+
+value = value + 7; // 49
+value = value - 7; // 42
+
+// value = 42 + 7 = 49
+// value = 49 - 7 = 42
+</code></pre>
+
+            <p>Такие операции встречаются настолько часто, что для них придумали сокращённые формы.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Сокращённые операции присваивания</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">num value = 42;
+
+value += 7; // value = value + 7;
+value -= 7; // value = value - 7;
+value *= 7; // value = value * 7;
+value /= 7; // value = value / 7;
+value %= 7; // value = value % 7;
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Инкремент и декремент</h2>
+            <div class="note">
+                <p><strong>Инкремент и декремент</strong></p>
+                <p>Крайне распространённые операции — увеличение/уменьшение переменной на единицу.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Инкремент и декремент</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int value = 10;
+
+// Можно так
+value += 1;
+value -= 1;
+
+// Но удобнее так
+value++; // инкремент
+value--; // декремент
+</code></pre>
+
+            <p>Инкремент <code class="code">++</code> делает то же, что и <code class="code">+= 1</code>, но короче. Аналогично декремент <code class="code">--</code>.</p>
+            <div class="note warning">
+                <p><strong>Важно</strong></p>
+                <p>Операторы <code class="code">++</code> и <code class="code">--</code> работают только при изменении на единицу.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Префиксная форма</h2>
+            <p>Префиксная форма изменяет значение переменной <em>перед её использованием</em>. Префиксный инкремент возвращает уже увеличенное значение.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Префиксный инкремент (++a)</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int a = 10;
+int b = ++a;
+
+print(a); // 11
+print(b); // 11
+</code></pre>
+
+            <div class="note">
+                <p>Сначала <code class="code">a</code> увеличивается на единицу, затем значение присваивается <code class="code">b</code>. В итоге <code class="code">a</code> и <code class="code">b</code> равны 11.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Постфиксная форма</h2>
+            <p>Постфиксная форма изменяет значение переменной <em>после её использования</em>. Постфиксный инкремент возвращает значение до увеличения.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Постфиксный инкремент (a++)</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int a = 10;
+int b = a++;
+
+print(a); // 11
+print(b); // 10
+</code></pre>
+
+            <div class="note">
+                <p>Сначала значение <code class="code">a</code> присваивается <code class="code">b</code>, затем <code class="code">a</code> увеличивается на единицу. В итоге <code class="code">a</code> = 11, <code class="code">b</code> = 10.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Порядок приоритета</h2>
+            <p>Понимание приоритета операторов важно для корректного чтения и написания выражений.</p>
+            <img src="images/l6/operator-precedence.png" alt="Порядок приоритета операторов в Dart" width="700">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Сценарии использования % и условных конструкций</h2>
+
+            <div class="note">
+                <p><strong>Деление нацело</strong></p>
+                <p>Часто нужно проверить, делится ли число нацело. В этом помогает оператор остатка от деления <code class="code">%</code>: если остаток равен <code class="code">0</code>, число делится нацело.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Проверка кратности 5</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int value = 25;
+
+if (value % 5 == 0) {
+  print("Число $value кратно 5");
+} else {
+  print("Число $value на цело не делится на 5");
+}
+</code></pre>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Кратно 3 и 5 одновременно</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int value = 15;
+
+if ((value % 5 == 0) && (value % 3 == 0)) {
+  print("Число $value кратно 5 и 3 одновременно");
+} else {
+  print("Число $value на цело не делится на 5 и 3 одновременно");
+}
+</code></pre>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Проверка чётности</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int value = 42;
+
+if (value % 2 == 0) {
+  print("Число $value чётное");
+} else {
+  print("Число $value нечётное");
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Получение числовых разрядов</h2>
+            <div class="note">
+                <p><strong>Разбор числа на разряды</strong></p>
+                <p>Единицы, десятки, сотни, тысячи и т.д.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Разбор числа на разряды</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int value = 2354;
+
+// Разбить число на разряды
+print(value % 10);   // 4   Единицы
+print(value % 100);  // 54  Десятки
+print(value % 1000); // 354 Сотни
+print(value);        // 2354 Тысячи
+
+// Получить каждую цифру по отдельности
+print((value / 1000).truncate());      // 2
+print((value / 100).truncate() % 10);  // 3
+print(((value % 100) / 10).truncate()); // 5
+print(value % 10);                      // 4
+</code></pre>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Целочисленное деление (~/)</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Для целочисленного деления используйте оператор ~/ 
+int value = 2354;
+
+print(value ~/ 1000);       // 2
+print((value ~/ 100) % 10); // 3
+print((value % 100) ~/ 10); // 5
+print(value % 10);          // 4
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            try {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                    block.removeAttribute('data-highlighted');
+                    hljs.highlightElement(block);
+                });
+            } catch (e) {
+                console.error("Highlight.js error:", e);
+            }
+        }
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const menuLinks = document.querySelectorAll('#side-menu a');
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelector('#side-menu').addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (document.querySelectorAll('.lesson-section').length > 0) {
+                const firstId = document.querySelectorAll('.lesson-section')[0].id;
+                showSection(firstId);
+            }
+        });
+    </script>
+    <script src="slideshow.js"></script>
+
+</body>
+</html> 

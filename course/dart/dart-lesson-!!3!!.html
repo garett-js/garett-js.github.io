@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Типы данных в Dart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <link rel="stylesheet" href="slideshow.css">
+    <script src="highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 3: Типы данных</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Типы данных в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Типизация</h2>
+            <p>Язык программирования <code class="code">Dart</code> строго типизированный</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Строгая типизация</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+    int number = 42;
+    
+    // Ошибка! Нельзя в число присвоить строку!
+    number = "Двадцать восемь";
+
+    // Ошибка! Нельзя в целое число присвоить дробное!
+    number = 0.09; 
+    
+    // Ошибки нет! 28 это число Int
+    number = 28;
+}
+            </code></pre>
+            <div class="note">
+                <p><strong>Строгая типизация</strong></p>
+                <p>При повторном присвоении значения можно использовать только значения того же типа, что и изначально.</p>
+                <img src="images/l3/strict_typing_error.png" alt="Ошибка строгой типизации" width="400">
+            </div>
+            <p>Предположим, что на складе магазина есть коробки:</p>
+            <ul>
+                <li>с меткой <code class="code">Конфеты</code> (тип данных <code class="code">Конфеты</code>)</li>
+                <li>с меткой <code class="code">Гвозди</code> (тип данных <code class="code">Гвозди</code>)</li>
+            </ul>
+            <img src="images/l3/boxes.png" alt="Коробки с типами">
+            <p>Мы ожидаем, что в коробке с конфетами должны быть только конфеты, а не что-то иное.<br>Будет крайне грустно и неожиданно, если в этой коробке мы обнаружим гвозди.</p>
+            <img src="images/l3/wrong_box.png" alt="Неправильная коробка">
+            <p>Так же работает и с переменными. Например, мы хотим быть всегда уверены, что в переменной с типом <code class="code">String</code> всегда будут находиться строки. Поэтому строгая типизация контролирует работу с типами данных.</p>
+            <img src="images/l3/string_type.png" alt="Тип String">
+            <img src="images/l3/string_type_ide.png" alt="Подсказка IDE о типе String">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Простые типы данных</h2>
+            <p>Тип данных определяет, какие именно значения может хранить объект.</p>
+            <ul>
+                <li>Целые и дробные числа (<code class="code">int</code>, <code class="code">double</code>)</li>
+                <li>Строки (<code class="code">String</code>, <code class="code">Runes</code>)</li>
+                <li>Логические значения (<code class="code">bool</code>)  <code class="code">true</code> или <code class="code">false</code> (истина или ложь)</li>
+                <li>Пустоту (<code class="code">null</code>)</li>
+            </ul>
+            <div class="note">
+                <p>Под каждый тип данных в памяти выделится область для хранения.</p>
+                <p>Например, если мы указываем тип <code class="code">Integer</code>, то в этой области памяти можно хранить только целые числа и только до определенного размера.</p>
+                <p>В данном случае для <code class="code">Integer</code> - выделяется <code class="code">64 бита</code>значения от <code class="code">-9223372036854775808 до 9223372036854775807</code></p>
+            </div>
+            <img src="images/l3/basic_data_types.png" alt="Основные типы данных" width="500">
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Основные типы данных</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+    int intValue = 42;         // Целое число
+    double doubleValue = 3.14; // Дробное число (или с плавающей точкой)
+    
+    String loveName = "Юля";   // Строка
+    bool isHappy = true;       // Логическое значение
+    int? emptyValue = null;    // Пустое значение
+}
+            </code></pre>
+
+            <p><strong>Зачем нужна типизация?</strong></p>
+            <ol>
+                <li>Точное указание того какие мы ожидаем данные в той или иной переменной</li>
+                <li>В зависимости от выбранного типа, выделяется разный объем памяти в оперативки</li>
+                <li>IDE легче проанализировать код и указать на ошибки</li>
+                <li>Интерпретатору легче понять, где мы начинаем делать что-то ни так и указать на это</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Округление чисел</h2>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Методы округления</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+// ! Округления чисел
+print(3.25.round());   // 3
+print(3.5.round());    // 4
+print(3.75.round());   // 4
+print((-3.5).round()); // -4
+
+// floor всегда округляются в меньшую сторону
+print(1.99.floor());    // 1
+print(2.99.floor());    // 2
+print((-2.01).floor()); // -3
+
+// ceil всегда округляются в большую сторону
+print(1.99.ceil()); // 2
+print(2.001.ceil()); // 3
+print((-1.99).ceil()); // -1
+
+// truncate отбросить дробную часть
+print(2.01.truncate()); // 2
+print(1.9.truncate()); // 1
+print(0.5.truncate()); // 0
+            </code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Неявное приведение типов</h2>
+            <div class="note">
+                <p><strong>Неявное приведение типов</strong></p>
+                <p>Позволяет писать меньше кода при объявлении переменных.</p>
+                <p>Компилятор может определить тип данных переменной по значению, <code class="code">без явного указания</code> этого типа в коде.</p>
+            </div>
+            <p>Вместо этого кода</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Явное указание типа</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int count = 2;
+String name = "Flutter";
+            </code></pre>
+            <p>Можно написать так (но не рекомендуется)</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Неявное указание типа (var)</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+var count = 2; // Тип данных num
+var name = "Flutter"; // Тип данных String
+            </code></pre>
+            <div class="note">
+                <p><strong>Родительский тип данных для всех чисел</strong></p>
+                <p><strong>Важно!</strong> В данном случае переменной <code class="code">count</code> будет присвоен тип данных <code class="code">num</code>.</p>
+                <p>Это родительский тип данных для <code class="code">целых и дробных</code> чисел.</p>
+            </div>
+            <p>Такой подход называется - <code class="code">динамическая типизация</code></p>
+            <p>Кроме <code class="code">var</code> есть возможность вывести типы через <code class="code">dynamic</code> и <code class="code">Object</code></p>
+            <p>У всех динамических типов: <code class="code">var</code> <code class="code">dynamic</code> <code class="code">Object</code> есть различия и особенности работы.</p>
+            <p>Рассмотрим их позже в отдельном занятии.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Динамические типы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+var someValueOne = 42;
+var someValueTwo = 'String';
+
+dynamic someValueThree = 3.14;
+Object someValueFourth = 9999;
+            </code></pre>
+            <div class="note">
+                <p><strong><code class="code">int</code> и <code class="code">double</code></strong></p>
+                <p>В языке Dart между переменными типа <code class="code">int</code> и <code class="code">double</code> можно выполнять арифметические операции без ошибок приведения типов.</p>
+                <p>Результат будет приведён к типу <code class="code">double</code>, чтобы сохранить дробную часть и точность вычислений.</p>
+            </div>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Операции с int и double</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+int x = 1;
+double y = 2.2;
+
+print(x + y); // 3.2
+print(x * y); // 2.2
+print(x / y); // 0.45454545454545453
+print(x % y); // 1.0
+            </code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Явное приведение типов</h2>
+            <div class="note">
+                <p><strong>Явное приведение типов</strong></p>
+                <p>Для преобразования данных одного типа в другой можно использовать встроенные функции, которые есть у базовых типов</p>
+                <p><code class="code">.toInt()</code> <code class="code">.toString()</code> <code class="code">.toDouble()</code></p>
+                <img src="images/l3/type_casting.png" alt="Приведение типов" width="400">
+            </div>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Явное приведение типов</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+    var count = 2; // Неявно вывелся тип num
+    
+    int intValue = count.toInt(); // Число 2
+    String stringValue = count.toString(); // Строка "2"
+    double doubleValue = count.toDouble(); // Дробное 2.0
+}
+            </code></pre>
+            <div class="note">
+                <p><strong>Приведение строки в число</strong></p>
+                <p>Чтобы преобразовать строку в целое число, можно использовать метод <code class="code">int.parse()</code></p>
+                <p>Этот метод принимает строковое значение и возвращает его в виде целого числа.</p>
+            </div>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Приведение строки в число</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+main() {
+  String text = "123";
+  int intValue = int.parse(text);
+
+  print(intValue * 2); // 123 * 2 = 246
+}
+            </code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Объекты и вызов через точку</h2>
+            <div class="note">
+                <p><strong>Объект</strong></p>
+                <p>Dart это ООП язык и всё здесь является объектом (<i>число, строка, переменная</i>)</p>
+                <p>Объект из реальной жизни обладает двумя важными характеристиками:</p>
+                <ol>
+                    <li><strong>СВОЙСТВА</strong> (Количественно-Качественная характеристика)</li>
+                    <li><strong>МЕТОДЫ</strong> (Действия которые этот объект может делать)</li>
+                </ol>
+            </div>
+            <p>Например</p>
+            <p>Студент это <code class="code">Объект</code></p>
+            <p>У него есть <code class="code">свойства</code>: возраст, рост, цвет глаз, …</p>
+            <p>У него есть <code class="code">методы</code>: учиться, спать, играть в настолки, …</p>
+            <p>Переносим эти понятия в мир программирования.</p>
+            <p>у <code class="code">String</code> (строк) есть свойства и методы</p>
+            <p>у <code class="code">Num</code> (чисел) тоже есть свойства и методы, потому что это тоже объекты</p>
+            <div class="note">
+                <p><strong>Точечная нотация</strong></p>
+                <p>Доступ до свойств и методов делается через точку <code class="code"> . </code></p>
+                <p>Пишем название объекта, потом ставим точку и выбираем нужные операции</p>
+                <img src="images/l3/dot_notation.png" alt="Точечная нотация" width="500">
+            </div>
+            <p>Свойство вызывается <code class="code">без круглых</code> скобок. Метод обязательно <code class="code">с круглыми</code> скобками</p>
+            <img src="images/l3/attributes_and_methods.png" alt="Свойства и методы" width="600">
+            <p>Рассмотрим несколько свойств и методов. Однако этих методов великое множество, все их рассматривать прямо сейчас смысла нет. Они изучаются на практике, при решение конкретной проблемы.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Свойства и методы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+  String myStringObject = 'String is an Object';
+  num myNumObject = -42.42;
+  
+  // ? Свойства строки
+  print(myStringObject.length); // Длина строки
+  print(myStringObject.runtimeType); // Тип объекта
+
+  // ? Методы строки
+  print(myStringObject.contains('is')); // Cодержит ли строка подстроку 'is'
+  print(myStringObject.toUpperCase()); // Сделать все буквы заглавными
+
+  // ? Методы числа
+  print(myNumObject.toString()); // Сделать число строкой
+  print(myNumObject.abs()); // Вернуть модуль числа
+  print(myNumObject.ceil()); // Округлить число
+
+  // ? Свойства числа
+  print(myNumObject.toInt().isEven); // четное ли число
+  print(myNumObject.toInt().isOdd); // не четное ли число
+  print(myNumObject.isNegative); // отрицательное ли число
+            </code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            try {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                    block.removeAttribute('data-highlighted');
+                    hljs.highlightElement(block);
+                });
+            } catch (e) {
+                console.error("Highlight.js error:", e);
+            }
+        }
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const menuLinks = document.querySelectorAll('#side-menu a');
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            menu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (sections.length > 0) {
+                showSection(sections[0].id);
+            }
+        });
+    </script>
+    <script src="slideshow.js"></script>
+
+</body>
+</html> 

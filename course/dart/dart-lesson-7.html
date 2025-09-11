@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Циклы в Dart: for, while, do-while, break и continue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <link rel="stylesheet" href="slideshow.css">
+    <script src="highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 7: Циклы в Dart</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>4.4 Циклы</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Зачем нужны циклы</h2>
+
+            <div class="note">
+                <p><strong>Зачем нужны циклы</strong></p>
+                <p>Компьютеры круче людей в том, что могут делать одни и же действия много раз, но быстро и без усталости!</p>
+                <p>Иногда, определенную часть кода, нужно <code class="code">повторить множество раз</code>.</p>
+                <p>Можно, конечно, <code class="code">скопировать и вставить</code> это выражение...<br>А что делать, если нужно его повторить, например, <code class="code">10 тысяч раз</code>? Копирование вставка в этом случае - боль 😵‍💫🥴</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Без цикла</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">  print("Как правильно учить программирование?");
+
+  print("1 Практика !");
+  print("2 Практика !");
+  print("3 Практика !");
+  print("4 Практика !");
+  print("5 Практика !");
+
+  // и так ещё 10 тысяч раз
+  print("10000 Практика !");
+</code></pre>
+
+            <div class="note">
+                <p><strong>Многократное повторение кода</strong></p>
+                <p>В языках программирования для многократного повторения кода используются <code class="code">циклы</code></p>
+                <p>Любой <code class="code">цикл</code> состоит из <code class="code">условия</code> и <code class="code">тела цикла</code></p>
+                <p>Код в теле цикла { } выполняется множество раз, пока условие равно <code class="code">true</code></p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Цикл <code class="code">for</code></h2>
+
+            <div class="note">
+                <p><strong>Цикл <code class="code">for</code></strong></p>
+                <p>Используется для повторения кода определенное количество раз. Он включает в себя три основных компонента: <code class="code">инициализацию</code>, <code class="code">условие</code> и <code class="code">шаг</code>, который выполняется после каждой итерации.</p>
+                <p>Такой цикл называют ещё <code class="code">счётчиком</code></p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Общий синтаксис for</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">for (инициализация; условие; шаг) {   
+  // код, который выполняется в каждой итерации 
+}
+</code></pre>
+
+            <p>Одно выполнение тела цикла называется <code class="code">итерацией цикла</code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Печать 10000 раз</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">  print("Как правильно учить программирование?");
+
+  // Напечатать в консоль 10000 раз
+  for (int i = 1; i &lt; 10000; i++) {
+    // Тело цикла
+    print("$i Практика !");
+  }
+</code></pre>
+
+            <img src="images/l7/for 1.gif" alt="for 1">
+
+            <ul>
+                <li>Инициализируем переменную <code class="code">i</code> со значением 1</li>
+                <li>Цикл будет продолжаться, пока <code class="code">i</code> меньше или равно 10000</li>
+                <li>В каждой итерации значение <code class="code">i</code> увеличивается на 1</li>
+            </ul>
+
+            <img src="images/l7/Pasted image 20241015211913.png" alt="for схема" width="400">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Цикл <code class="code">while</code></h2>
+
+            <div class="note">
+                <p><strong>Цикл <code class="code">while</code></strong></p>
+                <p>Повторяет код до наступления определенного условия.</p>
+                <p>Если условие <code class="code">истинно</code>, цикл продолжается до тех пор, пока условие не станет <code class="code">ложным</code>.</p>
+                <p>Проверяет условие перед выполнением, поэтому его называют <code class="code">цикл с предусловием</code>.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Пример while</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var coin = 5; // Начальное значение. 5 монеток
+
+// Выполнять цикл ПОКА, монеток больше 0
+while (coin &gt; 0) {
+  print("Осталось собрать монеток $coin");
+  coin--; // Вычесть единицу
+}
+</code></pre>
+
+            <img src="images/l7/Pasted image 20241015211244.png" alt="while схема" width="300">
+
+            <p>Можно написать бесконечный цикл, если условие остается всегда истинным:</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Бесконечный цикл</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">while (true) {
+  // тело цикла: делать что-то бесконечно
+}
+</code></pre>
+
+            <div class="note">
+                <p><strong>Цикл <code class="code">while</code> с постусловием</strong></p>
+                <p>В отличие от обычного <code class="code">while</code> первый раз действие в теле цикла { } выполнится в любом случае, а условная проверка будет после.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — do-while</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">  do {
+    print("Осталось собрать монеток $coin");
+    coin--; 
+  } while (coin &gt; 0);
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операторы <code class="code">continue</code> и <code class="code">break</code></h2>
+
+            <div class="note">
+                <p><strong>Операторы <code class="code">continue</code> и <code class="code">break</code></strong></p>
+                <p>Иногда бывает нужно:</p>
+                <ul>
+                    <li><code class="code">прервать</code> выполнение цикла — используем оператор <code class="code">break</code></li>
+                    <li><code class="code">пропустить</code> итерацию и перейти к следующей — используем оператор <code class="code">continue</code></li>
+                </ul>
+            </div>
+
+            <p>Пример с оператором <code class="code">break</code></p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — break</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">for (int i = 1; i &lt;= 20; i++) {
+  // Когда счётчик цикла станет равен 13 ЗАВЕРШИТЬ выполнение цикла!
+  if (i == 13) break;
+  print("Пятница $i");
+}
+</code></pre>
+
+            <p>После <code class="code">Пятница 12</code> цикл перестанет работать и в консоль больше ничего не напечатается</p>
+
+            <p>Пример с оператором <code class="code">continue</code></p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — continue</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">for (int i = 1; i &lt;= 20; i++) {
+  // Когда счётчик цикла станет равен 13 ПРОПУСТИТЬ вывод в консоль
+  if (i == 13) continue;
+  print("Пятница $i");
+}
+</code></pre>
+
+            <p>Когда <code class="code">i = 13</code> в консоль не напечатается <code class="code">Пятница 13</code> это значение пропускается и будет продолжено уже c <code class="code">Пятница 14</code></p>
+
+            <div class="note">
+                <p><strong>Бесконечный цикл</strong></p>
+                <p>Помните про бесконечный цикл? Из него можно выйти с помощью оператора <code class="code">break</code></p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Сценарии использования циклов</h2>
+
+            <h3>Цикл <code class="code">for</code> в <code class="code">обратном порядке</code></h3>
+            <p>Нужно изменить начальное значение, знак сравнения и счётчик убавлять на 1</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Обратный порядок</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">for (int i = 5; i &gt;= 1; i--) {
+  print(i); // 5 4 3 2 1
+}
+</code></pre>
+
+            <h3>Шаг цикла <code class="code">for</code></h3>
+            <p>Например, вместо <code class="code">i++</code> можно указать шаг <code class="code">i += 2</code> (или любой другой)<br>Таким образом мы получаем в цикле четные значения счётчика</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Шаг i += 2</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">for (var i = 0; i &lt; 10; i += 2) {
+  print(i); // 0 2 4 6 8 
+}
+</code></pre>
+
+            <h3>Циклы <code class="code">вложенные</code> друг в друга</h3>
+            <p>Например, вложим цикл <code class="code">for</code> внутрь другого цикла <code class="code">for</code> и попробуем вывести таблицу умножения на экран</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Таблица умножения</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'dart:io'; // Библиотека для работы с вводом/выводом
+  
+main() {
+  // Печатаем таблицу умножения
+  for (int i = 1; i &lt;= 9; i++) {
+    for (int j = 1; j &lt;= 9; j++) {
+      // Используем знак табуляции '\t' для выравнивания
+      stdout.write("${i * j}\t"); // stdout.write вывод в одной строке
+    }
+    stdout.writeln(); // Перенос строки в конце ряда
+  }
+}
+</code></pre>
+
+            <div class="note">
+                <p><strong>Обратите внимание!</strong></p>
+                <p>В первом цикле переменная для счётчика называется <code class="code">i</code><br>Во втором цикле переменная для счётчика называется <code class="code">j</code></p>
+                <p>Такое отображение данных называется <code class="code">Матрица</code></p>
+            </div>
+
+            <img src="images/l7/Pasted image 20241015180610.png" alt="Матрица" width="400">
+
+            <h3>Подсчёт количества</h3>
+            <p>Часто необходимо подсчитать сколько раз что-либо произошло в ходе выполнения. Например, подсчитаем сколько четных чисел встречается от 0 до 10</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Подсчёт чётных</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">main() {
+  // Создадим переменную для подсчета четных чисел
+  // ВАЖНО! Она должна быть за пределами цикла
+  int count = 0;
+
+  for (var i = 0; i &lt;= 10; i++) {
+    if (i.isEven) {
+      count++;
+    }
+  }
+
+  // Напечает в консоль количество всех четных значений
+  print(count); // 6 штук
+
+  // Удостоверимся 0 2 4 6 8 10 = 6 штук
+}
+</code></pre>
+
+            <h3>Подсчёт суммы</h3>
+            <p>Классическая задача найти сумму элементов. Например, можно найти сумму всех чисел от 0 до 10.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart — Сумма 0..10</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/l2/light_theme.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/l2/dark_theme.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">main() {
+  // Счётчик для суммы
+  int sum = 0;
+
+  for (var i = 0; i &lt;= 10; i++) {
+    sum += i;
+  }
+  
+  print(sum); // 55
+
+  // 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55
+}
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            try {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                    block.removeAttribute('data-highlighted');
+                    hljs.highlightElement(block);
+                });
+            } catch (e) {
+                console.error("Highlight.js error:", e);
+            }
+        }
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const menuLinks = document.querySelectorAll('#side-menu a');
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelector('#side-menu').addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (document.querySelectorAll('.lesson-section').length > 0) {
+                const firstId = document.querySelectorAll('.lesson-section')[0].id;
+                showSection(firstId);
+            }
+        });
+    </script>
+    <script src="slideshow.js"></script>
+
+</body>
+</html> 

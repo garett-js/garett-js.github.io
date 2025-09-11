@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Логика и Управление потоком в Dart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" id="theme-style" href="highlight/styles/github.css">
+    <link rel="stylesheet" href="slideshow.css">
+    <script src="highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3>Урок 4: Логика и Управление потоком</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Логика и Управление потоком в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Что такое Булева Алгебра</h2>
+            <p>Вопрос к аудитории: Как вы принимаете решения в повседневной жизни?</p>
+            <p>Давайте начнем с логики. Логика — это наука о правильном рассуждении, и она играет важнейшую роль в нашем повседневном мышлении и, конечно, в программировании. Когда мы пишем программы, мы не просто пишем код; мы создаем систему, которая принимает решения на основе заданных условий.</p>
+            <p>Представьте, что вы хотите создать программу, которая помогает вам принимать решения. Например, "Если на улице идёт дождь, то я возьму зонт, иначе если нет дождя, пойду гулять в солнечных очках". Это выражение — пример логического рассуждения. Мы можем формализовать это в терминах логических операций.</p>
+            <p>Булева алгебра — это раздел математики, названа в честь Джорджа Булла, работает с двумя основными значениями: <strong>истина</strong> (true) и <strong>ложь</strong> (false). Мы можем использовать булеву алгебру для построения логических выражений, которые формируют базу программирования.</p>
+            <img src="images/l4/george-boole.png" alt="Английский математик Джордж Буль" width="300">
+            <div class="note">
+                <p><strong>Логический тип данных</strong></p>
+                <p>В языке Dart булевый тип данных обозначается как <code class="code">bool</code></p>
+            </div>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Булев тип</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+bool isComplete = true;
+bool isAdmin = false;
+
+print(isComplete);  // Выведет: true
+print(isAdmin); // Выведет: false
+            </code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Логические операции</h2>
+            <p>В булевой алгебре есть три основные логические операции: <strong>И</strong> <strong>ИЛИ</strong> и <strong>НЕ</strong></p>
+            
+            <h3>Операция И (<code class="code">&&</code>)</h3>
+            <div class="note">
+                <p><strong>Логическое `И`</strong></p>
+                <p>Логическое `И` возвращает истину, только если `оба` значения истинны.</p>
+                <p><em>Обозначение</em>: <code class="code">&&</code></p>
+            </div>
+            <p>Это похоже на ситуацию, когда вам нужно, чтобы два события произошли одновременно, чтобы получить желаемый результат</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>A && B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Например: `Я пойду гулять, если погода солнечная И сегодня выходной`</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Логическое И</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+bool isSunny = true;  // Допустим сегодня солнечно
+bool isWeekend = false; // Допустим сегодня не выходной
+
+print(isSunny && isWeekend) // false погулять не вышло
+
+// Потому что 
+// true && false = false 
+// 1 && 0 = 0
+            </code></pre>
+
+            <h3>Операция ИЛИ (<code class="code">||</code>)</h3>
+            <div class="note">
+                <p><strong>Логическое `ИЛИ`</strong></p>
+                <p>Логическое `ИЛИ` возвращает истину, если хотя бы одно из значений истинно.</p>
+                <p><em>Обозначение</em>: <code class="code">||</code></p>
+            </div>
+            <p>Это похоже на выбор между двумя альтернативами — если хотя бы одна из них подходит, мы можем считать, что условие выполнено</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>A || B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Например: `Я пойду гулять, если сделана домашка ИЛИ сегодня выходные`</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Логическое ИЛИ</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+bool isHomeworkDone = false; // Домашка не сделана
+bool isWeekend = true; // Сегодня выходной
+
+print(isHomeworkDone || isWeekend); // true идём гулять, домашка не сделана, но сегодня же выходной
+
+// Потому что 
+// false || true = true
+// 0 || 1 = 1
+            </code></pre>
+
+            <h3>Операция НЕ (NOT)</h3>
+            <div class="note">
+                <p><strong>Логическое `НЕ`</strong></p>
+                <p>Логическое `НЕ` позволяет инвертировать значение (т.е. заменить на противоположное)</p>
+                <p>Если значение истинно, оно становится ложным, и наоборот</p>
+                <p><em>Обозначение</em>: <code class="code">!</code></p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>!A</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Например</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Логическое НЕ</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+bool isWeekend = true; // Сегодня выходной
+
+print(!isWeekend); // false НЕ выходной
+            </code></pre>
+            
+            <h3>Исключающее ИЛИ <code class="code">xor</code></h3>
+            <p>Это бинарный оператор, который возвращает <code class="code">true</code>, если булевы операнды имеют разные значения. В противном случае он возвращает <code class="code">false</code>. Он обозначается символом <code class="code">xor</code>.</p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Исключающее ИЛИ (xor)</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+false ^ false // false
+false ^ true  // true
+true  ^ false // true
+true  ^ true  // false
+            </code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Комбинирование операций</h2>
+            <p>Сложные логические выражения можно строить, комбинируя <strong>И</strong>, <strong>ИЛИ</strong> и <strong>НЕ</strong>.</p>
+            <p><code class="code">Приоритет логических операторов</code></p>
+            <ol>
+                <li><code class="code">!</code> для <code class="code">NOT</code></li>
+                <li><code class="code">^</code> для <code class="code">XOR</code></li>
+                <li><code class="code">&&</code> для <code class="code">AND</code></li>
+                <li><code class="code">||</code> для <code class="code">OR</code></li>
+            </ol>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Комбинирование операторов</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+bool isCold = false // предположим, сейчас не холодно
+bool isDry = true // cухо, без дождя
+bool isSummer = false // предположим, сейчас осень
+bool goHiking = isDry && (!isCold || isSummer) // true, можно идти в поход!
+            </code></pre>
+            <img src="images/l4/logic-2.gif" alt="Комбинирование логических операций">
+            <p>Таблицы истинности используются для анализа и построения логических выражений. Рассмотрим пример выражения `( A и B ) или не С`</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>(A && B) || !C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>1. Сначала посчитаем действие в скобках `A && B` это будет `0 && 0 = 0`</p>
+            <p>2. Далее деланием логическое отрицание `!С` это будет `!0 = 1`</p>
+            <p>3. Осталось выполнить логическое сложение между этими двумя результатами `0 || 1 = 1`</p>
+            <div class="note">
+                <p><strong>Практика</strong></p>
+                <p>Составьте таблицу истинности для всех значений</p>
+                <p>Напишите результат для логического выражения</p>
+                <p>`( A и B ) или не С`</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>(A && B) || !C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операторы сравнения</h2>
+            <p>Операторы сравнения возвращают логическое значение (<code class="code">true</code> или <code class="code">false</code>)</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Операция</th>
+                        <th>Объяснение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>==</td>
+                        <td>равно</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">!=</code></td>
+                        <td>не равно</td>
+                    </tr>
+                    <tr>
+                        <td>></td>
+                        <td>больше</td>
+                    </tr>
+                    <tr>
+                        <td>>=</td>
+                        <td>больше или равно</td>
+                    </tr>
+                    <tr>
+                        <td><</td>
+                        <td>меньше</td>
+                    </tr>
+                    <tr>
+                        <td><=</td>
+                        <td>меньше или равно</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="note">
+                <p><strong><code class="code">==</code></strong></p>
+                <p><strong>Запомните!</strong> Для проверки равенства <strong>два знака</strong> <code class="code">==</code></p>
+            </div>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Операторы сравнения</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+main() {
+  print(1 == 1); // true
+  print(1 < 2);  // true
+  print(1 > 2);  // false
+  print(1 != 2); // true
+  print(3 >= 3); // true
+  print(1 <= 2); // true
+}
+            </code></pre>
+            <h3>Соединение операций сравнения</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Соединение операций сравнения</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+  var age = 12;
+  print(0 < age && age < 18);
+  // true - возраст находтися в пределах от 0 до 18 
+
+  var age2 = 20;
+  print(0 < age2 && age2 < 18);
+  // false - возраст выходит за пределы [0; 18]
+            </code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script>
+        // Initialize Highlight.js
+        hljs.highlightAll();
+
+        function toggleTheme(themeName) {
+            var themeLink = document.getElementById('theme-style');
+            themeLink.href = "highlight/styles/" + themeName + ".css";
+            try {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    block.classList.remove(...Array.from(block.classList).filter(cls => cls.startsWith('hljs')));
+                    block.removeAttribute('data-highlighted');
+                    hljs.highlightElement(block);
+                });
+            } catch (e) {
+                console.error("Highlight.js error:", e);
+            }
+        }
+
+        // Scroll to top button functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#side-menu ul');
+            const sections = document.querySelectorAll('.lesson-section');
+            const headers = document.querySelectorAll('#main-content h2');
+
+            headers.forEach((header, index) => {
+                const sectionId = `section-${index + 1}`;
+                const section = header.closest('.lesson-section');
+                if (section) {
+                    section.id = sectionId;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${sectionId}`;
+                    link.textContent = `${index + 1}. ${header.textContent}`;
+                    link.dataset.sectionId = sectionId;
+
+                    listItem.appendChild(link);
+                    menu.appendChild(listItem);
+
+                    if (index < headers.length - 1) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = 'Далее';
+                        nextBtn.classList.add('next-section-btn');
+                        nextBtn.dataset.nextSectionId = `section-${index + 2}`;
+                        section.appendChild(nextBtn);
+                    }
+                }
+            });
+
+            const menuLinks = document.querySelectorAll('#side-menu a');
+            const nextButtons = document.querySelectorAll('.next-section-btn');
+
+            function showSection(sectionId, event) {
+                if(event) event.preventDefault();
+                
+                let targetSection = document.getElementById(sectionId);
+                if (!targetSection) return;
+
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                targetSection.classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.sectionId === sectionId);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            menu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    const sectionId = e.target.dataset.sectionId;
+                    showSection(sectionId, e);
+                }
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const nextSectionId = e.target.dataset.nextSectionId;
+                    showSection(nextSectionId, e);
+                });
+            });
+
+            if (sections.length > 0) {
+                showSection(sections[0].id);
+            }
+        });
+    </script>
+    <script src="slideshow.js"></script>
+
+</body>
+</html> 

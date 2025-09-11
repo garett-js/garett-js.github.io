@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 3: Решение</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 3: Решение</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Решение задачи</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Задача 1: Простые типы данных</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Решение</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  // 1. Добавляем правильные типы данных
+  int value1 = 42;
+  double value2 = 3.14;
+  String value3 = "Учусь программировать";
+  String value4 = "2024";
+  bool isValue = true;
+  int? emptyValue = null;
+
+  // 2. Создаем переменную result и сохраняем результат деления
+  double result = value1 / value2;
+  print('Результат деления value1 на value2: $result');
+
+  // 3. Отбрасываем дробную часть у value2, перемножаем и выводим
+  print('Результат умножения: ${value1 * value2.truncate()}');
+
+  // 4. Делаем буквы в value3 заглавными и выводим
+  print('Строка в верхнем регистре: ${value3.toUpperCase()}');
+
+  // 5. Выполняем арифметическую операцию с value4
+  print('Результат value4 + 1: ${int.parse(value4) + 1}');
+}</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+
+</body>
+</html> 

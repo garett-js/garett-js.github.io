@@ -67,7 +67,9 @@ code.hljs {
   /* prettylights-syntax-comment */
   color: black;
   padding: 2px 5px;
-  background-color: #88ff34;
+  /* background-color: #88ff34; */
+  /* background-color: #7fd144; */
+  background-color: #40c3ffb6;
   border-radius: 5px;
   font-style: italic
 }
@@ -119,4 +121,15 @@ code.hljs {
 .hljs-tag {
   /* purposely ignored */
   
+}
+
+/* Custom toggle for comment highlighting */
+pre.comments-off .hljs-comment,
+pre.comments-off .hljs-code,
+pre.comments-off .hljs-formula {
+  background-color: transparent !important;
+  color: #6a737d !important; /* a github-like comment color */
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-style: italic !important;
 }
