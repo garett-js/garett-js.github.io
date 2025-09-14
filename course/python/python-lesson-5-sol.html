@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решения - Урок 5: Условные конструкции</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="python-lesson-5-praktika.html" class="back-link">←</a> Решения: Урок 5</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Решения - Урок 5: Условные конструкции</h1>
+
+        <div class="note">
+            <p><strong>Внимание!</strong> Сначала попробуйте решить задачи самостоятельно. Эти решения предназначены для проверки или если вы совсем застряли.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Проверка здоровья персонажа</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">health = int(input("Введите здоровье персонажа: "))
+
+if health == 100:
+    print("Персонаж полностью здоров")
+else:
+    print("Персонажа нужно подлечить")
+
+# Альтернативный вариант с дополнительной информацией:
+# if health == 100:
+#     print("Персонаж полностью здоров")
+# elif health > 100:
+#     print("Ошибка: здоровье не может быть больше 100!")
+# elif health <= 0:
+#     print("Персонаж мертв!")
+# else:
+#     print(f"Персонажа нужно подлечить (здоровье: {health}/100)")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Простая конструкция if-else. Проверяем точное равенство здоровья 100, иначе выводим сообщение о необходимости лечения.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Классификация монстра</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">monster_health = int(input("Введите здоровье монстра: "))
+
+if monster_health > 100:
+    print("Босс")
+elif monster_health > 50:
+    print("Элитный монстр")
+else:
+    print("Обычный монстр")
+
+# Более подробный вариант:
+# if monster_health > 100:
+#     monster_type = "Босс"
+# elif monster_health > 50:
+#     monster_type = "Элитный монстр"
+# else:
+#     monster_type = "Обычный монстр"
+# 
+# print(f"Тип монстра: {monster_type} (HP: {monster_health})")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Конструкция if-elif-else. Важен порядок проверки условий - сначала проверяем большее значение (>100), затем меньшее (>50). Если ни одно не подходит, значит здоровье ≤ 50.</p>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Система оповещения социальной сети</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">subscribers = int(input("Введите количество подписчиков: "))
+
+if subscribers > 10_000_000:
+    print("Вау! Ну тут уже только ЗОЛОТО! 💕")
+elif subscribers > 100_000:
+    print("Шикарно! Вручаем вам Серебряную кнопку! 👌")
+elif subscribers > 1_000:
+    print("У вас уже крутой канал, но кнопку ещё не дадим! 😊")
+else:
+    print("Хммм...Трудитесь усердней и всё у вас получится!")
+
+# Альтернативный вариант с составными условиями:
+# if subscribers > 10_000_000:
+#     message = "Вау! Ну тут уже только ЗОЛОТО! 💕"
+# elif 100_000 < subscribers <= 10_000_000:
+#     message = "Шикарно! Вручаем вам Серебряную кнопку! 👌"
+# elif 1_000 < subscribers <= 100_000:
+#     message = "У вас уже крутой канал, но кнопку ещё не дадим! 😊"
+# else:
+#     message = "Хммм...Трудитесь усердней и всё у вас получится!"
+# 
+# print(f"Подписчиков: {subscribers:,}")
+# print(message)
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Важно начинать проверку с самого большого числа, так как условия проверяются по порядку. Используем подчеркивания в больших числах для читаемости (10_000_000).</p>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Время работы Кванториума</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">time = int(input("Введите время (0-23): "))
+
+if time == 12:
+    print("Кванториум закрыт (обеденный перерыв)")
+elif 8 <= time <= 18:
+    print("Кванториум работает")
+else:
+    print("Кванториум закрыт")
+
+# Альтернативный вариант:
+# if time < 8 or time > 18:
+#     print("Кванториум закрыт")
+# elif time == 12:
+#     print("Кванториум закрыт (обеденный перерыв)")
+# else:
+#     print("Кванториум работает")
+
+# Еще один вариант с более подробным выводом:
+# if time == 12:
+#     status = "закрыт (обеденный перерыв)"
+# elif 8 <= time <= 18:
+#     status = "работает"
+# else:
+#     status = "закрыт"
+# 
+# print(f"В {time}:00 Кванториум {status}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Сначала проверяем особый случай (обед в 12 часов), затем проверяем рабочие часы (8-18). Используем цепочку сравнений для проверки диапазона.</p>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Определение четверти часа</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">minutes = int(input("Введите минуты (0-59): "))
+
+if 0 <= minutes <= 14:
+    print("Первая четверть часа")
+elif 15 <= minutes <= 29:
+    print("Вторая четверть часа")
+elif 30 <= minutes <= 44:
+    print("Третья четверть часа")
+elif 45 <= minutes <= 59:
+    print("Четвертая четверть часа")
+else:
+    print("Неверное значение минут!")
+
+# Альтернативный вариант через целочисленное деление:
+# if 0 <= minutes <= 59:
+#     quarter = minutes // 15 + 1
+#     if quarter > 4:
+#         quarter = 4
+#     quarters = ["Первая", "Вторая", "Третья", "Четвертая"]
+#     print(f"{quarters[quarter-1]} четверть часа")
+# else:
+#     print("Неверное значение минут!")
+
+# Еще более простой математический способ:
+# if 0 <= minutes <= 59:
+#     quarter_names = ["Первая", "Вторая", "Третья", "Четвертая"]
+#     quarter_index = min(minutes // 15, 3)  # ограничиваем максимум тремя
+#     print(f"{quarter_names[quarter_index]} четверть часа")
+# else:
+#     print("Неверное значение минут!")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Проверяем диапазоны для каждой четверти. Также показаны математические способы решения через целочисленное деление.</p>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Определение времени года</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">month = int(input("Введите номер месяца (1-12): "))
+
+if month in [12, 1, 2]:
+    print("Зима")
+elif month in [3, 4, 5]:
+    print("Весна")
+elif month in [6, 7, 8]:
+    print("Лето")
+elif month in [9, 10, 11]:
+    print("Осень")
+else:
+    print("Неверный номер месяца!")
+
+# Альтернативный вариант с логическими операторами:
+# if month == 12 or month == 1 or month == 2:
+#     season = "Зима"
+# elif month == 3 or month == 4 or month == 5:
+#     season = "Весна"
+# elif month == 6 or month == 7 or month == 8:
+#     season = "Лето"
+# elif month == 9 or month == 10 or month == 11:
+#     season = "Осень"
+# else:
+#     season = "Неизвестно"
+# 
+# if 1 <= month <= 12:
+#     print(f"Месяц {month} - это {season}")
+# else:
+#     print("Неверный номер месяца!")
+
+# Вариант со словарем (более продвинутый):
+# seasons = {
+#     12: "Зима", 1: "Зима", 2: "Зима",
+#     3: "Весна", 4: "Весна", 5: "Весна",
+#     6: "Лето", 7: "Лето", 8: "Лето",
+#     9: "Осень", 10: "Осень", 11: "Осень"
+# }
+# 
+# if month in seasons:
+#     print(seasons[month])
+# else:
+#     print("Неверный номер месяца!")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем оператор <code class="code">in</code> для проверки принадлежности к списку. Это более читаемо, чем множественные <code class="code">or</code>. Показаны различные способы решения.</p>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2>Задача № 7: Доступ к локации</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">social_rank = input("Введите ваш социальный ранг: ").strip().lower()
+has_pass = input("Есть ли у вас пропуск? (y/n): ").strip().lower() == 'y'
+
+if social_rank == "дворянин" or has_pass:
+    print("Доступ разрешен! Добро пожаловать в Замок!")
+else:
+    print("Доступ запрещен! Вам нужен пропуск или дворянский титул.")
+
+# Более подробный вариант с объяснением причины доступа:
+# if social_rank == "дворянин" and has_pass:
+#     print("Доступ разрешен! Добро пожаловать в Замок!")
+#     print("Причина: дворянский титул И пропуск")
+# elif social_rank == "дворянин":
+#     print("Доступ разрешен! Добро пожаловать в Замок!")
+#     print("Причина: дворянский титул")
+# elif has_pass:
+#     print("Доступ разрешен! Добро пожаловать в Замок!")
+#     print("Причина: наличие пропуска")
+# else:
+#     print("Доступ запрещен! Вам нужен пропуск или дворянский титул.")
+
+# Вариант с проверкой различных рангов:
+# noble_ranks = ["дворянин", "граф", "барон", "князь", "король"]
+# 
+# if social_rank in noble_ranks or has_pass:
+#     print("Доступ разрешен! Добро пожаловать в Замок!")
+#     if social_rank in noble_ranks:
+#         print(f"Ваш статус: {social_rank.title()}")
+#     if has_pass:
+#         print("У вас есть пропуск")
+# else:
+#     print("Доступ запрещен! Вам нужен пропуск или дворянский титул.")
+#     print(f"Ваш текущий статус: {social_rank}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логический оператор <code class="code">or</code> - достаточно одного из условий. Применяем <code class="code">.strip().lower()</code> для обработки ввода пользователя (убираем пробелы и приводим к нижнему регистру).</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

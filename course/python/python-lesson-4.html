@@ -25,16 +25,20 @@
         <section class="lesson-section">
             <h2 style="display: inline;">Логические выражения</h2>
             <p>Как вы принимаете решения в повседневной жизни?</p>
-            <p>Давайте начнем с логики. Логика — это наука о правильном рассуждении, и она играет важнейшую роль в нашем повседневном мышлении и, конечно, в программировании. Когда мы пишем программы, мы не просто пишем код; мы создаем систему, которая принимает решения на основе заданных условий.</p>
-            <p></p>
-            <p>Представьте, что вы хотите создать программу, которая помогает вам принимать решения. <br><br>Например, <em>"Если на улице идёт дождь, то я возьму зонт, иначе если нет дождя, пойду гулять в солнечных очках"</em>. <br><br> Это выражение — пример логического рассуждения. Мы можем формализовать это в терминах логических операций.</p>
+            <p>Давайте начнем с логики. </p>
+            <div class="note">
+                <p><code class="code">Логика</code> — это наука о правильном рассуждении, и она играет важнейшую роль в нашем повседневном мышлении и, конечно, в программировании. Когда мы пишем программы, мы не просто пишем код; мы создаем систему, которая принимает решения на основе заданных условий.</p>
+            </div>
+            <p>Представьте, что вы хотите создать программу, которая помогает вам принимать решения. <br><br>Пример логического рассуждения, <em>"Если на улице идёт дождь, то я возьму зонт, иначе если нет дождя, пойду гулять в солнечных очках"</em>.</p>
+
+            <img src="images/l4/Logic.png" width="500" alt="Логика">
 
             <div class="note">
             <p>Булева алгебра — это раздел математики, названный в честь Джорджа Буля, работает с двумя основными значениями: <strong>истина</strong> (<code class="code">True</code>) и <strong>ложь</strong> (<code class="code">False</code>). Мы можем использовать булеву алгебру для построения логических выражений, которые формируют базу программирования.</p>
         </div>
             <figure>
-                <img src="../4 Управление потоком/images/boll.png" alt="Джордж Буль" width="300">
-                <figcaption>Английский математик Джордж Буль</figcaption>
+                <img src="images/l4/Boole.png" alt="Джордж Буль" width="300" style="display: block; margin: 0 auto;">
+                <figcaption style="text-align: center;">Английский математик Джордж Буль</figcaption>
             </figure>
             <div class="note">
                 <p><strong>Логический тип данных</strong></p>
@@ -73,8 +77,10 @@ print(is_admin)     # Выведет: False
                 </ul>
                 <p>Эта аналогия поможет вам быстро вычислять результат сложных логических выражений.</p>
             </div>
+        </section>
 
-            <h3>Операция И (<code class="code">and</code>)</h3>
+        <section class="lesson-section">
+            <h2 style="display: inline;">Логическое И (and)</h2>
             <div class="note">
                 <p><strong>Логическое И (and)</strong></p>
                 <p>Логическое <strong>И</strong> возвращает <strong>True</strong>, только если <strong>оба</strong> операнда истинны.</p>
@@ -130,8 +136,10 @@ print(can_go_for_a_walk) # False, погулять не вышло
 # True and False => False
 # 1 * 0 => 0
 </code></pre>
+        </section>
 
-            <h3>Операция ИЛИ (<code class="code">or</code>)</h3>
+        <section class="lesson-section">
+            <h2 style="display: inline;">Логическое ИЛИ (or)</h2>
             <div class="note">
                 <p><strong>Логическое ИЛИ (or)</strong></p>
                 <p>Логическое <strong>ИЛИ</strong> возвращает <strong>True</strong>, если хотя бы один из операндов истинен.</p>
@@ -187,8 +195,10 @@ print(can_go_for_a_walk) # True, идём гулять, домашка не сд
 # False or True => True
 # 0 + 1 => 1
 </code></pre>
+        </section>
 
-            <h3>Операция НЕ (<code class="code">not</code>)</h3>
+        <section class="lesson-section">
+            <h2 style="display: inline;">Логическое НЕ (not)</h2>
             <div class="note">
                 <p><strong>Логическое НЕ (not)</strong></p>
                 <p>Логическое <strong>НЕ</strong> инвертирует значение (т.е. заменяет на противоположное).</p>
@@ -227,8 +237,10 @@ print(not is_weekend) # False, НЕ выходной
 # not True => False
 # not 1 => 0
 </code></pre>
+        </section>
 
-            <h3>Исключающее ИЛИ (<code class="code">^</code>)</h3>
+        <section class="lesson-section">
+            <h2 style="display: inline;">Исключающее ИЛИ (XOR)</h2>
             <p>Это бинарный оператор, который возвращает <code class="code">True</code>, если булевы операнды имеют разные значения. В противном случае он возвращает <code class="code">False</code>. В Python для этого используется оператор битового "исключающего ИЛИ" <code class="code">^</code>.</p>
             <table>
                 <thead>
@@ -348,6 +360,12 @@ print(go_hiking)   # True, можно идти в поход!
 </div>
 
             <p>Таблицы истинности используются для анализа и построения логических выражений. Рассмотрим пример выражения <code class="code">(A and B) or not C</code></p>
+
+            <ol>
+                <li>Сначала посчитаем действие в скобках <code class="code">A and B</code> это будет <code class="code">0 and 0 = 0</code></li>
+                <li>Далее делаем логическое отрицание <code class="code">not C</code> это будет <code class="code">not 0 = 1</code></li>
+                <li>Логическое сложение между этими двумя результатами <code class="code">0 or 1 = 1</code></li>
+            </ol>
             <table>
 <thead>
 <tr>
@@ -366,76 +384,8 @@ print(go_hiking)   # True, можно идти в поход!
 </tr>
 </tbody>
 </table>
-            <ol>
-                <li>Сначала посчитаем действие в скобках <code class="code">A and B</code> это будет <code class="code">0 and 0 = 0</code></li>
-                <li>Далее делаем логическое отрицание <code class="code">not C</code> это будет <code class="code">not 0 = 1</code></li>
-                <li>Осталось выполнить логическое сложение между этими двумя результатами <code class="code">0 or 1 = 1</code></li>
-            </ol>
-            <div class="note">
-                <p><strong>Практика</strong></p>
-                <p>Составьте таблицу истинности для всех значений</p>
-                <p>Напишите результат для логического выражения<br><code class="code">(A and B) or not C</code></p>
-            </div>
-            <table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>C</th>
-<th>( A and B ) or not C</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
+
+            
         </section>
 
         <section class="lesson-section">

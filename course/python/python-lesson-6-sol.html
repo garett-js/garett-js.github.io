@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решения - Урок 6: Арифметические операции</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="python-lesson-6-praktika.html" class="back-link">←</a> Решения: Урок 6</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Решения - Урок 6: Арифметические операции</h1>
+
+        <div class="note">
+            <p><strong>Внимание!</strong> Сначала попробуйте решить задачи самостоятельно. Эти решения предназначены для проверки или если вы совсем застряли.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Расход маны</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">mana_points = int(input("Введите количество маны: "))
+spell_cost = 25
+
+print(f"До каста: {mana_points} маны")
+
+# Используем комбинированный оператор для уменьшения маны
+mana_points -= spell_cost
+
+print(f"После каста: {mana_points} маны")
+
+if mana_points >= 0:
+    print("Заклинание успешно применено!")
+else:
+    print("Недостаточно маны для заклинания!")
+
+# Альтернативный вариант с проверкой:
+# mana_points = int(input("Введите количество маны: "))
+# spell_cost = 25
+# 
+# print(f"До каста: {mana_points} маны")
+# 
+# if mana_points >= spell_cost:
+#     mana_points -= spell_cost
+#     print(f"После каста: {mana_points} маны")
+#     print("Заклинание успешно применено!")
+# else:
+#     print(f"Недостаточно маны! Нужно {spell_cost}, а у вас {mana_points}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем комбинированный оператор <code class="code">-=</code> который эквивалентен <code class="code">mana_points = mana_points - spell_cost</code>. Это более краткая и читаемая запись.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Усиление оружия</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">win_count = int(input("Введите количество побед: "))
+
+print(f"Победы: {win_count}")
+
+# Проверяем, делится ли количество побед на 3 без остатка
+if win_count % 3 == 0 and win_count > 0:
+    print("Оружие усилено! (каждая 3-я победа)")
+else:
+    # Вычисляем, сколько побед осталось до следующего усиления
+    remaining = 3 - (win_count % 3)
+    print(f"Оружие не усилено. До усиления осталось: {remaining} победы")
+
+# Альтернативный вариант с дополнительной информацией:
+# win_count = int(input("Введите количество побед: "))
+# 
+# print(f"Победы: {win_count}")
+# 
+# if win_count == 0:
+#     print("Пока побед нет. Нужно 3 победы для усиления оружия.")
+# elif win_count % 3 == 0:
+#     upgrades = win_count // 3
+#     print(f"Оружие усилено! (каждая 3-я победа)")
+#     print(f"Всего усилений получено: {upgrades}")
+# else:
+#     remaining = 3 - (win_count % 3)
+#     next_upgrade = win_count + remaining
+#     print(f"Оружие не усилено. До усиления осталось: {remaining} победы")
+#     print(f"Следующее усиление на {next_upgrade}-й победе")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Оператор <code class="code">%</code> (модуло) возвращает остаток от деления. Если <code class="code">win_count % 3 == 0</code>, значит число побед делится на 3 нацело, и оружие усиливается.</p>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Последние цифры ID предмета</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">item_id = int(input("Введите ID предмета: "))
+
+print(f"ID предмета: {item_id}")
+
+# Получаем последние 3 цифры с помощью остатка от деления на 1000
+last_3_digits = item_id % 1000
+
+# Форматируем с ведущими нулями для красивого вывода
+print(f"Последние 3 цифры: {last_3_digits:03d}")
+
+# Дополнительная информация для понимания:
+print(f"Система бонусов: категория {last_3_digits}")
+
+# Альтернативные способы:
+# Способ 1: Через строки
+# item_id_str = str(item_id)
+# if len(item_id_str) >= 3:
+#     last_3_str = item_id_str[-3:]
+# else:
+#     last_3_str = item_id_str.zfill(3)
+# print(f"Последние 3 цифры (строковый способ): {last_3_str}")
+
+# Способ 2: Математический разбор
+# first_digit = (item_id % 1000) // 100
+# second_digit = (item_id % 100) // 10  
+# third_digit = item_id % 10
+# print(f"По цифрам: {first_digit}{second_digit}{third_digit}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> <code class="code">item_id % 1000</code> дает остаток от деления на 1000, что и есть последние 3 цифры. Форматирование <code class="code">{last_3_digits:03d}</code> добавляет ведущие нули для чисел меньше 100.</p>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Проверка числа на условия</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">number = int(input("Введите число: "))
+
+# Проверяем два условия одновременно
+is_odd = number % 2 == 1  # или number % 2 != 0
+is_divisible_by_7 = number % 7 == 0
+
+result = is_odd and is_divisible_by_7
+
+print(f"Число {number} является нечетным и делится на 7: {result}")
+
+# Более подробный вариант с объяснением:
+print(f"\nПодробный анализ:")
+print(f"Число {number} нечетное: {is_odd}")
+print(f"Число {number} делится на 7: {is_divisible_by_7}")
+print(f"Оба условия выполнены: {result}")
+
+# Альтернативная запись в одну строку:
+# result_oneline = (number % 2 == 1) and (number % 7 == 0)
+# print(f"Результат в одну строку: {result_oneline}")
+
+# Примеры чисел, которые подходят под условие:
+# 7, 21, 35, 49, 63, 77, 91, 105, 119, 133...
+# Это нечетные числа, кратные 7
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логический оператор <code class="code">and</code> для проверки двух условий одновременно. Число нечетное, если <code class="code">number % 2 == 1</code>, и делится на 7, если <code class="code">number % 7 == 0</code>.</p>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Счастливый билет</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">ticket = input("Введите 6-значный номер билета: ")
+
+# Проверяем, что введено ровно 6 цифр
+if len(ticket) != 6 or not ticket.isdigit():
+    print("Ошибка: введите ровно 6 цифр!")
+else:
+    # Разделяем на две половины
+    first_half = ticket[:3]   # первые 3 цифры
+    second_half = ticket[3:]  # последние 3 цифры
+    
+    # Вычисляем суммы
+    sum_first = sum(int(digit) for digit in first_half)
+    sum_second = sum(int(digit) for digit in second_half)
+    
+    # Проверяем равенство сумм
+    if sum_first == sum_second:
+        print(f"Да: {sum_first} равно {sum_second}")
+        print("Поздравляем! У вас счастливый билет! 🍀")
+    else:
+        print(f"Нет: {sum_first} не равно {sum_second}")
+        print("К сожалению, билет не счастливый.")
+
+# Альтернативный способ без генератора:
+# first_sum = int(ticket[0]) + int(ticket[1]) + int(ticket[2])
+# second_sum = int(ticket[3]) + int(ticket[4]) + int(ticket[5])
+
+# Еще один способ через цикл:
+# first_sum = 0
+# second_sum = 0
+# for i in range(3):
+#     first_sum += int(ticket[i])
+#     second_sum += int(ticket[i + 3])
+
+# Математический способ (если билет - число):
+# if ticket.isdigit():
+#     ticket_num = int(ticket)
+#     # Извлекаем цифры математически
+#     d1 = ticket_num // 100000
+#     d2 = (ticket_num // 10000) % 10
+#     d3 = (ticket_num // 1000) % 10
+#     d4 = (ticket_num // 100) % 10
+#     d5 = (ticket_num // 10) % 10
+#     d6 = ticket_num % 10
+#     
+#     sum1 = d1 + d2 + d3
+#     sum2 = d4 + d5 + d6
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем срезы строк <code class="code">[:3]</code> и <code class="code">[3:]</code> для разделения на половины. Функция <code class="code">sum()</code> с генератором списка <code class="code">sum(int(digit) for digit in string)</code> элегантно суммирует цифры.</p>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Размен монет для великого воина</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">amount = int(input("Введите стоимость услуг: "))
+
+# Номиналы монет в порядке убывания (жадный алгоритм)
+denominations = [25, 15, 10, 1]
+coins_used = []
+
+original_amount = amount
+total_coins = 0
+
+print(f"\nРазбивка:")
+
+for coin in denominations:
+    if amount >= coin:
+        # Вычисляем количество монет данного номинала
+        count = amount // coin
+        coins_used.append((coin, count))
+        total_coins += count
+        
+        print(f"{count} монет номиналом {coin} = {count * coin}")
+        
+        # Уменьшаем оставшуюся сумму
+        amount -= count * coin
+    else:
+        coins_used.append((coin, 0))
+        print(f"0 монет номиналом {coin} = 0")
+
+print(f"\nМинимальное количество монет: {total_coins}")
+
+# Проверка правильности
+total_value = sum(coin * count for coin, count in coins_used)
+print(f"Итого: {' + '.join(str(coin * count) for coin, count in coins_used if count > 0)} = {total_value}")
+
+# Альтернативный вариант с более компактным выводом:
+# amount = int(input("Введите стоимость услуг: "))
+# 
+# coins_25 = amount // 25
+# amount %= 25
+# 
+# coins_15 = amount // 15
+# amount %= 15
+# 
+# coins_10 = amount // 10
+# amount %= 10
+# 
+# coins_1 = amount  # оставшаяся сумма
+# 
+# total_coins = coins_25 + coins_15 + coins_10 + coins_1
+# 
+# print(f"Минимальное количество монет: {total_coins}")
+# print(f"25: {coins_25}, 15: {coins_15}, 10: {coins_10}, 1: {coins_1}")
+
+# Функциональный подход:
+# def min_coins(amount, denominations=[25, 15, 10, 1]):
+#     result = {}
+#     for coin in denominations:
+#         result[coin] = amount // coin
+#         amount %= coin
+#     return result, sum(result.values())
+# 
+# coins_breakdown, min_coins_count = min_coins(int(input("Введите стоимость: ")))
+# print(f"Минимальное количество монет: {min_coins_count}")
+# for coin, count in coins_breakdown.items():
+#     if count > 0:
+#         print(f"{count} x {coin} = {count * coin}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем жадный алгоритм - берем максимально возможное количество монет самого крупного номинала, затем переходим к следующему. Оператор <code class="code">//</code> дает целое количество монет, а <code class="code">%=</code> обновляет остаток.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

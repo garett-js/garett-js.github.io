@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 4: Логика</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="python-lesson-4.html" class="back-link">←</a> Практика: Урок 4</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 4: Логика</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.py</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Таблица истинности</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Составьте таблицу истинности для логического выражения <code class="code">(A and B) or not C</code></p>
+            
+            <div class="note">
+                <p><strong>Практика</strong></p>
+                <p>Составьте таблицу истинности для всех значений</p>
+                <p>Напишите результат для логического выражения<br><code class="code">(A and B) or not C</code></p>
+            </div>
+            <table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>( A and B ) or not C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Просмотр фильма</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Есть три логические переменные:</p>
+            <ul>
+                <li><code class="code">is_tired</code> - устал ли человек</li>
+                <li><code class="code">has_time</code> - есть ли время</li>
+                <li><code class="code">likes_movies</code> - нравится ли человеку смотреть фильмы</li>
+            </ul>
+            <p>Составьте логическое выражение для переменной <code class="code">can_watch_movie</code>, которое будет определять, можно ли посмотреть фильм.</p>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Подумайте, при каких условиях человек может посмотреть фильм. Обычно это когда у него есть время, он не слишком устал и ему нравятся фильмы.</p>
+            </div>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Время работы Кванториума</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Есть переменная <code class="code">time</code> в которой указано время (в часах от 0 до 23).</p>
+            <p>Составьте логическое выражение, которое проверяет условие времени работы Кванториума.</p>
+            
+            <p><strong>Условия работы:</strong></p>
+            <ul>
+                <li>Кванториум работает с 8 утра до 18 вечера</li>
+                <li>В 13 часов перерыв на обед (не работает)</li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примеры</h5>
+            </div>
+            <pre><code class="bash">Время 10 утра → True (работает)
+Время 13 часов → False (обед, не работает)  
+Время 23 часа → False (ночь, не работает)</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Вход в подземелье</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Чтобы войти в древнее подземелье, персонаж должен быть минимум 10-го уровня <strong>и</strong> иметь при себе "Ключ от подземелья". Спросите пользователя уровень (<code class="code">int</code>) и наличие ключа (<code class="code">y/n</code>). Выведите, может ли персонаж войти.</p>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Использование заклинания</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Чтобы использовать мощное заклинание "Огненный шар", у мага должно быть достаточно маны (больше 50) <strong>или</strong> на нём должен быть эффект "Вдохновение". Запросите количество маны (<code class="code">int</code>) и наличие эффекта (<code class="code">y/n</code>).</p>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Защита от яда</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Персонаж защищён от яда, если на нём надет "Амулет противоядия". Спросите пользователя, надет ли амулет (<code class="code">y/n</code>). Инвертируйте значение с помощью <code class="code">not</code>, чтобы узнать, отравлен ли персонаж.</p>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2>Задача № 7: Условия для критического удара</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐⭐</p>
+            <p>Персонаж наносит критический удар, если он атакует со спины <strong>и</strong> (у него высокий показатель ловкости (больше 20) <strong>или</strong> он находится в состоянии невидимости). Спросите пользователя три параметра.</p>
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2>Задача № 8: Открытие магического замка</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐⭐</p>
+            <p>Магический замок откроется, если игрок — "маг" <strong>XOR</strong> у него есть "универсальный ключ" (только одно из условий). Запросите у пользователя обе характеристики (<code class="code">y/n</code>).</p>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте оператор исключающего ИЛИ <code class="code">^</code>. Замок откроется только если выполнено ровно одно условие из двух.</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

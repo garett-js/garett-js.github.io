@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решения - Урок 4: Логика</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="python-lesson-4-praktika.html" class="back-link">←</a> Решения: Урок 4</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Решения - Урок 4: Логика</h1>
+
+        <div class="note">
+            <p><strong>Внимание!</strong> Сначала попробуйте решить задачи самостоятельно. Эти решения предназначены для проверки или если вы совсем застряли.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Таблица истинности</h2>
+            <p>Составьте таблицу истинности для логического выражения <code class="code">(A and B) or not C</code></p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            
+            <table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>( A and B ) or not C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+            <p><strong>Объяснение:</strong></p>
+            <ol>
+                <li>Сначала вычисляем <code class="code">A and B</code></li>
+                <li>Затем вычисляем <code class="code">not C</code></li>
+                <li>Наконец, выполняем <code class="code">(A and B) or not C</code></li>
+            </ol>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Просмотр фильма</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_tired = False
+has_time = True
+likes_movies = True
+
+can_watch_movie = has_time and not is_tired and likes_movies
+print(f"Можно посмотреть фильм: {can_watch_movie}")
+
+# Альтернативное решение:
+# can_watch_movie = has_time and likes_movies and not is_tired
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Человек может посмотреть фильм, если у него есть время, он не устал и ему нравятся фильмы. Все три условия должны быть истинными.</p>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Время работы Кванториума</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">time = int(input("Введите время (0-23): "))
+
+is_working = (8 <= time <= 18) and (time != 13)
+print(f"Кванториум работает: {is_working}")
+
+# Альтернативное решение:
+# is_working = (time >= 8 and time <= 18) and (time != 13)
+
+# Или более подробно:
+# is_working_hours = 8 <= time <= 18
+# is_not_lunch = time != 13
+# is_working = is_working_hours and is_not_lunch
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Кванториум работает с 8 до 18 часов, но не работает в 13 часов (обед). Используем цепочку сравнений и исключаем 13 час.</p>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Вход в подземелье</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">player_level = int(input("Введите уровень персонажа: "))
+has_key = input("Есть ли ключ от подземелья? (y/n): ").strip().lower() == 'y'
+
+can_enter_dungeon = (player_level >= 10) and has_key
+print(f"Может ли игрок войти в подземелье? {can_enter_dungeon}")
+
+# Более подробный вывод:
+if can_enter_dungeon:
+    print("Персонаж может войти в подземелье!")
+else:
+    print("Персонаж не может войти в подземелье.")
+    if player_level < 10:
+        print("Недостаточный уровень (нужен минимум 10)")
+    if not has_key:
+        print("Нет ключа от подземелья")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логическое И (and) - нужны ОБА условия: уровень >= 10 И наличие ключа.</p>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Использование заклинания</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">mana = int(input("Введите количество маны: "))
+has_inspiration_effect = input("Есть эффект 'Вдохновение'? (y/n): ").strip().lower() == 'y'
+
+can_cast_spell = (mana > 50) or has_inspiration_effect
+print(f"Может ли маг использовать заклинание? {can_cast_spell}")
+
+# Более подробный вывод:
+if can_cast_spell:
+    print("Маг может использовать заклинание!")
+    if mana > 50:
+        print("У мага достаточно маны")
+    if has_inspiration_effect:
+        print("У мага есть эффект 'Вдохновение'")
+else:
+    print("Маг не может использовать заклинание - недостаточно маны и нет эффекта 'Вдохновение'")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логическое ИЛИ (or) - достаточно ОДНОГО из условий: много маны ИЛИ эффект вдохновения.</p>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Защита от яда</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">has_amulet = input("Надет ли амулет противоядия? (y/n): ").strip().lower() == 'y'
+
+is_poisoned = not has_amulet
+print(f"Персонаж отравлен? {is_poisoned}")
+
+# Более подробный вывод:
+if has_amulet:
+    print("Персонаж защищен от яда амулетом")
+else:
+    print("Персонаж отравлен - нет защиты от яда")
+
+# Альтернативный способ:
+is_protected = has_amulet
+print(f"Персонаж защищен? {is_protected}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логическое НЕ (not) для инверсии значения. Если амулет надет - персонаж не отравлен, если амулета нет - отравлен.</p>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2>Задача № 7: Условия для критического удара</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_attacking_from_behind = input("Атака со спины? (y/n): ").strip().lower() == 'y'
+agility = int(input("Введите значение ловкости: "))
+is_invisible = input("Персонаж невидим? (y/n): ").strip().lower() == 'y'
+
+is_critical_hit = is_attacking_from_behind and (agility > 20 or is_invisible)
+print(f"Это критический удар? {is_critical_hit}")
+
+# Разбор по шагам:
+print("\nАнализ условий:")
+print(f"Атака со спины: {is_attacking_from_behind}")
+print(f"Высокая ловкость (>20): {agility > 20} (ловкость: {agility})")
+print(f"Невидимость: {is_invisible}")
+
+bonus_condition = agility > 20 or is_invisible
+print(f"Бонусное условие (ловкость > 20 ИЛИ невидимость): {bonus_condition}")
+print(f"Критический удар (атака со спины И бонусное условие): {is_critical_hit}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Сложное логическое выражение с приоритетом операций. Скобки важны! Сначала вычисляется <code class="code">(agility > 20 or is_invisible)</code>, затем результат объединяется с <code class="code">is_attacking_from_behind</code> через И.</p>
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2>Задача № 8: Открытие магического замка</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-python">is_mage = input("Персонаж — маг? (y/n): ").strip().lower() == 'y'
+has_universal_key = input("Есть универсальный ключ? (y/n): ").strip().lower() == 'y'
+
+can_open_lock = is_mage ^ has_universal_key  # исключающее ИЛИ
+print(f"Замок открыт? {can_open_lock}")
+
+# Демонстрация работы XOR:
+print("\nТаблица истинности для XOR:")
+print("Маг | Ключ | Результат")
+print("0   | 0    | 0")
+print("0   | 1    | 1")  
+print("1   | 0    | 1")
+print("1   | 1    | 0")
+
+print(f"\nВаша ситуация:")
+print(f"Маг: {is_mage}")
+print(f"Ключ: {has_universal_key}")
+print(f"Замок открывается только при одном условии из двух: {can_open_lock}")
+
+# Альтернативная запись XOR без оператора ^:
+# can_open_lock_alt = (is_mage and not has_universal_key) or (not is_mage and has_universal_key)
+# print(f"Альтернативная запись: {can_open_lock_alt}")
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Исключающее ИЛИ (XOR) возвращает True только когда условия разные. Замок открывается, если персонаж ЛИБО маг (но без ключа), ЛИБО не маг (но с ключом). Если оба условия выполнены или оба не выполнены - замок не откроется.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 
