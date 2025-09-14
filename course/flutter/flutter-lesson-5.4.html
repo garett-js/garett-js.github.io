@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как происходит обновление виджетов</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Как происходит обновление виджетов</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Как происходит обновление виджетов</h1>
+        
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Обновление виджетов</strong></h2>
+            <p><code class="code">Flutter</code> может вызывать метод <code class="code">build()</code> в нескольких ситуациях:</p>
+            <ul>
+                <li>После вызова метода <code class="code">iniState()</code></li>
+                <li>После вызова метода <code class="code">didUpdateWidget()</code></li>
+                <li>После вызова метода <code class="code">setState()</code></li>
+                <li>После того как зависимости <code class="code">State</code> объекта были изменены (<code class="code">InheritedWidget</code>)</li>
+                <li>После <code class="code">deactivate()</code>, а затем повторной вставки объекта <code class="code">State</code> в дерево.</li>
+            </ul>
+            <p>Метод <code class="code">build()</code> может быть вызван довольно часто и при этом не должен иметь никаких побочных эффектов, кроме создания виджета.</p>
+            <p>Переданный аргумент <code class="code">build(BuildContext context)</code> содержит информацию о том месте в дереве, в котором создается этот виджет. Например, контекст предоставляет набор унаследованных виджетов для этого места в дереве. Аргумент <code class="code">BuildContext</code> всегда совпадает со свойством контекста этого объекта State и остается неизменным в течение всего времени существования этого объекта.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Практический пример</strong></h2>
+            <p>Рассмотрим случай когда <code class="code">StatefulWidget</code> находится внутри другого <code class="code">StatefulWidget</code> и происходит вызов метода <code class="code">didUpdateWidget()</code></p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">3_stateful_didUpdateWidget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+class TrackCardExample3 extends StatefulWidget {  
+  const TrackCardExample3({super.key});  
+  
+  @override  
+  State<TrackCardExample3> createState() => _TrackCardExample3State();  
+}  
+  
+class _TrackCardExample3State extends State<TrackCardExample3> {  
+  int counter = 0;  
+  
+  void _incCount() => setState(() {  
+        counter++;  
+      });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+  
+    debugPrint("🔵 TrackCardExample3 build (widget hash: ${identityHashCode(widget)})");  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: const TitleWidget(text: "Stateless"),  
+        subtitle: const SubtitleWidget(text: "Flutter vibes"),  
+        trailing: LikeButton(  
+          text: "Like $counter",  
+          incCount: _incCount,  
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  final String text;  
+  const TitleWidget({super.key, this.text = ""});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+  
+    debugPrint("🔵 TitleWidget build (widget hash: ${identityHashCode(this)})");  
+  
+    return Text(  
+      text,  
+      style: TextStyle(  
+        fontWeight: FontWeight.bold,  
+      ),  
+    );  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  
+  
+  const SubtitleWidget({super.key, this.text = ""});  
+  @override  
+  Widget build(BuildContext context) {  
+  
+    debugPrint("🔵 SubtitleWidget build (widget hash: ${identityHashCode(this)})");  
+  
+    return Text(text.toUpperCase());  
+  }  
+}  
+  
+class LikeButton extends StatefulWidget {  
+  final String text;  
+  final Function incCount;  
+  const LikeButton({  
+    super.key,  
+    this.text = "",  
+    required this.incCount,  
+  });  
+  
+  @override  
+  State<LikeButton> createState() => _LikeButtonState();  
+}  
+  
+class _LikeButtonState extends State<LikeButton> {  
+  bool isFavorite = false;  
+  
+  @override  
+  void didUpdateWidget(covariant LikeButton oldWidget) {  
+    super.didUpdateWidget(oldWidget);  
+    debugPrint("LikeButton identityHashCode oldWidget = "  
+        "${identityHashCode(oldWidget)}, "  
+        "newWidget = ${identityHashCode(widget)}");  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🔵 LikeButton build isFavorite: $isFavorite, widget hash: ${identityHashCode(widget)}");  
+  
+    return Column(  
+      mainAxisAlignment: MainAxisAlignment.center,  
+      crossAxisAlignment: CrossAxisAlignment.center,  
+      children: [  
+        Expanded(  
+          child: IconButton(  
+            onPressed: () {  
+              isFavorite = !isFavorite; // Не обязательно вызывать ещё один setState  
+              widget.incCount(); // Вызываем функцию-колбэк из виджета TrackCard  
+            },  
+            icon: isFavorite  
+                ? const Icon(Icons.favorite, color: Colors.red)  
+                : const Icon(Icons.favorite_border),  
+          ),  
+        ),  
+        Text(widget.text),  
+      ],  
+    );  
+  }  
+}
+            </code></pre>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>Как происходит обновление виджетов</strong></h2>
+            <p>Слайды. Как происходит обновление виджетов</p>
+
+            <div class="slideshow-container" data-width="800px">
+              <div class="slideshow-wrapper">
+                  <div class="slideshow">
+                      <div class="slide active">
+                          <img src="images/l5.4/1.png" alt="StatefulWidget - шаг 1">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/2.png" alt="StatefulWidget - шаг 2">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/3.png" alt="StatefulWidget - шаг 3">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/4.png" alt="StatefulWidget - шаг 4">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/5.png" alt="StatefulWidget - шаг 5">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/6.png" alt="StatefulWidget - шаг 6">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/7.png" alt="StatefulWidget - шаг 7">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/8.png" alt="StatefulWidget - шаг 8">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/9.png" alt="StatefulWidget - шаг 9">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/10.png" alt="StatefulWidget - шаг 10">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/11.png" alt="StatefulWidget - шаг 11">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/12.png" alt="StatefulWidget - шаг 12">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/13.png" alt="StatefulWidget - шаг 13">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/14.png" alt="StatefulWidget - шаг 14">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/15.png" alt="StatefulWidget - шаг 15">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/16.png" alt="StatefulWidget - шаг 16">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/17.png" alt="StatefulWidget - шаг 17">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/18.png" alt="StatefulWidget - шаг 18">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/19.png" alt="StatefulWidget - шаг 19">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/20.png" alt="StatefulWidget - шаг 20">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/21.png" alt="StatefulWidget - шаг 21">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/22.png" alt="StatefulWidget - шаг 22">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/23.png" alt="StatefulWidget - шаг 23">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/24.png" alt="StatefulWidget - шаг 24">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/25.png" alt="StatefulWidget - шаг 25">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/26.png" alt="StatefulWidget - шаг 26">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/27.png" alt="StatefulWidget - шаг 27">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/28.png" alt="StatefulWidget - шаг 28">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/29.png" alt="StatefulWidget - шаг 29">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/30.png" alt="StatefulWidget - шаг 30">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/31.png" alt="StatefulWidget - шаг 31">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/32.png" alt="StatefulWidget - шаг 32">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/33.png" alt="StatefulWidget - шаг 33">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/34.png" alt="StatefulWidget - шаг 34">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/35.png" alt="StatefulWidget - шаг 35">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/36.png" alt="StatefulWidget - шаг 36">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.4/37.png" alt="StatefulWidget - шаг 37">
+                      </div>
+                  </div>
+              </div>
+              <div class="slideshow-controls">
+                  <button class="slideshow-btn prev-btn">‹</button>
+                  <div class="dots-container"></div>
+                  <button class="slideshow-btn next-btn">›</button>
+              </div>
+          </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решения - Урок 4: Логика</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-4-praktika.html" class="back-link">←</a> Решения: Урок 4</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Решения - Урок 4: Логика</h1>
+
+        <div class="note">
+            <p><strong>Внимание!</strong> Сначала попробуйте решить задачи самостоятельно. Эти решения предназначены для проверки или если вы совсем застряли.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Таблица истинности</h2>
+            <p>Составьте таблицу истинности для логического выражения <code class="code">(A && B) || !C</code></p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+            </div>
+            
+            <table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>( A && B ) || !C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+            <p><strong>Объяснение:</strong></p>
+            <ol>
+                <li>Сначала вычисляем <code class="code">A && B</code></li>
+                <li>Затем вычисляем <code class="code">!C</code></li>
+                <li>Наконец, выполняем <code class="code">(A && B) || !C</code></li>
+            </ol>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Просмотр фильма</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+void main() {
+    bool isTired = false;
+    bool hasTime = true;
+    bool likesMovies = true;
+
+    bool canWatchMovie = hasTime && !isTired && likesMovies;
+    print("Можно посмотреть фильм: $canWatchMovie");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Человек может посмотреть фильм, если у него есть время, он не устал и ему нравятся фильмы. Все три условия должны быть истинными.</p>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Время работы Кванториума</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите время (0-23):");
+    String? input = stdin.readLineSync();
+    int time = int.parse(input!);
+
+    bool isWorking = (time >= 8 && time <= 18) && (time != 13);
+    print("Кванториум работает: $isWorking");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Кванториум работает с 8 до 18 часов, но не работает в 13 часов (обед). Используем проверку диапазона и исключаем 13 час.</p>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Вход в подземелье</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите уровень персонажа:");
+    int playerLevel = int.parse(stdin.readLineSync()!);
+
+    print("Есть ли ключ от подземелья? (y/n):");
+    bool hasKey = stdin.readLineSync()!.toLowerCase() == 'y';
+
+    bool canEnterDungeon = (playerLevel >= 10) && hasKey;
+    print("Может ли игрок войти в подземелье? $canEnterDungeon");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логическое И (<code class="code">&&</code>) - нужны ОБА условия: уровень >= 10 И наличие ключа.</p>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Использование заклинания</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите количество маны:");
+    int mana = int.parse(stdin.readLineSync()!);
+
+    print("Есть эффект 'Вдохновение'? (y/n):");
+    bool hasInspirationEffect = stdin.readLineSync()!.toLowerCase() == 'y';
+
+    bool canCastSpell = (mana > 50) || hasInspirationEffect;
+    print("Может ли маг использовать заклинание? $canCastSpell");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логическое ИЛИ (<code class="code">||</code>) - достаточно ОДНОГО из условий: много маны ИЛИ эффект вдохновения.</p>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Защита от яда</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Надет ли амулет противоядия? (y/n):");
+    bool hasAmulet = stdin.readLineSync()!.toLowerCase() == 'y';
+
+    bool isPoisoned = !hasAmulet;
+    print("Персонаж отравлен? $isPoisoned");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логическое НЕ (<code class="code">!</code>) для инверсии значения. Если амулет надет - персонаж не отравлен, если амулета нет - отравлен.</p>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2>Задача № 7: Условия для критического удара</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Атака со спины? (y/n):");
+    bool isAttackingFromBehind = stdin.readLineSync()!.toLowerCase() == 'y';
+    
+    print("Введите значение ловкости:");
+    int agility = int.parse(stdin.readLineSync()!);
+    
+    print("Персонаж невидим? (y/n):");
+    bool isInvisible = stdin.readLineSync()!.toLowerCase() == 'y';
+
+    bool isCriticalHit = isAttackingFromBehind && (agility > 20 || isInvisible);
+    print("Это критический удар? $isCriticalHit");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Сложное логическое выражение с приоритетом операций. Скобки важны! Сначала вычисляется <code class="code">(agility > 20 || isInvisible)</code>, затем результат объединяется с <code class="code">isAttackingFromBehind</code> через <code class="code">&&</code>.</p>
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2>Задача № 8: Открытие магического замка</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Персонаж — маг? (y/n):");
+    bool isMage = stdin.readLineSync()!.toLowerCase() == 'y';
+    
+    print("Есть универсальный ключ? (y/n):");
+    bool hasUniversalKey = stdin.readLineSync()!.toLowerCase() == 'y';
+
+    bool canOpenLock = isMage != hasUniversalKey; // исключающее ИЛИ
+    print("Замок открыт? $canOpenLock");
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Исключающее ИЛИ (XOR), реализованное через <code class="code">!=</code>, возвращает true только когда условия разные. Замок открывается, если персонаж ЛИБО маг (но без ключа), ЛИБО не маг (но с ключом). Если оба условия выполнены или оба не выполнены - замок не откроется.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

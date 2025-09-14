@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решения - Урок 5: Условные конструкции</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-5-praktika.html" class="back-link">←</a> Решения: Урок 5</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Решения - Урок 5: Условные конструкции</h1>
+
+        <div class="note">
+            <p><strong>Внимание!</strong> Сначала попробуйте решить задачи самостоятельно. Эти решения предназначены для проверки или если вы совсем застряли.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Проверка здоровья персонажа</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите здоровье персонажа:");
+    int health = int.parse(stdin.readLineSync()!);
+
+    if (health == 100) {
+        print("Персонаж полностью здоров");
+    } else {
+        print("Персонажа нужно подлечить");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Простая конструкция if-else. Проверяем точное равенство здоровья 100, иначе выводим сообщение о необходимости лечения.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Классификация монстра</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите здоровье монстра:");
+    int monsterHealth = int.parse(stdin.readLineSync()!);
+
+    if (monsterHealth > 100) {
+        print("Босс");
+    } else if (monsterHealth > 50) {
+        print("Элитный монстр");
+    } else {
+        print("Обычный монстр");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Конструкция if-else if-else. Важен порядок проверки условий - сначала проверяем большее значение (>100), затем меньшее (>50). Если ни одно не подходит, значит здоровье ≤ 50.</p>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Система оповещения социальной сети</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите количество подписчиков:");
+    int subscribers = int.parse(stdin.readLineSync()!);
+
+    if (subscribers > 10000000) {
+        print("Вау! Ну тут уже только ЗОЛОТО! 💕");
+    } else if (subscribers > 100000) {
+        print("Шикарно! Вручаем вам Серебряную кнопку! 👌");
+    } else if (subscribers > 1000) {
+        print("У вас уже крутой канал, но кнопку ещё не дадим! 😊");
+    } else {
+        print("Хммм...Трудитесь усердней и всё у вас получится!");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Важно начинать проверку с самого большого числа, так как условия проверяются по порядку.</p>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Время работы Кванториума</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите время (0-23):");
+    int time = int.parse(stdin.readLineSync()!);
+
+    if (time == 12) {
+        print("Кванториум закрыт (обеденный перерыв)");
+    } else if (time >= 8 && time <= 18) {
+        print("Кванториум работает");
+    } else {
+        print("Кванториум закрыт");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Сначала проверяем особый случай (обед в 12 часов), затем проверяем рабочие часы (8-18).</p>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Определение четверти часа</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите минуты (0-59):");
+    int minutes = int.parse(stdin.readLineSync()!);
+
+    if (minutes >= 0 && minutes <= 14) {
+        print("Первая четверть часа");
+    } else if (minutes >= 15 && minutes <= 29) {
+        print("Вторая четверть часа");
+    } else if (minutes >= 30 && minutes <= 44) {
+        print("Третья четверть часа");
+    } else if (minutes >= 45 && minutes <= 59) {
+        print("Четвертая четверть часа");
+    } else {
+        print("Неверное значение минут!");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Проверяем диапазоны для каждой четверти с помощью <code class="code">if-else if-else</code>.</p>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Определение времени года</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение (if-else if-else)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите номер месяца (1-12):");
+    int month = int.parse(stdin.readLineSync()!);
+
+    if (month == 12 || month == 1 || month == 2) {
+        print("Зима");
+    } else if (month >= 3 && month <= 5) {
+        print("Весна");
+    } else if (month >= 6 && month <= 8) {
+        print("Лето");
+    } else if (month >= 9 && month <= 11) {
+        print("Осень");
+    } else {
+        print("Неверный номер месяца!");
+    }
+}
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение (switch-case)</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите номер месяца (1-12):");
+    int month = int.parse(stdin.readLineSync()!);
+
+    switch (month) {
+      case 12:
+      case 1:
+      case 2:
+        print("Зима");
+        break;
+      case 3:
+      case 4:
+      case 5:
+        print("Весна");
+        break;
+      case 6:
+      case 7:
+      case 8:
+        print("Лето");
+        break;
+      case 9:
+      case 10:
+      case 11:
+        print("Осень");
+        break;
+      default:
+        print("Неверный номер месяца!");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Задача решена двумя способами: с помощью <code class="code">if-else if-else</code> и более элегантно с <code class="code">switch-case</code>, используя "проваливание" (fall-through) для группировки месяцев.</p>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2>Задача № 7: Доступ к локации</h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Решение</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">
+import 'dart:io';
+
+void main() {
+    print("Введите ваш социальный ранг:");
+    String socialRank = stdin.readLineSync()!.toLowerCase();
+
+    print("Есть ли у вас пропуск? (y/n):");
+    bool hasPass = stdin.readLineSync()!.toLowerCase() == 'y';
+
+    if (socialRank == "дворянин" || hasPass) {
+        print("Доступ разрешен! Добро пожаловать в Замок!");
+    } else {
+        print("Доступ запрещен! Вам нужен пропуск или дворянский титул.");
+    }
+}
+</code></pre>
+            
+            <p><strong>Объяснение:</strong> Используем логический оператор <code class="code">||</code> (ИЛИ) - достаточно выполнения одного из условий. Метод <code class="code">.toLowerCase()</code> используется для обработки ввода пользователя независимо от регистра.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

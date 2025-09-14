@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StatelessWidget и StatefulWidget. Жизненный цикл виджетов</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> StatelessWidget и StatefulWidget</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>StatelessWidget и StatefulWidget. Жизненный цикл виджетов</h1>
+        
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Что такое StatelessWidget</strong></h2>
+            
+            <div class="note-block">
+                <p>Это виджет, <strong>который не изменяет своего состояния</strong>. У него:</p>
+                <ul>
+                    <li>Нет изменяемых данных (свойства класса обычно <code class="code">final</code>)</li>
+                    <li>Нет возможности передавать новые значения извне после инициализации</li>
+                    <li>Все, что описано в его <code class="code">build</code>-методе, остается неизменным</li>
+                </ul>
+            </div>
+
+            <p>Например, если в <code class="code">StatelessWidget</code> есть текст с фиксированным размером шрифта <code class="code">fontSize: 16</code>, он всегда будет <code class="code">16</code>, и поменять его через пользовательский ввод или кнопку будет <strong>нельзя</strong>.</p>
+
+            <p>По сути, <code class="code">StatelessWidget</code> — это <strong>статичный элемент интерфейса</strong> (статичная картинка), который отображает неизменяемые данные.</p>
+
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Построение UI с debug-принтами</strong></h2>
+            
+            <div class="note-block">
+                <h4>Анализ построения интерфейса</h4>
+                <p>Добавим внутри виджетов для конструктора класса и для метода <code class="code">build</code> дебаг-принты, чтобы проанализировать когда происходит вызов виджетов и постройка интерфейса</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code> - Базовая структура приложения</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Точка входа в приложение - функция main()
+void main() => runApp(MyApp());  
+  
+// MyApp - корневой виджет приложения, наследуется от StatelessWidget
+class MyApp extends StatelessWidget {  
+  // const конструктор - оптимизация производительности
+  // super.key передает ключ родительскому классу для идентификации виджета
+  const MyApp({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // MaterialApp - основа приложения, предоставляет Material Design
+    return MaterialApp(  
+      title: "Flutter Course 2025",  // Заголовок приложения
+      debugShowCheckedModeBanner: false,  // Убираем debug баннер
+      
+      // Настройка темы приложения
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(  
+          seedColor: Colors.greenAccent,  // Основной цвет темы
+        ),  
+        fontFamily: "Montserrat",  // Шрифт по умолчанию
+      ),  
+      
+      // home - начальный экран приложения
+      home: Scaffold(  
+        // Scaffold предоставляет базовую структуру экрана
+        body: HomeWidget(),  // Наш кастомный виджет в качестве содержимого
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code> - HomeWidget с debug-принтами</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// HomeWidget - главный виджет экрана, наследуется от StatelessWidget
+class HomeWidget extends StatelessWidget {  
+  // Конструктор с телом - здесь можем добавить debug-принт
+  // НЕ const, потому что в теле есть debugPrint
+  HomeWidget({super.key}) {  
+    debugPrint("💛 HomeWidget constructor");  // Отслеживаем создание виджета
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛 HomeWidget build");  // Отслеживаем вызов build метода
+  
+    // Container - базовый виджет для создания прямоугольной области
+    return Container(  
+      width: double.infinity,  // Занимает всю доступную ширину
+      
+      // BoxDecoration - оформление контейнера (фон, границы, тени)
+      decoration: BoxDecoration(  
+        // LinearGradient - линейный градиент от одного цвета к другому
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  // Зеленый → Голубой
+          begin: Alignment.topLeft,     // Начало градиента - левый верх
+          end: Alignment.bottomRight,   // Конец градиента - правый низ
+        ),  
+      ),  
+      
+      // child - дочерний виджет внутри Container
+      child: SafeArea(  
+        // SafeArea учитывает системные области (статус бар, навигация)
+        child: Center(  
+          // Center размещает дочерний виджет по центру
+          child: Padding(  
+            // Padding добавляет отступы вокруг дочернего виджета
+            padding: const EdgeInsets.all(32.0),  // 32 пикселя со всех сторон
+            child: TrackCard(),  // Наш кастомный виджет карточки
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>Создание StatelessWidget компонентов</strong></h2>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">1_stateless_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// WhiteWidget - контейнер с белым фоном для карточки
+class WhiteWidget extends StatelessWidget {  
+  // Конструктор НЕ const из-за debugPrint в теле
+  WhiteWidget({super.key}) {  
+    debugPrint("💛 WhiteWidget constructor");  // Отслеживаем создание
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛 WhiteWidget build");  // Отслеживаем вызов build
+  
+    return Container(  
+      width: double.infinity,  // Растягиваем на всю ширину
+      padding: const EdgeInsets.all(20),  // Внутренние отступы 20px
+      
+      // Оформление контейнера
+      decoration: BoxDecoration(  
+        borderRadius: BorderRadius.circular(16),  // Скругленные углы
+        color: Colors.white,  // Белый фон
+      ),  
+      
+      // Column - вертикальное расположение дочерних виджетов
+      child: Column(  
+        children: [  
+          TrackCard(),  // Наша карточка трека
+        ],  
+      ),  
+    );  
+  }  
+}  
+  
+// TrackCard - виджет карточки с информацией о треке
+class TrackCard extends StatelessWidget {  
+  // Конструктор НЕ const из-за debugPrint
+  TrackCard({super.key}) {  
+    debugPrint("💛TrackCard constructor");  // Отслеживаем создание
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TrackCard build");  // Отслеживаем вызов build
+  
+    // Card - готовый виджет карточки с тенью и скругленными углами
+    return Card(  
+      color: Colors.white,  // Белый фон карточки
+      
+      // ListTile - готовый виджет для отображения элемента списка
+      // Автоматически располагает leading, title, subtitle, trailing
+      child: ListTile(  
+        // leading - виджет слева (обычно иконка или аватар)
+        leading: Image.asset("assets/images/pro.webp"),  // Изображение трека
+        
+        // title - основной текст (заголовок)
+        title: TitleWidget(text: "Stateless"),  // Кастомный виджет заголовка
+        
+        // subtitle - дополнительный текст под заголовком
+        subtitle: SubtitleWidget(text: "Flutter vibes"),  // Кастомный виджет подзаголовка
+        
+        // trailing - виджет справа (обычно кнопка или иконка)
+        trailing: IconButton(  
+          onPressed: () {},  // Пустая функция - кнопка пока ничего не делает
+          icon: Icon(Icons.favorite_border),  // Иконка "не в избранном"
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+// TitleWidget - виджет для отображения заголовка
+class TitleWidget extends StatelessWidget {  
+  final String text;  // final - значение нельзя изменить после инициализации
+  
+  // const конструктор - оптимизация производительности
+  // Можем использовать const, так как нет debugPrint в теле конструктора
+  const TitleWidget({super.key, this.text = ""});  // Значение по умолчанию
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // Text - базовый виджет для отображения текста
+    return Text(  
+      text,  // Отображаем переданный текст
+      style: TextStyle(  
+        fontWeight: FontWeight.bold,  // Жирный шрифт
+      ),  
+    );  
+  }  
+}  
+  
+// SubtitleWidget - виджет для отображения подзаголовка
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  // final поле для хранения текста
+  
+  // Конструктор НЕ const из-за debugPrint в теле
+  SubtitleWidget({super.key, this.text = ""}) {  
+    debugPrint("💛SubtitleWidget constructor");  // Отслеживаем создание
+  }
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛SubtitleWidget build");  // Отслеживаем вызов build
+  
+    return Text(text.toUpperCase());  // Преобразуем текст в верхний регистр
+  }  
+}
+</code></pre>
+
+<img src="images/l5.1/stateless.png" width="300" alt="">
+
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Построение дерева виджетов</strong></h2>
+            
+            <p>Когда Flutter строит интерфейс, он делает это в определенном порядке:</p>
+
+            <ol>
+                <li>Flutter сначала <strong>создает виджет верхнего уровня</strong> (<code class="code">HomeWidget</code>)</li>
+                <li>Затем он вызывает у него <code class="code">build</code>-метод.</li>
+                <li>В <code class="code">build</code>методе описан дочерний виджет <code class="code">TrackCard</code>, он <strong>сначала создаётся</strong>, а потом вызывается его метод <code class="code">build</code>.</li>
+                <li>В свою очередь в этом <code class="code">build</code>методе есть виджеты <code class="code">Card</code> <code class="code">TitleWidget</code> <code class="code">SubtitleWidget</code> <code class="code">IconButton</code>, которые так же создаются, а потом вызываются свои методы <code class="code">build()</code> и так далее, пока не будем построено полностью дерево виджетов.</li>
+            </ol>
+
+            <div class="warning-block">
+                <h4>Важно</h4>
+                <p>У каждого виджета, при вызове, создается экземпляр класса и потом вызывается метод build. И таких вызовов может быть ОЧЕНЬ много.</p>
+                <p>Flutter <strong>создает виджет</strong>, а затем вызывает у него <code class="code">build</code>, а не наоборот!</p>
+            </div>
+
+            <p>Так как <code class="code">StatelessWidget</code> <strong>не изменяется</strong>, после рендеринга <strong>ничего больше не происходит</strong>. Интерфейс <strong>застыл</strong> в неизменном состоянии.</p>
+
+            <img src="images/l5.1/stateless-2.png" width="700" alt="">
+
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>Как обновить интерфейс?</strong></h2>
+            
+            <p>Поскольку <code class="code">StatelessWidget</code> <strong>не реагирует</strong> на изменения данных, изменить его стандартными способами нельзя. Однако есть один способ обновить верстку — <strong>hot reload</strong>.</p>
+
+            <p>Когда мы вызываем <strong>hot reload</strong>, Flutter <strong>перерисовывает все StatelessWidget'ы</strong>, но это не влияет на сохраненные данные (если бы они были). В консоли снова появится тот же самый список вызовов <code class="code">build</code>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Консольный вывод при запуске приложения</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">I/flutter (20888): 💛HomeWidget constructor
+I/flutter (20888): 💛HomeWidget build
+
+I/flutter (20888): 💛TrackCard constructor
+I/flutter (20888): 💛TrackCard build
+
+I/flutter (20888): 💛SubtitleWidget constructor
+I/flutter (20888): 💛SubtitleWidget constructor
+
+I/flutter (20888): 💛TitleWidget build
+I/flutter (20888): 💛SubtitleWidget build
+</code></pre>
+
+            <p>Попробуем добавить интерактивность в наш <code class="code">StatelessWidget</code>:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Попытка добавить состояние в StatelessWidget</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Попытка добавить состояние в StatelessWidget (НЕ РАБОТАЕТ!)
+class TrackCard extends StatelessWidget {  
+  TrackCard({super.key}) {  
+    debugPrint("💛 TrackCard constructor");  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // ❌ ПРОБЛЕМА: локальная переменная сбрасывается при каждом вызове build()
+    bool isFavorite = false;  // Всегда будет false при каждом build()
+  
+    debugPrint("💛 TrackCard build");  
+    debugPrint("⚪️ isFavorite = $isFavorite");  // Всегда выведет false
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: TitleWidget(text: "Stateless"),  
+        subtitle: SubtitleWidget(text: "Flutter vibes"),  
+        trailing: IconButton(  
+          onPressed: () {  
+            // ❌ Изменяем локальную переменную, но это НЕ вызывает перерисовку
+            isFavorite = !isFavorite;  // Изменение есть, но интерфейс не обновится
+            
+            // StatelessWidget НЕ МОЖЕТ перерисовать себя!
+            // Нет метода setState() или другого способа уведомить Flutter
+            // о том, что нужно вызвать build() заново
+          },  
+          // Условная иконка - но isFavorite всегда false
+          icon: isFavorite  
+              ? Icon(Icons.favorite, color: Colors.red)      // Красное сердце
+              : Icon(Icons.favorite_border),                 // Пустое сердце
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <div class="warning-block">
+                <h4>Результат</h4>
+                <p>При нажатии на кнопку <strong>ничего не происходит</strong>. При горячей перезагрузке <code class="code">Hot Restart</code> тоже ничего не меняется. <code class="code">isFavorite</code> всегда имеет значение <code class="code">false</code>, потому что каждый раз когда вызывается метод <code class="code">build</code>, устанавливается это значение.</p>
+            </div>
+
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2 style="display: inline;"><strong>StatefulWidget - решение проблемы</strong></h2>
+            
+            <div class="note-block">
+                <h4>Переходим к StatefulWidget</h4>
+                <p>Переделаем <code class="code">TrackCard</code> виджет из <code class="code">StatelessWidget</code> в <code class="code">StatefulWidget</code></p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">TrackCard как StatefulWidget</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// ✅ StatefulWidget - РЕШЕНИЕ! Может хранить и изменять состояние
+class TrackCard extends StatefulWidget {  
+  TrackCard({super.key}) {  
+    debugPrint("💛TrackCard constructor");  // Создается ОДИН раз
+  }  
+  
+  // createState() создает объект State, который будет управлять состоянием
+  @override  
+  State<TrackCard> createState() => _TrackCardState();  
+}  
+  
+// _TrackCardState - класс состояния, наследуется от State<TrackCard>
+// Именно здесь хранятся изменяемые данные
+class _TrackCardState extends State<TrackCard> {  
+  // ✅ Переменная состояния - хранится между вызовами build()
+  // НЕ сбрасывается при каждом build(), в отличие от StatelessWidget
+  bool isFavorite = false;  
+  
+  @override  
+  Widget build(BuildContext context) {  
+  
+    debugPrint("💛TrackCard build");  
+    debugPrint("⚪️isFavorite = $isFavorite");  // Теперь значение сохраняется!
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: TitleWidget(text: "Stateless"),  
+        subtitle: SubtitleWidget(text: "Flutter vibes"),  
+        trailing: IconButton(  
+          onPressed: () {  
+            // ✅ setState() - КЛЮЧЕВОЙ метод StatefulWidget!
+            // Он делает 2 вещи:
+            // 1. Выполняет код внутри () => {}
+            // 2. Говорит Flutter: "Нужно перерисовать этот виджет!"
+            setState(() {  
+            isFavorite = !isFavorite;  // Изменяем состояние
+            });  
+            // После setState() Flutter автоматически вызовет build() заново
+          },  
+          // Теперь условие работает правильно!
+          icon: isFavorite  
+              ? Icon(Icons.favorite, color: Colors.red)      // Красное сердце
+              : Icon(Icons.favorite_border),                 // Пустое сердце
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <p>Если теперь нажать на иконку, то в консоле будут такие вызовы:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Консольный вывод при нажатии на кнопку</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">💛 TrackCard build
+⚪️ isFavorite = true
+
+💛 SubtitleWidget constructor
+💛 SubtitleWidget constructor
+💛 TitleWidget build
+💛 SubtitleWidget build
+</code></pre>
+
+            <div class="note-block">
+                <h4>Что происходит при setState()</h4>
+                <ul>
+                    <li><code class="code">HomeWidget</code> constructor и <code class="code">HomeWidget</code> build не участвуют в перерисовке экрана, они остаются как есть.</li>
+                    <li>Объект класса TrackCard constructor не вызывается. Перезапускается только метод <code class="code">build()</code> у Stateful виджета.</li>
+                    <li>Меняется значение переменной состояния <code class="code">isFavorite = true</code></li>
+                    <li>Но... в данном случае перерисовываются ВСЕ виджеты которые вызываются внутри метода <code class="code">build()</code>. Даже если их не нужно перерисовывать.</li>
+                </ul>
+            </div>
+
+            <img src="images/l5.1/stateless-3.png" width="500" alt="">
+
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2 style="display: inline;"><strong>Оптимизация построения виджетов</strong></h2>
+            
+            <p>Как в данном случае можно оптимизировать работу приложения по отрисовке элементов на экране?</p>
+
+            <ol>
+                <li>Использовать везде, где есть возможность <code class="code">const</code> - <strong>константные конструкторы</strong></li>
+                <li>Сделать <code class="code">Stateful</code> виджетом только тот элемент который изменяется, например, в данном случае это <code class="code">IconButton</code></li>
+            </ol>
+
+            <p>У константных конструкторов не может быть "тела" поэтому придётся убрать <code class="code">debugPrint</code>, но оставим их в методе <code class="code">build()</code> чтобы увидеть разницу</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Оптимизированная версия с const конструкторами</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Оптимизированная версия с const конструкторами
+class TrackCard extends StatefulWidget {  
+  TrackCard({super.key}) {  
+    debugPrint("💛TrackCard constructor");  
+  }  
+  
+  @override  
+  State<TrackCard> createState() => _TrackCardState();  
+}  
+  
+class _TrackCardState extends State<TrackCard> {  
+  bool isFavorite = false;  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TrackCard build");  
+    debugPrint("⚪️isFavorite = $isFavorite");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        
+        // ✅ ОПТИМИЗАЦИЯ: const виджеты НЕ пересоздаются при setState()
+        // Flutter сравнивает виджеты и видит, что это те же const объекты
+        title: const TitleWidget(text: "Stateless"),    // const!
+        subtitle: const SubtitleWidget(text: "Flutter vibes"),  // const!
+        
+        // IconButton НЕ const, потому что его состояние (иконка) меняется
+        trailing: IconButton(  
+          onPressed: () {  
+            setState(() {  
+              isFavorite = !isFavorite;  
+            });  
+          },  
+          icon: isFavorite  
+              ? Icon(Icons.favorite, color: Colors.red)  
+              : Icon(Icons.favorite_border),  
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+// TitleWidget с const конструктором для оптимизации
+class TitleWidget extends StatelessWidget {  
+  final String text;  
+  const TitleWidget({super.key, this.text = ""});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TitleWidget build");  // Теперь НЕ вызывается при setState()!
+    return Text(  
+      text,  
+      style: TextStyle(  
+        fontWeight: FontWeight.bold,  
+      ),  
+    );  
+  }  
+}  
+  
+// SubtitleWidget с const конструктором для оптимизации
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  
+  
+  const SubtitleWidget({super.key, this.text = ""});  // const конструктор!
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛SubtitleWidget build");  // Теперь НЕ вызывается при setState()!
+  
+    return Text(text.toUpperCase());  
+  }  
+}
+</code></pre>
+
+            <div class="note-block">
+                <h4>Результат оптимизации</h4>
+                <p>Нажимаем на иконку и теперь виджеты <code class="code">TitleWidget</code> и <code class="code">SubtitleWidget</code> не вызывают лишний раз метод <code class="code">build()</code></p>
+                <p>У константных виджетов <code class="code">build()</code> не вызывается. Потому что flutter сравнивает виджеты в дереве, и если это один и тот же виджет, то build у него он не вызывает.</p>
+                <p>Здесь важно чтобы виджеты использовали ключи <code class="code">this.key</code>. Эти ключи как раз нужны, чтоб сравнивать виджеты до и после изменения состояния и отрисовки интерфейса.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Оптимизированный консольный вывод</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">I/flutter (20888): 💛TrackCard build
+I/flutter (20888): ⚪️isFavorite = false
+
+I/flutter (20888): 💛TrackCard build
+I/flutter (20888): ⚪️isFavorite = true
+
+I/flutter (20888): 💛TrackCard build
+I/flutter (20888): ⚪️isFavorite = false
+</code></pre>
+
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2 style="display: inline;"><strong>Максимальная оптимизация - отдельный StatefulWidget для кнопки</strong></h2>
+            
+            <p>Вариант когда только <code class="code">IconButton</code> это <code class="code">Stateful</code> виджет:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Отдельный LikeButton виджет</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// 🚀 МАКСИМАЛЬНАЯ ОПТИМИЗАЦИЯ: только кнопка - StatefulWidget
+// Теперь TrackCard снова StatelessWidget, а состояние только у кнопки
+class TrackCard extends StatelessWidget {  
+  TrackCard({super.key}) {  
+    debugPrint("💛TrackCard constructor");  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TrackCard build");  // Вызывается только при первом создании
+    
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: const TitleWidget(text: "Stateless"),  
+        subtitle: const SubtitleWidget(text: "Flutter vibes"),  
+        
+        // Заменяем IconButton на отдельный StatefulWidget
+        trailing: LikeButton(),  // Только ЭТА кнопка будет перерисовываться!
+      ),  
+    );  
+  }  
+}  
+  
+// Эти виджеты остаются StatelessWidget с const конструкторами
+class TitleWidget extends StatelessWidget {  
+  final String text;  
+  const TitleWidget({super.key, this.text = ""});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TitleWidget build");  // НЕ вызывается при нажатии на кнопку!
+    return Text(  
+      text,  
+      style: TextStyle(  
+        fontWeight: FontWeight.bold,  
+      ),  
+    );  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  
+  
+  const SubtitleWidget({super.key, this.text = ""});  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛SubtitleWidget build");  // НЕ вызывается при нажатии на кнопку!
+  
+    return Text(text.toUpperCase());  
+  }  
+}  
+  
+// 🎯 LikeButton - ЕДИНСТВЕННЫЙ StatefulWidget с минимальной областью ответственности
+class LikeButton extends StatefulWidget {  
+  const LikeButton({super.key});  // const конструктор для оптимизации
+  
+  @override  
+  State<LikeButton> createState() => _LikeButtonState();  
+}  
+  
+// Состояние ТОЛЬКО для кнопки лайка
+class _LikeButtonState extends State<LikeButton> {  
+  
+  bool isFavorite = false;  // Состояние хранится только здесь
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // При setState() перерисовывается ТОЛЬКО эта кнопка!
+    // Все остальные виджеты (TrackCard, TitleWidget, SubtitleWidget) остаются нетронутыми
+    return IconButton(  
+      onPressed: () {  
+        setState(() {  
+          isFavorite = !isFavorite;  // Изменяем состояние
+        });  
+        // Flutter перерисует ТОЛЬКО LikeButton, а не весь TrackCard!
+      },  
+      icon: isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)      // Красное сердце
+          : Icon(Icons.favorite_border),                 // Пустое сердце
+    );  
+  }  
+}
+</code></pre>
+
+        </section>
+
+        <section id="section-9" class="lesson-section">
+            <h2 style="display: inline;"><strong>Итоги и полезные советы</strong></h2>
+            
+            <div class="note-block">
+                <h4>Полезные советы по использованию виджетов</h4>
+                <ol>
+                    <li>Нужно <strong>минимизировать</strong> вложенность виджетов (в случае если UI начинает реально лагать)</li>
+                    <li>Использовать по возможности <code class="code">const</code> - <strong>константные конструкторы</strong></li>
+                    <li>Выбирать более точечно виджеты которые будут изменяться и переделывать их в <code class="code">Stateful</code> виджеты</li>
+                </ol>
+            </div>
+
+            <div class="warning-block">
+                <h4>Ключевые различия</h4>
+                <ul>
+                    <li><strong>StatelessWidget</strong> - статичный виджет, не изменяет свое состояние</li>
+                    <li><strong>StatefulWidget</strong> - динамический виджет, может изменять свое состояние через <code class="code">setState()</code></li>
+                    <li>Используйте <code class="code">const</code> конструкторы для оптимизации производительности</li>
+                    <li>Делайте <code class="code">Stateful</code> только те виджеты, которые действительно должны изменяться</li>
+                </ul>
+            </div>
+
+            <p>Понимание жизненного цикла виджетов и правильное использование <code class="code">StatelessWidget</code> и <code class="code">StatefulWidget</code> - это основа эффективной разработки на Flutter!</p>
+
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>

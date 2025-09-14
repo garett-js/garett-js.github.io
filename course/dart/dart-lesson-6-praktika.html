@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 6: Остаток от деления. Инкремент и Декремент</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-6.html" class="back-link">←</a> Практика: Урок 6</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 6: Остаток от деления. Инкремент и Декремент</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Расход маны</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Маг кастует заклинание стоимостью 25 маны. У него есть <code class="code">manaPoints</code>. Уменьшите количество маны, используя комбинированный оператор.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите количество маны: 100
+До каста: 100 маны
+После каста: 75 маны
+Заклинание успешно применено!</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте оператор <code class="code">-=</code> для уменьшения значения переменной.</p>
+            </div>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Усиление оружия</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Каждая третья победа над монстром усиливает оружие. Переменная <code class="code">winCount</code> хранит общее число побежденных монстров. Проверьте, получит ли игрок усиление на текущей победе.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите количество побед: 9
+Победы: 9
+Оружие усилено! (каждая 3-я победа)
+
+Введите количество побед: 7
+Победы: 7
+Оружие не усилено. До усиления осталось: 2 победы</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте оператор остатка от деления <code class="code">%</code>. Если число делится на 3 без остатка, то оружие усиливается.</p>
+            </div>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Последние цифры ID предмета</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>У каждого предмета есть уникальный <code class="code">itemId</code>. Система бонусов зависит от последних цифр этого ID. Найдите последние 3 цифры <code class="code">itemId</code>.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите ID предмета: 123456789
+ID предмета: 123456789
+Последние 3 цифры: 789
+
+Введите ID предмета: 42
+ID предмета: 42
+Последние 3 цифры: 042</code></pre>
+            
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Проверка числа на условия</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Проверить является ли число одновременно <strong>нечетным</strong> и <strong>делится ли на 7</strong> без остатка.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите число: 21
+Число 21 является нечетным и делится на 7: true
+
+Введите число: 14
+Число 14 является нечетным и делится на 7: false
+
+Введите число: 15
+Число 15 является нечетным и делится на 7: false</code></pre>
+            
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Счастливый билет</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Дана строка из 6-ти цифр. Проверьте, что сумма первых трех цифр равняется сумме вторых трех цифр. Если это так - выведите 'Да', в противном случае выведите 'Нет'.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примеры</h5>
+            </div>
+            <pre><code class="bash">Входная строка: 123321
+Результат: Да: 6 равно 6
+
+Входная строка: 111222  
+Результат: Нет: 3 не равно 6</code></pre>
+            
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2>Задача № 6: Размен монет для великого воина</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐⭐</p>
+            <p>Великий азиатский мечник Ким Нам Джун способен одолеть любых чудовищ, однако его услуги обойдутся недешево. В мире ёкаев существуют монеты с номиналами <strong>1, 10, 15, 25</strong>.</p>
+            
+            <p>Напишите программу, которая определяет, какое минимальное количество монет нужно заплатить великому воину.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Пример</h5>
+            </div>
+            <pre><code class="bash">Введите стоимость услуг: 69
+Минимальное количество монет: 7
+
+Разбивка:
+2 монеты номиналом 25 = 50
+1 монета номиналом 15 = 15  
+0 монет номиналом 10 = 0
+4 монеты номиналом 1 = 4
+Итого: 50 + 15 + 0 + 4 = 69</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте жадный алгоритм - начните с самых крупных номиналов и берите максимально возможное количество монет каждого номинала.</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

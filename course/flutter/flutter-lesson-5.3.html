@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stateful Виджет</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Stateful Виджет</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Stateful Виджет</h1>
+        
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Что такое `Stateful Widget`</strong></h2>
+            <p><code class="code">StatefulWidget</code>&nbsp;не хранит состояние сам и даже не имеет метод <code class="code">build()</code>, но он умеет <strong>создавать</strong> и связывать с собой объект&nbsp;<code class="code">State</code>, который уже отвечает за хранение состояния и управление обновлениями UI.</p>
+            <p><code class="code">StatefulWidget</code>&nbsp;— это лишь "оболочка", которая делегирует всю работу по управлению состоянием и построению UI своему&nbsp;<code class="code">State</code>.</p>
+            <p><code class="code">StatefulWidget</code> — изменяет своё состояние в процессе работы приложения. Он состоит из двух классов:</p>
+            <ol>
+                <li>Сам виджет (StatefulWidget).</li>
+                <li>Состояние (State), которое управляет изменяемыми данными.</li>
+            </ol>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Производительность Flutter</strong></h2>
+            <p>Чтобы отобразить пользовательский интерфейс (UI) на экране, Flutter вызывает метод build(). Этот метод присутствует у каждого виджета и может вызываться довольно часто.</p>
+            <p>При каждом вызове build() весь виджет перерисовывается, что звучит крайне неэффективно. Однако Flutter устроен умнее и не обновляет весь UI целиком.</p>
+            <p>Flutter оптимизирован для работы при 60 кадрах в секунду (fps) и поддерживает 120+ fps на современных устройствах.</p>
+            <p>Flutter использует эффективный механизм отрисовки:</p>
+            <ol>
+                <li>При первой отрисовке выполняются все необходимые вычисления:<br>— определение положения и размеров элементов,<br>— установка цвета, текста и других параметров.<br>Это самый затратный этап, каждый пиксель нужно рассчитать и настроить.</li>
+                <li>При последующих вызовах метода <code class="code">build()</code> Flutter <code class="code">НЕ пересоздаёт</code> весь UI заново, если в нём ничего не изменилось.<br>Вместо этого он использует уже рассчитанные данные и снова показывает их на экране. Это позволяет значительно ускорить рендеринг.</li>
+                <li>Реальная перерисовка затрагивает только те части интерфейса, состояние которых изменилось. Таким образом, Flutter обновляет только необходимые элементы, что делает его работу максимально эффективной.</li>
+            </ol>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>🌳 Лес , деревья и Flutter</strong></h2>
+            <p>В основе архитектуры Flutter лежат&nbsp;<code class="code">три дерева</code>, которые взаимодействуют друг с другом для эффективного построения и обновления пользовательского интерфейса (UI):</p>
+            <ol>
+                <li>Дерево виджетов (<code class="code">Widget Tree</code>)</li>
+                <li>Дерево элементов (<code class="code">Element Tree</code>)</li>
+                <li>Дерево рендеринга (<code class="code">RenderObject Tree</code>)</li>
+            </ol>
+            <div class="note-block">
+                <h4>Дерево виджетов</h4>
+                <p>Представляет собой виджеты которые разработчики пишут в коде при создании Flutter приложения.</p>
+                <p>Это дерево создаётся вызовом метода&nbsp;<code class="code">build()</code>&nbsp;и предоставляет&nbsp;<code class="code">описание</code>&nbsp;того, как должен выглядеть UI. Важно понимать, что <code class="code">дерево виджетов не отображается на экране</code>, оно только сообщает Flutter, что нужно отрисовать.</p>
+                <p>Дерево виджетов часто перестраивается, например, при вызове&nbsp;<code class="code">setState()</code>. Однако это <code class="code">не означает, что весь UI пересоздаётся с нуля</code>.</p>
+            </div>
+            <div class="note-block">
+                <h4>Дерево элементов</h4>
+                <p>Это ключевая часть внутренней работы Flutter. Это дерево автоматически создаётся <code class="code">на основе дерева виджетов</code> и&nbsp;<code class="code">связывает</code>&nbsp;виджеты (конфигурации) с реальными объектами рендеринга (то что показывается на экране устройства)</p>
+                <p>Дерево элементов не перестраивается при каждом вызове&nbsp;<code class="code">build()</code>. Оно управляется более эффективно и служит мостом между описанием (виджетами) и фактическим отображением (рендерингом).</p>
+            </div>
+            <div class="note-block">
+                <h4>Дерево рендеринга</h4>
+                <p>Это то, что в итоге <code class="code">отображается на экране</code>. Это дерево состоит из объектов, которые непосредственно отвечают за отрисовку пикселей. Flutter обновляет только те части, которые изменились, что делает <code class="code">процесс рендеринга очень эффективным</code>.</p>
+            </div>
+            <p><strong>Итого</strong></p>
+            <ul>
+                <li><strong>Дерево виджетов</strong>&nbsp;предоставляет описание UI. Оно часто перестраивается, но это не затрагивает производительность, так как это всего лишь конфигурация.</li>
+                <li><strong>Дерево элементов</strong>&nbsp;связывает виджеты с объектами рендеринга и управляет их жизненным циклом. Оно обновляется только при необходимости.</li>
+                <li><strong>Дерево рендеринга</strong>&nbsp;отвечает за отрисовку на экране. Оно изменяется только тогда, когда это действительно требуется.</li>
+            </ul>
+            <img src="images/l5.3/statef-1.png" alt="Tree relationship diagram">
+            <img src="images/l5.3/statef-2.png" alt="Widget, Element, RenderObject">
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class HomeWidget extends StatelessWidget {  
+  HomeWidget({super.key}) {  
+    debugPrint("💛 HomeWidget constructor");  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛 HomeWidget build");  
+  
+    return Container(  
+      width: double.infinity,  
+      decoration: BoxDecoration(  
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  
+          begin: Alignment.topLeft,  
+          end: Alignment.bottomRight,  
+        ),  
+      ),  
+      child: SafeArea(  
+        child: Center(  
+          child: Padding(  
+            padding: const EdgeInsets.all(32.0),  
+            child: TrackCard(),  
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">2_stateful_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TrackCard extends StatelessWidget {  
+  TrackCard({super.key}) {  
+    debugPrint("💛TrackCard constructor");  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TrackCard build");  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: const TitleWidget(text: "Stateless"),  
+        subtitle: const SubtitleWidget(text: "Flutter vibes"),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  final String text;  
+  const TitleWidget({super.key, this.text = ""});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛TitleWidget build");  
+    return Text(  
+      text,  
+      style: TextStyle(  
+        fontWeight: FontWeight.bold,  
+      ),  
+    );  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  
+  
+  const SubtitleWidget({super.key, this.text = ""});  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("💛SubtitleWidget build");  
+  
+    return Text(text.toUpperCase());  
+  }  
+}  
+  
+class LikeButton extends StatefulWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  State<LikeButton> createState() => _LikeButtonState();  
+}  
+  
+class _LikeButtonState extends State<LikeButton> {  
+  
+  bool isFavorite = false;  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return IconButton(  
+      onPressed: () {  
+        // При нажатии вызываем setState, чтобы сообщить Flutter о необходимости перестроить виджет
+        setState(() {  
+          isFavorite = !isFavorite;  
+        });  
+      },  
+      // В зависимости от значения isFavorite, показываем разную иконку
+      icon: isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Как это всё работает?</strong></h2>
+            <p>Для каждого виджета в дереве Flutter автоматически создаётся соответствующий <code class="code">элемент</code> в дереве элементов. Это происходит в момент, когда приложение сталкивается с этим виджетом впервые — например, при запуске или при изменении условий, требующих отображения нового виджета.</p>
+            <div class="note-block">
+                <h4><code class="code">Element</code></h4>
+                <p>Элемент - это объект, который указывает на виджет (содержит <code class="code">ссылку</code>)</p>
+                <ul>
+                    <li>Элемент не хранит конфигурацию виджета.</li>
+                    <li>Элемент связывает виджет с деревом рендеринга.</li>
+                </ul>
+                <p>Элемент содержит:</p>
+                <ul>
+                    <li><code class="code">Context</code> - механизм доступа к данным о расположении + методы работы с ним.</li>
+                    <li><code class="code">State</code> - ссылку на состояние, если это <code class="code">Stateful</code> виджет.</li>
+                </ul>
+            </div>
+
+            <h6>Дерево элементов и <code class="code">грязные</code> объекты</h6>
+            <p>Когда состояние виджета меняется, <code class="code">Flutter</code> не перерисовывает весь экран приложения, а помечает определенные элементы как <code class="code">грязные</code> (<code class="code">Dirty</code>) и в дальнейшем обновляет только их.</p>
+            <p>В нашем случае <code class="code">Dirty</code> становится <strong>элемент</strong> <code class="code">LikeButton</code>, потому что он вызывает метод <code class="code">setState()</code>. В этом случае, элемент <code class="code">LikeButton</code> отмечается как <code class="code">грязный</code>, и во время следующего цикла сборки <code class="code">build()</code> он будет перестроен.</p>
+            <div class="note-block">
+                <h4>Как происходит обновление виджета на экране</h4>
+                <ol>
+                    <li>Нажимаем на <code class="code">IconButton</code> → вызывается <code class="code">setState()</code></li>
+                    <li><code class="code">StatefulElement</code>, который хранит <code class="code">_LikeButtonState</code> помечается как <code class="code">Dirty</code></li>
+                    <li><code class="code">Flutter</code> вызывает метод <code class="code">build()</code> только для <code class="code">LikeButton</code></li>
+                    <li>Все <code class="code">виджеты</code> внутри <code class="code">LikeButton</code> пересоздаются</li>
+                    <li>Создаётся новый <code class="code">IconButton</code> и новый <code class="code">Icon</code></li>
+                    <li>Их элементы <code class="code">Element</code> остаются неизменными</li>
+                    <li>Если <code class="code">тип</code> элемента совпадает с <code class="code">типом</code> нового виджета (и ключи), то</li>
+                    <li>Элементы <code class="code">обновляют ссылки</code> на новые виджеты</li>
+                    <li>Остальная часть <code class="code">UI</code> не перерисовывается</li>
+                    <li>Объект состояния <code class="code">_LikeButtonState</code> сохраняется</li>
+                </ol>
+            </div>
+            <div class="note-block">
+                <h4><code class="code">setState()</code></h4>
+                <p>Метод <code class="code">setState()</code> не уничтожает <code class="code">State</code> и <code class="code">Element</code> → он <code class="code">пересоздает виджет</code></p>
+            </div>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>Посмотрим как это работает на практике с помощью дебагера:</strong></h2>
+            <ul>
+                <li>Ставим <code class="code">точку останова</code> на строчке где вызывается <code class="code">setState()</code></li>
+                <li>Запускаем приложение в режиме дебагера</li>
+                <li>Кликаем на иконку-сердечко</li>
+                <li>Программа остановила выполнение на нужной строчке</li>
+                <li>Проинспектируем свойства объекта <code class="code">_LikeButtonState</code></li>
+                <li>Обратите внимание на свойства <code class="code">_dirty</code> и <code class="code">_inDirtyList</code></li>
+                <li>По умолчанию там значения <code class="code">false</code></li>
+                <li>Выполним шаги кода с помощью дебагера, чтобы выполнился setState()</li>
+                <li>Теперь свойства <code class="code">_dirty</code> и <code class="code">_inDirtyList</code> со значением true</li>
+                <li>После этого все виджеты внутри <code class="code">build()</code> будут созданы по новой</li>
+                <li>Кнопка-иконка с сердечком станет красной</li>
+            </ul>
+            <img src="images/l5.3/statef-3.png" width="420" alt="Debugger properties">
+            <br>
+            <img src="images/l5.3/Debuger.gif" alt="Debugger animation">
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2 style="display: inline;"><strong>Проверим, что пересоздаются виджеты только внутри <code class="code">build()</code> у виджета <code class="code">LikeButton</code></strong></h2>
+            <p>Воспользуемся методом <code class="code">identityHashCode</code>. Он возвращает <strong>уникальный идентификатор конкретного экземпляра в памяти</strong>. Его нельзя переопределить, он привязан к адресу объекта в памяти.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">2_stateful_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TrackCard extends StatelessWidget {  
+  const TrackCard({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+  
+    final likeButton = LikeButton();  
+    
+    // Выводим хэш-код созданного экземпляра LikeButton
+    debugPrint("🆕 LikeButton created: ${identityHashCode(likeButton)}");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: const TitleWidget(text: "Stateless"),  
+        subtitle: const SubtitleWidget(text: "Flutter vibes"),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">2_stateful_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class LikeButton extends StatefulWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  State<LikeButton> createState() => _LikeButtonState();  
+}  
+  
+class _LikeButtonState extends State<LikeButton> {  
+  bool isFavorite = false;  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    final iconButton = IconButton(  
+      onPressed: () {  
+        setState(() {  
+          isFavorite = !isFavorite;  
+        });  
+      },  
+      icon: isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+    // Выводим хэш-код созданного экземпляра IconButton
+    debugPrint("🆕 IconButton created: ${identityHashCode(iconButton)}");  
+    return iconButton;  
+  }  
+}
+</code></pre>
+            <pre><code class="language-bash">flutter: 🆕 LikeButton created: 1070612665
+flutter: 🆕 IconButton created: 331251001
+
+flutter: 🆕 IconButton created: 950743870
+flutter: 🆕 IconButton created: 45617114
+flutter: 🆕 IconButton created: 35391228
+flutter: 🆕 IconButton created: 455893635
+flutter: 🆕 IconButton created: 272893660
+flutter: 🆕 IconButton created: 77883252
+flutter: 🆕 IconButton created: 896606673
+</code></pre>
+            <img src="images/l5.3/hashcode.gif" alt="Hashcode animation">
+            <div class="note-block">
+                <h4>Перестроение виджетов</h4>
+                <p>Виджет <code class="code">LikeButton</code> был создан только один раз!<br>Виджет <code class="code">IconButton</code> создается каждый раз при изменении состояния!</p>
+            </div>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2 style="display: inline;"><strong>Как работает Перестроение виджетов (слайды и анимация)</strong></h2>
+
+            <div class="slideshow-container" data-width="800px">
+              <div class="slideshow-wrapper">
+                  <div class="slideshow">
+                      <div class="slide active">
+                          <img src="images/l5.3/1.png" alt="StatefulWidget - шаг 1">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/2.png" alt="StatefulWidget - шаг 2">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/3.png" alt="StatefulWidget - шаг 3">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/4.png" alt="StatefulWidget - шаг 4">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/5.png" alt="StatefulWidget - шаг 5">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/6.png" alt="StatefulWidget - шаг 6">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/7.png" alt="StatefulWidget - шаг 7">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/8.png" alt="StatefulWidget - шаг 8">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/9.png" alt="StatefulWidget - шаг 9">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/10.png" alt="StatefulWidget - шаг 10">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/11.png" alt="StatefulWidget - шаг 11">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/12.png" alt="StatefulWidget - шаг 12">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/13.png" alt="StatefulWidget - шаг 13">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/14.png" alt="StatefulWidget - шаг 14">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/15.png" alt="StatefulWidget - шаг 15">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/16.png" alt="StatefulWidget - шаг 16">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/17.png" alt="StatefulWidget - шаг 17">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/18.png" alt="StatefulWidget - шаг 18">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/19.png" alt="StatefulWidget - шаг 19">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/20.png" alt="StatefulWidget - шаг 20">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/21.png" alt="StatefulWidget - шаг 21">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/22.png" alt="StatefulWidget - шаг 22">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/23.png" alt="StatefulWidget - шаг 23">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.3/24.png" alt="StatefulWidget - шаг 24">
+                      </div>
+                  </div>
+              </div>
+              <div class="slideshow-controls">
+                  <button class="slideshow-btn prev-btn">‹</button>
+                  <div class="dots-container"></div>
+                  <button class="slideshow-btn next-btn">›</button>
+              </div>
+          </div>
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2 style="display: inline;"><strong>Итог</strong></h2>
+            <div class="note-block">
+                <h4>Краткие итоги</h4>
+                <p>Существует дерево <code class="code">ЭЛЕМЕНТОВ</code>, которое не перестраивается всякий раз, когда вызывается метод <code class="code">build()</code>. Перестраивается только дерево <code class="code">ВИДЖЕТОВ</code>, дерево элементов может автоматически <code class="code">обновлять свои ссылки на виджеты</code>, чтобы знать, доступна ли новая конфигурация, и если она доступна, то передать эту информацию в дерево <code class="code">РЕНДЕРИНГА</code> объектов, чтобы они могли повторно отображаться на экране.</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>
