@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 8: Списки List</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 8: Списки List</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок 8: Списки List</h1>
+<section class="lesson-section">
+<h2 style="display: inline;">Коллекции элементов</h2>
+<div class="note">
+<p><strong>Напоминалка</strong></p>
+<p>Переменная - это именованная область памяти, в которой находится нужное нам значение. Если это область именованная, значит у неё есть какое-то имя. По имени мы можем получить доступ к данным, можем изменить данные.</p>
+</div>
+<p>До этого момента, определенное значение мы сохраняли в одной переменной, например нужно сохранить в переменной название и путь до изображения на удаленном сервере.</p>
+<pre><code class="language-dart">
+String image = "Картинка-1.png";
+</code></pre>
+<p>С одной фотографией всё прекрасно, но … допустим нужно сохранить и иметь доступ к фотографиям которых больше <code class="code">5000 штук</code></p>
+<div class="note">
+<p><strong>Боль ...</strong></p>
+<p>Это получается нужно создать <code class="code">5000 переменных</code>. Придумать им имена. Как-то управлять этими переменными да ещё и не допустить ошибок.</p>
+<p>Это ... Боль</p>
+<p>Видно, что не тем путём пошли</p>
+</div>
+<pre><code class="language-dart">
+// Так делать крайне печально !!! :(
+
+String image1 = "Картинка-1.png";
+String image2 = "Картинка-2.png";
+String image3 = "Картинка-3.png";
+String image4 = "Картинка-4.png";
+String image5 = "Картинка-5.png";
+
+...
+
+String image5000 = "Картинка-5000.png";
+</code></pre>
+
+<img src="images/l8/list1.png" width="800px" alt="Проблема множества данных">
+
+<p>В частности по этой причине, начали придумывать различные способы объединения данных. Для больших объемов данных с которыми нужно производить операции доступа, записи, изменения, придумали способы объединять данные в специальные <code class="code">структуры данных</code>.</p>
+<p>В <code class="code">Dart</code> есть 3 вида коллекций:</p>
+<ul>
+<li><strong>Список (</strong><code class="code">List</code>) хранит элементы в определенном порядке и доступ к ним по индексу.</li>
+<li><strong>Множество (</strong><code class="code">Set</code>) хранит уникальные элементы, порядок которых не определен.</li>
+<li><strong>Словарь (</strong><code class="code">Map</code>) хранит пары ключ-значение (записи); ключи уникальны</li>
+</ul>
+<p>В данной ситуации, когда нужно сохранить очень много элементов одного и того же типа и которые хранятся последовательно друг за другом, лучше использовать специальную структуру данных - <code class="code">Список</code> (<code class="code">Массив</code>)</p>
+<div class="note">
+<p><strong>Коллекция элементов</strong></p>
+<p>Вместо создания <code class="code">5000 переменных</code>, можно создать только <code class="code">одну переменную</code>, которая будет хранить целую <code class="code">коллекцию элементов</code></p>
+</div>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Списки элементов</h2>
+<div class="note">
+<p><strong>`List`</strong></p>
+<p>Список <code class="code">List</code> - это коллекция элементов <code class="code">одного типа данных</code>, которые хранятся в <code class="code">определённом порядке</code>. Каждый элемент списка имеет <code class="code">индекс</code> (<code class="code">index</code>)</p>
+<p>Список можно представить себе в виде подноса со стаканами</p>
+</div>
+
+<img src="images/l8/list2.png" width="600px" alt="Проблема множества данных">
+
+<p>Все стаканы <code class="code">пронумерованы</code>, у каждого есть свой <code class="code">индекс</code>, свое место на подносе!</p>
+<p><strong>Важно!</strong> Индексы в программировании начинаются с <code class="code">0</code></p>
+
+<img src="images/l8/list3.png" width="600px" alt="Проблема множества данных">
+
+<div class="note">
+  <p><strong>Важно!</strong></p>
+  <p>Индексы списков в программировании начинаются с <code class="code">0</code></p>
+</div>
+<p><strong>Создание списка</strong></p>
+<p>Вместо создания миллиона переменных, создадим только одну переменную <code class="code">images</code>, которая может хранить уже целые списки элементов</p>
+<ul>
+  <li>В самом начале указывается тип данных <code class="code">List</code></li>
+  <li>Далее <code class="code">имя переменной</code>, обычно во <code class="code">множественном</code> числе</li>
+  <li>в эту переменную присваивается список элементов внутри <code class="code">квадратных скобочек</code></li>
+  <li>Элементы внутри квадратных скобочек, <code class="code">разделены запятыми</code></li>
+</ul>
+
+<img src="images/l8/list4.png" width="600px" alt="Проблема множества данных">
+
+<pre><code class="language-dart">
+  // Создание массива
+  List images = ["Картинка-1.png", "Картинка-2.png", "Картинка-3.png"];
+  
+  // Доступ к элементам массива
+  print( images[0] ); // Картинка-1.png
+  print( images[1] ); // Картинка-2.png
+  print( images[2] ); // Картинка-3.png
+</code></pre>
+<div class="note">
+  <p><strong>Получить значение из массива</strong></p>
+  <ul>
+    <li>обратиться к имени массива</li>
+    <li>добавить квадратные скобки</li>
+    <li>в скобках указать индекс элемента</li>
+  </ul>
+</div>
+<p>При создании списка можно явно указать тип данных элементов. Указывается в <code class="code">треугольных</code> скобках.</p>
+<pre><code class="language-dart">
+  // Явное указание типа данных элементов списка
+  List<int> numbers = [1, 2, 3, 4, 5, 6, 7];
+    List<String> images = ["Картинка-1.png", "Картинка-2.png", "Картинка-3.png"];
+    </code></pre>
+  </section>
+  <section class="lesson-section">
+    <h2 style="display: inline;">Списки в оперативной памяти</h2>
+    <p>Когда мы создаём переменные, для них выделяются ячейки в оперативной памяти. Эти ячейки могут быть расположены в разных местах памяти, в зависимости от того, где есть свободное пространство.</p>
+    <p>Такой подход может затруднить доступ к этим переменным, поскольку при работе с ними система должна находить адрес каждой переменной отдельно. Этот процесс может требовать дополнительных ресурсов для поиска и обращения к памяти.</p>
+    
+    <img src="images/l8/list5.png" width="600px" alt="Проблема множества данных">
+    
+    
+    <p>Когда мы создаём массив или список, операционная система обычно выделяет один непрерывный блок памяти для всех элементов. Это означает, что после первой ячейки для первого элемента все последующие элементы списка будут находиться последовательно в соседних ячейках памяти.</p>
+    <p>Такое размещение упрощает и ускоряет доступ к элементам, так как достаточно знать адрес первого элемента и шаг перехода к следующему элементу, чтобы обращаться к любому элементу списка напрямую.</p>
+
+    <img src="images/l8/list6.png" width="700px" alt="Проблема множества данных">
+
+<div class="note">
+<p><strong>Примечание</strong></p>
+<p>Существует множество структур данных, и рассмотренный выше пример актуален для <code class="code">простых массивов</code>. Он показан для демонстрации и понимания основ работы с памятью. Например, такие структуры данных, как связанные списки и динамические списки, работают с памятью немного сложнее.</p>
+</div>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">CRUD Операции</h2>
+<p>Сначала стоит отметить, что существует два вида списков/массивов</p>
+<ul>
+<li>Изменяемые</li>
+<li>Неизменяемые</li>
+</ul>
+<div class="note">
+<p><strong>Изменяемый список</strong></p>
+<p><code class="code">List</code> — это <code class="code">динамический массив</code>, что означает, что его размер может изменяться во время выполнения программы.</p>
+<p>На начальном этапе памяти выделяется ровно столько, сколько необходимо для хранения элементов. Однако если список превышает текущий размер, Dart выделяет новый, более крупный блок памяти, копирует туда все элементы из старого массива и добавляет новые.</p>
+</div>
+<p><strong>Что такое CRUD операции?</strong></p>
+<div class="note">
+<p><strong>CRUD операции</strong></p>
+<p>Существует 4 операции над данными:</p>
+<p><code class="code">Создание</code>, <code class="code">Чтение</code>, <code class="code">Обновление</code>, <code class="code">Удаление</code></p>
+<p><code class="code">C</code>reate</p>
+<p><code class="code">R</code>ead</p>
+<p><code class="code">U</code>pdate</p>
+<p><code class="code">D</code>elete</p>
+</div>
+<p><code class="code">C</code> - <code class="code">Create</code> - <code class="code">Создание данных</code></p>
+<pre><code class="language-dart">
+void main() {
+
+  // C - Create - Создание данных
+  
+  List<String> images = [
+    "Картинка-1.png",
+    "Картинка-2.png",
+    "Картинка-3.png",
+  ];
+  
+  images.add("Картинка-4"); // Добавить в конец списка новый элемент
+  images.add(4); // Ошибка! Список принимает элементы только типа String
+}
+</code></pre>
+
+<div class="slideshow-container" data-width="800px">
+  <div class="slideshow-wrapper">
+      <div class="slideshow">
+          <div class="slide active">
+              <img src="images/l8/create/Untitled-1.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/create/Untitled-2.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/create/Untitled-3.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/create/Untitled-4.png">
+          </div>
+      </div>
+  </div>
+  <div class="slideshow-controls">
+      <button class="slideshow-btn prev-btn">‹</button>
+      <div class="dots-container"></div>
+      <button class="slideshow-btn next-btn">›</button>
+  </div>
+</div>
+
+
+
+<p><code class="code">R</code> - <code class="code">Read</code> - <code class="code">Чтение данных</code></p>
+<pre><code class="language-dart">
+void main() {
+  List<String> images = [
+    "Картинка-1.png",
+    "Картинка-2.png",
+    "Картинка-3.png",
+  ];
+  images.add("Картинка-4");
+
+  // R - Read - Чтение данных
+
+  // Получить все элементы списка
+  print(images); // [Картинка-1.png, Картинка-2.png, Картинка-3.png, Картинка-4]
+
+  // Получить первый элемент списка
+  print(images[0]); // "Картинка-1.png"
+
+  // Получить размер списка
+  print(images.length); // 4
+
+  // Получить последний элемент списка
+  print(images[images.length]); // Ошибка. Индекс 4 находится за пределами списка
+
+  // Почему ошибка?
+  // Индексы начинаются с 0
+  // В списке 4 элемента, значит индексы 0 1 2 3
+  // Мы пытаемся получить 5 элемент по индексу 4 (которого не существует)
+
+  // Получить последний элемент списка
+  print(images[images.length-1]); // "Картинка-4"
+  print(images.last); // "Картинка-4"
+
+}
+</code></pre>
+
+<div class="slideshow-container" data-width="800px">
+  <div class="slideshow-wrapper">
+      <div class="slideshow">
+          <div class="slide active">
+              <img src="images/l8/read/Untitled.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-1.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-2.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-3.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-4.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-5.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-6.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-7.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-8.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-9.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/read/Untitled-10.png">
+          </div>
+      </div>
+  </div>
+  <div class="slideshow-controls">
+      <button class="slideshow-btn prev-btn">‹</button>
+      <div class="dots-container"></div>
+      <button class="slideshow-btn next-btn">›</button>
+  </div>
+</div>
+
+<p><code class="code">U</code> - <code class="code">Update</code> - <code class="code">Обновление данных</code></p>
+<pre><code class="language-dart">
+void main() {
+  List<String> images = [
+    "Картинка-1.png",
+    "Картинка-2.png",
+    "Картинка-3.png",
+  ];
+  images.add("Картинка-4");
+  print(images); 
+  print(images[0]); 
+  print(images.length);
+  print(images[images.length-1]);
+  print(images.last);
+
+  // U - Update - Обновление данных
+  
+  images[images.length - 1] = "Картинка-4.png";
+  print(images); 
+  // [Картинка-1.png, Картинка-2.png, Картинка-3.png, Картинка-4.png]
+}
+</code></pre>
+
+<div class="slideshow-container" data-width="800px">
+  <div class="slideshow-wrapper">
+      <div class="slideshow">
+          <div class="slide active">
+              <img src="images/l8/update/Untitled.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/update/Untitled-1.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/update/Untitled-2.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/update/Untitled-3.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/update/Untitled-4.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/update/Untitled-5.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/update/Untitled-6.png">
+          </div>
+      </div>
+  </div>
+  <div class="slideshow-controls">
+      <button class="slideshow-btn prev-btn">‹</button>
+      <div class="dots-container"></div>
+      <button class="slideshow-btn next-btn">›</button>
+  </div>
+</div>
+
+<p><code class="code">D</code> - <code class="code">Delete</code> - <code class="code">Удаление данных</code></p>
+<pre><code class="language-dart">
+void main() {
+  List<String> images = [
+    "Картинка-1.png",
+    "Картинка-2.png",
+    "Картинка-3.png",
+  ];
+  images.add("Картинка-4");
+  print(images); 
+  print(images[0]); 
+  print(images.length);
+  print(images[images.length-1]);
+  print(images.last);
+  images[images.length - 1] = "Картинка-4.png";
+  print(images); 
+
+  // D - Delete - Удаление данных
+  
+  images.removeAt(2); // Удалить 3 элемент списка
+  print(images); // [Картинка-1.png, Картинка-2.png, Картинка-4.png]
+}
+</code></pre>
+
+<div class="slideshow-container" data-width="800px">
+  <div class="slideshow-wrapper">
+      <div class="slideshow">
+          <div class="slide active">
+              <img src="images/l8/delete/Untitled.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/delete/Untitled-1.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/delete/Untitled-2.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/delete/Untitled-3.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/delete/Untitled-4.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/delete/Untitled-5.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/delete/Untitled-6.png">
+          </div>
+      </div>
+  </div>
+  <div class="slideshow-controls">
+      <button class="slideshow-btn prev-btn">‹</button>
+      <div class="dots-container"></div>
+      <button class="slideshow-btn next-btn">›</button>
+  </div>
+</div>
+
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Перебор списка с помощью циклов</h2>
+<div class="note">
+<p><strong>Перебор списка</strong></p>
+<p> Это процесс последовательного доступа к каждому элементу списка для его обработки.</p>
+</div>
+<p>Цикл <code class="code">for</code> позволяет перебирать список по индексам. Это полезно, если вам нужно получить доступ не только к элементам, но и к их индексам.</p>
+<pre><code class="language-dart">
+List<int> numbers = [1, 2, 3, 4, 5];
+
+for (int i = 0; i < list.length; i++) {
+  // Доступ к элементу через индекс
+  print(list[i]);
+}
+</code></pre>
+<pre><code class="language-dart">
+List<String> shawarmas = [
+  "Шаурма Королевская",
+  "Шаурма Деревенская",
+  "Шаурма Гавайская",
+];
+
+print("Сегодня у нас в меню:");
+
+for (var i = 0; i < shawarmas.length; i++) {
+  print("Блюдо № ${i+1} - ${shawarmas[i]}");
+}
+</code></pre>
+
+<div class="slideshow-container" data-width="800px">
+  <div class="slideshow-wrapper">
+      <div class="slideshow">
+          <div class="slide active">
+              <img src="images/l8/for-list/Untitled.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/for-list/Untitled-1.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/for-list/Untitled-2.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/for-list/Untitled-3.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/for-list/Untitled-4.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/for-list/Untitled-5.png">
+          </div>
+          <div class="slide">
+              <img src="images/l8/for-list/Untitled-6.png">
+          </div>
+      </div>
+  </div>
+  <div class="slideshow-controls">
+      <button class="slideshow-btn prev-btn">‹</button>
+      <div class="dots-container"></div>
+      <button class="slideshow-btn next-btn">›</button>
+  </div>
+</div>
+
+<p>Цикл <code class="code">for-in</code> удобен, когда вам не нужны индексы, а нужно просто получить доступ к каждому элементу списка.</p>
+<pre><code class="language-dart">
+List<String> shawarmas = [
+  "Шаурма Королевская",
+  "Шаурма Деревенская",
+  "Шаурма Гавайская",
+];
+
+print("Сегодня у нас в меню:");
+for (var shawarma in shawarmas) {
+  print('Блюдо: $shawarma');
+}
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Полезные методы работы со списками</h2>
+<pre><code class="language-dart">
+List<int> myList = [1, 2, 3];
+
+myList.length; // Размер списка
+myList.isEmpty; // Есть ли в списке элементы
+myList.reversed; // ? Развернуть список [3, 2, 1]
+
+myList.add(3); // Добавить значение в конец списка
+myList.addAll([4, 5, 6]); // Добавить ещё один список 
+myList.insert(0, 42); // Добавить значение 42 по индексу 0
+
+myList.indexOf(2); // Найти индекс элемента по его значению
+myList.removeAt(1); // Удалить элемент по его индексу
+myList.contains(7); // Содержит ли список указанный элемент
+myList.clear(); // ? Отчистить весь список -> testList = []
+</code></pre>
+<div class="note">
+<p><strong>Строки и Массивы</strong></p>
+<p>Методы <code class="code">split</code> и <code class="code">join</code></p>
+</div>
+<pre><code class="language-dart">
+void main() {
+  String str = "Как сделать из строки массив";
+
+  var myList = str.split(" ");
+  print(myList); // [Как, сделать, из, строки, массив]
+
+  // Сделать из массива строку
+  var myStr = myList.join("-");
+  print(myStr); // Как-сделать-из-строки-массив
+}
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Почему массивы начинаются с нуля</h2>
+<p>Каждая ячейка памяти имеет свой уникальный адрес — это просто число, которое указывает на местоположение конкретного элемента. Например, если у нас есть массив чисел, каждый элемент массива занимает определённое количество памяти (в зависимости от типа данных, например, <code class="code">int8</code> занимает 1 байт, <code class="code">int64</code> — 8 байт).</p>
+<p>Представьте массив из 5 значений</p>
+<p><code class="code">[ Картинка1, Картинка2, Картинка3, Картинка4, Картинка5 ]</code></p>
+<p>Допустим, первый элемент массива находится по адресу 1000.</p>
+<p>Этот элемент занимает 1 байт или 8 бит</p>
+<p>Следующий элемент будет находиться по адресу 1000 + 8</p>
+<p>Следующий по адресу 1000 + 8 + 8</p>
+<p>Следующий по адресу 1000 + 8 + 8 + 8</p>
+<p>И далее до 5 ого элемента</p>
+<p>1000 + 0</p>
+<p>1000 + 8</p>
+<p>1000 + 8 + 8</p>
+<p>1000 + 8 + 8 + 8</p>
+<p>1000 + 8 + 8 + 8 + 8</p>
+<div class="note">
+<p><strong>Почему индекс начинается с 0</strong></p>
+
+<img src="images/l8/list7.png" width="600px" alt="Проблема множества данных">
+
+
+<p> Когда мы обращаемся к первому элементу, фактически мы берём начальный адрес памяти 1000 и не добавляем никакого смещения, так как это первый элемент.</p>
+<p> Это называется <code class="code">нулевым смещением</code>, поэтому индекс этого элемента - <code class="code">0</code></p>
+<p> Для второго элемента добавляем 1 байт, для третьего — 2 байта, и так далее. Поэтому индексы массива и начинаются с 0: первый элемент — смещение 0, второй — смещение 1, третий — смещение 2, и так далее.</p>
+</div>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Создание приложения по генерации рекламных слоганов</h2>
+<pre><code class="language-dart">
+import 'dart:math';
+
+void main() {
+  var words1 = ["Неразлучные","Вечнозелёные","Ленивые","Сытные","Шустрые"];
+  var words2 = ["Огурцы","Бублики","Идеи","Пингвины", "Балалайки"];
+  var words3 = ["Объединяют","Удивляют","Спасают","Украшают","Вдохновляют"];
+
+  // Размер массивов
+  var arraySize1 = words1.length;
+  var arraySize2 = words2.length;
+  var arraySize3 = words3.length;
+
+  // Генерация случайных индексов
+  var rand1 = Random().nextInt(arraySize1);
+  var rand2 = Random().nextInt(arraySize2);
+  var rand3 = Random().nextInt(arraySize3);
+
+  var phrase = "${words1[rand1]} ${words2[rand2]} ${words3[rand3]}";
+
+  print(phrase);
+}
+</code></pre>
+</section>
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

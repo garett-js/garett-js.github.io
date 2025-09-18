@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider — База</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Provider — База</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Provider — База</h1>
+
+        <section id="section-1" class="lesson-section">
+           <div class="note-block">
+               <h4>Provider</h4>
+               <p><code class="code">Provider</code> — это популярный пакет для управления состоянием в приложениях Flutter. Он представляет собой обертку над <code class="code">InheritedWidget</code>, делая его проще в использовании и более гибким для многократного применения.</p>
+           </div>
+           <p>Пакет установим с сайта <a href="https://pub.dev/packages/provider" target="_blank">https://pub.dev/packages/provider</a><br>В этом уроке будем использовать версию <code class="code">provider 6.1.5</code></p>
+           <p>На прошлых уроках мы научились пользоваться <code class="code">InheritedWidget</code> и <code class="code">ChangeNotifier</code> для элегантной передачи состояния между виджетами, без дополнительных <code class="code">build()</code></p>
+           <p><code class="code">Provider</code> позволяет делать тоже самое, но более профессионально и легче.</p>
+           
+           <h4>Некоторые ключевые преимущества использования Provider:</h4>
+           <ul>
+               <li><strong>Упрощенное выделение/освобождение ресурсов:</strong> Provider берет на себя заботу о жизненном цикле объектов состояния</li>
+               <li><strong>Ленивая загрузка (lazy-loading):</strong> Объекты состояния создаются только тогда, когда они действительно нужны</li>
+               <li><strong>Значительно уменьшенный шаблонный код:</strong> По сравнению с ручным написанием <code class="code">InheritedWidget</code></li>
+               <li><strong>Производительность:</strong> Provider перестраивает только те виджеты, которые зависят от конкретного изменившегося значения</li>
+               <li><strong>Гибкость:</strong> Позволяет комбинировать несколько провайдеров и вкладывать их, поддерживая модульную архитектуру</li>
+           </ul>
+
+           <h4>Кратко принцип работы:</h4>
+           <ul>
+               <li><strong><code class="code">ChangeNotifier</code></strong>: Предоставляет уведомления об изменениях своим слушателям (виджетам). Модель данных обычно наследуется от <code class="code">ChangeNotifier</code>. Когда данные в модели изменяются, вы вызываете метод <code class="code">notifyListeners()</code>, чтобы уведомить всех подписчиков (виджеты) о необходимости перестроиться.</li>
+               <li><strong><code class="code">ChangeNotifierProvider</code></strong>: Это один из типов провайдеров, который предоставляет экземпляр вашего <code class="code">ChangeNotifier</code> (модели данных) дереву виджетов. Он также автоматически вызывает <code class="code">dispose()</code> для <code class="code">ChangeNotifier</code>, когда провайдер удаляется из дерева виджетов.</li>
+               <li><strong>Потребители состояния</strong>: Чтобы получить доступ к данным из модели и реагировать на их изменения, используются виджеты <code class="code">Consumer</code>, <code class="code">Selector</code> или методы <code class="code">Provider.of&lt;T&gt;(context)</code>, <code class="code">context.watch&lt;T&gt;()</code> и <code class="code">context.read&lt;T&gt;()</code>.</li>
+           </ul>
+       </section>
+ 
+       <section id="section-2" class="lesson-section">
+           <h2 style="display: inline;"><strong>Provider Практика</strong></h2>
+           <p>Рассмотрим на практике, вспомним прошлый пример про музыкальную карточку и проблему <code class="code">Lifting State Up</code>, когда гоняем данные через все виджеты и лишний раз их перестраиваем.</p>
+
+           <div class="code-block-header">
+               <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+               <div class="code-block-controls">
+                   <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                   <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+               </div>
+           </div>
+           <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:flutter_apps_2025_1/views/track_card.dart';  
+  
+void main() => runApp(MyApp());  
+  
+class MyApp extends StatefulWidget {  
+  const MyApp({super.key});  
+  
+  @override  
+  State&lt;MyApp&gt; createState() => _MyAppState();  
+}  
+  
+class _MyAppState extends State&lt;MyApp&gt; {  
+  
+  // 👉 Данные хранит 1й виджет MyApp  String title = "Provider";  
+  String author = "ChangeNotifier";  
+  bool isFavorite = false;  
+  
+  // Пример для изменения состояния и передачи вниз по дереву виджетов  
+  void onLike() {  
+    setState(() {  
+      isFavorite = !isFavorite;  
+    });  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 MyApp() build");  
+  
+    return MaterialApp(  
+      title: "Flutter Course 2025",  
+      debugShowCheckedModeBanner: false,  
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),  
+        fontFamily: "Montserrat",  
+      ),  
+      home: Scaffold(  
+        body: HomeWidget(  
+          title: title, // 👉 Передаём данные во 2й виджет          
+          author: author,  
+          isFavorite: isFavorite,  
+          onLike: onLike, // 👉 Передаём callback во 2й виджет        
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class HomeWidget extends StatelessWidget {  
+  final String title;  
+  final String author;  
+  final bool isFavorite;  
+  final VoidCallback onLike; // 👉 Принимаем callback во 2й виджет  
+  const HomeWidget({  
+    super.key,  
+    required this.title,  
+    required this.author,  
+    required this.isFavorite,  
+    required this.onLike,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    return Container(  
+      width: double.infinity,  
+      decoration: BoxDecoration(  
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  
+          begin: Alignment.topLeft,  
+          end: Alignment.bottomRight,  
+        ),  
+      ),  
+      child: SafeArea(  
+        child: Center(  
+          child: Padding(  
+            padding: const EdgeInsets.all(32.0),  
+            child: TrackCard(  
+              title: title, // 👉 Передаём данные во 3й виджет              
+              author: author,  
+              isFavorite: isFavorite,  
+              onLike: onLike, // 👉 Передаём callback во 3й виджет            
+            ),  
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+           <div class="code-block-header">
+               <h5 class="code-block-title">Файл <code class="code">track_card.dart</code></h5>
+               <div class="code-block-controls">
+                   <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                   <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+               </div>
+           </div>
+           <pre><code class="language-dart">import 'package:flutter/material.dart';  
+  
+class TrackCard extends StatelessWidget {  
+  final String title;  
+  final String author;  
+  final bool isFavorite;  
+  final VoidCallback onLike; // 👉 Принимаем callback во 3й виджет  
+  const TrackCard({  
+    super.key,  
+    required this.title,  
+    required this.author,  
+    required this.isFavorite,  
+    required this.onLike,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TrackCard() build");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/kapa.jpg"),  
+        title: TitleWidget(  
+          title: title,  
+          isFavorite: isFavorite,  
+        ),  
+        subtitle: SubtitleWidget(author: author),  
+        trailing: LikeButton(  
+          isFavorite: isFavorite,  
+          onLike: onLike, // 👉 Передаём callback во 4й виджет        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  final String title;  
+  final bool isFavorite;  
+  
+  const TitleWidget({  
+    super.key,  
+    required this.title,  
+    required this.isFavorite,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    return Text(title, style: TextStyle(fontWeight: FontWeight.bold));  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  final String author;  
+  
+  const SubtitleWidget({super.key, this.author = ""});  
+  @override  
+  Widget build(BuildContext context) {  
+    return Text(author.toUpperCase());  
+  }  
+}  
+  
+class LikeButton extends StatelessWidget {  
+  final bool isFavorite;  
+  final VoidCallback onLike;  
+  
+  const LikeButton({super.key, required this.isFavorite, required this.onLike,});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    final iconButton = IconButton(  
+      onPressed: () {  
+        onLike(); // 👉 Вызываем callback из 1 виджета      },  
+      icon: isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+  
+    return iconButton;  
+  }  
+}
+</code></pre>
+           <img src="images/l7.1/provider.gif" width="300" alt="Provider Demo">
+           
+           <h4>Проблемы</h4>
+           <ol>
+               <li>Можно легко ошибиться</li>
+               <li>Утомительное занятие</li>
+               <li>Ухудшение производительности приложения, каждый виджет будет перестраиваться</li>
+           </ol>
+       </section>
+ 
+       <section id="section-3" class="lesson-section">
+           <h2 style="display: inline;"><strong>Используем `Provider`</strong></h2>
+           <h4>Шаг 1: Добавление зависимости</h4>
+           <p>Добавим пакет `provider` в файл `pubspec.yaml` проекта</p>
+           <div class="code-block-header">
+               <h5 class="code-block-title">Файл <code class="code">pubspec.yaml</code></h5>
+               <div class="code-block-controls">
+                   <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                   <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+               </div>
+           </div>
+           <pre><code class="language-yaml">dependencies:  
+  flutter:  
+    sdk: flutter  
+  
+  cupertino_icons: ^1.0.8  
+  provider: ^6.1.5
+</code></pre>
+           <p>Или устанавливаем через терминал</p>
+           <div class="code-block-header">
+                <h5 class="code-block-title">Терминал</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+           <pre><code class="language-bash">flutter pub add provider
+</code></pre>
+
+           <h4>Шаг 2: Структура проекта</h4>
+           <p>Раскидаем разные файлы по нужным директориям</p>
+           <img src="images/l7.1/studio64_uKtKHfxynz.png" alt="Структура проекта">
+           <p>В директории <code class="code">lib</code> добавим новы директории</p>
+            <ul>
+                <li><code class="code">models</code></li>
+                <li><code class="code">providers</code></li>
+                <li><code class="code">views</code></li>
+            </ul>
+            <p>В <code class="code">models</code> добавим <code class="code">track_model.dart</code></p>
+            <p>В <code class="code">providers</code> добавим <code class="code">track_provider.dart</code></p>
+            <p>В <code class="code">views</code> добавим <code class="code">track_card.dart</code></p>
+
+           <h4>Шаг 3: Модель данных</h4>
+           <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">models/track_model.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+           <pre><code class="language-dart">class TrackData {  
+  final String title;  
+  final String author;  
+  final bool isFavorite;  
+  
+  const TrackData({  
+    required this.title,  
+    required this.author,  
+    required this.isFavorite,  
+  });  
+  
+  TrackData copyWith({  
+    String? title,  
+    String? author,  
+    bool? isFavorite,  
+  }) {  
+    return TrackData(  
+      title: title ?? this.title,  
+      author: author ?? this.author,  
+      isFavorite: isFavorite ?? this.isFavorite,  
+    );  
+  }  
+}
+</code></pre>
+
+           <h4>Шаг 4: Используем `ChangeNotifier`</h4>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">providers/track_provider.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+           <pre><code class="language-dart">import 'package:flutter/material.dart';  
+  
+import '../models/track_model.dart';  
+  
+class TrackModel extends ChangeNotifier {  
+  TrackData _trackData;  
+  
+  TrackModel(this._trackData);  
+  
+  // Геттеры для доступа к данным  
+  TrackData get trackData => _trackData;  
+  
+  String get title => _trackData.title;  
+  String get author => _trackData.author;  
+  bool get isFavorite => _trackData.isFavorite;  
+  
+  // Метод для изменения состояния  
+  void toggleFavorite() {  
+    _trackData = _trackData.copyWith(isFavorite: !_trackData.isFavorite);  
+    notifyListeners(); // Уведомляем всех слушателей об изменении  
+  }  
+}
+</code></pre>
+
+       </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Шаг 5: Предоставление модели данных дереву виджетов</strong></h2>
+            <p>Необходимо обернуть корневой виджет  приложения (или часть дерева виджетов, для которой нужен доступ к состоянию) в <code class="code">ChangeNotifierProvider</code>. Это сделает экземпляр <code class="code">TrackModel</code> доступным для всех дочерних виджетов.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() => runApp(MyApp());  
+  
+class MyApp extends StatelessWidget {  
+  const MyApp({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 MyApp() build");  
+  
+    return MaterialApp(  
+      title: "Flutter Course 2025",  
+      debugShowCheckedModeBanner: false,  
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),  
+        fontFamily: "Montserrat",  
+      ),  
+      home: Scaffold(  
+        // Оборачиваем в ChangeNotifierProvider для передачи данных вниз по дереву  
+        body: ChangeNotifierProvider(  
+            // Через create создаем экземпляр класса TrackModel и передаем данные  
+            create: (context) => TrackModel(  
+              TrackData(  
+                title: "Provider",  
+                author: "Change Notifier",  
+                isFavorite: false,  
+              ),  
+            ),  
+            child: HomeWidget()  
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class HomeWidget extends StatelessWidget {  
+  const HomeWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    return Container(  
+      width: double.infinity,  
+      decoration: BoxDecoration(  
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  
+          begin: Alignment.topLeft,  
+          end: Alignment.bottomRight,  
+        ),  
+      ),  
+      child: SafeArea(  
+        child: Center(  
+          child: Padding(  
+            padding: const EdgeInsets.all(32.0),  
+            child: TrackCard(),  
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+        <p><code class="code">ChangeNotifierProvider</code>  предоставляет (<code class="code">provides</code>) экземпляр <code class="code">ChangeNotifier</code> своим потомкам в дереве виджетов. Он "слушает" (<code class="code">listens</code>) изменения в этом <code class="code">ChangeNotifier</code> и автоматически перестраивает (<code class="code">rebuilds</code>) виджеты-потомки, которые зависят от этого <code class="code">ChangeNotifier</code>, когда его состояние меняется.</p>
+       </section>
+
+       <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>Шаг 6: Использование (потребление/consume) состояния в виджетах</strong></h2>
+            <p>Чтобы получить данные и правильно их обработать есть несколько методов:</p>
+            <ol>
+                <li><code class="code">Consumer</code> - Слушает изменения в <code class="code">ChangeNotifier</code> и перестраивать только определенную часть UI.</li>
+                <li><code class="code">Selector</code> - Продвинутый <code class="code">Consumer</code> позволяет  указать, какую часть данных из <code class="code">ChangeNotifier</code> нужно "слушать". Виджет перестроится только тогда, когда изменится только выбранная часть данных.</li>
+                <li><code class="code">Provider.of&lt;T&gt;(context)</code> - Получить данные и подписаться или нет на изменения</li>
+                <li><code class="code">context.watch&lt;T&gt;()</code> - Получить данные и подписаться на изменения</li>
+                <li><code class="code">context.read&lt;T&gt;()</code> - Поучить данные и не подписываться на изменения</li>
+            </ol>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">track_card.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TrackCard extends StatelessWidget {  
+  const TrackCard({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TrackCard() build");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/kapa.jpg"),  
+        title: TitleWidget(),  
+        subtitle: SubtitleWidget(),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  const TitleWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    // Получаем весь TrackModel  
+    final trackModel = Provider.of&lt;TrackModel&gt;(context, listen: false);  
+  
+    return Text(trackModel.title, style: TextStyle(fontWeight: FontWeight.bold,),);  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  const SubtitleWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 SubtitleWidget() build");  
+  
+    // Получаем весь TrackModel 
+    final trackModel = Provider.of&lt;TrackModel&gt;(context, listen: false);  
+      
+    return Text(trackModel.author);  
+  }  
+}  
+  
+class LikeButton extends StatelessWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    // Получаем весь TrackModel и слушаем его изменения  
+    final trackModel = context.watch&lt;TrackModel&gt;();  
+  
+    final iconButton = IconButton(  
+      onPressed: () {  
+        trackModel.toggleFavorite();  
+      },  
+      icon: trackModel.isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+  
+    return iconButton;  
+  }  
+}
+</code></pre>
+            <p>Супер! Всё прекрасно работает через <code class="code">Provider</code></p>
+            <h4>Оптимизируем перестройку виджетов</h4>
+            <p>Используя <code class="code">Provider.of&lt;TrackModel&gt;(context)</code> мы ни только получаем данные, но и подписываемся на изменения в модели данных. В данном случае, изменяется только <code class="code">isFavorite</code> , но <code class="code">notifyListeners()</code> сообщаем всем своим подписчикам об изменении, и просит эти виджеты перестроится. <code class="code">TitleWidget</code> и <code class="code">SubtitleWidget</code> нет смысла лишний раз перестраивать.</p>
+            <p><strong>Используем</strong></p>
+            <ul>
+                <li><code class="code">Provider.of&lt;TrackModel&gt;(context, listen: false)</code>  - без подписки на изменения</li>
+                <li><code class="code">Provider.of&lt;TrackModel&gt;(context)</code>  - с подпиской на изменения</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">track_card.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TitleWidget extends StatelessWidget {  
+  const TitleWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    // Получаем весь TrackModel  
+    final trackModel = Provider.of&lt;TrackModel&gt;(context, listen: false);  
+  
+    return Text(trackModel.title, style: TextStyle(fontWeight: FontWeight.bold,),);  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  const SubtitleWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 SubtitleWidget() build");  
+  
+    // Получаем весь TrackModel 
+    final trackModel = Provider.of&lt;TrackModel&gt;(context, listen: false);  
+      
+    return Text(trackModel.author);  
+  }  
+}
+</code></pre>
+            <p><strong>Или более красивые современные методы</strong></p>
+             <ul>
+                <li><code class="code">context.read&lt;TrackModel&gt;()</code> - без подписки на изменения</li>
+                <li><code class="code">context.watch&lt;TrackModel&gt;()</code> - с подпиской на изменения</li>
+                <li><code class="code">context.select&lt;TrackModel&gt;(() {})</code> - с подпиской на изменения части модели</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">track_card.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TrackCard extends StatelessWidget {  
+  const TrackCard({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TrackCard() build");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/kapa.jpg"),  
+        title: TitleWidget(),  
+        subtitle: SubtitleWidget(),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  const TitleWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    // Получаем весь TrackModel  
+    final trackModel = context.read&lt;TrackModel&gt;();  
+  
+    return Text(  
+      trackModel.title,  
+      style: TextStyle(fontWeight: FontWeight.bold),  
+    );  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  const SubtitleWidget({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 SubtitleWidget() build");  
+  
+    // Получаем весь TrackModel  
+    final trackModel = context.read&lt;TrackModel&gt;();  
+  
+    return Text(trackModel.author);  
+  }  
+}  
+  
+class LikeButton extends StatelessWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    // Получаем весь TrackModel и слушаем его изменения  
+    final trackModel = context.watch&lt;TrackModel&gt;();  
+  
+    final iconButton = IconButton(  
+      onPressed: () {  
+        trackModel.toggleFavorite();  
+      },  
+      icon: trackModel.isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+  
+    return iconButton;  
+  }  
+}
+</code></pre>
+    <p>Перестраивается только <code class="code">HomeWidget()</code></p>
+    <img src="images/l7.1/Pasted image 20250604111207.png" alt="Build logs">
+       </section>
+ 
+       <section id="section-6" class="lesson-section">
+            <div class="note-block">
+                <h4><code class="code">Consumer</code></h4>
+                <p>Теперь воспользуемся виджетом <code class="code">Consumer</code>, чтобы обновить только определенную часть виджета</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">track_card.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class LikeButton extends StatelessWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 LikeButton() build");  
+  
+    // Используем context.read для вызова метода toggleFavorite 
+    // т.к. не нужно перестраивать IconButton    
+    final trackModel = context.read&lt;TrackModel&gt;();  
+  
+    return IconButton(  
+      onPressed: () {  
+        trackModel.toggleFavorite();  
+      },  
+      
+      // Используем Consumer для динамической иконки  
+      // Consumer/Selector лучше для тонкой настройки чем watch()      
+      icon: Consumer&lt;TrackModel&gt;(  
+        builder: (context, model, child) {  
+          return model.trackData.isFavorite  
+              ? const Icon(Icons.favorite, color: Colors.red)  
+              : const Icon(Icons.favorite_border);  
+        },  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+            <p>Теперь даже виджет <code class="code">LikeButton</code> не перестраивается!!!<br>Обновляется только иконка сердечка!<br>Очень круто!</p>
+            <img src="images/l7.1/provider2.gif" width="300" alt="Provider with Consumer">
+
+            <div class="note-block">
+                <h4><code class="code">Selector</code></h4>
+                <p>Тот же самый <code class="code">Consumer</code> но работает ещё гибче! Следить не за всей моделью, а только за определённой частью</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">track_card.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class LikeButton extends StatelessWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 LikeButton() build");  
+      
+    final trackModel = context.read&lt;TrackModel&gt;();  
+  
+    return IconButton(  
+      onPressed: () {  
+        trackModel.toggleFavorite();   
+      },  
+  
+      // Используем Selector для получения только состояния isFavorite  
+      icon: Selector&lt;TrackModel, bool&gt;(  
+        selector: (context, trackModel) => trackModel.trackData.isFavorite,  
+        builder: (context, isFavorite, child) {  
+          return isFavorite  
+              ? const Icon(Icons.favorite, color: Colors.red)  
+              : const Icon(Icons.favorite_border);  
+        },  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+       </section>
+
+       <section id="section-7" class="lesson-section">
+            <h2 style="display: inline;"><strong>Особенности работы Provider</strong></h2>
+            
+            <h4>1. `Consumer&lt;T&gt;`</h4>
+            <p><code class="code">Consumer</code> — это виджет, который позволяет "слушать" изменения в <code class="code">ChangeNotifier</code> и перестраивать только определенную часть UI.</p>
+            <ul>
+                <li><strong>Особенности:</strong>
+                    <ul>
+                        <li><strong>Перестраивает только себя:</strong> Это главное преимущество. Если ваш <code class="code">build</code> метод виджета большой, и только небольшая его часть зависит от данных провайдера, <code class="code">Consumer</code> поможет избежать лишних перестроек всего виджета, что улучшает производительность.</li>
+                        <li><strong>Не требует <code class="code">context</code> для доступа к провайдеру:</strong> Он передает экземпляр провайдера в своей <code class="code">builder</code> функции.</li>
+                        <li><strong>Третий аргумент <code class="code">child</code>:</strong> В <code class="code">builder</code> функции есть необязательный третий аргумент <code class="code">child</code>. Это позволяет вам передать дочерний виджет, который не зависит от провайдера, и он не будет перестраиваться.</li>
+                    </ul>
+                </li>
+                <li><strong>"Подводные камни":</strong>
+                    <ul>
+                        <li>Может сделать дерево виджетов более глубоким из-за вложенности <code class="code">Consumer</code>'ов, хотя это редко является большой проблемой.</li>
+                        <li>Если вам нужно только вызвать метод провайдера (т.е., не нужно "слушать" его изменения), то <code class="code">Provider.of&lt;T&gt;(context, listen: false)</code> или <code class="code">context.read&lt;T&gt;()</code> будут более подходящими, так как <code class="code">Consumer</code> всегда "слушает".</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>2. `Selector&lt;T, S&gt;`</h4>
+            <p><code class="code">Selector</code> — это более продвинутая версия <code class="code">Consumer</code>, которая позволяет вам указать, какую именно часть данных из <code class="code">ChangeNotifier</code> нужно "слушать". Виджет перестроится только тогда, когда изменится выбранная часть данных.</p>
+            <ul>
+                <li><strong>Особенности:</strong>
+                    <ul>
+                        <li><strong>Точечная оптимизация перестроек:</strong> <code class="code">Selector</code> принимает функцию <code class="code">selector</code>, которая извлекает ("селектирует") часть данных из вашего провайдера. Виджет будет перестраиваться <em>только</em> если результат этой функции изменится. Это очень мощный инструмент для тонкой настройки производительности.</li>
+                        <li><strong><code class="code">shouldRebuild</code> (необязательно):</strong> Можно также передать функцию <code class="code">shouldRebuild</code>, чтобы еще точнее контролировать, когда должна произойти перестройка (например, если <code class="code">newCount != oldCount</code> — перестраивать, иначе нет).</li>
+                    </ul>
+                </li>
+                <li><strong>"Подводные камни":</strong>
+                    <ul>
+                        <li>Функция <code class="code">selector</code> должна быть "чистой" (pure function) — она не должна вызывать побочных эффектов и должна возвращать один и тот же результат для одних и тех же входных данных.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>3. `Provider.of&lt;T&gt;(context)`</h4>
+            <p>Этот метод является одним из самых распространенных способов получения данных из провайдера. Он позволяет получить экземпляр <code class="code">ChangeNotifier</code> из ближайшего <code class="code">ChangeNotifierProvider</code> в дереве виджетов.</p>
+             <ul>
+                <li><strong>Особенности:</strong>
+                    <ul>
+                        <li><strong>Автоматически "слушает" (по умолчанию):</strong> Если вы используете <code class="code">Provider.of&lt;T&gt;(context)</code>, виджет, в котором он вызывается, будет перестраиваться каждый раз, когда <code class="code">notifyListeners()</code> вызывается в соответствующем <code class="code">ChangeNotifier</code>.</li>
+                        <li><strong>Гибкость:</strong> Можно использовать <code class="code">listen: false</code> для случаев, когда вам просто нужен доступ к методам провайдера, но не нужно перестраивать виджет при изменении его состояния.</li>
+                    </ul>
+                </li>
+                <li><strong>"Подводные камни":</strong>
+                    <ul>
+                        <li><strong>Перестраивает весь виджет:</strong> Если вы используете <code class="code">Provider.of&lt;T&gt;(context)</code> (без <code class="code">listen: false</code>) в <code class="code">build</code> методе <code class="code">StatelessWidget</code> или <code class="code">StatefulWidget</code>, то <em>весь</em> этот виджет будет перестраиваться при любом изменении в <code class="code">ChangeNotifier</code>. Это может привести к ненужным перестройкам и снижению производительности, если только небольшая часть виджета зависит от изменяющихся данных.</li>
+                        <li>Должен быть вызван в <code class="code">build</code> методе или в методе жизненного цикла (например, <code class="code">didChangeDependencies</code>) после <code class="code">initState</code>.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>4. `context.watch&lt;T&gt;()`</h4>
+            <p>Это более лаконичная и современная синтаксическая "сахарная" обертка над <code class="code">Provider.of&lt;T&gt;(context, listen: true)</code>. Она делает код более читабельным.</p>
+             <ul>
+                <li><strong>Особенности:</strong>
+                    <ul>
+                        <li><strong>То же самое, что <code class="code">Provider.of&lt;T&gt;(context, listen: true)</code>:</strong> Виджет, использующий <code class="code">context.watch&lt;T&gt;()</code>, будет перестраиваться при любых изменениях в <code class="code">ChangeNotifier</code>.</li>
+                        <li><strong>Короткий синтаксис:</strong> Удобно и чисто.</li>
+                        <li><strong>Доступно только в <code class="code">build</code> методе:</strong> Как и <code class="code">Provider.of&lt;T&gt;(context)</code>, <code class="code">context.watch&lt;T&gt;()</code> должен использоваться в <code class="code">build</code> методе виджета.</li>
+                    </ul>
+                </li>
+                <li><strong>"Подводные камни":</strong>
+                    <ul>
+                        <li>Те же, что и у <code class="code">Provider.of&lt;T&gt;(context)</code> без <code class="code">listen: false</code>: перестраивает весь виджет, если не использовать <code class="code">Consumer</code> или <code class="code">Selector</code> для более точечных перестроек.</li>
+                    </ul>
+                </li>
+            </ul>
+
+             <h4>5. `context.read&lt;T&gt;()`</h4>
+            <p>Этот метод используется, когда вам нужно получить экземпляр <code class="code">ChangeNotifier</code> для вызова его методов, но <strong>вам не нужно, чтобы виджет перестраивался</strong> при изменении состояния <code class="code">ChangeNotifier</code>.</p>
+             <ul>
+                <li><strong>Особенности:</strong>
+                    <ul>
+                        <li><strong>Не "слушает" изменения:</strong> Виджет, использующий <code class="code">context.read&lt;T&gt;()</code>, не будет перестраиваться, когда <code class="code">notifyListeners()</code> вызывается в провайдере. Это делает его идеальным для вызова методов в обработчиках событий (например, <code class="code">onPressed</code>).</li>
+                        <li><strong>Доступен в любом месте:</strong> Можно использовать как в <code class="code">build</code> методе, так и за его пределами (например, в колбэках <code class="code">onPressed</code>), потому что он не зависит от жизненного цикла перестроек.</li>
+                    </ul>
+                </li>
+                <li><strong>"Подводные камни":</strong>
+                    <ul>
+                        <li><strong>Не используйте для отображения данных, которые должны меняться:</strong> Если вы используете <code class="code">context.read&lt;T&gt;()</code> для получения данных, которые должны обновляться в UI, эти данные не будут обновляться, так как виджет не "слушает" изменения.</li>
+                    </ul>
+                </li>
+            </ul>
+       </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>
+
+

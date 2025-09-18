@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stateful. Жизненный цикл</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a>Stateful. Жизненный цикл</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Stateful. Жизненный цикл</h1>
+        
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Схема жизненного цикла</strong></h2>
+            <p>В отличие от <code class="code">StatelessWidget</code>, который неизменяем, <code class="code">StatefulWidget</code> может изменять своё состояние в процессе работы. Это делает его более гибким, но также требует понимания жизненного цикла, чтобы правильно управлять ресурсами и обновлять интерфейс.</p>
+            <p>Жизненный цикл <code class="code">StatefulWidget</code> можно представить как несколько последовательных этапов, которые вызываются в определённом порядке.</p>
+            <img src="images/l5.5/Pasted image 20250327120701.png" width="500" alt="Схема жизненного цикла">
+
+            <h3><strong>Основные методы жизненного цикла:</strong></h3>
+            <ol>
+                <li><code class="code">StatefulWidget</code> → прописали код виджета</li>
+                <li><code class="code">Constructor</code> → вызвали конструктор</li>
+                <li><code class="code">createState()</code> → создаёт объект состояния <code class="code">State</code></li>
+                <li><code class="code">State</code> получает <code class="code">context</code> → Информация о местоположении виджета в дереве</li>
+                <li><code class="code">initState()</code> → вызывается один раз когда создаётся объект (добавляется в дерево)</li>
+                <li><code class="code">didCnangeDependecies</code> → вызывается, когда изменяются зависимости виджета</li>
+                <li><code class="code">build()</code> → строит (отрисовывает) виджет</li>
+                <li><code class="code">setState()</code> → сообщает, что состояние изменилось, и необходимо перерисовать UI</li>
+                <li><code class="code">didUpdateWidget()</code>  → вызывается, если виджет обновился.</li>
+                <li><code class="code">deactivate()</code> → удаление из дерева, но есть возможность вернуть виджет в него</li>
+                <li><code class="code">dispose()</code> → окончательное удаление виджета из дерева</li>
+            </ol>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Подробное описание работы жизненного цикла виджета</strong></h2>
+            <ol>
+                <li>
+                    <p><strong>Когда <code class="code">BuildContext</code> назначается виджету, он считается "смонтированным" (mounted).</strong> Это означает, что у <code class="code">State</code>-объекта устанавливается флаг <code class="code">mounted = true</code>, и фреймворк знает, что виджет присутствует в дереве.</p>
+                    <ul>
+                        <li>Этот флаг можно использовать, чтобы проверить, можно ли обновлять состояние (например, перед вызовом <code class="code">setState()</code>).</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Вызывается <code class="code">initState()</code>.</strong> Это первый метод, вызываемый при создании <code class="code">State</code>. Здесь можно инициализировать ресурсы, подписаться на <code class="code">Stream</code>, создать <code class="code">AnimationController</code> и т. д.</p>
+                    <ul>
+                        <li><strong>Аналогии:</strong> <code class="code">onCreate()</code> в Android, <code class="code">viewDidLoad()</code> в iOS.</li>
+                        <li><strong>Важно:</strong> <code class="code">initState()</code> вызывается только один раз за время жизни <code class="code">State</code>.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Вызывается <code class="code">didChangeDependencies()</code>.</strong></p>
+                    <ul>
+                        <li>Этот метод вызывается сразу после <code class="code">initState()</code>, если <code class="code">State</code>- объект зависит от <code class="code">InheritedWidget</code>.</li>
+                        <li>Если изменяется <code class="code">InheritedWidget</code>, от которого зависит <code class="code">State</code>, <code class="code">didChangeDependencies()</code> сработает снова.</li>
+                        <li><strong>Важно:</strong> Метод может вызываться несколько раз за время жизни <code class="code">State</code>.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Вызывается <code class="code">build()</code>.</strong> Это главный метод отрисовки UI. Он вызывается каждый раз, когда фреймворк считает, что виджет требует обновления.</p>
+                    <ul>
+                        <li>Каждый виджет в дереве рекурсивно вызывает <code class="code">build()</code>, поэтому этот метод должен работать максимально быстро.</li>
+                        <li><strong>Нельзя делать в <code class="code">build()</code>:</strong>
+                            <ul>
+                                <li>Тяжелые вычисления (их нужно выполнять асинхронно и сохранять результат в <code class="code">State</code>).</li>
+                                <li>Запросы в сеть (иначе UI зависнет).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Вызывается <code class="code">didUpdateWidget()</code>, если родительский виджет изменился.</strong></p>
+                    <ul>
+                        <li>Если <code class="code">StatefulWidget</code> пересоздан, но <code class="code">State</code> остался тем же, вызывается <code class="code">didUpdateWidget()</code>.</li>
+                        <li>В этот момент передается <code class="code">oldWidget</code>, чтобы можно было сравнить старые и новые свойства.</li>
+                        <li>Используется, например, для перезапуска анимации, если изменился параметр анимации.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Когда вызывается <code class="code">setState()</code>, виджет помечается как "грязный" (<em>dirty</em>).</strong></p>
+                    <ul>
+                        <li>Это сигнал фреймворку, что виджет требует перерисовки.</li>
+                        <li>После этого <strong><code class="code">build()</code> будет вызван снова</strong>.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Если виджет удаляется из дерева, вызывается <code class="code">deactivate()</code>.</strong></p>
+                    <ul>
+                        <li>Но объект <code class="code">State</code> может быть повторно использован в другом месте дерева.</li>
+                        <li>Пример: при использовании <code class="code">Navigator.push()</code> и <code class="code">Navigator.pop()</code> виджет может временно исчезнуть и снова появиться.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Когда виджет окончательно удаляется, вызывается <code class="code">dispose()</code>.</strong></p>
+                    <ul>
+                        <li>Этот метод используется для освобождения ресурсов:
+                            <ul>
+                                <li>Отмена подписок на <code class="code">Stream</code>.</li>
+                                <li>Очистка контроллеров (<code class="code">AnimationController</code>, <code class="code">TextEditingController</code>).</li>
+                                <li>Остановка таймеров и других асинхронных операций.</li>
+                            </ul>
+                        </li>
+                        <li>После <code class="code">dispose()</code> объект <code class="code">State</code> уничтожается, а <code class="code">mounted</code> становится <code class="code">false</code>.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>Практический пример</strong></h2>
+            <div class="note-block">
+                <p><strong>Важно!</strong></p>
+                <ul>
+                    <li>Внутри <code class="code">StatefulWidget</code> нет доступа до <code class="code">Context</code> и до <code class="code">State</code></li>
+                    <li>Внутри <code class="code">State</code> есть доступ до <code class="code">Context</code> и до <code class="code">State</code></li>
+                    <li>Внутри <code class="code">State</code> нет прямого доступа к свойствам <code class="code">StatefulWidget</code></li>
+                    <li>Для доступа к свойствам <code class="code">StatefulWidget</code> используется ключевое слово <code class="code">widget</code></li>
+                </ul>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">widgets/lifecycle_example.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+  
+class ListOfSomeWidget extends StatefulWidget {  
+  @override  
+  State&lt;ListOfSomeWidget&gt; createState() =&gt; _MyAppState();  
+}  
+  
+class _MyAppState extends State&lt;ListOfSomeWidget&gt; {  
+  // Так сделано для примера, чтобы посмотреть  
+  // на методы жизненного цикла при добавлении удалении и обновлении виджета  List&lt;Widget&gt; listOfWidget = [];  
+  int index = 0;  
+  
+  void deleteItem() =&gt; setState(() =&gt; listOfWidget.removeLast());  
+  void insertItem() =&gt; setState(() =&gt; listOfWidget.add(LifeCycleExample()));  
+  void updateItem() {  
+    index = (index + 1) % 5; // цикличная последовательность от 0 до 4  
+    setState(() {  
+      listOfWidget.last = LifeCycleExample(colorIndex: index);  
+    });  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return Column(  
+      children: [  
+        Row(  
+          mainAxisAlignment: MainAxisAlignment.center,  
+          children: [  
+            TextButton(onPressed: insertItem, child: Text('Добавить')),  
+            if (listOfWidget.isNotEmpty) ...[  
+              TextButton(onPressed: deleteItem, child: Text('Удалить')),  
+              TextButton(onPressed: updateItem, child: Text('Обновить')),  
+            ],  
+          ],  
+        ),  
+        ...listOfWidget,  
+      ],  
+    );  
+  }  
+}  
+  
+class LifeCycleExample extends StatefulWidget {  
+  final int colorIndex;  
+  final colors = [  
+    Color(0xFFFFD448),  
+    Color(0xFFFD7777),  
+    Color(0xFFFF80DE),  
+    Color(0xFFFFF4F4),  
+    Color(0xFFD1FF48),  
+  ];  
+  
+  LifeCycleExample({this.colorIndex = 0}) {  
+    debugPrint('🔵constructor -&gt; ExampleLifeCycle()');  
+  }  
+  
+  @override  
+  _LifeCycleExampleState createState() {  
+    debugPrint('🔵createState()');  
+    return _LifeCycleExampleState();  
+  }  
+}  
+  
+class _LifeCycleExampleState extends State&lt;LifeCycleExample&gt; {  
+  late String title;  
+  
+  _LifeCycleExampleState() {  
+    debugPrint('🔵constructor -&gt; _ExampleLifeCycleState');  
+  }  
+  
+  void changeTitle() {  
+    setState(() {  
+      debugPrint('🔵widget#${'{'}identityHashCode(widget){'}'} setState()');  
+      title = 'Жизненный цикл + State';  
+    });  
+  }  
+  
+  @override  
+  void initState() {  
+    debugPrint('🔵initState()');  
+    title = 'Жизненный цикл';  
+    super.initState();  
+  }  
+  
+  @override  
+  void didChangeDependencies() {  
+    debugPrint('🔵widget#${'{'}identityHashCode(widget){'}'} didChangeDependencies()');  
+    super.didChangeDependencies();  
+  }  
+  
+  @override  
+  void didUpdateWidget(covariant LifeCycleExample oldWidget) {  
+    debugPrint('🔵didUpdateWidget()');  
+    debugPrint(''  
+        '❌ oldWidget = ${'{'}identityHashCode(oldWidget){'}'}\n'  
+        '✅ newWidget = ${'{'}identityHashCode(widget){'}'}');  
+    super.didUpdateWidget(oldWidget);  
+  }  
+  
+  @override  
+  void deactivate() {  
+    debugPrint('🔵widget#${'{'}identityHashCode(widget){'}'} deactivate()');  
+    super.deactivate();  
+  }  
+  
+  @override  
+  void dispose() {  
+    debugPrint('🔵widget#${'{'}identityHashCode(widget){'}'} dispose()');  
+    super.dispose();  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint('🔵widget#${'{'}identityHashCode(widget){'}'} build()');  
+    return GestureDetector(  
+      onTap: changeTitle,  
+      child: ColoredBox(  
+        color: widget.colors[widget.colorIndex],  
+        child: Padding(  
+          padding: const EdgeInsets.all(8.0),  
+          child: Text(title),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Как работает жизненный цикл виджета</strong></h2>
+            <img src="images/l5.5/studio64_SDmzCYQuJy.gif" width="500" alt="Демонстрация жизненного цикла">
+
+            <h4><strong>Добавление виджета</strong></h4>
+            <p>Нажатие <strong>"Добавить"</strong> вызывает <code class="code">insertItem()</code>. Новый <code class="code">LifeCycleExample</code> добавляется в <code class="code">listOfWidget</code>. Flutter вызывает:</p>
+            <ul>
+                <li>🔵<code class="code">constructor</code> → <code class="code">ExampleLifeCycle()</code></li>
+                <li>🔵<code class="code">createState()</code></li>
+                <li>🔵<code class="code">constructor</code> → <code class="code">_ExampleLifeCycleState</code></li>
+                <li>🔵<code class="code">initState()</code></li>
+                <li>🔵<code class="code">widget#450469716</code> → <code class="code">didChangeDependencies()</code></li>
+                <li>🔵<code class="code">widget#450469716</code> → <code class="code">build()</code></li>
+            </ul>
+
+            <hr>
+            <h4><strong>Изменение внутреннего состояния виджета</strong></h4>
+            <p>Нажатие на текст <code class="code">Жизненный цикл</code> вызывает:</p>
+            <ul>
+                <li>🔵<code class="code">widget#450469716</code> → <code class="code">setState()</code></li>
+                <li>🔵<code class="code">widget#450469716</code> → <code class="code">build()</code></li>
+                <li>Текст меняется на <code class="code">Жизненный цикл + State</code></li>
+            </ul>
+
+            <hr>
+            <h4><strong>Обновление виджета</strong></h4>
+            <p>Нажатие <strong>"Обновить"</strong> вызывает <code class="code">updateItem()</code>, меняя <code class="code">colorIndex</code>. Flutter вызывает:</p>
+            <ul>
+                <li>🔵<code class="code">constructor</code> → <code class="code">ExampleLifeCycle()</code></li>
+                <li>🔵<code class="code">didUpdateWidget()</code> (старый и новый <code class="code">LifeCycleExample</code> сравниваются)</li>
+                <li>❌ <code class="code">oldWidget</code> = <code class="code">450469716</code></li>
+                <li>✅ <code class="code">newWidget</code> = <code class="code">801791187</code></li>
+                <li>🔵<code class="code">widget#801791187</code> → <code class="code">build()</code> (отрисовка с новым цветом)</li>
+            </ul>
+            <p><strong>Важно:</strong> Виджет не пересоздается полностью, а обновляется. <code class="code">Element</code> и <code class="code">State</code> сохраняются (надпись «Жизненный цикл + State» не исчезает).</p>
+
+            <hr>
+            <h4><strong>Удаление виджета</strong></h4>
+            <p>Нажатие <strong>"Удалить"</strong> вызывает <code class="code">deleteItem()</code>. Последний <code class="code">LifeCycleExample</code> удаляется. Flutter вызывает:</p>
+            <ul>
+                <li>🔵<code class="code">widget#801791187</code> → <code class="code">deactivate()</code></li>
+                <li>🔵<code class="code">widget#801791187</code> → <code class="code">dispose()</code></li>
+            </ul>
+        </section>
+        
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>

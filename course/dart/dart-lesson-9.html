@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 9: Строки String</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 9: Строки String</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок 9: Строки String</h1>
+<section class="lesson-section">
+<h2 style="display: inline;">Создание строк</h2>
+<div class="note">
+<p><strong>Строка</strong></p>
+<p>Это <code class="code">последовательность символов</code> заключенная в кавычки <code class="code">двойные</code> или <code class="code">одинарные</code></p>
+<p>Важно выбрать один стиль и придерживаться его во всем коде для повышения читаемости.</p>
+</div>
+<pre><code class="language-dart">
+String str1 = "Обычная строка в вдойных кавычках";
+String str2 = 'Обычная строка в одинарных кавычках';
+</code></pre>
+<p>Лучше выбрать один способ и использовать его постоянно.</p>
+<p>Советую <strong>двойные</strong> кавычки.</p>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Многострочные строки</h2>
+<p>Если нужно создать строку, которая занимает несколько строк в коде, используйте тройные кавычки:</p>
+<pre><code class="language-dart">
+String multStr = '''
+  Это многострочная строка,
+  которая продолжается на несколько строк.
+  Довольно удобно!
+''';
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Пустые строки</h2>
+<p>Все строки, включая пустые, считаются строками (тип данных <code class="code">String</code>)</p>
+<p>Все примеры ниже являются строками!</p>
+<pre><code class="language-dart">
+String text1 = "Привет";
+String text2 = "";
+String text3 = " ";
+String text4 = "12345";
+String text5 = "😎🧐";  // Строка может содержать эмодзи!
+</code></pre>
+
+<img src="images/l9/str1.png" width="800px">
+
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Повторение строк</h2>
+<p>Для повторения строки несколько раз используется оператор умножения:</p>
+<pre><code class="language-dart">
+print("Привет! " * 3);  // Привет! Привет! Привет!
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Конкатенация строк</h2>
+<div class="note">
+<p><strong>Конкатенация</strong></p>
+<p>Это объединение нескольких строк в одну.</p>
+<p>В <code class="code">Dart</code> строки можно объединять с помощью оператора <code class="code">+</code></p>
+</div>
+<pre><code class="language-dart">
+void main() {
+  String text1 = "Привет,";
+  String text2 = "Юля";
+  String result = text1 + text2;
+
+  print(result); // "Привет, Юля"
+}
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Интерполяция строк</h2>
+<p>Чтобы использовать данные из переменных внутри строки, эту строку нужно разбить на части и с помощью оператора <code class="code">+</code> сделать конкатенацию.</p>
+<p>Можно это сделать намного лучше и элегантней - <code class="code">шаблонные строки</code></p>
+<div class="note">
+<p><strong>Шаблонные строки - `интерполяция`</strong></p>
+<p>Интерполяция строк позволяет вставлять значения переменных и выражений прямо в строку.</p>
+<p>Для этого используйте знак <code class="code">$</code> для одной переменной или <code class="code">${}</code> для сложного выражения.</p>
+</div>
+<pre><code class="language-dart">
+void main() {
+  int countMessage = 10;
+  print("У вас " + countMessage.toString() + "сообщений" );
+
+  // Использование интерполяции
+  print("У вас $countMessage сообщений");
+  // У вас 10 сообщений
+
+  // Если выполняется более сложное выражение
+  // Нужно обернуть его в { }
+  print("У вас ${countMessage + 1} сообщений");
+  // У вас 11 сообщений
+}
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Экранирование символов</h2>
+<p>Если в строках нужно использовать специальные символы, такие как кавычки, символы новой строки, табуляции и т.д., используйте <strong>escape-последовательности</strong>.</p>
+<pre><code class="language-dart">
+void main() {
+  print("'H' первая буква строки \"Hello world!\"");
+  print("Первая строка \nВторая строка");
+}
+
+// 'H' - первая буква строки "Hello world!"
+// Первая строка
+// Вторая строка
+</code></pre>
+<div class="note">
+<p><strong>Вот некоторые распространенные `escape-последовательности`</strong></p>
+<p><code class="code">\n</code> → новая строка</p>
+<p><code class="code">\t</code> → табуляция</p>
+<p><code class="code">\'</code> → одинарная кавычка</p>
+<p><code class="code">\"</code> → двойная кавычка</p>
+</div>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Работа с отдельными символами строки</h2>
+<div class="note">
+<p><strong>Коллекция символов</strong></p>
+<p>Строки в Dart — это последовательности символов, и вы можете обращаться к отдельным символам строки через <code class="code">индексы</code>, как в массиве.</p>
+</div>
+
+<img src="images/l9/str3.png" alt="image.png" width="800px"/>
+
+
+<pre><code class="language-dart">
+String text = "Привет";
+
+print(text[0]); // П
+print(text[1]); // р
+print(text[2]); // и
+print(text[3]); // в
+print(text[4]); // е
+print(text[5]); // т
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Ограничения - Строки неизменяемые</h2>
+<div class="note">
+<p><strong>Все строки `неизменяемые` (`immutable`)</strong></p>
+<p>Строки в Dart — <code class="code">неизменяемые</code>. Вы не можете изменить отдельный символ строки!</p>
+</div>
+<img src="images/l9/str4.png" width="800px">
+<pre><code class="language-dart">
+String text = "Привет";
+text[0] = "п"; // Ошибка!
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Методы работы со строками</h2>
+<h3>Проверка длины строки и пустоты</h3>
+<p>Вы можете проверить длину строки с помощью свойства <code class="code">length</code> и проверить, пуста ли строка, с помощью <code class="code">isEmpty</code></p>
+<pre><code class="language-dart">
+String s = "Hello, Dart!";
+
+print(s.length);  // 13
+print(s.isEmpty);  // false
+
+// Cтрока состоящая из пробелов не считается пустой!
+print(''.isEmpty); // true
+print(' '.isEmpty); // false
+</code></pre>
+<h3>Преобразование регистра</h3>
+<p>Вы можете преобразовать строку в верхний или нижний регистр</p>
+<pre><code class="language-dart">
+String s = "Hello, Dart!";
+print(s.toUpperCase());  // HELLO, DART!
+print(s.toLowerCase());  // hello, dart!
+</code></pre>
+<h3>Удаление пробелов</h3>
+<p>Для удаления пробелов по краям строки - методы <code class="code">trim()</code>, <code class="code">trimLeft()</code>, <code class="code">trimRight()</code></p>
+<pre><code class="language-dart">
+String s = "  Hello, Dart!  ";
+print(s.trim());     // "Hello, Dart!" 
+print(s.trimLeft());  // "Hello, Dart!  "
+print(s.trimRight()); // "  Hello, Dart!"
+</code></pre>
+<h3>Извлечение подстроки</h3>
+<p>Используйте метод <code class="code">substring()</code> для извлечения части строки</p>
+<pre><code class="language-dart">
+String s = "Hello, Dart!";
+print(s.substring(0, 5));  // Hello
+</code></pre>
+<h3>Поиск в строке</h3>
+<p>Используйте методы для поиска внутри строки <code class="code">contains()</code> <code class="code">startsWith()</code> <code class="code">endsWith()</code></p>
+<pre><code class="language-dart">
+var name = 'IT-Квантум';
+
+// Содержит ли строка другую строку
+print(name.contains('Квантум')); // true
+
+// Начинается ли строка с другой строки
+print(name.startsWith('IT')); // true
+
+// Заканчивается ли строка другой строкой
+print(name.endsWith('ум')); // true
+
+// Найти положение(индекс) строки в другой строке
+print(name.indexOf('Ква')); // 3
+</code></pre>
+<h3>Разделение строки</h3>
+<p>Метод <code class="code">split()</code> разделяет строку на подстроки с помощью разделителя в скобках</p>
+<pre><code class="language-dart">
+String s = "Hello Dart";
+
+List parts = s.split(" ");
+
+print(parts.lenght); // 2
+print(parts);  // ["Hello", "Dart"]
+</code></pre>
+<h3>Замена подстроки</h3>
+<p>Метод <code class="code">replaceAll()</code> позволяет заменить все вхождения подстроки:</p>
+<pre><code class="language-dart">
+String s = "Hello Dart";
+String result = s.replaceAll("Dart", "Flutter");
+print(result);  // Hello Flutter
+</code></pre>
+<h3>Преобразование строки в число</h3>
+<p>Используйте методы <code class="code">int.parse()</code> и <code class="code">double.parse()</code> для преобразования строк в числа:</p>
+<pre><code class="language-dart">
+int digit = int.parse("42");
+double ddigit = double.parse("3.14");
+
+print(digit);  // 42
+print(ddigit);  // 3.14
+</code></pre>
+<p>Для безопасного преобразования используйте tryParse():</p>
+<pre><code class="language-dart">
+int? digit = int.tryParse('abc');
+print(digit);  // null
+</code></pre>
+<h3>Преобразование числа в строку</h3>
+<p>Методы <code class="code">toString()</code> и <code class="code">toStringAsFixed()</code> используются для преобразования чисел обратно в строки</p>
+<pre><code class="language-dart">
+int num = 42;
+double pi = 3.14159;
+print(num.toString());  // "42"
+print(pi.toStringAsFixed(2));  // "3.14"
+</code></pre>
+</section>
+<section class="lesson-section">
+<h2 style="display: inline;">Дополнительно</h2>
+<h3>Использование StringBuffer</h3>
+<div class="note">
+<p><strong>Конкатенация строк через `StringBuffer`</strong></p>
+<p>Создать объект <code class="code">StringBuffer</code>, методом <code class="code">write</code> добавить отдельные строки.</p>
+<p>Результат - приведение к строке методом <code class="code">toString</code>, который объединит всё в одну строку. Это удобный и эффективный способ, если входных строк очень много.</p>
+<p><code class="code">StringBuffer</code> - Класс для эффективного объединения строк.</p>
+</div>
+<pre><code class="language-dart">
+List<String> strings = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+StringBuffer buffer = StringBuffer();
+
+buffer
+..write('!')
+..writeAll(strings)
+..write('.');
+
+var fullString = buffer.toString();
+print('StringBuffer: $fullString');
+</code></pre>
+<h3>Регулярные выражения</h3>
+<pre><code class="language-dart">
+// * Задать правило для регулярного выражения через класс RegExp()
+// * Найти и выбрать все цифровые значения в строке
+
+var numbers = RegExp(r'\d+');
+var allCharacters = 'Dart & Flutter';
+var someDigits = 'Dart 2.15 & Flutter 2.6.0';
+
+// ? Содержит ли строка цифры
+print(allCharacters.contains(numbers)); // false
+print(someDigits.contains(numbers)); // true
+
+// ? Заменить каждое совпадение в строке
+var exedOut = someDigits.replaceAll(numbers, 'XX');
+print(exedOut); // Dart XX.XX.XX & Flutter XX.XX.XX
+
+// * Также можно работать непосредсвенно с классом RegExp()
+// hasMatch - когда регулярка имеет совпадение в строке
+print(numbers.hasMatch(someDigits)); // true
+
+// Показать все совпадения
+for (var match in numbers.allMatches(someDigits)) {
+  print(match.group(0));
+}
+</code></pre>
+<h3>Символы и Руны</h3>
+<pre><code class="language-dart">
+// ! Строка представлена последовательностью единиц кода Unicode UTF-16, доступной через элементы codeUnitAt или codeUnits:
+string = 'Dart';
+print(string.codeUnitAt(0)); // 68
+print(string.codeUnits); // [68, 97, 114, 116]
+
+// ! Строковое представление единиц кода доступно через оператор индекса:
+string[0]; // D
+
+// ! Символы строки (characters of a string) кодируются в UTF-16. Декодирование UTF-16, которое объединяет пары, возвращает код в Unicode.
+
+// Следуя терминологии, аналогичной в языке Go, мы используем имя «руна» rune для целого числа, представляющего кодовую точку Unicode. Используйте свойство runes, чтобы получить руны строки:
+
+(string.runes.toList()); // [68, 97, 114, 116]
+
+// ! Чтобы не мучаться с парой возвращаемых значений для символов, руны объединяют эту пару и возвращают одно целое число. Например, символ Unicode для музыкального G-ключа ('𝄞') со значением руны 0x1D11E состоит из пары UTF-16: 0xD834 и 0xDD1E. Использование codeUnits возвращает пару, а использование рун возвращает их объединенное значение:
+
+// var clef = '\u{1D11E}';
+
+var clef = '𝄞';
+var pumpkin = '🎃';
+print(clef.codeUnits); // [55348, 56606] Hex: [0xD834, 0xDD1E]
+print(clef.runes.toList()); // [119070] Hex: [0x1D11E]
+print(pumpkin);
+print(pumpkin.codeUnits);
+
+// ! И ещё для более удобной работы и ожидаемого поведения, рекомендуется использовать официальный пакет characters 1.2.0 (на основе этих рун)
+// https://pub.dev/packages/characters
+// ? Например, есть строка c эмоодзи.
+// Если обратиться к последнему символу, то будет ерунда
+// Для нормального поведения нужно использовать characters
+
+var iLovePumpkin = 'I Love Pumpkin 🎃';
+print(iLovePumpkin);
+print('ТЫКОВКА: ${iLovePumpkin.substring(iLovePumpkin.length-1)}');
+print('ТЫКОВКА: ${iLovePumpkin.characters.last}');
+
+// Можно это проследить по размеру строки, она отличается 17 вместо 16
+print(iLovePumpkin.length);
+print(iLovePumpkin.characters.length);
+
+// ! Так же в дарте есть ещё один тип похожий строки это Symbols, он нужен для постоянной идентификации объекта (исп. обычно в API, чтобы при модификации значений, символы никогда не изменятся)
+
+// Но использовать их мы не будем практически никогда, в этом курсе точно.
+//* #id
+//* #symbols
+</code></pre>
+</section>
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

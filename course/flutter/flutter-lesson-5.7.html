@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проблема Lifting State Up</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Проблема Lifting State Up</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Проблема Lifting State Up</h1>
+
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Что такое InheritedWidget и зачем он нужен</strong></h2>
+
+            <p><code class="code">InheritedWidget</code> — это фундаментальный механизм управления состоянием во Flutter, который позволяет эффективно передавать данные вниз по дереву виджетов без необходимости явной передачи через конструкторы у каждого виджета.</p>
+            <p>Этот инструмент лежит в основе многих популярных решений (например, Provider) и используется во встроенных виджетах Flutter: <code class="code">Theme</code>, <code class="code">MediaQuery</code>, <code class="code">Localizations</code>.</p>
+
+            <p>До сих пор во всех наших примерах мы передавали данные (свойства и методы) через конструктор в каждом виджете, пока не доходили до нужного. Это неэффективно для больших приложений с глубокой иерархией:</p>
+            <ol>
+                <li>Легко ошибиться и «потерять» данные на пути.</li>
+                <li>Много рутины и повторяющегося кода.</li>
+                <li>Падает производительность — излишние перестроения (<code class="code">build()</code>) множества виджетов.</li>
+            </ol>
+
+            <p><strong>Демонстрация проблемы.</strong> Данные хранит верхний виджет <code class="code">MyApp</code> (название карточки и колбэк для изменения текста), а использовать их нужно глубоко внизу по дереву. Без контекста или <code class="code">InheritedWidget</code> — придётся «прокидывать» через все уровни.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Демонстрация: прокидывание пропсов через конструкторы</strong></h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() => runApp(MyApp());  
+  
+class MyApp extends StatelessWidget {  
+  const MyApp({super.key});  
+  
+  final String text = "Где Context?"; // 👉 Данные хранит 1й виджет MyApp  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 MyApp() build");  
+  
+    return MaterialApp(  
+      title: "Flutter Course 2025",  
+      debugShowCheckedModeBanner: false,  
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),  
+        fontFamily: "Montserrat",  
+      ),  
+      home: Scaffold(  
+        body: HomeWidget(  
+          text: text, // 👉 Передаём во 2й виджет         
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class HomeWidget extends StatelessWidget {  
+  final String text; // 👉 Принимаем во 2й виджет  
+  const HomeWidget({super.key, required this.text});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    return Container(  
+      width: double.infinity,  
+      decoration: BoxDecoration(  
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  
+          begin: Alignment.topLeft,  
+          end: Alignment.bottomRight,  
+        ),  
+      ),  
+      child: SafeArea(  
+        child: Center(  
+          child: Padding(  
+            padding: const EdgeInsets.all(32.0),  
+            child: TrackCard(text: text), // 👉 Передаём в 3й виджет          
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <img src="images/l5.7/Pasted image 20250530103924.png" width="500" alt="Схема передачи пропсов">
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">core_6_inherited_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+  
+class TrackCard extends StatelessWidget {  
+  final String text; // 👉 Принимаем в 3й виджет  
+  const TrackCard({super.key, required this.text});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TrackCard() build");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: TitleWidget(text: text), // 👉 Передаём в 4й виджет         
+        subtitle: SubtitleWidget(text: "Flutter"),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  final String text; // 👉 Принимаем в 4й виджет  
+  const TitleWidget({super.key, required this.text});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    return Text(  
+      text, // 👉 И наконец-то используем здесь       
+      style: TextStyle(fontWeight: FontWeight.bold),  
+    );  
+  }  
+}
+</code></pre>
+
+            <img src="images/l5.7/Pasted image 20250530104456.png" width="500" alt="Иллюстрация иерархии">
+            <img src="images/l5.7/Pasted image 20250530104837.png" width="300" alt="Структура пропсов">
+
+            <h3><strong>Логи перестроений</strong></h3>
+            <pre><code class="language-bash">🟢 MyApp() build
+🟢 HomeWidget() build
+🟢 TrackCard() build
+🟢 TitleWidget() build
+🟢 HomeWidget() build
+</code></pre>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>Переделка: управляющий стейт вверху и колбэк вниз</strong></h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() => runApp(MyApp());  
+  
+class MyApp extends StatefulWidget {  
+  const MyApp({super.key});  
+  
+  @override  
+  State&lt;MyApp&gt; createState() => _MyAppState();  
+}  
+  
+class _MyAppState extends State&lt;MyApp&gt; {  
+  String text = "Где Context?"; // 👉 Данные хранит 1й виджет MyApp  
+  bool isComplete = false;  
+  void changeText() {  
+    setState(() {  
+      isComplete = !isComplete;  
+    });  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 MyApp() build");  
+  
+    return MaterialApp(  
+      title: "Flutter Course 2025",  
+      debugShowCheckedModeBanner: false,  
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),  
+        fontFamily: "Montserrat",  
+      ),  
+      home: Scaffold(  
+        body: HomeWidget(  
+          text: text,  
+          isComplete: isComplete,  
+          onChange: changeText, // 👉 Передаём callback во 2й виджет         
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class HomeWidget extends StatelessWidget {  
+  final String text;  
+  final bool isComplete;  
+  final VoidCallback onChange; // 👉 Принимаем callback во 2й виджет  
+  const HomeWidget({  
+    super.key,  
+    required this.text,  
+    required this.onChange,  
+    required this.isComplete,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    return Container(  
+      width: double.infinity,  
+      decoration: BoxDecoration(  
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  
+          begin: Alignment.topLeft,  
+          end: Alignment.bottomRight,  
+        ),  
+      ),  
+      child: SafeArea(  
+        child: Center(  
+          child: Padding(  
+            padding: const EdgeInsets.all(32.0),  
+            child: TrackCard(  
+              text: text,  
+              isComplete: isComplete,  
+              onChange: onChange, // 👉 Передаём callback в 3й виджет            
+            ),  
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <img src="images/l5.7/Pasted image 20250530113033.png" width="500" alt="Колбэк вниз, состояние вверх">
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">core_6_inherited_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TrackCard extends StatelessWidget {  
+  final String text;  
+  final bool isComplete;  
+  final VoidCallback onChange; // 👉 Принимаем callback во 3й виджет  
+  const TrackCard({  
+    super.key,  
+    required this.text,  
+    required this.onChange,  
+    required this.isComplete,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TrackCard() build");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: TitleWidget(  
+          text: text,  
+          isComplete: isComplete,  
+          onChange: onChange, // 👉 Передаём callback во 4й виджет         
+        ),  
+        subtitle: SubtitleWidget(text: "Flutter"),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  final String text;  
+  final bool isComplete;  
+  final VoidCallback onChange; // 👉 Принимаем callback в 4й виджет  
+  const TitleWidget({  
+    super.key,  
+    required this.text,  
+    required this.onChange,  
+    required this.isComplete,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    return GestureDetector(  
+      onTap: () {  
+        onChange(); // 👉 Вызываем callback из 1го виджета (MyApp)      
+      },  
+      child: Text(  
+        text,  
+        style: TextStyle(  
+          fontWeight: FontWeight.bold,  
+          decoration: isComplete  
+              ? TextDecoration.lineThrough  
+              : TextDecoration.none,  
+          color: isComplete ? Colors.red : Colors.black,  
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  
+  const SubtitleWidget({super.key, this.text = ""});  
+  @override  
+  Widget build(BuildContext context) {  
+    return Text(text.toUpperCase());  
+  }  
+}  
+  
+class LikeButton extends StatefulWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  State&lt;LikeButton&gt; createState() => _LikeButtonState();  
+}  
+  
+class _LikeButtonState extends State&lt;LikeButton&gt; {  
+  bool isFavorite = false;  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    final iconButton = IconButton(  
+      onPressed: () {  
+        setState(() {  
+          isFavorite = !isFavorite;  
+        });  
+      },  
+      icon: isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+  
+    return iconButton;  
+  }  
+}
+</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Цена подхода Lifting State Up</strong></h2>
+
+            <div class="warning-block">
+                <h4>И вроде всё работает… но какой ценой?</h4>
+                <p>Много повторяющегося кода, сложно поддерживать, и главное — при каждом изменении состояния перерисовываются почти все виджеты на пути. Это бьёт по производительности.</p>
+            </div>
+
+            <img src="images/l5.7/lifting-state-up.gif" width="500" alt="Демонстрация лишних перестроений">
+            <img src="images/l5.7/lifting_state_up.gif" width="500" alt="Схема лишних перестроений">
+
+            <pre><code class="language-bash">🟢 MyApp() build
+🟢 HomeWidget() build
+🟢 TrackCard() build
+🟢 TitleWidget() build
+🟢 HomeWidget() build
+
+Нажали на текст зачеркнуть/вернуть
+
+🟢 MyApp() build
+🟢 HomeWidget() build
+🟢 TrackCard() build
+🟢 TitleWidget() build
+🟢 HomeWidget() build
+            </code></pre>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>Пошаговая инфографика</strong></h2>
+            <p>Слайды с пояснениями процесса передачи состояния и его влияния на перестроения.</p>
+
+            <div class="slideshow-container" data-width="800px">
+              <div class="slideshow-wrapper">
+                  <div class="slideshow">
+                      <div class="slide active">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122238.png" alt="Шаг 1">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122313.png" alt="Шаг 2">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122332.png" alt="Шаг 3">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122416.png" alt="Шаг 4">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122430.png" alt="Шаг 5">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122446.png" alt="Шаг 6">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122511.png" alt="Шаг 7">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122605.png" alt="Шаг 8">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122631.png" alt="Шаг 9">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122643.png" alt="Шаг 10">
+                      </div>
+                      <div class="slide">
+                          <img src="images/l5.7/lifting_state_up/Pasted image 20250609122703.png" alt="Шаг 11">
+                      </div>
+                  </div>
+                </div>
+                <div class="slideshow-controls">
+                  <button class="slideshow-btn prev-btn">‹</button>
+                  <div class="dots-container"></div>
+                  <button class="slideshow-btn next-btn">›</button>
+              </div>
+            </div>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2 style="display: inline;"><strong>Показать весь код</strong></h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'core_6_inherited_widget.dart';  
+  
+void main() => runApp(MyApp());  
+  
+class MyApp extends StatefulWidget {  
+  const MyApp({super.key});  
+  
+  @override  
+  State&lt;MyApp&gt; createState() => _MyAppState();  
+}  
+  
+class _MyAppState extends State&lt;MyApp&gt; {  
+  String text = "Где Context?";  
+  bool isComplete = false;  
+  void changeText() {  
+    setState(() {  
+      isComplete = !isComplete;  
+    });  
+  }  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 MyApp() build");  
+  
+    return MaterialApp(  
+      title: "Flutter Course 2025",  
+      debugShowCheckedModeBanner: false,  
+      theme: ThemeData(  
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),  
+        fontFamily: "Montserrat",  
+      ),  
+      home: Scaffold(  
+        body: HomeWidget(  
+          text: text,  
+          isComplete: isComplete,  
+          onChange: changeText,   
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class HomeWidget extends StatelessWidget {  
+  final String text;  
+  final bool isComplete;  
+  final VoidCallback onChange;  
+  const HomeWidget({  
+    super.key,  
+    required this.text,  
+    required this.onChange,  
+    required this.isComplete,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+  
+    return Container(  
+      width: double.infinity,  
+      decoration: BoxDecoration(  
+        gradient: LinearGradient(  
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],  
+          begin: Alignment.topLeft,  
+          end: Alignment.bottomRight,  
+        ),  
+      ),  
+      child: SafeArea(  
+        child: Center(  
+          child: Padding(  
+            padding: const EdgeInsets.all(32.0),  
+            child: TrackCard(  
+              text: text,  
+              isComplete: isComplete,  
+              onChange: onChange,  
+            ),  
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">core_6_inherited_widget.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+  
+class TrackCard extends StatelessWidget {  
+  final String text;  
+  final bool isComplete;  
+  final VoidCallback onChange;  
+  const TrackCard({  
+    super.key,  
+    required this.text,  
+    required this.onChange,  
+    required this.isComplete,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TrackCard() build");  
+  
+    return Card(  
+      color: Colors.white,  
+      child: ListTile(  
+        leading: Image.asset("assets/images/pro.webp"),  
+        title: TitleWidget(  
+          text: text,  
+          isComplete: isComplete,  
+          onChange: onChange,         
+        ),  
+        subtitle: SubtitleWidget(text: "Flutter"),  
+        trailing: LikeButton(),  
+      ),  
+    );  
+  }  
+}  
+  
+class TitleWidget extends StatelessWidget {  
+  final String text;  
+  final bool isComplete;  
+  final VoidCallback onChange;  
+  const TitleWidget({  
+    super.key,  
+    required this.text,  
+    required this.onChange,  
+    required this.isComplete,  
+  });  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 TitleWidget() build");  
+  
+    return GestureDetector(  
+      onTap: onChange,  
+      child: Text(  
+        text,  
+        style: TextStyle(  
+          fontWeight: FontWeight.bold,  
+          decoration: isComplete ? TextDecoration.lineThrough : TextDecoration.none,  
+          color: isComplete ? Colors.red : Colors.black,  
+        ),  
+      ),  
+    );  
+  }  
+}  
+  
+class SubtitleWidget extends StatelessWidget {  
+  final String text;  
+  const SubtitleWidget({super.key, this.text = ""});  
+  @override  
+  Widget build(BuildContext context) {  
+    return Text(text.toUpperCase());  
+  }  
+}  
+  
+class LikeButton extends StatefulWidget {  
+  const LikeButton({super.key});  
+  
+  @override  
+  State&lt;LikeButton&gt; createState() => _LikeButtonState();  
+}  
+  
+class _LikeButtonState extends State&lt;LikeButton&gt; {  
+  bool isFavorite = false;  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🟢 HomeWidget() build");  
+    return IconButton(  
+      onPressed: () {  
+        setState(() {  
+          isFavorite = !isFavorite;  
+        });  
+      },  
+      icon: isFavorite  
+          ? Icon(Icons.favorite, color: Colors.red)  
+          : Icon(Icons.favorite_border),  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>
+
+
