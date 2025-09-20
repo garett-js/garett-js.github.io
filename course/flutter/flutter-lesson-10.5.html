@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP CRUD (Пакет http)</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> HTTP CRUD (Пакет http)</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>HTTP CRUD (Пакет http)</h1>
+
+      <section id="section-1" class="lesson-section">
+        <p>На прошлом занятии использовался встроенный <code class="code">dart:io HttpClient</code>. Это мощный, но низкоуровневый инструмент.</p>
+        <p>Для большинства повседневных задач удобнее использовать пакеты более высокого уровня. </p>
+        <p>Самые популярные это пакеты <code class="code">http</code> и <code class="code">dio</code></p>
+        <h3><strong>Почему лучше пакеты?</strong></h3>
+        <ul>
+          <li><strong>Простота:</strong> Код становится короче и читабельнее.</li>
+          <li><strong>Удобство:</strong> Меньше ручной работы с заголовками и телом запроса.</li>
+          <li><strong>Кроссплатформенность:</strong> Легко работает как в Flutter (мобильные, веб), так и в консольных приложениях.</li>
+        </ul>
+        <h3><strong>Минусы?</strong></h3>
+        <ul>
+          <li>Зависимость от стороннего разработчика пакета</li>
+        </ul>
+        <h3><strong>Установка:</strong> добавим в файл <code class="code">pubspec.yaml</code>:</h3>
+        <div class="code-block-header">
+          <h5 class="code-block-title">YAML</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-yaml">dependencies:
+  http: ^1.4.0
+</code></pre>
+        <p>Или установить через консоль командой</p>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Терминал</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-bash">flutter pub add http
+// или 
+dart pub add http
+</code></pre>
+        <div class="note-block">
+          <p><strong><code class="code">dummyjson</code></strong></p>
+          <p>Для разнообразия возьмём другой <code class="code">API</code>, например с сервиса https://dummyjson.com/</p>
+        </div>
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2>Используем <code class="code">сырые данные</code> для обработки запросов</h2>
+
+        <h3>1. <strong><code class="code">GET</code>-запрос: Читаем данные с сервера</strong></h3>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">// Функция для выполнения GET-запроса  
+Future&lt;void&gt; getData(String url) async {  
+  try {  
+    // Отправляем GET-запрос и ждем ответ. Код стал проще!  
+    final response = await http.get(Uri.parse(url));  
+  
+    if (response.statusCode == 200) {  
+      final data = jsonDecode(response.body);  
+      print(data);  
+    } else {  
+      // Если сервер вернул ошибку  
+      print('Ошибка при GET-запросе: ${response.statusCode}');  
+      print('Тело ответа: ${response.body}');  
+    }  
+  } catch (e) {  
+    print('Исключение при GET-запросе: $e');  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">import 'dart:convert';  
+import 'package:http/http.dart' as http; // Импорт пакета http с псевдонимом
+
+void main() async {  
+  final baseUrl = 'https://dummyjson.com';  
+  
+  await getData('$baseUrl/todos/1'); // Получаем пост с ID = 1  
+  await getData('$baseUrl/todos/900000'); // Получаем ошибку 404  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>{
+  id: 1, 
+  todo: Do something nice for someone you care about, 
+  completed: false, 
+  userId: 152
+}
+
+Ошибка при GET-запросе: 404
+Тело ответа: {"message":"Todo with id '900000' not found"}
+</code></pre>
+
+        <h3>2. <strong><code class="code">POST</code>-запрос: Создаем новый пост</strong></h3>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">// Функция для выполнения POST-запроса  
+Future&lt;void&gt; postData(String url, Map&lt;String, dynamic&gt; data) async {  
+  try {  
+    // Отправляем POST-запрос  
+    final response = await http.post(  
+      Uri.parse(url),  
+      // Обязательно указываем, что отправляем данные в формате JSON  
+      headers: {  
+        'Content-Type': 'application/json; charset=UTF-8',  
+      },  
+      body: jsonEncode(data), // Преобразуем данные в строку JSON !!! 
+    );  
+  
+    // 201 - статус код успешного создания ресурса  
+    if (response.statusCode == 201) {  
+      final responseData = jsonDecode(response.body);  
+	  print('Todo успешно создан!');
+      print(responseData);  
+    } else {  
+      print('Ошибка при POST-запросе: ${response.statusCode}');  
+      print('Тело ответа: ${response.body}');  
+    }  
+  } catch (e) {  
+    print('Исключение при POST-запросе: $e');  
+  }  
+}
+</code></pre>
+        <div class="note-block">
+          <p><strong><code class="code">jsonEncode(data)</code></strong></p>
+          <p>Нельзя отправить <code class="code">Map</code> напрямую. <br>Его нужно <code class="code">сериализовать</code> - превратить в строку формата <code class="code">JSON</code>.</p>
+        </div>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">void main() async {  
+  final baseUrl = 'https://dummyjson.com';  
+  
+  await postData('$baseUrl/todos/add', {  
+    'todo': 'make a ai project',  
+    'completed': false,  
+    'userId': 1}  
+  );  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>Todo успешно создан!
+
+{
+  id: 255, 
+  todo: make a ai project, 
+  completed: false, 
+  userId: 1
+}
+</code></pre>
+
+        <h3>3. <strong><code class="code">PUT</code>-запрос: Обновляем существующий todo</strong></h3>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">// Функция для выполнения PUT-запроса  
+Future&lt;void&gt; putData(String url, Map&lt;String, dynamic&gt; data) async {  
+  try {  
+    // Отправляем PUT-запрос  
+    final response = await http.put(  
+      Uri.parse(url),  
+      headers: {  
+        'Content-Type': 'application/json; charset=UTF-8',  
+      },  
+      body: jsonEncode(data),  
+    );  
+  
+    if (response.statusCode == 200) {  
+      final responseData = jsonDecode(response.body);  
+      print('Todo успешно обновлён!');  
+      print(responseData);  
+    } else {  
+      print('Ошибка при PUT-запросе: ${response.statusCode}');  
+      print('Тело ответа: ${response.body}');  
+    }  
+  } catch (e) {  
+    print('Исключение при PUT-запросе: $e');  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">void main() async {  
+  final baseUrl = 'https://dummyjson.com';  
+  
+  await putData('$baseUrl/todos/1', {  
+    'todo': 'Update todo',  
+    'completed': true,  
+    'userId': 1  
+  });  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>Todo успешно обновлён!
+
+{id: 1, todo: Update todo, completed: true, userId: 1}
+</code></pre>
+
+        <h3>4. <strong><code class="code">DELETE</code>- запрос: Удаляем существующий todo</strong></h3>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">// Функция для выполнения DELETE-запроса  
+Future&lt;void&gt; deleteData(String url) async {  
+  try {  
+    // DELETE-запрос не имеет тела, только URL  
+    final response = await http.delete(Uri.parse(url));  
+  
+    if (response.statusCode == 200) {  
+      print('Ресурс по адресу $url успешно удален.');  
+    } else {  
+      print('Ошибка при DELETE-запросе: ${response.statusCode}');  
+    }  
+  } catch (e) {  
+    print('Исключение при DELETE-запросе: $e');  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">void main() async {  
+  final baseUrl = 'https://dummyjson.com';  
+  
+  await deleteData('$baseUrl/todos/1');  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>Ресурс по адресу https://dummyjson.com/todos/1 успешно удален.
+</code></pre>
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2>Используем <code class="code">модель данных</code> для обработки запросов</h2>
+        <p>Работать с <code class="code">Map&lt;String, dynamic&gt;</code> неудобно и небезопасно (легко опечататься в ключе). В реальных проектах создают классы-модели на которые отображаются реальные данные.</p>
+        <p>Это делает ваш код гораздо чище, надежнее и проще для понимания.</p>
+        <p>Сделаем небольшую "архитектуру" в проекте</p>
+        <img src="images/l10.5/http1.png" alt="arch" style="display:block;margin:20px auto;max-width:100%;">
+
+        <h4>Файл <code class="code">models/todo.dart</code></h4>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">class Todo {  
+  final int id;  
+  final String todo;  
+  final bool completed;  
+  final int userId;  
+  
+  Todo({  
+    required this.id,  
+    required this.todo,  
+    required this.completed,  
+    required this.userId,  
+  });  
+  
+  // Фабричный конструктор: создает экземпляр Todo из JSON (Map)  
+  // Это нужно для десериализации ответа от сервера.  
+  factory Todo.fromJson(Map&lt;String, dynamic&gt; json) {  
+    return Todo(  
+      id: json['id'],  
+      todo: json['todo'],  
+      completed: json['completed'],  
+      userId: json['userId'],  
+    );  
+  }  
+  
+  // Метод для преобразования объекта Todo обратно в JSON (Map)  
+  // Это нужно для сериализации данных при отправке на сервер (POST, PUT).  
+  Map&lt;String, dynamic&gt; toJson() {  
+    return {  
+      'todo': todo,  
+      'completed': completed,  
+      'userId': userId,  
+    };  
+  }  
+  
+  // Переопределяем toString для удобного вывода в консоль  
+  @override  
+  String toString() {  
+    return '\n\tid: $id,\n\ttodo: "$todo",\n\tcompleted: $completed,\n\tuserId: $userId';  
+  }  
+}
+</code></pre>
+        <div class="note-block">
+          <p><strong><code class="code">Сериализация</code></strong></p>
+          <p><strong>Сериализация</strong> - это процесс преобразования структуры данных или объекта из его представления в памяти (например, объекта в языке программирования) в формат, который можно легко сохранить или передать, а затем восстановить.</p>
+          <p>Чаще всего этим форматом является строка (например, JSON, XML) или поток байтов.</p>
+          <p>Представьте это как упаковку вещей в коробку для переезда:</p>
+          <ul>
+            <li><strong>Вещи</strong> это ваш <strong>объект</strong> или <strong>структура</strong> данных в памяти компьютера.</li>
+            <li><strong>Упаковка в коробку</strong>  это процесс <strong>сериализации</strong>.</li>
+            <li><strong>Коробка с упакованными вещами</strong> это <strong>сериализованные</strong> данные (например,  JSON).</li>
+          </ul>
+        </div>
+        <div class="note-block">
+          <p><strong><code class="code">Десериализация</code></strong></p>
+          <p>Десериализация - это обратный процесс. Это преобразование данных из сохраненного или переданного формата (например, строки JSON) обратно в структуру данных или объект в памяти.</p>
+          <p>Продолжая аналогию с переездом:</p>
+          <ul>
+            <li>Коробка с упакованными вещами - это ваши сериализованные данные.</li>
+            <li>Распаковка вещей из коробки - это процесс десериализации.</li>
+            <li>Распакованные вещи - это восстановленный объект или структура данных в памяти.</li>
+          </ul>
+        </div>
+        <img src="images/l10.5/http2.png" alt="img2" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http3.png" alt="img3" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http4.png" alt="img4" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http5.png" alt="img5" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http6.png" alt="img6" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http7.png" alt="img7" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http8.png" alt="img8" style="display:block;margin:20px auto;max-width:100%;">
+
+        <h4>Файл <code class="code">services/todo_service.dart</code></h4>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">import 'dart:convert';  
+import 'package:http/http.dart' as http;  
+import '../models/todo.dart';  
+  
+  
+/// Сервисный класс для работы с API  
+/// Инкапсулируем всю логику сетевых запросов в одном классе.  
+/// Это делает код более чистым и переиспользуемым.  
+class TodoService {  
+  final String _baseUrl = 'https://dummyjson.com';  
+  
+// GET получить задачу по id  
+Future&lt;Todo?&gt; getTodoById(int id) async {  
+  
+  final uri = Uri.parse('$_baseUrl/todos/$id');  
+  
+  try {  
+    final response = await http.get(uri);  
+    if (response.statusCode == 200) {  
+  
+      return Todo.fromJson(jsonDecode(response.body));  
+  
+    } else {  
+      throw Exception('Не удалось загрузить список задач');  
+    }  
+  } catch (e) {  
+    print('Ошибка при получении списка задач: $e');  
+  }  
+  return null;  
+}
+  
+  // POST добавить новую задачу  
+  Future&lt;Todo?&gt; addTodo({String todoText = "", int userId = 0}) async {  
+    final uri = Uri.parse('$_baseUrl/todos/add');  
+  
+    try {  
+      final response = await http.post(  
+        uri,  
+        headers: {'Content-Type': 'application/json'},  
+        body: jsonEncode({  
+          'todo': todoText,  
+          'completed': false,  
+          'userId': userId,  
+        }),  
+      );  
+  
+      if (response.statusCode == 200 || response.statusCode == 201) {  
+        // Преобразуем JSON-объект в объект класса Todo  
+        return Todo.fromJson(jsonDecode(response.body));  
+      } else {  
+        print('Ошибка при добавлении задачи: ${response.statusCode}');  
+        return null;  
+      }  
+    } catch (e) {  
+      print('Исключение при добавлении задачи: $e');  
+      return null;  
+    }  
+  }  
+  
+  // PUT обновление задачи  
+  Future&lt;Todo?&gt; updateTodo({int todoId = 0, bool isCompleted = false}) async {  
+    final uri = Uri.parse('$_baseUrl/todos/$todoId');  
+    try {  
+      final response = await http.put(  
+        uri,  
+        headers: {'Content-Type': 'application/json'},  
+        body: jsonEncode({  
+          'completed': isCompleted,  
+        }),  
+      );  
+  
+      if (response.statusCode == 200) {  
+        return Todo.fromJson(jsonDecode(response.body));  
+      } else {  
+        print('Ошибка при обновлении задачи: ${response.statusCode}');  
+        return null;  
+      }  
+    } catch (e) {  
+      print('Исключение при обновлении задачи: $e');  
+      return null;  
+    }  
+  }  
+  
+  // DELETE удаление задачи  
+  Future&lt;Todo?&gt; deleteTodo(int todoId) async {  
+    final uri = Uri.parse('$_baseUrl/todos/$todoId');  
+    try {  
+      final response = await http.delete(uri);  
+  
+      if (response.statusCode == 200) {  
+        final deletedTodo = Todo.fromJson(jsonDecode(response.body));  
+        return deletedTodo;  
+      } else {  
+        print('Ошибка при удалении задачи: ${response.statusCode}');  
+        return null;  
+      }  
+    } catch (e) {  
+      print('Исключение при удалении задачи: $e');  
+      return null;  
+    }  
+  }  
+}
+</code></pre>
+
+        <h4>Файл <code class="code">main.dart</code></h4>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">Future&lt;void&gt; main() async {  
+  // Создаем экземпляр сервиса  
+  final todoService = TodoService();  
+  
+  // 1. CREATE: Добавляем новую задачу  
+  print('\nСоздаем новую задачу...');  
+  final newTodo = await todoService.addTodo(  
+      todoText: 'Изучить Dart и Flutter',  
+      userId: 5,  
+  );  
+  print('✅ Задача успешно создана: $newTodo');  
+  
+  // 2. UPDATE: Обновляем статус  задачи  
+  print('\nОбновляем статус задачи...');  
+  final updatedTodo = await todoService.updateTodo(  
+      todoId: 2,  
+      isCompleted: true,  
+  );  
+  print('✅ Задача успешно обновлена: $updatedTodo');  
+  
+  // 3. DELETE: Удаляем задачу  
+  print('\nУдаляем задачу...');  
+  final deletedTodo = await todoService.deleteTodo(2);  
+  print('✅ Задача успешно удалена: $deletedTodo');  
+  
+  
+  // 4. GET: Получаем задачу по ID
+  print('\nПолучаем задачу...');  
+  final todo = await todoService.getTodoById(1); 
+  print('✅ Задача успешно получена: $todo'); 
+  	  
+  print("id: ${todo?.id}");  
+  print("Задача: ${todo?.todo}");  
+  print("Завершена?: ${todo?.completed}");
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>Создаем новую задачу...
+✅ Задача успешно создана: 
+	id: 255,
+	todo: "Изучить Dart и Flutter",
+	completed: false,
+	userId: 5
+
+Обновляем статус задачи...
+✅ Задача успешно обновлена: 
+	id: 2,
+	todo: "Memorize a poem",
+	completed: true,
+	userId: 13
+
+Удаляем задачу...
+✅ Задача успешно удалена: 
+	id: 2,
+	todo: "Memorize a poem",
+	completed: true,
+	userId: 13
+
+Получаем задачу...
+✅ Задача успешно получена:
+	id: 1
+	Задача: Do something nice for someone you care about
+	Завершена?: false
+</code></pre>
+
+        <img src="images/l10.5/http9.png" alt="img9" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http10.png" alt="img10" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http11.png" alt="img11" style="display:block;margin:20px auto;max-width:100%;">
+        <img src="images/l10.5/http12.png" alt="img12" style="display:block;margin:20px auto;max-width:100%;">
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>

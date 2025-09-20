@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter. Работа с сетью. Приложение Покемоны</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> Flutter. Работа с сетью. Приложение Покемоны</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>Flutter. Работа с сетью. Приложение Покемоны</h1>
+      
+      <h2><strong>Тема: Разработка Pokédex-приложения на Flutter</strong></h2>
+      
+      <p>В этом уроке мы создадим простое приложение-каталог покемонов. Пользователь увидит список покемонов, сможет нажать на любого из них и перейти на экран с подробной информацией.</p>
+      
+      <img src="images/l10.8/Pasted image 20250612142603.png" alt="Pokemon App List" width="200" style="display: inline-block; margin: 20px 10px; max-width: 45%;">
+      <img src="images/l10.8/Pasted image 20250612142623.png" alt="Pokemon App Detail" width="200" style="display: inline-block; margin: 20px 10px; max-width: 45%;">
+      
+      <p><strong>Используемый стек технологий:</strong></p>
+      <ul>
+        <li><strong>PokéAPI</strong>: Бесплатный и открытый API для получения данных о покемонах.</li>
+        <li><strong>Dio</strong>: Мощный клиент для выполнения сетевых запросов.</li>
+        <li><strong>Provider</strong>: Гибкий инструмент для управления состоянием.</li>
+        <li><strong>Архитектура MVVM</strong>: Для чистого, масштабируемого и понятного кода.</li>
+        <li><strong>Навигация</strong>: Для перехода между экранами.</li>
+      </ul>
+      
+      <section id="section-1" class="lesson-section">
+          <h2><strong>Шаг 1: Настройка проекта и зависимостей</strong></h2>
+          <p>Сначала подготовим наш проект и установим необходимые библиотеки.</p>
+          
+          <ol>
+            <li><strong>Создайте новый проект Flutter</strong> с помощью <code class="code">VS Code</code> или <code class="code">Android Studio</code>.</li>
+            <li><strong>Добавьте зависимости</strong> в файл <code class="code">pubspec.yaml</code>. Нам понадобятся <code class="code">dio</code> для сети и <code class="code">provider</code> для управления состоянием.</li>
+          </ol>
+          
+          <div class="code-block-header">
+              <h5 class="code-block-title">pubspec.yaml</h5>
+              <div class="code-block-controls">
+                  <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                  <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+              </div>
+          </div>
+          <pre><code class="language-yaml">dependencies:
+  flutter:
+    sdk: flutter
+  
+  dio: ^5.8.0+1
+  provider: ^6.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0</code></pre>
+          
+          <p>Или установите их через терминал:</p>
+          <div class="code-block-header">
+              <div class="code-block-controls">
+                  <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                  <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+              </div>
+          </div>
+          <pre><code class="language-bash">flutter pub add dio
+flutter pub add provider</code></pre>
+          
+          <p>Не забудьте выполнить <code class="code">flutter pub get</code> после сохранения файла, чтобы установить пакеты.</p>
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2><strong>Шаг 2: Архитектура MVVM и структура проекта</strong></h2>
+        <p>Мы будем использовать архитектуру <strong>MVVM (Model-View-ViewModel)</strong>, чтобы разделить логику и пользовательский интерфейс.</p>
+        
+        <ul>
+          <li style="margin-bottom: 10px;"><strong>Model (Модель)</strong>: Классы, описывающие наши данные. У нас будет две модели: <code class="code">PokemonListItem</code> для элемента в списке и <code class="code">PokemonDetail</code> для подробной информации о покемоне.</li>
+          <li style="margin-bottom: 10px;"><strong>View (Представление)</strong>: UI-компоненты (виджеты), которые видит пользователь. У нас будет два экрана: <code class="code">PokemonListView</code> (список) и <code class="code">PokemonDetailView</code> (детали).</li>
+          <li style="margin-bottom: 10px;"><strong>ViewModel (Модель Представления)</strong>: "Мозг" для каждого экрана. <code class="code">PokemonListViewModel</code> будет загружать список покемонов, а <code class="code">PokemonDetailViewModel</code> — детальную информацию для одного покемона.</li>
+          <li><strong>Service (Сервис)</strong>: Вспомогательный класс <code class="code">PokemonService</code>, который будет инкапсулировать всю логику общения с PokéAPI.</li>
+        </ul>
+        
+        <p><em>Структура папок и файлов</em></p>
+        <img src="images/l10.8/chrome_y8bsVmZTMy.png" alt="Project Structure" width="400" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2><strong>Шаг 3: Создание Моделей (Model)</strong></h2>
+        <p>Мы будем использовать два эндпоинта PokéAPI:</p>
+        
+        <ol>
+          <li><code class="code">https://pokeapi.co/api/v2/pokemon?limit=151</code> - для получения списка первых 151 покемона.</li>
+          <li>URL из ответа первого эндпоинта - для получения детальной информации о конкретном покемоне.</li>
+        </ol>
+        
+        <p>По запросу https://pokeapi.co/api/v2/pokemon?limit=151 будет представлен такой список объектов</p>
+        <img src="images/l10.8/chrome_Xm3pcVFRCr.png" alt="Pokemon List API Response" width="400" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <p>Детальный запрос представляет собой значительно детальный <code class="code">JSON объект</code>, заберём из него только некоторые данные</p>
+        
+        <p>Например, для https://pokeapi.co/api/v2/pokemon/1/</p>
+        
+        <img src="images/l10.8/SXnGHvXxi6.png" alt="Pokemon Detail API Response" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <h3><strong>Модель для списка покемонов</strong></h3>
+        
+        <p>Создайте файл <code class="code">lib/domain/models/pokemon_list_item_model.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_list_item_model.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">// Модель описывает одного покемона в общем списке.  
+// Содержит только имя и URL для получения детальной информации.  
+class PokemonListItem {  
+  final String name; // Имя покемона  
+  final String url;  // URL для получения полной информации  
+
+  PokemonListItem({  
+    required this.name,  
+    required this.url,  
+  });  
+
+  // Фабричный конструктор для создания экземпляра PokemonListItem из JSON.  
+  // API возвращает список, где каждый элемент имеет формат {'name': 'baseurl', 'url': '...'}.  
+  factory PokemonListItem.fromJson(Map<String, dynamic> json) {  
+    return PokemonListItem(  
+      name: json['name'] as String,  
+      url: json['url'] as String,  
+    );  
+  }  
+}</code></pre>
+        
+        <h3><strong>Модель для детальной информации</strong></h3>
+        
+        <p>Создайте файл <code class="code">lib/domain/models/pokemon_detail_model.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_detail_model.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">// Модель для детальной информации о покемоне.  
+class PokemonDetail {  
+  final int id;              // ID покемона  
+  final String name;         // Имя  
+  final String imageUrl;     // URL изображения  
+  final List<String> types;  // Список типов (например, "grass", "poison")  
+
+  PokemonDetail({  
+    required this.id,  
+    required this.name,  
+    required this.imageUrl,  
+    required this.types,  
+  });  
+
+  // Фабричный конструктор для парсинга JSON с детальной информацией.  
+  factory PokemonDetail.fromJson(Map<String, dynamic> json) {  
+    // Извлекаем список типов и преобразуем его в List<String>.  
+    final typesList = (json['types'] as List)  
+        .map((typeInfo) => typeInfo['type']['name'] as String)  
+        .toList();  
+
+    return PokemonDetail(  
+      id: json['id'] as int,  
+      name: json['name'] as String,  
+      // Изображение находится во вложенной структуре JSON.  
+      imageUrl: json['sprites']['other']['official-artwork']['front_default'] as String,  
+      types: typesList,  
+    );  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-4" class="lesson-section">
+        <h2><strong>Шаг 4: Реализация Сервиса (Service)</strong></h2>
+        <p>Сервис будет общаться с API, используя <code class="code">dio</code>.</p>
+        
+        <p>Добавим файл <code class="code">lib/data/services/pokemon_service.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_service.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:dio/dio.dart';  
+import '../../domain/models/pokemon_detail_model.dart';  
+import '../../domain/models/pokemon_list_item_model.dart';  
+
+class PokemonService {  
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'https://pokeapi.co/api/v2/'));  
+
+  // Метод для получения списка покемонов.  
+  Future<List<PokemonListItem>> getPokemonList() async {  
+    try {  
+      // https://pokeapi.co/api/v2/pokemon?limit=151  
+      //      
+      // Выполняем GET-запрос к эндпоинту 'pokemon'.      
+      // ?limit=151 означает, что просим API вернуть 151 покемона.      
+      final response = await _dio.get(  
+        'pokemon',  
+        queryParameters: {'limit': 151},  
+      );  
+
+      if (response.statusCode == 200) {  
+        // API возвращает JSON, где в ключе 'results' лежит список покемонов.  
+        final List<dynamic> results = response.data['results'];  
+        // Преобразуем каждый элемент списка JSON в объект PokemonListItem.  
+        return results.map((json) => PokemonListItem.fromJson(json)).toList();  
+      } else {  
+        throw Exception('Не удалось загрузить список покемонов');  
+      }  
+    } catch (e) {  
+      // Отлавливаем любые ошибки  
+      throw Exception('Ошибка при загрузке: $e');  
+    }  
+  }  
+
+  // Метод для получения детальной информации о покемоне.  
+  // Принимает полный URL, который получили в PokemonListItem.  
+  Future<PokemonDetail> getPokemonDetails(String url) async {  
+    try {  
+      // Dio позволяет делать запросы по полному URL, даже если задан baseUrl.  
+      final response = await _dio.get(url);  
+
+      if (response.statusCode == 200) {  
+        // Парсим JSON-ответ  
+        return PokemonDetail.fromJson(response.data);  
+      } else {  
+        throw Exception('Не удалось загрузить детали покемона');  
+      }  
+    } catch (e) {  
+      throw Exception('Ошибка при загрузке деталей: $e');  
+    }  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>Шаг 5: Создание ViewModel</strong></h2>
+        <p>Понадобится две ViewModel: одна для списка, другая для экрана деталей.</p>
+        
+        <h3><strong>ViewModel для списка</strong></h3>
+        
+        <p>Добавим файл <code class="code">lib/ui/viewmodels/pokemon_list_viewmodel.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_list_viewmodel.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import '../../data/services/pokemon_service.dart';  
+import '../../domain/models/pokemon_list_item_model.dart';
+
+
+class PokemonListViewModel with ChangeNotifier {  
+
+  final PokemonService _pokemonService = PokemonService();  
+
+  List<PokemonListItem> _pokemonList = [];  
+  bool _isLoading = false;  
+  String? _errorMessage;  
+
+  List<PokemonListItem> get pokemonList => _pokemonList;  
+  bool get isLoading => _isLoading;  
+  String? get errorMessage => _errorMessage;
+
+  PokemonListViewModel() {  
+    fetchPokemonList(); // Вызываем загрузку при создании ViewModel  
+  }
+
+  // Метод для загрузки данных.  
+  Future<void> fetchPokemonList() async {  
+    // 1. Устанавливаем состояние загрузки и сбрасываем ошибки  
+    _isLoading = true;  
+    _errorMessage = null;  
+    notifyListeners(); // Уведомляем UI для показа индикатора загрузки  
+
+    try {  
+      // 2. Вызываем метод сервиса для получения данных.  
+      _pokemonList = await _pokemonService.getPokemonList();  
+    } catch (e) {  
+      // 3. В случае ошибки, сохраняем сообщение.  
+      _errorMessage = e.toString();  
+    } finally {  
+      // 4. В любом случае убираем состояние загрузки.  
+      _isLoading = false;  
+      notifyListeners(); // Уведомляем UI об окончании загрузки.  
+    }  
+  }  
+}</code></pre>
+        
+        <h3><strong>ViewModel для деталей</strong></h3>
+        
+        <p>Добавим файл <code class="code">lib/ui/viewmodels/pokemon_detail_viewmodel.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_detail_viewmodel.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import '../../data/services/pokemon_service.dart';  
+import '../../domain/models/pokemon_detail_model.dart';  
+
+
+class PokemonDetailViewModel with ChangeNotifier {  
+  final PokemonService _pokemonService = PokemonService();  
+
+  PokemonDetail? _pokemonDetail;  
+  bool _isLoading = false;  
+  String? _errorMessage;  
+
+  PokemonDetail? get pokemonDetail => _pokemonDetail;  
+  bool get isLoading => _isLoading;  
+  String? get errorMessage => _errorMessage;  
+
+  // Метод для загрузки данных по конкретному URL.  
+  Future<void> fetchPokemonDetails(String url) async {  
+    _isLoading = true;  
+    _errorMessage = null;  
+    notifyListeners();  
+
+    try {  
+      _pokemonDetail = await _pokemonService.getPokemonDetails(url);  
+    } catch (e) {  
+      _errorMessage = e.toString();  
+    } finally {  
+      _isLoading = false;  
+      notifyListeners();  
+    }  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-6" class="lesson-section">
+        <h2><strong>Шаг 6: Сборка UI (View)</strong></h2>
+        <p>Теперь создадим два экрана.</p>
+        
+        <h3><strong>Экран списка покемонов</strong></h3>
+        
+        <p>Добавим файл <code class="code">lib/ui/views/pokemon_list_view.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_list_view.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import '../viewmodels/pokemon_list_viewmodel.dart';  
+import 'pokemon_detail_view.dart';  
+
+
+class PokemonListView extends StatelessWidget {  
+  const PokemonListView({super.key});  
+
+  @override  
+  Widget build(BuildContext context) {  
+    return Scaffold(  
+      appBar: AppBar(  
+        centerTitle: true,  
+        title: const Text('Покемоны'),  
+        backgroundColor: Colors.red,  
+      ),  
+      body: Container(  
+        decoration: const BoxDecoration(  
+          gradient: LinearGradient(  
+            colors: [Colors.red, Colors.white],  
+            begin: Alignment.topCenter,  
+            end: Alignment.bottomCenter,  
+          ),  
+        ),  
+        child: Consumer<PokemonListViewModel>(  
+          builder: (context, viewModel, child) {  
+            if (viewModel.isLoading) {  
+              return const Center(child: CircularProgressIndicator());  
+            }  
+
+            if (viewModel.errorMessage != null) {  
+              return Center(child: Text('Ошибка: ${viewModel.errorMessage}'));  
+            }  
+
+            if (viewModel.pokemonList.isEmpty) {  
+              return const Center(child: Text('Нет доступных покемонов.'));  
+            }  
+
+            return const PokemonGridView();  
+          },  
+        ),  
+      ),  
+    );  
+  }  
+}</code></pre>
+        
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">// Сетка покемонов  
+class PokemonGridView extends StatelessWidget {  
+  const PokemonGridView({super.key});  
+
+  @override  
+  Widget build(BuildContext context) {  
+    // Используем Consumer для доступа к списку покемонов из ViewModel  
+    return Consumer<PokemonListViewModel>(  
+      builder: (context, viewModel, child) {  
+        if (viewModel.pokemonList.isEmpty &&  
+            viewModel.errorMessage == null &&  
+            !viewModel.isLoading) {  
+          return const Center(child: Text('Нет доступных покемонов.'));  
+        }  
+
+        if (viewModel.errorMessage != null) {  
+          return Center(child: Text('Ошибка: ${viewModel.errorMessage}'));  
+        }  
+
+        return GridView.builder(  
+          padding: const EdgeInsets.all(8.0),  
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(  
+            crossAxisCount: 3, // 3 столбца  
+            crossAxisSpacing: 8.0,  
+            mainAxisSpacing: 8.0,  
+            childAspectRatio: 0.7,  
+          ),  
+          itemCount: viewModel.pokemonList.length,  
+          itemBuilder: (context, index) {  
+            final pokemon = viewModel.pokemonList[index];  
+            return PokemonGridItem(pokemon: pokemon);  
+          },  
+        );  
+      },  
+    );  
+  }  
+}</code></pre>
+        
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">// Карточка покемона  
+class PokemonGridItem extends StatelessWidget {  
+  final pokemon;  
+
+  const PokemonGridItem({super.key, required this.pokemon});  
+
+  @override  
+  Widget build(BuildContext context) {  
+    // получить ID покемона из строки URL между двумя слешами в самом конце  
+    final pokemonId = pokemon.url.split('/')[pokemon.url.split('/').length - 2];  
+
+    // Формируем URL для изображения  
+    final imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png';  
+
+    return GestureDetector(  
+      onTap: () {  
+        Navigator.push(  
+          context,  
+          MaterialPageRoute(  
+            builder: (context) => PokemonDetailView(pokemonUrl: pokemon.url),  
+          ),  
+        );  
+      },  
+      child: Card(  
+        child: Column(  
+          mainAxisAlignment: MainAxisAlignment.center,  
+          children: <Widget>[  
+            Expanded(  
+              child: Padding(  
+                padding: const EdgeInsets.all(8.0),  
+                child: Image.network(  
+                  imageUrl,  
+                  fit: BoxFit.contain,  
+                  // Показать ошибку при загрузке изображения  
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {  
+                        return Column(  
+                          children: [  
+                            const Icon(  
+                              Icons.error_outline,  
+                              color: Colors.red,  
+                              size: 40,  
+                            ),  
+                            Text("Ошибка загрузки", textAlign: TextAlign.center),  
+                          ],  
+                        );  
+                      },  
+                ),  
+              ),  
+            ),  
+            Padding(  
+              padding: const EdgeInsets.only(  
+                bottom: 8.0,  
+                left: 4.0,  
+                right: 4.0,  
+              ),  
+              child: Text(  
+                // Первая буква заглавная  
+                pokemon.name[0].toUpperCase() + pokemon.name.substring(1),  
+                textAlign: TextAlign.center,  
+                style: const TextStyle(fontWeight: FontWeight.bold),  
+                overflow: TextOverflow.ellipsis,  
+              ),  
+            ),  
+          ],  
+        ),  
+      ),  
+    );  
+  }  
+}</code></pre>
+        
+        <h3><strong>Экран детальной информации</strong></h3>
+        
+        <p>Добавим файл <code class="code">lib/ui/views/pokemon_detail_view.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">pokemon_detail_view.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import '../viewmodels/pokemon_detail_viewmodel.dart';  
+
+class PokemonDetailView extends StatelessWidget {  
+  final String pokemonUrl;  
+
+  const PokemonDetailView({super.key, required this.pokemonUrl});  
+
+  @override  
+  Widget build(BuildContext context) {  
+    // Создаем и предоставляем `PokemonDetailViewModel` только для этого экрана.  
+    // Это хороший способ инкапсулировать логику, специфичную для одного виджета.    
+    return ChangeNotifierProvider(  
+      // Создаем `PokemonDetailViewModel` и сразу вызываем `fetchPokemonDetails`  с полученным URL покемона. 
+      // Модель будет загружать данные покемона сразу после создания      
+
+      create: (context) =>  
+          PokemonDetailViewModel()..fetchPokemonDetails(pokemonUrl),  
+      child: Scaffold(  
+        appBar: AppBar(  
+          backgroundColor: Colors.red,  
+          title: Consumer<PokemonDetailViewModel>(  
+            builder: (context, viewModel, child) {  
+              // Показываем имя покемона, если оно загружено  
+              return Text(  
+                viewModel.pokemonDetail?.name.toUpperCase() ?? 'Загрузка...',  
+              );  
+            },  
+          ),  
+        ),  
+        body: Container(  
+          decoration: const BoxDecoration(  
+            gradient: LinearGradient(  
+              colors: [Colors.red, Colors.white],  
+              begin: Alignment.topCenter,  
+              end: Alignment.bottomCenter,  
+            ),  
+          ),  
+          child: Consumer<PokemonDetailViewModel>(  
+            builder: (context, viewModel, child) {  
+              if (viewModel.isLoading) {  
+                return const Center(child: CircularProgressIndicator());  
+              }  
+              if (viewModel.errorMessage != null) {  
+                return Center(child: Text('Ошибка: ${viewModel.errorMessage}'));  
+              }  
+              if (viewModel.pokemonDetail == null) {  
+                return const Center(child: Text('Нет данных о покемоне.'));  
+              }  
+
+              // Если ошибок нет и данные загружены, получаем их  
+              final detail = viewModel.pokemonDetail!;  
+
+              return Center(  
+                child: Column(  
+                  mainAxisAlignment: MainAxisAlignment.center,  
+                  children: [  
+                    // Показываем изображение покемона.  
+                    Image.network(  
+                      detail.imageUrl,  
+                      height: 250,  
+                      fit: BoxFit.contain,  
+                    ),  
+                    const SizedBox(height: 20),  
+                    Text(  
+                      detail.name.toUpperCase(),  
+                      style: const TextStyle(  
+                        fontSize: 28,  
+                        fontWeight: FontWeight.bold,  
+                      ),  
+                    ),  
+                    const SizedBox(height: 10),  
+                    Text(  
+                      // Объединяем список типов в строку через запятую  
+                      'Тип покемона: ${detail.types.join(', ')}',  
+                      style: const TextStyle(  
+                        fontSize: 20,  
+                        fontStyle: FontStyle.italic,  
+                      ),  
+                    ),  
+                  ],  
+                ),  
+              );  
+            },  
+          ),  
+        ),  
+      ),  
+    );  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-7" class="lesson-section">
+        <h2><strong>Шаг 7: Собираем все вместе в <code class="code">main.dart</code></strong></h2>
+        
+        <p><em>Файл <code class="code">main.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import 'ui/viewmodels/pokemon_list_viewmodel.dart';  
+import 'ui/views/pokemon_list_view.dart';  
+
+void main() {  
+  runApp(const MyApp());  
+}  
+
+class MyApp extends StatelessWidget {  
+  const MyApp({super.key});  
+
+  @override  
+  Widget build(BuildContext context) {  
+    // ChangeNotifierProvider делает PokemonListViewModel доступным для всех  
+    // дочерних виджетов, в данном случае для всего приложения.    
+    return ChangeNotifierProvider(  
+      create: (context) => PokemonListViewModel(),  
+      child: MaterialApp(  
+        title: 'Pokedex',  
+        theme: ThemeData(  
+          primarySwatch: Colors.red,  
+          visualDensity: VisualDensity.adaptivePlatformDensity,  
+        ),  
+        home: const PokemonListView(),  
+      ),  
+    );  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-8" class="lesson-section">
+        <h2><strong>Шаг 8: Запуск и демонстрация</strong></h2>
+        
+        <div class="note-block">
+          <p><strong>ПРИМЕЧАНИЕ:</strong> Ссылка на репозиторий с кодом проекта</p>
+          <p>Ветка <code class="code">master</code></p>
+          <p><a href="https://gitflic.ru/project/igarett/flutter_course_2025_http_pokemon" target="_blank">https://gitflic.ru/project/igarett/flutter_course_2025_http_pokemon</a></p>
+        </div>
+        
+        <ul>
+          <li>При запуске приложения сразу происходит запрос на сервер и загрузка данных</li>
+          <li>Список покемонов можно листать, изображения подгружаются в процессе</li>
+          <li>Можно перейти на экран с подробной информацией, там данные так же загружаются через сеть</li>
+        </ul>
+        
+        <img src="images/l10.8/poremon1.gif" alt="Pokemon App Working" width="300" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <ul>
+          <li>Если в процессе использования приложения пропал интернет, изображения не будут загружаться, будет показано сообщение об ошибке</li>
+        </ul>
+        
+        <img src="images/l10.8/poremon_error_1.gif" alt="Pokemon App Image Error" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <ul>
+          <li>Если включить приложение без интернета список покемонов не будет загружен, будет сообщение об ошибке</li>
+        </ul>
+        
+        <img src="images/l10.8/poremon_error_3.gif" alt="Pokemon App Network Error" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>

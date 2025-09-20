@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ру">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP CRUD (HttpClient)</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> HTTP CRUD (HttpClient)</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>HTTP CRUD (HttpClient)</h1>
+
+      <section id="section-1" class="lesson-section">
+        <h2><strong>Базовые операции CRUD</strong></h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Операция</th>
+              <th>Назначение</th>
+              <th>HTTP-метод</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Create</td><td>Создание нового ресурса</td><td>POST</td></tr>
+            <tr><td>Read</td><td>Чтение/получение ресурса</td><td>GET</td></tr>
+            <tr><td>Update</td><td>Полное обновление ресурса</td><td>PUT</td></tr>
+            <tr><td>Delete</td><td>Удаление ресурса</td><td>DELETE</td></tr>
+          </tbody>
+        </table>
+        <p><strong><code class="code">PATCH vs PUT</code>:</strong> Существует еще один метод, <code class="code">PATCH</code>, который используется для <em>частичного</em> обновления ресурса. Например, если нужно изменить только название поста, а не все его поля. <code class="code">PUT</code> же подразумевает полную замену ресурса.</p>
+        <div class="note-block">
+          <p><strong>Важно</strong></p>
+          <p>Внимательно читайте все комментарии к примерам кода ниже</p>
+        </div>
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2><strong>1. <code class="code">GET Запрос</code> - получаем данные по <code class="code">API</code></strong></h2>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">// Выполняет GET запрос и выводит полученные данные.  
+Future&lt;void&gt; getData(String url) async {  
+  final client = HttpClient();  
+  try {  
+    final request = await client.getUrl(Uri.parse(url));  
+    final response = await request.close();  
+  
+    if (response.statusCode == HttpStatus.ok) {  
+      final responseBody = await response.transform(utf8.decoder).join();  
+      // responseBody содержит тело ответа в виде строки  
+	  // jsonDecode преобразует строку JSON в объект (Map или List)
+      print(jsonDecode(responseBody));  
+    } else {  
+      print('Ошибка при GET запросе. Статус код: $url: ${response.statusCode}');  
+    }  
+  } catch (e) {  
+    print('GET Exception $url: $e');  
+  } finally {  
+    client.close();  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">import 'dart:convert';  
+import 'dart:io';  
+  
+void main() async {  
+  final baseUrl = 'https://jsonplaceholder.typicode.com';  
+  await getData('$baseUrl/posts/1');  // получаем данные 1го поста
+}
+</code></pre>
+        <img src="images/l10.4/http.png" alt="http" width="500" style="display:block;margin:20px auto;max-width:100%;">
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>{
+	userId: 1, 
+	id: 1, 
+	title: sunt aut facere repellat provident occaecati excepturi optio, 
+	body: quia et suscipit suscipit recusandae consequuntur expedita et cum
+}
+</code></pre>
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2><strong>2. <code class="code">POST Запрос</code> - отправляем данные по <code class="code">API</code> на сервер</strong></h2>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">/// POST запрос для отправки данных  
+Future&lt;void&gt; postData(String url, Map&lt;String, dynamic&gt; data) async {  
+  final client = HttpClient();  
+  try {  
+    // client.postUrl() - создает POST-запрос  
+    // Uri.parse(url) - преобразует строку URL в объект Uri    
+    // URL это просто строка, Uri структурированный доступ к URL компонентам,    
+    final request = await client.postUrl(Uri.parse(url));  
+      
+    // Устанавливаем заголовки  
+    request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');  
+      
+    // Преобразует объект data в строку JSON и записывает (отправляет)   
+    // эту строку в тело HTTP-запроса  
+    request.write(jsonEncode(data));  
+    final response = await request.close();  
+  
+    // HttpStatus.created - код состояния 201 Created для POST  
+    if (response.statusCode == HttpStatus.created) {   
+      final responseBody = await response.transform(utf8.decoder).join();  
+      print(jsonDecode(responseBody));  
+    } else {  
+      print('Ошибка при POST запросе. Статус код: $url: ${response.statusCode}');  
+      final errorBody = await response.transform(utf8.decoder).join();  
+      print('Ошибка в теле: $errorBody');  
+    }  
+  } catch (e) {  
+    print('POST Exception for $url: $e');  
+  } finally {  
+    client.close();  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">import 'dart:convert';  
+import 'dart:io';  
+  
+void main() async {  
+  final baseUrl = 'https://jsonplaceholder.typicode.com';  
+  
+  // 1. GET запрос для получения данных
+  await getData('$baseUrl/posts/1');  // получаем данные 1го поста
+
+  // 2. POST запрос для отправки данных  
+  final newPost = {  
+    'title': 'HTTP Requests',  
+    'body': ' GET POST PUT DELETE',  
+    'userId': 1,  
+  };  
+  await postData('$baseUrl/posts', newPost);
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>{
+  title: HTTP Requests, 
+  body:  GET POST PUT DELETE, 
+  userId: 1, 
+  id: 101
+}
+</code></pre>
+      </section>
+
+      <section id="section-4" class="lesson-section">
+        <h2><strong>3. <code class="code">PUT Запрос</code> - обновляет данные по <code class="code">API</code> на сервере</strong></h2>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">/// PUT запрос для обновления данных.  
+Future&lt;void&gt; putData(String url, Map&lt;String, dynamic&gt; data) async {  
+  final client = HttpClient();  
+  try {  
+    final request = await client.putUrl(Uri.parse(url));  
+    request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');  
+    request.write(jsonEncode(data));  
+    final response = await request.close();  
+  
+    if (response.statusCode == HttpStatus.ok) {  
+      final responseBody = await response.transform(utf8.decoder).join();  
+      print(jsonDecode(responseBody));  
+    } else {  
+      print('Ошибка при PUT запросе. Статус код: $url: ${response.statusCode}');  
+      final errorBody = await response.transform(utf8.decoder).join();  
+      print('Ошибка в теле: $errorBody');  
+    }  
+  } catch (e) {  
+    print('PUT Exception $url: $e');  
+  } finally {  
+    client.close();  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">import 'dart:convert';  
+import 'dart:io';  
+  
+void main() async {  
+  final baseUrl = 'https://jsonplaceholder.typicode.com';  
+  
+  // 1. GET запрос для получения данных
+  await getData('$baseUrl/posts/1');  // получаем данные 1го поста
+
+  // 2. POST запрос для отправки данных  
+  final newPost = {  
+    'title': 'HTTP Requests',  
+    'body': ' GET POST PUT DELETE',  
+    'userId': 1,  
+  };  
+  await postData('$baseUrl/posts', newPost);
+
+  // 3. PUT запрос для обновления данных  
+  final updatedPost = {  
+    'id': 1, // Важно указать ID для обновления  
+    'title': '1234',  
+    'body': '7777777777',  
+    'userId': 1,  
+  };  
+  await putData('$baseUrl/posts/1', updatedPost);
+
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>{
+  id: 1, 
+  title: 1234, 
+  body: 7777777777, 
+  userId: 1
+}
+</code></pre>
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>4. <code class="code">DELETE Запрос</code> - удаляет данные по <code class="code">API</code> на сервере</strong></h2>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">/// DELETE запрос для удаления данных.  
+Future&lt;void&gt; deleteData(String url) async {  
+  final client = HttpClient();  
+  try {  
+    // client.deleteUrl() - создает DELETE-запрос  
+    final request = await client.deleteUrl(Uri.parse(url));  
+    final response = await request.close();  
+  
+    if (response.statusCode == HttpStatus.ok) {  
+      print('Всё успешно удалёно');  
+    } else {  
+      print('Ошибка при DELETE запросе. Статус код: $url:${response.statusCode}'); 
+    }  
+  } catch (e) {  
+    print('DELETE Exception $url: $e');  
+  } finally {  
+    client.close();  
+  }  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code class="language-dart">import 'dart:convert';  
+import 'dart:io';  
+  
+void main() async {  
+  final baseUrl = 'https://jsonplaceholder.typicode.com';  
+  
+  // 1. GET запрос для получения данных  
+  await getData('$baseUrl/posts/1');  
+  
+  // 2. POST запрос для отправки данных  
+  final newPost = {  
+    'title': 'HTTP Requests',  
+    'body': ' GET POST PUT DELETE',  
+    'userId': 1,  
+  };  
+  await postData('$baseUrl/posts', newPost);  
+  
+  // 3. PUT запрос для обновления данных  
+  final updatedPost = {  
+    'id': 1, // Важно указать ID для обновления  
+    'title': '1234',  
+    'body': '7777777777',  
+    'userId': 1,  
+  };  
+  await putData('$baseUrl/posts/1', updatedPost);  
+  
+  
+  // 4. DELETE запрос для удаления данных  
+  await deleteData('$baseUrl/posts/1');  
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+        <pre><code>Всё успешно удалёно
+</code></pre>
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>

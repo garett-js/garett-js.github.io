@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основы Future и EventLoop</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> Основы Future и EventLoop</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>Основы Future и EventLoop</h1>
+      
+      <p>Асинхронное программирование стало неотъемлемой частью современной разработки, особенно важной для создания отзывчивых пользовательских интерфейсов и эффективной обработки данных.</p>
+      <p>Dart, будучи однопоточным языком, эффективно справляется с долгими операциями, не блокируя пользовательский интерфейс. Мы изучим ключевые концепции, такие как <code class="code">Future</code>, <code class="code">async/await</code>, <code class="code">Stream</code> и <code class="code">Isolate</code>.</p>
+      
+      <section id="section-1" class="lesson-section">
+          <h2><strong>1. Процессы и Потоки</strong></h2>
+          <p>Чтобы понять асинхронность, сначала нужно разобраться с двумя базовыми понятиями: <strong>Процесс</strong> и <strong>Поток</strong>.</p>
+          <ul>
+            <li style="margin-bottom: 10px;"><strong>Процесс</strong> (Process) — это запущенная программа в операционной системе (например, ваш браузер, текстовый редактор или Flutter-приложение). Каждый процесс имеет свою собственную, <strong>изолированную память</strong>. Это значит, что один процесс не может напрямую получить доступ к данным другого. Однако они могут общаться между собой через системные сообщения. Например, при HTTP-запросе наш процесс обращается к процессу операционной системы, чтобы она загрузила данные из интернета.</li>
+            <li style="margin-bottom: 10px;"><strong>Поток</strong> (Thread) — это последовательность выполнения команд внутри процесса. В одном процессе может быть несколько потоков, что позволяет выполнять код <strong>параллельно</strong> (одновременно), если у вас многоядерный процессор. Например, один поток может заниматься вычислениями, а другой — отрисовкой интерфейса.  В любом приложении всегда есть как минимум один поток.</li>
+            <li><strong>Многопоточность</strong> позволяет запускать несколько потоков одновременно, распределяя “тяжелые операции” между ними для значительного ускорения выполнения.</li>
+          </ul>
+          <p>Ключевой момент заключается в том, что Dart в своей основе является <strong>однопоточным</strong> языком. Это означает, что весь ваш Dart-код по умолчанию выполняется в одном-единственном потоке. Но как же тогда выполнять "тяжелые" операции, не замораживая приложение? Ответ кроется в асинхронности и изолятах.</p>
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2><strong>2. Что такое асинхронность в Dart</strong></h2>
+        <p>Асинхронность работает в рамках ОДНОГО потока и не подразумевает одновременное выполнение кода. Это возможность не ждать выполнения трудоемкой операции сейчас, а получить результат в будущем, не блокируя другой код.</p>
+        <p><strong>Аналогия с загрузкой картинки</strong>: Представьте, что вы начинаете загружать большую картинку из интернета. В синхронном случае ваше приложение “замирает” и ждет завершения загрузки, прежде чем выполнить следующую строку кода. В асинхронном случае загрузка картинки передается операционной системе и помещается в специальную очередь Event Loop, а ваш код продолжает выполняться. Когда ОС завершит загрузку и подойдет очередь в Event Loop, картинка станет доступной для использования.</p>
+        
+        <div class="code-block-header">
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">Future getDataAsync() async {
+  // Трудоемкая операция, нужно много времени
+  var data = await HackingServer(); 
+}
+
+getData() {
+  // Трудоемкая операция, нужно много времени
+  var data = HackingServer(); 
+}
+
+
+print('hello');
+getData(); // * Синхронная операция
+print('Ok');
+
+// В синхронном случае, на экран попадёт 'hello' и начнётся обработка получения изображений с сервера. 
+// Всё приложение замирает и ждёт конца выполнения. И только потом на экран попадёт 'Ok'
+
+print('hello');
+getDataAsync() // * Асинхронная операция
+print('Ok');
+
+// В Асинхронном случае, на экран сразу попадёт 'hello' 'Ok', а выполнение тяжелой операции выполняется в фоне и приложение не зависает
+</code></pre>
+
+        <p><strong>Рассмотрим пример работы синхронной и асинхронной операции в приложении.</strong></p>
+        <p>1. При нажатии на кнопку <code class="code">Синхронная загрузка</code> начинается выполнение тяжёлой операции, весь UI зависает, ничего не возможно сделать, пока условно не загрузится картинка. Тыкаем на чекбокс, увеличивает счётчик и ничего не происходит.</p>
+        <img src="images/l10/sync.gif" alt="sync" style="display: block; margin: 20px auto; max-width: 100%;">
+        <p>2. При нажатии на кнопку <code class="code">Асинхронная загрузка</code>, UI не замораживается и можно продолжать с ним взаимодействовать без проблем.</p>
+        <img src="images/l10/async.gif" alt="async" width="310" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2><strong>3. Future: Обещание результата</strong></h2>
+        <p><strong>Future</strong> — это центральный объект в асинхронном Dart. Он представляет собой "обещание" на получение результата какой-либо операции в будущем.</p>
+        <p>У <code class="code">Future</code> есть три состояния:</p>
+        <ol>
+            <li><strong>Незавершенное (Uncompleted):</strong> Когда вы вызываете асинхронную функцию, она сразу возвращает <code class="code">Future</code> в этом состоянии. Операция еще выполняется.</li>
+            <li><strong>Завершенное со значением (Completed with a value):</strong> Операция успешно выполнена, и <code class="code">Future</code> содержит результат (например, данные из файла).</li>
+            <li><strong>Завершенное с ошибкой (Completed with an error):</strong> Во время операции произошла ошибка, и <code class="code">Future</code> содержит информацию об этой ошибке.</li>
+        </ol>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">void main() {  
+  // Эта функция сразу вернет объект Future<Map> в состоянии "незавершенное".  
+  Future<Map<String, String>> fetchUserData() {  
+    // Через 5 секунд Future завершится со значением объекта Map.  
+    return Future.delayed(  
+        const Duration(seconds: 5), () => {'user': 'Роман', 'fav': 'Окрошка'});  
+  }  
+  
+  print('Запрос данных пользователя...');  
+  final userFuture = fetchUserData();  
+  print('Запрос отправлен. Future получен: $userFuture');  
+  // Выведет "Instance of 'Future<String>'"  
+  
+  // Чтобы получить значение, нужно дождаться завершения Future  
+  userFuture.then((obj) {  
+    // Выполнится через 5 секунд  
+    print("Данные получены");  
+    print("Пользователь: ${obj['user']}");  
+    print("Любимое блюдо: ${obj['fav']}");  
+  });  
+}
+</code></pre>
+        <img src="images/l10/then.gif" alt="then" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-4" class="lesson-section">
+        <h2><strong>4. Использование async await</strong></h2>
+        <p>Работать с <code class="code">Future</code> через метод <code class="code">.then()</code> может быть громоздко. Для этого в Dart есть ключевые слова <code class="code">async</code> и <code class="code">await</code> — синтаксический сахар, который позволяет писать асинхронный код так, будто он синхронный.</p>
+        <ul>
+            <li style="margin-bottom: 10px;"><strong><code class="code">async</code></strong>: Помечает функцию как асинхронную. Такая функция всегда неявно возвращает <code class="code">Future</code>.</li>
+            <li><strong><code class="code">await</code></strong>: Приостанавливает выполнение <strong>текущей <code class="code">async</code>-функции</strong> до тех пор, пока <code class="code">Future</code> не завершится, и "распаковывает" его результат.</li>
+        </ul>
+        <p><code class="code">await</code> — это как сказать: "Я подожду здесь, пока не придет посылка (<code class="code">Future</code>), а потом продолжу".</p>
+        <p>Ещё одна прекрасная аналогия для асинхронности — это процесс готовки. Представим, что мы делаем окрошку.</p>
+        <ol>
+            <li><strong>Синхронный подход:</strong> Вы поставили вариться картошку и просто стоите у плиты все 15 минут, неотрывно наблюдая за кастрюлей. Вы больше ничего не делаете. В это время задачи по нарезке огурцов, лука и варке яиц <strong>простаивают</strong>. Весь процесс готовки заблокирован ожиданием одного — пока сварится картофель.</li>
+            <li><strong>Асинхронный подход:</strong> Вы ставите вариться картошку и заводите таймер на 15 минут. Сразу после этого ставите вариться яйца в другой кастрюле и заводите второй таймер на 10 минут. Пока оба таймера тикают, вы <strong>не ждете</strong>, а беретесь за другую работу — нарезаете огурцы и лук. Когда сработает таймер для яиц, вы прерываетесь, чтобы заняться ими. Затем, когда сварится картофель, вы переключаетесь на него. Таким образом, вы эффективно использовали время ожидания.»</li>
+        </ol>
+        <p><strong>Пример с приготовлением окрошки</strong></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">// Это быстрая синхронная работа  
+void chopIngredients() {  
+  print('🥒 Начинаю нарезать огурцы, лук и колбасу...');  
+  print('✅ Все ингредиенты нарезаны!');  
+}  
+  
+// Future.delayed() НЕ БЛОКИРУЕТ поток, а создает "обещание" (Future)  
+Future<void> boilPotatoesAsync() async {  
+  print('🥔 Пока картошка вариться (таймер 15 мин)... делаем другие дела.');  
+  await Future.delayed(Duration(milliseconds: 4500));  
+  print('🔔 Сработал таймер! Картошка сварилась!');  
+}  
+  
+Future<void> boilEggsAsync() async {  
+  print('🥚 Пока яйца вариться (таймер 10 мин)... делаем другие дела.');  
+  await Future.delayed(Duration(milliseconds: 4000));  
+  print('🔔 Сработал таймер! Яйца сварились!');  
+}  
+  
+void mixIngredients() {  
+  print('🥣 Все ингредиенты готовы. Начинаю смешивать окрошку!');  
+  print('🎉 Окрошка готова!');  
+}  
+  
+void main() {  
+  // 1. ЗАПУСКАЕМ обе долгие операции ОДНОВРЕМЕННО.  
+  // Не используем 'await' здесь, чтобы не ждать их завершения.  
+  // Мы получаем "обещания" (Futures), что они когда-нибудь завершатся.  
+  final potatoFuture = boilPotatoesAsync();  
+  final eggFuture = boilEggsAsync();  
+  
+  // 2. ПОКА картошка и яйца варятся, мы НЕ ЖДЕМ, а выполняем другую работу.  
+  // Наш основной поток не заблокирован!  
+  chopIngredients();  
+  
+  // 3. ТЕПЕРЬ, когда вся быстрая работа сделана, нам нужно дождаться  
+  // завершения всех долгих операций, чтобы смешать ингредиенты.  
+  // Используем Future.wait для ожидания завершения всех Future.
+  Future.wait([potatoFuture, eggFuture]).then((_) {  
+    // Выполнится ТОЛЬКО после того, как potatoFuture и eggFuture завершатся.  
+    mixIngredients();  
+  });  
+  
+  // Этот принт может появиться до mixIngredients  
+  print('Ожидаем завершения приготовления...');  
+  
+}
+</code></pre>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Вывод</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code>🥔 Пока картошка вариться (таймер 15 мин)... делаем другие дела.
+🥚 Пока яйца вариться (таймер 10 мин)... делаем другие дела.
+🥒 Начинаю нарезать огурцы, лук и колбасу...
+Ожидаем завершения приготовления...
+
+🔔 Сработал таймер! Яйца сварились!
+🔔 Сработал таймер! Картошка сварилась!
+🥣 Все ингредиенты готовы. Начинаю смешивать окрошку!
+🎉 Окрошка готова!
+</code></pre>
+        <img src="images/l10/await.gif" alt="await" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>5. Обработка ошибок</strong></h2>
+        <p>В асинхронном коде ошибки — обычное дело (например, нет интернет-соединения). Их нужно правильно обрабатывать.</p>
+        <h3><strong>1. С <code class="code">async / await</code> — блок <code class="code">try-catch</code></strong></h3>
+        <p>Cамый естественный и читаемый способ.</p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">Future<void> performTasksWithError() async {
+  try {
+    print('Начинаем...');
+    // Имитируем операцию, которая завершится ошибкой
+    String result = await Future.delayed(const Duration(seconds: 2), () {
+      throw Exception('Не удалось загрузить данные!');
+    });
+    print(result); // Эта строка никогда не выполнится
+  } catch (e) {
+    // Ловим ошибку, выброшенную из Future
+    print('Произошла ошибка: $e');
+  } finally {
+    // Этот блок выполнится всегда, независимо от ошибки
+    print('Операция завершена.');
+  }
+}
+</code></pre>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Вывод</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code>Начинаем...
+Произошла ошибка: Exception: Не удалось загрузить данные!
+Операция завершена.
+</code></pre>
+
+        <h3><strong>2. С Future API — метод <code class="code">.catchError()</code></strong></h3>
+        <p>Aльтернатива для кода, написанного в стиле цепочек вызовов.</p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">void performTasksWithCatchError() {
+  print('Начинаем...');
+  Future.delayed(const Duration(seconds: 2), () {
+    throw Exception('Не удалось загрузить данные!');
+  })
+  .then((value) => print('Успех!')) // Этот блок будет пропущен
+  .catchError((e) => print('Произошла ошибка: $e'))
+  .whenComplete(() => print('Операция завершена.'));
+}
+</code></pre>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Вывод</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code>Начинаем...
+Произошла ошибка: Exception: Не удалось загрузить данные!
+Операция завершена.
+</code></pre>
+      </section>
+
+      <section id="section-6" class="lesson-section">
+        <h2><strong>6. Модель выполнения в Dart: Event Loop</strong></h2>
+        <p>Вспомним подходы к приготовлению окрошки в наших прошлых примерах</p>
+        <ol>
+            <li><strong>Синхронный подход:</strong> Вы поставили вариться картошку и просто стоите у плиты все 15 минут, неотрывно наблюдая за кастрюлей. Вы больше ничего не делаете. В это время задачи по нарезке огурцов, лука и варке яиц <strong>простаивают</strong>. Весь процесс готовки заблокирован ожиданием одного — пока сварится картофель.</li>
+            <li><strong>Асинхронный подход:</strong> Вы ставите вариться картошку и заводите таймер на 15 минут. Сразу после этого ставите вариться яйца в другой кастрюле и заводите второй таймер на 10 минут. Пока оба таймера тикают, вы <strong>не ждете</strong>, а беретесь за другую работу — нарезаете огурцы и лук. Когда сработает таймер для яиц, вы прерываетесь, чтобы заняться ими. Затем, когда сварится картофель, вы переключаетесь на него. Таким образом, вы эффективно использовали время ожидания.»</li>
+        </ol>
+        <p>Как Dart управляет этими "отложенными" задачами? С помощью механизма под названием <strong>Event Loop</strong> (Цикл Событий).</p>
+        <p>Когда запускается Dart-приложение, создается главный <strong>Изолят</strong> (о нем позже), который инициализирует две очереди:</p>
+        <ol>
+            <li><strong>Event Queue</strong> (Очередь событий) — для внешних событий: операции ввода-вывода, жесты, таймеры, сетевые запросы. Сюда попадают все <code class="code">Future</code>.</li>
+            <li><strong>Microtask Queue</strong> (Очередь микрозадач) — для очень коротких внутренних действий, которые нужно выполнить немедленно после текущей операции, но до того, как обработать следующее событие.</li>
+        </ol>
+        <div class="note-block">
+            <p><strong>Очередь Microtask всегда имеет приоритет перед очередью Event.</strong></p>
+        </div>
+        <p>Цикл Event Loop работает непрерывно по простому алгоритму:</p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">// Псевдокод, объясняющий логику Event Loop
+void eventLoop() {
+  // Пока приложение работает, цикл повторяется
+  while (true) {
+    // 1. Сначала проверяем очередь микрозадач.
+    // Если не пуста, выполняем самую старую микрозадачу и начинаем цикл заново.
+    if (microtaskQueue.isNotEmpty) {
+      executeFirstMicrotask();
+      continue; // Возвращаемся к началу, чтобы снова проверить Microtask Queue
+    }
+
+    // 2. Только если очередь микрозадач ПУСТА, смотрим в очередь событий.
+    if (eventQueue.isNotEmpty) {
+      executeFirstEvent();
+    }
+  }
+}
+</code></pre>
+        <p>Этот механизм гарантирует, что важные внутренние задачи (микрозадачи) выполняются как можно скорее, а основной поток не блокируется в ожидании долгих операций из очереди событий.</p>
+        <p>Теперь давайте на основе аналогии про готовку окрошки разложим по полочкам, как работает Event Loop в Dart.</p>
+        <ul>
+            <li style="margin-bottom: 10px;"><strong>Повар</strong> = <strong>Основной поток (Main Thread)</strong> Единственный работник на кухне. Он может выполнять только одну задачу в один момент времени.</li>
+            <li style="margin-bottom: 10px;"><strong>Нарезка огурцов и лука</strong> = <strong>Синхронный код</strong> Это быстрые операции, которые повар выполняет немедленно и последовательно. Пока он режет лук, он не может делать ничего другого.</li>
+            <li style="margin-bottom: 10px;"><strong>Команда "поставить вариться картошку/яйца"</strong> = <strong>Инициация асинхронной операции</strong> Это как вызов <code class="code">http.get()</code> или <code class="code">File.readAsString()</code>. Повар не варит картошку сам — он делегирует эту работу плите (внешней системе, например, операционной системе для I/O или сети).</li>
+            <li style="margin-bottom: 10px;"><strong>Таймеры на 15 и 10 минут</strong> = <strong>Объекты <code class="code">Future</code></strong> Когда повар ставит таймер, он получает "обещание" (<code class="code">Future</code>), что через указанное время что-то произойдет.</li>
+            <li style="margin-bottom: 10px;"><strong>Звон таймера</strong> = <strong>Событие в Очереди Событий (Event Queue)</strong> Когда таймер срабатывает,  событие помещается в очередь событий.</li>
+            <li style="margin-bottom: 10px;"><strong>Рецепт голове у повара</strong> = <strong>Цикл Событий (Event Loop)</strong> Это внутренний механизм, который постоянно спрашивает:
+                <ol type="1" style="margin-top: 10px;">
+                    <li>Есть ли срочные микрозадачи (Microtask Queue)? (Например: "ой, соль забыл добавить, секунду").</li>
+                    <li>Если нет, то есть ли в моей очереди событий (Event Queue) сработавшие таймеры (завершенные <code class="code">Future</code>)?</li>
+                </ol>
+            </li>
+        </ul>
+
+        <h3><strong>Как это работает вместе</strong></h3>
+        <ol>
+            <li><strong>Начало:</strong> Повар (основной поток) начинает выполнять рецепт (функцию <code class="code">main()</code>).<br>
+                <img src="images/l10/event-loop-1.png" alt="event-loop-1" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+            <li><strong>Запуск асинхронной задачи:</strong> Пункт "сварить картошку". Он дает команду плите, ставит таймер на 15 минут (<code class="code">Future</code>) и <strong>сразу же идет дальше по рецепту</strong>. Он не ждет перед плитой пока сварится картошка</li>
+            <li>Тоже самое для пункта "Сварить яйца"<br>
+                <img src="images/l10/event-loop-2.png" alt="event-loop-2" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l10/event-loop-3.png" alt="event-loop-3" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+            <li><strong>Выполнение синхронного кода:</strong> Теперь поток свободен, и повар начинает резать огурцы и лук (выполняет синхронный код, который идет после вызова асинхронной функции).<br>
+                <img src="images/l10/event-loop-4.png" alt="event-loop-4" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l10/event-loop-5.png" alt="event-loop-5" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+            <li><strong>Событие:</strong> Через 10 минут звенит таймер для яиц. Это событие (<code class="code">Event</code>) попадает в <strong>Event Queue</strong>. (Будет 1й в очереди)</li>
+            <li><strong>Событие:</strong> Через 15 минут звенит таймер для картошки. Это событие (<code class="code">Event</code>) попадает в <strong>Event Queue</strong>. (Будет 2й в очереди)<br>
+                <img src="images/l10/event-loop-6.png" alt="event-loop-6" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l10/event-loop-7.png" alt="event-loop-7" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+            <li><strong>Обработка события:</strong> Как только повар закончит нарезать текущий огурец (завершит текущую синхронную операцию), нужно проверить очередь микротасков и очередь событий. В очереди событий сейчас ждут два действия, но в это момент выполняется микротаска "Добавить соль", а очередь микротасков имеет больший приоритет, поэтому выполняется сначала действие от туда<br>
+                <img src="images/l10/event-loop-8.png" alt="event-loop-8" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+            <li>Теперь Event Loop проверит очередь событий. Он увидит событие "яйца сварились", возьмет его из очереди и начнет выполнять соответствующий код, тоже самое для события "картошка сварилась."<br>
+                <img src="images/l10/event-loop-9.png" alt="event-loop-9" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l10/event-loop-10.png" alt="event-loop-10" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+            <li>Теперь когда оба асинхронных события выполнились, можно запустить синхронное событие "Дорезать и перемешать"<br>
+            <p><i>В коде это место</i></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Dart</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">Future.wait([potatoFuture, eggFuture]).then((_) {  
+  // Выполнится ТОЛЬКО после того, как potatoFuture и eggFuture завершатся.  
+  mixIngredients();  
+});
+</code></pre>
+            <img src="images/l10/event-loop-11.png" alt="event-loop-11" style="display: block; margin: 20px auto; max-width: 100%;">
+            </li>
+        </ol>
+        <p>Эта аналогия идеально ложится на модель Dart: один "повар" (поток) эффективно управляет множеством задач, делегируя долгие операции "плите" (ОС) и реагируя на "звонки таймеров" (<code class="code">Future</code>'ы, попадающие в Event Queue), в то время как в свободные промежутки выполняет быструю работу (синхронный код).</p>
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>

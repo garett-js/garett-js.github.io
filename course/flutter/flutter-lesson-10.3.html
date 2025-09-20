@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обработка ошибок</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> Обработка ошибок</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>Обработка ошибок</h1>
+
+      <section id="section-1" class="lesson-section">
+        <h2><strong>Errors Exceptions</strong></h2>
+        <p>Обработка ошибок — это критически важная часть любого надежного программного обеспечения.</p>
+        <p>В программировании ошибки неизбежны. Они могут возникать по множеству причин: неправильный ввод пользователя, отсутствие файла, сетевые проблемы, ошибки в логике программы и т.д.</p>
+        <p>В Dart ошибки делятся на два основных типа:</p>
+        <ul>
+          <li><strong>Errors (Ошибки):</strong> Представляют собой программные ошибки, которые указывают на проблемы в коде, которые разработчик должен исправить NullPointerException, OutOfMemoryError.</li>
+          <li><strong>Exceptions (Исключения):</strong> Представляют ситуации, которые могут возникнуть во время выполнения программы, но которые можно (и нужно) ожидать, "поймать" и обработать.</li>
+        </ul>
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2><strong>Основной механизм работы с исключениями</strong></h2>
+        <p><strong>try, catch, finally</strong></p>
+        <ul>
+          <li><strong>try:</strong>  Блок кода,  "пытаемся" выполнить код и возможно поймать исключение</li>
+          <li><strong>catch:</strong>  Блок кода, если внутри try было поймано исключение</li>
+          <li><strong>finally:</strong> Блок кода, который выполняется всегда</li>
+        </ul>
+        <p>Например</p>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code class="language-dart">void main() {
+  String text = 'Изучаем HTTP'; // Эта строка не может быть преобразована в число
+
+  try {
+    // Потенциально опасная операция
+    // "Пытаемся" её выполнить
+    int number = int.parse(text);
+    print('Число: $number');
+  } catch (e) { // e - это объект исключения
+    print('Произошла ошибка: $e');
+    print('Тип ошибки: ${e.runtimeType}'); // Показывает тип исключения
+  }
+
+  print('Программа продолжает выполнение.');
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code>Произошла ошибка: FormatException: Invalid radix-10 number (at character 1)
+Изучаем HTTP
+^
+Тип ошибки: FormatException
+</code></pre>
+        <p><strong>Объяснение:</strong></p>
+        <ul>
+          <li><code class="code">int.parse('Изучаем HTTP')</code> выбрасывает <code class="code">FormatException</code>, потому что 'Изучаем HTTP' не является целым числом.</li>
+          <li>Блок <code class="code">catch (e)</code> перехватывает это исключение.</li>
+          <li>Переменная <code class="code">e</code> содержит информацию о произошедшей ошибке.</li>
+          <li>Программа не завершается аварийно, а продолжает выполнение после блока <code class="code">try-catch</code>.</li>
+        </ul>
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2><strong>Перехват определенных типов исключений</strong></h2>
+        <p><code class="code">on ExceptionType</code> перехватывает только исключения указанного типа</p>
+        <p>Можно иметь несколько блоков <code class="code">on</code></p>
+        <p>Они обрабатываются сверху вниз</p>
+        <p>Например</p>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code class="language-dart">import 'dart:io';
+
+void main() {
+  try {
+    // int.parse('Это обычная строка'); // Выбрасывает FormatException
+    File('Файла_которого_нет.txt').readAsStringSync(); // Выбрасывает FileSystemException
+  } on FormatException catch (e) {
+    print('Ошибка формата данных: $e');
+  } on FileSystemException catch (e) { // Этот блок не сработает, так как сработал FormatException
+    print('Ошибка файловой системы: ${e.message}');
+  } catch (e) { // Общий catch для любых других исключений
+    print('Произошла общая ошибка: $e');
+  } finally {
+    print('Завершение попытки.');
+  }
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code>Ошибка файловой системы: Cannot open file
+Завершение попытки.
+</code></pre>
+      </section>
+
+      <section id="section-4" class="lesson-section">
+        <h2><strong>Выбрасывание своих исключений (throw)</strong></h2>
+        <p>Можно выбрасывать (<code class="code">throw</code>) свои собственные исключения, когда в коде возникает ситуация, которую он не может обработать самостоятельно.</p>
+        <p>Например</p>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code class="language-dart">// Создаём свой тип для исключения
+class InvalidInputException implements Exception {
+  final String message;
+  InvalidInputException(this.message);
+
+  @override
+  String toString() => 'InvalidInputException: $message';
+}
+
+void processInput(String input) {
+  if (input.isEmpty) {
+    throw InvalidInputException('Пусто и грустно ...');
+  }
+  if (input.length < 5) {
+    throw ArgumentError('Входные данные слишком короткие');
+  }
+  print('Ок: $input');
+}
+
+void main() {
+  try {
+    processInput(''); // Выбросит InvalidInputException
+    // processInput('Ой'); // Выбросит ArgumentError
+    // processInput('Привет :)'); // Успешно
+  } on InvalidInputException catch (e) {
+    print('Ошибка: ${e.message}');
+  } on ArgumentError catch (e) {
+    print('Ошибка: ${e.message}');
+  } catch (e) {
+    print('Неизвестная ошибка: $e');
+  }
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code>Результат 
+
+Ошибка: Пусто и грустно ...
+</code></pre>
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>Обработка ошибок в асинхронном коде</strong></h2>
+        <p><code class="code">try-catch</code> блоки используются вокруг <code class="code">await</code> выражений.</p>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Dart</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code class="language-dart">Future<String> fetchData() async {
+  await Future.delayed(Duration(seconds: 3)); // Имитация задержки сети
+  // Имитация ошибки сети
+  throw Exception('Не удалось получить данные с сервера.');
+  // return 'Данные успешно получены!';
+}
+
+Future<void> processData() async {
+  try {
+    String data = await fetchData(); // Ожидаем завершения Future
+    print('Данные: $data');
+  } catch (e) {
+    print('Ошибка при обработке данных: $e');
+  } finally {
+    print('Завершение асинхронной операции.');
+  }
+}
+
+void main() async {
+  print('Начало программы.');
+  await processData(); // Ожидаем завершения асинхронной функции
+  print('Программа завершена.');
+}
+</code></pre>
+        <div class="code-block-header">
+          <h5 class="code-block-title">Вывод</h5>
+          <div class="code-block-controls">
+            <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+            <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+          </div>
+        </div>
+<pre><code>Результат 
+
+Начало программы.
+Ошибка при обработке данных: Exception: Не удалось получить данные с сервера.
+Завершение асинхронной операции.
+Программа завершена.
+</code></pre>
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>

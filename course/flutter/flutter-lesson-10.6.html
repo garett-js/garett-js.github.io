@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP CRUD (Пакет Dio)</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> HTTP CRUD (Пакет Dio)</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>HTTP CRUD (Пакет Dio)</h1>
+      
+      <p><code class="code">Dio</code> — это мощный HTTP-клиент для Dart, который поддерживает перехватчики (interceptors), глобальную конфигурацию, работу с <code class="code">FormData</code>, обработку ошибок, таймауты и многое другое. Он делает сетевой код еще более чистым и управляемым.</p>
+      
+      <section id="section-1" class="lesson-section">
+          <h2><strong>1. Установка</strong></h2>
+          <p>Добавим в файл <code class="code">pubspec.yaml</code>:</p>
+          <div class="code-block-header">
+              <h5 class="code-block-title">pubspec.yaml</h5>
+              <div class="code-block-controls">
+                  <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                  <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+              </div>
+          </div>
+          <pre><code class="language-yaml">dependencies:
+  dio: ^5.8.0+1</code></pre>
+          
+          <p>Или установить через консоль командой</p>
+          <div class="code-block-header">
+              <div class="code-block-controls">
+                  <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                  <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+              </div>
+          </div>
+          <pre><code class="language-bash">flutter pub add dio</code></pre>
+          
+          <img src="images/l10.6/dio1.png" alt="dio" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2><strong>2. Преимущества Dio</strong></h2>
+        <ul>
+          <li style="margin-bottom: 10px;"><strong>Инициализация <code class="code">Dio</code>:</strong> Мы создаем один экземпляр <code class="code">Dio</code> и настраиваем его с базовым URL (<code class="code">baseUrl</code>). Это избавляет от необходимости прописывать <code class="code">https://dummyjson.com</code> в каждом запросе.</li>
+          <li style="margin-bottom: 10px;"><strong>Отправка данных:</strong> <code class="code">Dio</code> автоматически преобразует <code class="code">Map</code> в <code class="code">JSON</code> и добавляет нужный заголовок (<code class="code">'Content-Type': 'application/json'</code>), поэтому код становится короче.</li>
+          <li style="margin-bottom: 10px;"><strong>Получение данных:</strong> <code class="code">Dio</code> автоматически декодирует <code class="code">JSON</code>-ответы. Вместо <code class="code">jsonDecode(response.body)</code> мы просто используем <code class="code">response.data</code>.</li>
+          <li><strong>Обработка ошибок:</strong> <code class="code">Dio</code> по умолчанию выбрасывает исключение <code class="code">DioException</code> для неуспешных статус-кодов (не 2xx). Это позволяет отлавливать все ошибки сети в одном блоке <code class="code">catch</code>, делая код более надежным.</li>
+        </ul>
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2><strong>3. TodoService с Dio</strong></h2>
+        <p><em>Файл <code class="code">services/todo_service.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:dio/dio.dart';  
+import '../models/todo.dart';  
+
+class TodoService {  
+  /// Экземпляр Dio с базовой конфигурацией.  
+  final Dio _dio;  
+
+  TodoService() : _dio = Dio(BaseOptions(  
+    baseUrl: 'https://dummyjson.com',  
+    connectTimeout: Duration(seconds: 5), // Таймаут на подключение  
+    receiveTimeout: Duration(seconds: 5), // Таймаут на получение ответа  
+  ));  
+
+/// GET: получить СПИСОК всех задач  
+Future<Todo?> getTodoById(int id) async {  
+  try {  
+    final response = await _dio.get('/todos/$id');  
+    // Dio автоматически декодирует JSON, можно сразу работать с response.data  
+    return Todo.fromJson(response.data);  
+  } on DioException catch (e) {  
+    print('Ошибка при получении списка задач: $e');  
+    return null; // Возвращаем пустой список в случае ошибки  
+  }  
+} 
+
+  /// POST: добавить новую задачу  
+  Future<Todo?> addTodo({required String todoText, required int userId}) async {  
+    try {  
+      final response = await _dio.post(  
+        '/todos/add',  
+        // Dio автоматически преобразует Map в JSON  
+        data: {  
+          'todo': todoText,  
+          'completed': false,  
+          'userId': userId,  
+        },  
+      );  
+      return Todo.fromJson(response.data);  
+    } on DioException catch (e) {  
+      print('Ошибка при добавлении задачи: $e');  
+      return null;  
+    }  
+  }  
+
+  /// PUT: обновление задачи  
+  Future<Todo?> updateTodo({required int todoId, required bool isCompleted}) async {  
+    try {  
+      final response = await _dio.put(  
+        '/todos/$todoId',  
+        data: {'completed': isCompleted},  
+      );  
+      return Todo.fromJson(response.data);  
+    } on DioException catch (e) {  
+      print('Ошибка при обновлении задачи: $e');  
+      return null;  
+    }  
+  }  
+
+  /// DELETE: удаление задачи  
+  Future<Todo?> deleteTodo(int todoId) async {  
+    try {  
+      final response = await _dio.delete('/todos/$todoId');  
+      return Todo.fromJson(response.data);  
+    } on DioException catch (e) {  
+      print('Ошибка при удалении задачи: $e');  
+      return null;  
+    }  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-4" class="lesson-section">
+        <h2><strong>4. Модель Todo</strong></h2>
+        <p><em>Файл <code class="code">models/todo.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">class Todo {  
+  final int id;  
+  final String todo;  
+  final bool completed;  
+  final int userId;  
+
+  Todo({  
+    required this.id,  
+    required this.todo,  
+    required this.completed,  
+    required this.userId,  
+  });  
+
+  // Фабричный конструктор: создает экземпляр Todo из JSON (Map)  
+  // Это нужно для десериализации ответа от сервера.  
+  factory Todo.fromJson(Map<String, dynamic> json) {  
+    return Todo(  
+      id: json['id'],  
+      todo: json['todo'],  
+      completed: json['completed'],  
+      userId: json['userId'],  
+    );  
+  }  
+
+  // Метод для преобразования объекта Todo обратно в JSON (Map)  
+  // Это нужно для сериализации данных при отправке на сервер (POST, PUT).  
+  Map<String, dynamic> toJson() {  
+    return {  
+      'todo': todo,  
+      'completed': completed,  
+      'userId': userId,  
+    };  
+  }  
+
+  // Переопределяем toString для удобного вывода в консоль  
+  @override  
+  String toString() {  
+    return '\n\tid: $id,\n\ttodo: "$todo",\n\tcompleted: $completed,\n\tuserId: $userId';  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>5. Использование в main.dart</strong></h2>
+        <p><em>Файл <code class="code">main.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">Future<void> main() async {  
+  // Создаем экземпляр сервиса  
+  final todoService = TodoService();  
+
+  // Объект, который хранит данные полученные через сервис запросов  
+  final todo = await todoService.getTodoById(2);  
+
+  print("id : ${todo?.id}"); // Обращаемся к обычным свойствам объекта  
+  print("Задача : ${todo?.todo}");  
+  print("Завершена : ${todo?.completed}");  
+}</code></pre>
+        
+        <div class="code-block-header">
+            <h5 class="code-block-title">Вывод</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code>id : 2
+Задача : Memorize a poem
+Завершена : true</code></pre>
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>

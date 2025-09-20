@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Flutter. Разработка погодного приложения</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+      <h3><a href="index.html" class="back-link">←</a> 🔥 Flutter. Разработка погодного приложения</h3>
+      <ul>
+      <!-- Ссылки будут добавлены сюда динамически -->
+      </ul>
+    </nav>
+
+    <div id="main-content">
+      <h1>🔥 Flutter. Разработка погодного приложения</h1>
+      
+      <p><strong>Разработка погодного приложения</strong></p>
+      
+      <img src="images/l10.7/Pasted image 20250613110536.png" alt="Weather App" width="200" style="display: block; margin: 20px auto; max-width: 100%;">
+      
+      <p><strong>Используемый стек технологий:</strong></p>
+      <ul>
+        <li><strong><code class="code">WeatherAPI</code></strong>: Бесплатный и мощный сервис для получения погодных данных.</li>
+        <li><strong><code class="code">Dio</code></strong>: Для выполнения сетевых запросов к API.</li>
+        <li><strong><code class="code">Provider</code></strong>: Для управления состоянием приложения.</li>
+        <li><strong><code class="code">Архитектура MVVM</code></strong>: Для создания чистого, масштабируемого и тестируемого кода.</li>
+      </ul>
+      
+      <section id="section-1" class="lesson-section">
+          <h2><strong>Шаг 0: Получение ключа WeatherAPI.com</strong></h2>
+          <p>Cервис <strong>WeatherAPI.com</strong> требует <code class="code">API ключ</code> для доступа к данным. Это стандартная практика для большинства API-сервисов.</p>
+          
+          <p><strong>Возможно, нужно будет включить прокси для доступа к сервису</strong></p>
+          
+          <ol>
+            <li><strong>Зарегистрируйтесь</strong> на сайте <a href="https://www.weatherapi.com/" target="_blank">https://www.weatherapi.com/</a></li>
+            <li><strong>Войдите</strong> в свой аккаунт.</li>
+            <li>На главной панели вы увидите ваш <strong>API Key</strong>. Скопируйте его. Он понадобится в коде.</li>
+          </ol>
+          
+          <img src="images/l10.7/chrome_DikhdKvjtO.png" alt="WeatherAPI Key" style="display: block; margin: 20px auto; max-width: 100%;">
+          
+          <div class="note-block">
+            <p><strong>ВАЖНО:</strong> Всегда храните API ключ в секрете.</p>
+            <p>В реальных проектах его нельзя встраивать прямо в код. Используйте для этого переменные окружения или пакет <code class="code">flutter_dotenv</code>. В рамках этого урока для простоты мы оставим его в коде.</p>
+          </div>
+      </section>
+
+      <section id="section-2" class="lesson-section">
+        <h2><strong>Шаг 1: Настройка проекта и зависимостей</strong></h2>
+        <p>Сначала создадим новый Flutter-проект и добавим необходимые библиотеки.</p>
+        
+        <ol>
+          <li><strong>Создайте новый проект Flutter</strong> через <code class="code">VSCode</code> или <code class="code">AndroidStudio</code></li>
+        </ol>
+        
+        <img src="images/l10.7/Code_VmxQ3D75fE.png" alt="Create Project 1" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l10.7/Code_aJJ3woASyB.png" alt="Create Project 2" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <ol start="2">
+          <li><strong>Добавьте зависимости</strong> в файл <code class="code">pubspec.yaml</code>. Понадобятся <code class="code">dio</code> для сетевых запросов и <code class="code">provider</code> для управления состоянием.</li>
+        </ol>
+        
+        <div class="code-block-header">
+            <h5 class="code-block-title">pubspec.yaml</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-yaml">dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^5.8.0+1 
+  provider: ^6.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0</code></pre>
+        
+        <ol start="3">
+          <li>Выполните в терминале <code class="code">flutter pub get</code> для установки пакетов.</li>
+        </ol>
+      </section>
+
+      <section id="section-3" class="lesson-section">
+        <h2><strong>Шаг 2: Архитектура MVVM (Model-View-ViewModel)</strong></h2>
+        <p>Прежде чем писать код, давайте разберемся в нашей архитектуре. <code class="code">MVVM</code> помогает разделить логику и пользовательский интерфейс, делая код более чистым и организованным.</p>
+        
+        <ul>
+          <li style="margin-bottom: 10px;"><strong>Model (Модель):</strong> Это структура данных. В данном случае это будет класс <code class="code">Weather</code>, описывающий погоду (температура, скорость ветра и т.д.). Модель ничего не знает о том, как данные получаются или отображаются.</li>
+          <li style="margin-bottom: 10px;"><strong>View (Представление):</strong> Это UI (пользовательский интерфейс), то, что видит пользователь. View отвечает только за отображение данных и передачу действий пользователя (например, нажатие кнопки) во <code class="code">ViewModel</code>. Во Flutter это виджеты.</li>
+          <li style="margin-bottom: 10px;"><strong>ViewModel (Модель Представления):</strong> Это <code class="code">мозг</code> экрана. ViewModel запрашивает данные (например, из сети), обрабатывает их и предоставляет в готовом для отображения виде для View. Она также управляет состоянием экрана (загрузка, ошибка, данные загружены).</li>
+        </ul>
+        
+        <p>Также добавим <strong>Service (Сервис)</strong> - это вспомогательный класс, который будет напрямую общаться с <code class="code">WeatherAPI</code>. ViewModel будет использовать этот сервис, чтобы не заниматься "лишней" работой по формированию HTTP-запросов.</p>
+        
+        <p><em>Структура папок и файлов</em></p>
+        <img src="images/l10.7/chrome_uZyvyANa0g.png" alt="Project Structure" width="300" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-4" class="lesson-section">
+        <h2><strong>Шаг 3: Создание Модели (Model)</strong></h2>
+        <p>На основе документации <a href="https://www.weatherapi.com/docs/" target="_blank">WeatherAPI.com</a> мы определим, какие данные хотим получать. Нам интересны: название города, температура, текстовое описание погоды, ее код (для иконки) и скорость ветра.</p>
+        
+        <p>Обновим файл <code class="code">lib/domain/models/weather_model.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">weather_model.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">class Weather {  
+  final String cityName; // Название города  
+  final double temperature; // Температура в градусах Цельсия  
+  final String condition; // Текстовое описание погоды (например, "Sunny")  
+  final String conditionIcon; // Иконка изображение  
+  final int conditionCode; // Код погоды для подбора иконки  
+  final double windSpeed; // Скорость ветра в км/ч  
+
+  Weather({  
+    required this.cityName,  
+    required this.temperature,  
+    required this.condition,  
+    required this.conditionIcon,  
+    required this.conditionCode,  
+    required this.windSpeed,  
+  });  
+
+  // Фабричный конструктор fromJson для создания экземпляра Weather  
+  // из JSON-объекта, который возвращает WeatherAPI.com.  
+  factory Weather.fromJson(Map<String, dynamic> json) {  
+    return Weather(  
+      // Данные о локации находятся в объекте 'location'.  
+      cityName: json['location']['name'] as String,  
+      // Текущие погодные данные находятся в объекте 'current'.  
+      temperature: json['current']['temp_c'] as double,  
+      windSpeed: json['current']['wind_kph'] as double,  
+      // Информация о погодных условиях вложена в объект 'condition'.  
+      condition: json['current']['condition']['text'] as String,  
+      conditionIcon: json['current']['condition']['icon'] as String,  
+      conditionCode: json['current']['condition']['code'] as int,  
+    );  
+  }  
+}</code></pre>
+        
+        <img src="images/l10.7/chrome_lAEuRLNTfA.png" alt="WeatherAPI Response" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <p>Для формирования запроса будем использовать конкретные координаты (например, город Бийск: широта <code class="code">52.53</code>, долгота <code class="code">85.20</code>)</p>
+        
+        <p>Пример URL-запроса к <strong>WeatherAPI.com</strong>:</p>
+        <p><code class="code">https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=52.53,85.20</code></p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Часть URL</th>
+              <th>Название</th>
+              <th>Описание / Значение</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="code">https://</code></td>
+              <td><strong>Протокол</strong></td>
+              <td>Определяет безопасный способ передачи данных.</td>
+            </tr>
+            <tr>
+              <td><code class="code">api.weatherapi.com</code></td>
+              <td><strong>Доменное имя хоста</strong></td>
+              <td>Адрес сервера, который предоставляет API.</td>
+            </tr>
+            <tr>
+              <td><code class="code">/v1/</code></td>
+              <td><strong>Версия API</strong></td>
+              <td>Указывает на конкретную версию используемого API.</td>
+            </tr>
+            <tr>
+              <td><code class="code">current.json</code></td>
+              <td><strong>Эндпоинт</strong></td>
+              <td>Ресурс для получения <em>текущих</em> погодных данных.</td>
+            </tr>
+            <tr>
+              <td><code class="code">?</code></td>
+              <td><strong>Разделитель</strong></td>
+              <td>Отделяет URL от списка параметров.</td>
+            </tr>
+            <tr>
+              <td><code class="code">key=YOUR_API_KEY</code></td>
+              <td><strong>Параметр запроса</strong></td>
+              <td><strong>Уникальный ключ API</strong>, который вы получили при регистрации.</td>
+            </tr>
+            <tr>
+              <td><code class="code">&</code></td>
+              <td><strong>Разделитель</strong></td>
+              <td>Разделяет параметры в запросе.</td>
+            </tr>
+            <tr>
+              <td><code class="code">q=52.53,85.20</code></td>
+              <td><strong>Параметр запроса</strong></td>
+              <td>Указывает местоположение. <code class="code">q</code> (query) может принимать широту и долготу.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="note-block">
+          <p><strong>ПРИМЕЧАНИЕ:</strong> <code class="code">Эндпоинт</code></p>
+          <p><code class="code">Эндпоинт</code> это часть URL-адреса куда отправляем запрос для получения данных.</p>
+          <p>Это точка входа в API, где можно получить доступ к ресурсам сервера.</p>
+        </div>
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>Шаг 4: Реализация Сервиса (Service)</strong></h2>
+        <ul>
+          <li>Сервис будет отвечать за всю логику сетевых запросов.</li>
+          <li>Он будет использовать <code class="code">dio</code> для связи с <strong>WeatherAPI.com</strong>.</li>
+          <li>Здесь нужно указать <code class="code">API</code> ключ.</li>
+        </ul>
+        
+        <p>Добавим файл <code class="code">lib/data/services/weather_service.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">weather_service.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:dio/dio.dart';
+import '../../domain/models/weather_model.dart';
+
+// Сервис отвечает за получение данных о погоде из WeatherAPI.com.
+class WeatherService {
+  // Создаем экземпляр Dio с базовым URL для WeatherAPI
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'https://api.weatherapi.com/v1/'));
+
+  // ЗАМЕНИТЕ 'YOUR_API_KEY' НА ВАШ КЛЮЧ, ПОЛУЧЕННЫЙ НА WEATHERAPI.COM
+  final String _apiKey = 'YOUR_API_KEY';
+
+  // Асинхронный метод для получения текущей погоды по координатам.
+  Future<Weather> getCurrentWeather(double latitude, double longitude) async {   
+    try {
+      // Выполняем GET-запрос к эндпоинту 'current.json'.
+      final response = await _dio.get(
+        'current.json',
+        queryParameters: {
+          'key': _apiKey,
+          'q': '$latitude,$longitude', // Формируем строку с координатами
+        },
+      );
+
+      // Если запрос успешен (статус код 200), парсим данные
+      if (response.statusCode == 200) {
+        return Weather.fromJson(response.data);
+      } else {
+        // Если сервер вернул ошибку, выбрасываем исключение.
+        throw Exception(
+          'Ошибка при получении погоды: ${response.statusMessage}',
+        );
+      }
+    } on DioException catch (e) {
+      // Обрабатываем ошибки, связанные с Dio (например, нет интернета).
+      if (e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout) {
+        throw Exception(
+          'Отсутствует интернет-соединение. Проверьте ваше подключение.',
+        );
+      }
+      // В противном случае, выбрасываем общее исключение.
+      throw Exception(e.message);
+    } catch (e) {
+      // Ловим любые другие возможные ошибки.
+      throw Exception('Произошла непредвиденная ошибка: $e');
+    }
+  }
+}</code></pre>
+      </section>
+
+      <section id="section-6" class="lesson-section">
+        <h2><strong>Шаг 5: Создание ViewModel</strong></h2>
+        <p><code class="code">ViewModel</code> свяжет <code class="code">Сервис</code> и <code class="code">UI</code>. Она будет использовать <code class="code">ChangeNotifier</code> из пакета <code class="code">provider</code>, чтобы уведомлять UI об изменениях своего состояния.</p>
+        
+        <p>Добавим файл <code class="code">lib/ui/viewmodels/weather_viewmodel.dart</code></p>
+        
+        <p><em>Файл <code class="code">weather_viewmodel.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import '../../data/services/weather_service.dart';  
+import '../../domain/models/weather_model.dart';  
+
+
+class WeatherViewModel with ChangeNotifier {  
+  final WeatherService _weatherService = WeatherService();  
+
+  Weather? _weather;  
+  bool _isLoading = false;  
+  String? _errorMessage;  
+
+  Weather? get weather => _weather;  
+  bool get isLoading => _isLoading;  
+  String? get errorMessage => _errorMessage;  
+
+  Future<void> fetchWeather({double lat = 52.53, double lon = 85.20}) async {  
+    // 1. Устанавливаем состояние загрузки и сбрасываем предыдущие ошибки  
+    _isLoading = true;  
+    _errorMessage = null;  
+    notifyListeners();  
+
+    try {  
+      // 2. Вызываем метод сервиса для получения данных.  
+      // Используем пока что конкретные координаты      
+      _weather = await _weatherService.getCurrentWeather(lat, lon);  
+    } catch (e) {  
+      // 3. В случае ошибки, сохраняем сообщение  
+      _errorMessage = e.toString();  
+    } finally {  
+      // 4. В любом случае, убираем состояние загрузки.  
+      _isLoading = false;  
+      // Уведомляем об окончании загрузки и возможной ошибке  
+      notifyListeners();  
+    }  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-7" class="lesson-section">
+        <h2><strong>Шаг 5.1: Инфографика. Объяснение работы кода</strong></h2>
+        <img src="images/l10.7/Pasted image 20250614093344.png" alt="Infographic 1" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l10.7/Pasted image 20250614093353.png" alt="Infographic 2" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l10.7/Pasted image 20250614093407.png" alt="Infographic 3" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l10.7/Pasted image 20250614093416.png" alt="Infographic 4" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <section id="section-8" class="lesson-section">
+        <h2><strong>Шаг 6: Вёрстка интерфейса (View)</strong></h2>
+        <p>Теперь, когда вся логика готова, можно собрать UI. View будет "слушать" изменения во <code class="code">WeatherViewModel</code> и перерисовываться в зависимости от ее состояния.</p>
+        
+        <p>Добавим файл <code class="code">lib/ui/views/weather_view.dart</code>:</p>
+        
+        <p><em>Файл <code class="code">weather_view.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import '../viewmodels/weather_viewmodel.dart';  
+
+class WeatherView extends StatelessWidget {  
+  const WeatherView({super.key});  
+
+  @override  
+  Widget build(BuildContext context) {  
+    return Scaffold(  
+      body: Consumer<WeatherViewModel>(  
+        builder: (context, viewModel, child) {  
+          return Container(  
+            decoration: BoxDecoration(  
+              gradient: LinearGradient(  
+                begin: Alignment.topLeft,  
+                end: Alignment.bottomRight,  
+                colors: [Colors.blue.shade300, Colors.purple.shade300],  
+              ),  
+            ),  
+            child: Center(child: _buildUI(context, viewModel)),  
+          );  
+        },  
+      ),  
+    );  
+  }  
+
+  Widget _buildUI(BuildContext context, WeatherViewModel viewModel) {  
+    // 1. Если идет загрузка, показываем индикатор прогресса.  
+    if (viewModel.isLoading) {  
+      return const CircularProgressIndicator(color: Colors.white);  
+    }  
+
+    // 2. Если есть сообщение об ошибке, показываем его.  
+    if (viewModel.errorMessage != null) {  
+      return Padding(  
+        padding: const EdgeInsets.all(16.0),  
+        child: Text(  
+          'Ошибка: ${viewModel.errorMessage}',  
+          style: const TextStyle(  
+            color: Colors.white,  
+            fontSize: 18,  
+            fontWeight: FontWeight.bold,  
+          ),  
+          textAlign: TextAlign.center,  
+        ),  
+      );  
+    }  
+
+    // 3. Если данные о погоде загружены, отображаем их.  
+    if (viewModel.weather != null) {  
+      return Column(  
+        mainAxisAlignment: MainAxisAlignment.center,  
+        children: [  
+          Text(  
+            viewModel.weather?.cityName ?? "", // Отображаем название города  
+            style: const TextStyle(  
+              fontSize: 32,  
+              color: Colors.white,  
+              fontWeight: FontWeight.w500,  
+            ),  
+          ),  
+          const SizedBox(height: 10),  
+          Image.network(  
+            "https:${viewModel.weather!.conditionIcon}",  
+          ),  
+          Text(  
+            viewModel.weather!.condition, // Отображаем описание погоды  
+            style: const TextStyle(fontSize: 22, color: Colors.white),  
+          ),  
+          const SizedBox(height: 20),  
+          Text(  
+            '${viewModel.weather!.temperature.toStringAsFixed(1)}°C',  
+            style: const TextStyle(  
+              fontSize: 50,  
+              fontWeight: FontWeight.bold,  
+              color: Colors.white,  
+            ),  
+          ),  
+          const SizedBox(height: 10),  
+          Text(  
+            'Скорость ветра: ${viewModel.weather!.windSpeed.toStringAsFixed(1)} км/ч',  
+            style: const TextStyle(fontSize: 20, color: Colors.white70),  
+          ),  
+        ],  
+      );  
+    }  
+
+    // 4. Начальное состояние: данных еще нет. Показываем кнопку.  
+    return ElevatedButton(  
+      style: ElevatedButton.styleFrom(  
+        backgroundColor: Colors.white,  
+        foregroundColor: Colors.black,  
+        minimumSize: const Size(200, 50),  
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),  
+      ),  
+      onPressed: () {  
+        // Вызываем метод из ViewModel для загрузки данных.  
+        // Мы используем read, потому что нужно только один раз вызвать метод,     
+        // а не подписываться на изменения.        
+        context.read<WeatherViewModel>().fetchWeather();  
+      },  
+      child: const Text('Какая сейчас погода?'),  
+    );  
+  }  
+}</code></pre>
+      </section>
+
+      <section id="section-9" class="lesson-section">
+        <h2><strong>Шаг 7: Собираем все вместе в <code class="code">main.dart</code></strong></h2>
+        <p>Здесь нужно "предоставить" <code class="code">WeatherViewModel</code> всему дереву виджетов с помощью <code class="code">ChangeNotifierProvider</code>.</p>
+        
+        <p><em>Файл <code class="code">main.dart</code></em></p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'ui/viewmodels/weather_viewmodel.dart';
+import 'ui/views/weather_view.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => WeatherViewModel(),
+      child: MaterialApp(
+        title: 'Weather App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: const WeatherView(),
+      ),
+    );
+  }
+}</code></pre>
+      </section>
+
+      <section id="section-10" class="lesson-section">
+        <h2><strong>Шаг 8: Демонстрация работы приложения</strong></h2>
+        <ul>
+          <li>Нажимаем на кнопку</li>
+          <li>Отображается индикатор загрузки</li>
+          <li>При успешном получении данных отображается погода</li>
+        </ul>
+        
+        <img src="images/l10.7/weather_b.gif" alt="Weather App Working" style="display: block; margin: 20px auto; max-width: 100%;">
+        
+        <ul>
+          <li>Допустим отключили интернет</li>
+          <li>Нажимаем на кнопку</li>
+          <li>Отображается индикатор загрузки</li>
+          <li>Отображается ошибка</li>
+        </ul>
+        
+        <img src="images/l10.7/Weather_Error 2.gif" alt="Weather App Error" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
+
+      <button id="scrollToTop" title="Наверх"></button>
+    </div>
+  
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+</body>
+</html>
