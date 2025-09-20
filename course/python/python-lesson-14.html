@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 14. Python Функции. Часть 2</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 14: Функции. Часть 2</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+            <div id="main-content">
+        <h1>Урок 14: Функции. Часть 2</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Функция main и точка входа</h2>
+            <p>Каждая программа на Python может иметь точку входа — функцию <code class="code">main()</code>. Запуск файла начинается с верхней строки скрипта, но принято явно обозначать стартовый участок кода конструкцией:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main() -> None:
+    print("Это точка входа программы")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <p><code class="code">__name__ == "__main__"</code> проверяет, запущен ли файл напрямую. При импорте как модуль <code class="code">main()</code> не вызывается автоматически.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Функции как объекты</h2>
+            <p>Python — язык, где <strong>всё является объектом</strong>, включая функции. Их можно сохранять в переменных, передавать как аргументы и возвращать из других функций.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_value(value: int) -> None:
+    print(value)
+
+printer = print_value   # присвоили функции переменную
+printer(42)             # 42
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Callable
+
+# Аннотируем функцию, принимающую функцию-обработчик
+Handler = Callable[[int], None]
+
+def run_twice(handler: Handler, value: int) -> None:
+    handler(value)
+    handler(value)
+
+run_twice(print_value, 7)  # 7, затем 7
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Как передаются аргументы</h2>
+            <p>При вызове функции управление передаётся внутрь неё, затем возвращается в точку вызова. Важно понимать модель: Python использует <em>«передачу ссылок на объекты»</em> (иногда говорят «pass-by-assignment»).</p>
+            <ul>
+                <li><strong>Неизменяемые</strong> объекты (<code class="code">int</code>, <code class="code">str</code>, <code class="code">float</code>, <code class="code">bool</code>, <code class="code">tuple</code>) — изменить сам объект нельзя, поэтому «кажется», что передаются по значению.</li>
+                <li><strong>Изменяемые</strong> объекты (<code class="code">list</code>, <code class="code">dict</code>, <code class="code">set</code>, собственные классы) — передаётся та же ссылка; изменения внутри функции видны снаружи.</li>
+            </ul>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def add_one(n: int) -> None:
+    n += 1
+
+x = 10
+add_one(x)
+print(x)  # 10 — x не изменился (int неизменяемый)
+
+
+def append_item(items: list[int]) -> None:
+    items.append(99)
+
+nums = [1, 2, 3]
+append_item(nums)
+print(nums)  # [1, 2, 3, 99] — список изменился
+</code></pre>
+
+            <div class="note">
+                <p>Чтобы <em>не</em> менять исходную коллекцию внутри функции, делайте копию: <code class="code">items.copy()</code>, срез <code class="code">items[:]</code> или используйте <code class="code">list(items)</code>.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Возвращаемые значения</h2>
+            <p>Если функция не содержит <code class="code">return</code>, она возвращает <code class="code">None</code>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def empty_function():
+    pass
+
+print(empty_function())  # None
+</code></pre>
+
+            <p>Чтобы вернуть несколько значений, удобно использовать <strong>кортеж</strong> (распаковка):</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_point() -> tuple[int, int]:
+    return 12, 2
+
+x, y = get_point()
+print(f"Координата x = {x}")
+print(f"Координата y = {y}")
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Анонимные функции (lambda)</h2>
+            <p>Анонимные (лямбда-) функции не имеют имени и записываются через ключевое слово <code class="code">lambda</code>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">hello = lambda: "Я анонимная функция"
+print(hello())
+
+# Практичный пример: сортировка по длине строки
+words = ["python", "ai", "development"]
+print(sorted(words, key=lambda s: len(s)))
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">«Стрелочная» запись (однострочные функции)</h2>
+            <p>Если логика функции укладывается в одно выражение, можно использовать <code class="code">lambda</code> или однострочную <code class="code">def</code>:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_message(count: int) -> str: return f"У вас {count} сообщений"
+print(get_message(5))
+
+get_msg = lambda count: f"У вас {count} сообщений"
+print(get_msg(42))
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметры функций</h2>
+            <p>Функция может иметь обязательные позиционные параметры, необязательные со значением по умолчанию, позиционные-только (<code class="code">/</code>) и ключевые-только (<code class="code">*</code>). Рассмотрим наиболее востребованные варианты.</p>
+
+            <h3>Именованные (ключевые) параметры</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_super_value1(*, value1: int = 0, value2: int = 0) -> int:
+    """Обе переменные имеют значения по умолчанию"""
+    return value1 * value2 - 42
+
+get_super_value1(value2=10)
+</code></pre>
+            <p>Параметры после символа <code class="code">*</code> <strong>обязательны к передаче по имени</strong>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_super_value2(*, value1: int, value2: int) -> int:
+    return value1 * value2 - 42
+
+get_super_value2(value1=10, value2=10)
+</code></pre>
+
+            <h3>Nullable‑подобное поведение</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_super_value3(*, value1: int | None = None, value2: int | None = None) -> int:
+    value1 = value1 or 0
+    value2 = value2 or 0
+    return value1 * value2 - 42
+
+get_super_value3(value1=10)
+</code></pre>
+
+            <h3>Позиционные параметры со значениями по умолчанию</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def hello(name: str, msg: str, age: int = 18) -> str:
+    return f"{msg}! Меня зовут {name}! и мне {age}"
+
+print(hello("Маша", "Привет", 20))
+print(hello("Роман", "Привет"))
+</code></pre>
+
+            <div class="note">
+                <p>Порядок параметров в сигнатуре: <code class="code">[positional], /, [positional-or-keyword], *, [keyword-only]</code>.</p>
+            </div>
+
+            <h3>Позиционные‑только и ключевые‑только</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def f(a, b, /, c, d, *, e, f):
+    print(a, b, c, d, e, f)
+
+# f(a=1, b=2, c=3, d=4, e=5, f=6)  # TypeError: a и b — только позиционно
+f(1, 2, 3, 4, e=5, f=6)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Область видимости и вложенные функции</h2>
+            <p>Python использует <strong>лексическую область видимости</strong> (LEGB — Local, Enclosing, Global, Built-ins).</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main() -> None:
+    inside_main = True
+
+    def my_function() -> None:
+        inside_my_function = True
+        print(inside_main)        # доступно из внешней области
+        print(inside_my_function) # локальная переменная
+
+    my_function()
+    # print(inside_my_function)  # NameError: переменная вне области видимости
+
+main()
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">counter = 0
+
+def use_global() -> None:
+    global counter
+    counter += 1
+
+use_global()
+print(counter)  # 1
+</code></pre>
+            <div class="note"><p><code class="code">nonlocal</code> — для изменения переменной из замыкающей области; <code class="code">global</code> — из модуля.</p></div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Замыкания</h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def add(num_add: int):
+    def inner(i: int) -> int:
+        return num_add + i
+    return inner
+
+add2 = add(2)
+print(add2(3))  # 5
+print(add2(4))  # 6
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def make_counter(increment: int):
+    count = 0
+    def counter() -> int:
+        nonlocal count
+        count += increment
+        return count
+    return counter
+
+counter1 = make_counter(1)
+counter2 = make_counter(2)
+
+print(counter1())  # 1
+print(counter1())  # 2
+print(counter1())  # 3
+
+print(counter2())  # 2
+print(counter2())  # 4
+</code></pre>
+            <p><code class="code">nonlocal</code> позволяет изменять переменную из замыкающей области.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Рекурсия</h2>
+            <div class="note"><p><strong>Рекурсия</strong> — это когда функция вызывает саму себя для выполнения задачи.</p></div>
+            <p>Рекурсивная функция должна:</p>
+            <ol>
+                <li>Иметь <strong>базовый случай</strong> для остановки.</li>
+                <li>При каждом вызове <strong>приближаться</strong> к базовому случаю.</li>
+            </ol>
+
+            <h3>Пример: сумма элементов списка</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def recursive_sum(numbers: list[int]) -> int:
+    print(numbers)
+    if len(numbers) == 1:
+        return numbers[0]          # базовый случай
+    return numbers[0] + recursive_sum(numbers[1:])
+
+print(recursive_sum([1, 2, 3, 4, 5, 6, 7, 8, 9]))  # 45
+</code></pre>
+            <p>Преимущества: лаконичность при работе с деревьями/графами. Важно учитывать ограничение глубины рекурсии (по умолчанию ~1000 вызовов, можно изменить <code class="code">sys.setrecursionlimit</code>).</p>
+
+            <h3>Пошаговое выполнение рекурсии</h3>
+            <p>Ниже раскрутка (углубление) и обратный ход (сворачивание) стека вызовов для списка из 9 элементов.</p>
+            <ol>
+                <li><strong>Первый вызов</strong> <code class="code">recursive_sum([1, 2, 3, 4, 5, 6, 7, 8, 9])</code>
+                    <ul>
+                        <li><code class="code">numbers</code> — длиной 9, базовый случай не выполнен.</li>
+                        <li>Вычисляется <code class="code">numbers[0]</code> → 1.</li>
+                        <li>Рекурсивный вызов с хвостом <code class="code">[2, 3, 4, 5, 6, 7, 8, 9]</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Второй вызов</strong> <code class="code">recursive_sum([2, 3, 4, 5, 6, 7, 8, 9])</code> — берём 2, вызываем с хвостом.</li>
+                <li><strong>Третий вызов</strong> <code class="code">recursive_sum([3, 4, 5, 6, 7, 8, 9])</code> — берём 3, вызываем с хвостом.</li>
+                <li>… процесс продолжается …</li>
+                <li><strong>Девятый вызов</strong> <code class="code">recursive_sum([9])</code> — базовый случай, вернуть 9.</li>
+            </ol>
+            <p><strong>Сворачивание стека:</strong> 8+9=17 → 7+17=24 → 6+24=30 → 5+30=35 → 4+35=39 → 3+39=42 → 2+42=44 → 1+44=45.</p>
+
+            <div class="note"><p>На каждом шаге в стеке хранится текущее <code class="code">numbers[0]</code> и ссылка на следующий подсписок. После получения результата из глубины стек разворачивается, суммируя значения.</p></div>
+        </section>
+
+        <section class="lesson-section">
+            <div class="note">
+                <p><strong>Советы:</strong><br>
+                • Используйте <strong>аннотации типов</strong> для повышенной читаемости и статической проверки (<code class="code">mypy</code>).<br>
+                • Пишите <strong>докстринги</strong> сразу после <code class="code">def</code> — их используют IDE и функция <code class="code">help()</code>.<br>
+                • Соблюдайте <strong>PEP 8</strong>: 4‑пробельные отступы, имена в <code class="code">snake_case</code>.</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

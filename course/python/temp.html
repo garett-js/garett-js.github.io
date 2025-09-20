@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 9: Срезы (Slice)</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 9: Срезы (Slice)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок 9: Срезы (Slice)</h1>
+
+        <h2>Срезы строк - нарезаем данные как торт! 🍰</h2>
+
+В предыдущем уроке мы изучили, как получать отдельные символы строки через индексы `[]`. Но что если нам нужна не одна буква, а целый кусочек строки? Представьте, что строка — это торт, а мы хотим отрезать от него аккуратный кусочек. Для этого в Python есть **срезы** (slices)!
+
+<div class="note">
+    <p><strong>Срезы строк</strong></p>
+    <p>Срез позволяет получить часть строки, указав начальную и конечную позицию.</p>
+    <p>Это как нарезать хлеб — вы говорите "от 3-го кусочка до 7-го", и получаете именно эту часть! 🍞</p>
+</div>
+
+Давайте рассмотрим строку `text = "programming"` и разберём, как с ней работать:
+
+**Положительные индексы:**  0  1  2  3  4  5  6  7  8  9  10
+**Строка:**                p  r  o  g  r  a  m  m  i  n  g
+**Отрицательные индексы:** -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1
+
+## Базовый синтаксис срезов
+
+С помощью среза мы можем "вырезать" нужную часть строки, указав диапазон индексов через двоеточие: `text[начало:конец]`.
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+print(text[1:4])    # "rog"
+print(text[0:7])    # "program" 
+print(text[3:8])    # "gramm"
+</code></pre>
+
+<div class="note">
+    <p><strong>Важное правило срезов</strong></p>
+    <p>При создании среза `text[x:y]`:</p>
+    <ul>
+        <li>Первое число (x) — начало среза (включительно) 📍</li>
+        <li>Второе число (y) — конец среза (НЕ включительно) ⛔</li>
+    </ul>
+    <p>Думайте об этом как о линейке: "от отметки 1 до отметки 4, но саму отметку 4 не берём"</p>
+</div>
+
+## Срезы до конца и от начала
+
+Если вы хотите взять "всё от определённого места до конца" или "всё от начала до определённого места", можно опустить один из параметров:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+print(text[3:])     # "gramming" - от 3-го индекса до конца
+print(text[:6])     # "progra" - от начала до 6-го индекса
+print(text[:])      # "programming" - вся строка целиком
+</code></pre>
+
+<div class="note">
+    <p><strong>Полезный трюк</strong></p>
+    <p>Срез `text[:]` возвращает копию всей строки. Это может пригодиться, когда нужно "клонировать" строку! 🔄</p>
+</div>
+
+## Работа с отрицательными индексами
+
+Помните отрицательные индексы? Они отсчитываются с конца строки и прекрасно работают в срезах!
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+print(text[-8:-3])  # "gramm" - с 8-го с конца до 3-го с конца
+print(text[-4:])    # "ming" - последние 4 символа
+print(text[:-3])    # "programm" - всё кроме последних 3 символов
+</code></pre>
+
+<div class="note">
+    <p><strong>Лайфхак для новичков</strong></p>
+    <p>Чтобы удалить последний символ из строки, используйте `text[:-1]` 🎯</p>
+    <p>Чтобы получить последние N символов, используйте `text[-N:]`</p>
+</div>
+
+## Шаг среза - прыгаем через символы
+
+А что если нам нужен каждый второй символ? Или каждый третий? Для этого есть третий параметр — **шаг среза**:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+print(text[1:8:2])  # "rgam" - каждый 2-й символ с 1 по 8
+print(text[2::3])   # "orm" - каждый 3-й символ с 2-го до конца
+print(text[:9:2])   # "pormn" - каждый 2-й символ от начала до 9-го
+print(text[::2])    # "pormig" - каждый 2-й символ во всей строке
+</code></pre>
+
+<div class="note">
+    <p><strong>Как работает шаг</strong></p>
+    <p>Представьте, что вы идёте по строке и делаете шаги определённого размера:</p>
+    <ul>
+        <li>Шаг 1 — обычная ходьба, берём каждый символ</li>
+        <li>Шаг 2 — перешагиваем через один символ</li>
+        <li>Шаг 3 — перешагиваем через два символа</li>
+    </ul>
+</div>
+
+## Отрицательный шаг - идём задом наперёд! 🔄
+
+Самая крутая фишка — отрицательный шаг! Он позволяет "идти" по строке в обратном направлении:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+print(text[::-1])      # "gnimmargorP" - вся строка задом наперёд
+print(text[::-2])      # "gimrgr" - каждый 2-й символ в обратном порядке
+print(text[8:2:-1])    # "immarg" - с 8-го по 2-й в обратном порядке
+</code></pre>
+
+<div class="note">
+    <p><strong>Магия Python</strong></p>
+    <p>Срез `[::-1]` — это самый элегантный способ перевернуть строку в Python! 🪄</p>
+    <p>Запомните этот трюк — он очень часто используется на собеседованиях 😉</p>
+</div>
+
+## Полная таблица примеров
+
+Давайте систематизируем всё в удобной таблице с нашей строкой `text = "programming"`:
+
+| Срез | Результат | Объяснение |
+|------|-----------|------------|
+| `text[1:5]` | "rogr" | Символы с 1-го по 4-й включительно |
+| `text[:6]` | "progra" | Первые 6 символов |
+| `text[7:]` | "ming" | С 7-го символа до конца |
+| `text[-3:]` | "ing" | Последние 3 символа |
+| `text[:]` | "programming" | Вся строка |
+| `text[::3]` | "prmig" | Каждый 3-й символ |
+| `text[::-1]` | "gnimmargorP" | Строка в обратном порядке |
+| `text[9:3:-2]` | "nma" | С 9-го по 3-й с шагом -2 |
+
+## Изменение символов в строке
+
+Вот тут нас ждёт подвох! 😅 Попробуем заменить букву в нашей строке:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Ошибочный подход</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+text[5] = 'e'  # ❌ Ошибка! Так нельзя!
+</code></pre>
+
+<div class="note warning">
+    <p><strong>Строки неизменяемы!</strong></p>
+    <p>В Python строки относятся к неизменяемым типам данных. Это значит, что мы не можем изменить отдельный символ "на месте".</p>
+    <p>Но есть способ обойти это ограничение! 🛠️</p>
+</div>
+
+Чтобы "заменить" символ, нужно создать новую строку из частей старой:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Правильный подход</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+# Заменяем 'a' на 'e' (индекс 5)
+new_text = text[:5] + 'e' + text[6:]
+print(new_text)  # "progreming"
+</code></pre>
+
+<div class="note">
+    <p><strong>Как это работает</strong></p>
+    <p>Мы создаём "сэндвич" из трёх частей:</p>
+    <ul>
+        <li>`text[:5]` — всё до символа, который хотим заменить</li>
+        <li>`'e'` — новый символ</li>
+        <li>`text[6:]` — всё после символа, который заменяем</li>
+    </ul>
+    <p>Склеиваем всё вместе оператором `+` и получаем новую строку! 🔧</p>
+</div>
+
+## Практические примеры из жизни
+
+Давайте посмотрим, как срезы помогают в реальных задачах:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Практические применения</h5>
+</div>
+<pre><code class="language-python"># Работа с именем файла
+filename = "document.pdf"
+name = filename[:-4]        # "document" - убираем расширение
+extension = filename[-3:]   # "pdf" - получаем расширение
+
+# Скрытие части номера телефона
+phone = "89991234567"
+hidden = phone[:3] + "*****" + phone[-2:]  # "899*****67"
+
+# Получение инициалов
+full_name = "Иван Петрович Сидоров"
+words = full_name.split()
+initials = f"{words[0][0]}.{words[1][0]}.{words[2][0]}."  # "И.П.С."
+
+print(f"Имя файла: {name}")
+print(f"Расширение: {extension}")
+print(f"Скрытый номер: {hidden}")
+print(f"Инициалы: {initials}")
+</code></pre>
+
+## Цепочки срезов - комбинируем операции
+
+Поскольку срез возвращает новую строку, мы можем применять срезы к результатам других срезов:
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+# Сначала берём с 3-го символа до конца, потом убираем последние 2
+result1 = text[3:][:-2]  # "grammi"
+
+# Берём каждый 2-й символ, переворачиваем, потом первые 4
+result2 = text[::2][::-1][:4]  # "gimo"
+
+print(result1)
+print(result2)
+</code></pre>
+
+## Ошибки, которых стоит избегать
+
+<div class="note warning">
+    <p><strong>Частые ошибки со срезами</strong></p>
+    <ul>
+        <li>**Нулевой шаг:** `text[::0]` вызовет ошибку!</li>
+        <li>**Неправильный порядок индексов:** `text[7:3]` даст пустую строку</li>
+        <li>**Путаница с направлением:** При отрицательном шаге начало должно быть больше конца</li>
+    </ul>
+</div>
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Примеры ошибок</h5>
+</div>
+<pre><code class="language-python">text = "programming"
+
+print(text[::0])    # ❌ ValueError: slice step cannot be zero
+print(text[7:3])    # ✅ Но результат: "" (пустая строка)
+print(text[-3:-7:-1])  # ✅ "gnim" - правильно для отрицательного шага
+print(text[-3:-7])     # ✅ Но результат: "" (пустая строка)
+</code></pre>
+
+## Подводим итоги
+
+<div class="note">
+    <p><strong>Главное о срезах</strong></p>
+    <ul>
+        <li>Срезы позволяют получать части строки: `строка[начало:конец:шаг]`</li>
+        <li>Начало включается, конец — нет</li>
+        <li>Можно опускать параметры: `[:5]`, `[3:]`, `[::]`</li>
+        <li>Отрицательные индексы работают отлично</li>
+        <li>Отрицательный шаг переворачивает направление</li>
+        <li>Строки неизменяемы — для "замены" создаём новую строку</li>
+    </ul>
+</div>
+
+Срезы — это мощный инструмент для работы со строками. Освоив их, вы сможете элегантно решать множество задач по обработке текста! 🚀
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 

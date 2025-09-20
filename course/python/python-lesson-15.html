@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 15. Python ООП. Часть 1</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 15. Python ООП. Часть 1</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+            <div id="main-content">
+        <h1>Урок 15. Python Объектно-ориентированное программирование. Часть 1</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Урок 15. ООП Часть 1</h2>
+            <p>До настоящего момента мы разрабатывали программы, используя процедурный подход. В рамках данного подхода весь код, включая переменные и функции, размещается в одном файле, без чёткой структурной связи между его компонентами. В результате создаётся монолитная структура, где различные элементы программы хаотично смешаны.</p>
+            <p><strong>Основные характеристики процедурного подхода:</strong></p>
+            <ul>
+                <li>Программа строится с использованием процедур (функций) как ключевых структурных элементов.</li>
+                <li>Данные и функции существуют отдельно друг от друга, без явной привязки.</li>
+                <li>Использование глобальных переменных для хранения данных, повышает риск ошибок: такие переменные доступны для просмотра и изменения любым элементом программы, что затрудняет контроль и отладку, потому что эти переменные может видеть и изменять кто хочет.</li>
+            </ul>
+            <p>Рассмотрим пример программы, написанной в процедурном стиле, чтобы выделить её ограничения и проблемы.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    player_name = "Геральт из Ривии"
+    player_hp = 100
+    player_attack = 20
+    player_defence = 10
+
+    monster_name = "Леший из Лихолесья"
+    monster_hp = 50
+    monster_attack = 12
+    monster_defence = 8
+
+    def player_deals_damage():
+        nonlocal monster_hp
+        damage = player_attack - monster_defence
+        if damage < 0:
+            damage = 0
+        monster_hp -= damage
+
+        if monster_hp < 0:
+            print("Монстр проиграл")
+            return
+
+        print(f"Игрок наносит монстру {damage} урона")
+        print(f"У монстра осталось {monster_hp} HP")
+
+    def monster_deals_damage():
+        nonlocal player_hp
+        damage = monster_attack - player_defence
+        if damage < 0:
+            damage = 0
+        player_hp -= damage
+        
+        print(f"Монстр наносит игроку {damage} урона")
+        print(f"У игрока осталось {player_hp} HP")
+
+    def level_up():
+        nonlocal player_hp, player_attack, player_defence
+        print("Поздравляем! Уровень повышен! Ваши статы усилены!")
+        player_hp += 10
+        player_attack += 5
+        player_defence += 2
+
+    def show_player_stats():
+        print(f"Имя игрока: {player_name}")
+        print(f"Здоровье игрока: {player_hp}")
+        print(f"Атака игрока: {player_attack}")
+        print(f"Защита игрока: {player_defence}")
+
+    def show_monster_stats():
+        print(f"Имя монстра: {monster_name}")
+        print(f"Здоровье монстра: {monster_hp}")
+        print(f"Атака монстра: {monster_attack}")
+        print(f"Защита монстра: {monster_defence}")
+
+    # Выпускаем кракена
+    player_deals_damage()
+    player_deals_damage()
+    monster_deals_damage()
+    player_deals_damage()
+    player_deals_damage()
+    player_deals_damage()
+
+    level_up()
+    show_player_stats()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <p>На данном этапе всё кажется упорядоченным, однако попробуем добавить ещё одного монстра, похожего на существующего. Это приведёт к необходимости создавать дополнительные переменные для нового монстра, а также писать отдельные функции, связанные с ним.</p>
+            <p>Основная проблема заключается в том, что эти переменные и функции не имеют структурной связи друг с другом. Это делает код менее понятным и увеличивает вероятность ошибок.</p>
+            <p>Например, можно случайно обратиться к переменным, не относящимся к конкретному монстру, что приведёт к некорректной работе программы и непредсказуемым результатам.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    player_name = "Геральт из Ривии"
+    player_hp = 100
+    player_attack = 20
+    player_defence = 10
+
+    monster_name = "Леший из Лихолесья"
+    monster_hp = 50
+    monster_attack = 12
+    monster_defence = 8
+
+    # Ещё пачка переменных
+    monster2_name = "Злобный Бобр"
+    monster2_hp = 7000
+    monster2_attack = 20
+    monster2_defence = 0
+
+    def player_deals_damage():
+        nonlocal monster_hp
+        damage = player_attack - monster_defence
+        if damage < 0:
+            damage = 0
+        monster_hp -= damage
+
+        if monster_hp < 0:
+            print("Монстр проиграл")
+            return
+
+        print(f"Игрок наносит монстру {damage} урона. У монстра осталось {monster_hp} HP.")
+
+    # Придётся дополнительно создать ещё функция для битвы с новым монстром
+    def player_deals_damage_to_monster2():
+        nonlocal monster2_hp
+        damage = player_attack - monster2_defence
+        if damage < 0:
+            damage = 0
+        monster2_hp -= damage
+
+        if monster2_hp < 0:
+            print("Монстр проиграл")
+            return
+
+        print(f"Игрок наносит монстру {damage} урона. У монстра осталось {monster2_hp} HP.")
+
+    def monster_deals_damage():
+        nonlocal player_hp
+        damage = monster_attack - player_defence
+        if damage < 0:
+            damage = 0
+        player_hp -= damage
+        print(f"Монстр наносит игроку {damage} урона. У игрока осталось {player_hp} HP.")
+
+    # Так же придётся делать и функцию атаки для нового монстра
+    def monster2_deals_damage():
+        nonlocal player_hp
+        damage = monster2_attack - player_defence
+        if damage < 0:
+            damage = 0
+        player_hp -= damage
+        print(f"Монстр наносит игроку {damage} урона. У игрока осталось {player_hp} HP.")
+
+    def level_up():
+        nonlocal player_hp, player_attack, player_defence
+        print("Поздравляем! Уровень повышен! Ваши статы усилены!")
+        player_hp += 10
+        player_attack += 5
+        player_defence += 2
+
+    def show_player_stats():
+        print(f"Имя игрока: {player_name}")
+        print(f"Здоровье игрока: {player_hp}")
+        print(f"Атака игрока: {player_attack}")
+        print(f"Защита игрока: {player_defence}")
+
+    def show_monster_stats():
+        print(f"Имя монстра: {monster_name}")
+        print(f"Здоровье монстра: {monster_hp}")
+        print(f"Атака монстра: {monster_attack}")
+        print(f"Защита монстра: {monster_defence}")
+
+    # Выпускаем кракена
+    player_deals_damage()
+    player_deals_damage()
+    monster_deals_damage()
+    player_deals_damage()
+    player_deals_damage()
+    player_deals_damage()
+
+    level_up()
+    show_player_stats()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <p>А теперь представьте, что монстров в игре может быть несколько десятков, а то и сотни, или же появляется необходимость поддерживать несколько игроков. В таких условиях наш код быстро превратится в хаотичный и неподдающийся управлению массив, полный дублирования и путаницы. Это усложнит не только чтение и поддержку кода, но и внесение изменений или исправление ошибок.</p>
+
+            <div class="note"><p><strong>Примечание:</strong> Наш код и работа превратиться в настоящий кошмар и пытку!</p></div>
+
+            <p>Как справиться с подобной ситуацией? Решение заключается в использовании другой парадигмы программирования, известной как <em>Объектно-Ориентированное Программирование</em> (ООП). Этот подход помогает структурировать код, связывая данные и функциональность в единые логические блоки.</p>
+            <p>Давайте сразу преобразуем наш пример в стиле ООП. После этого я подробно объясню, как работает данный подход и какие преимущества он даёт.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    # Конструктор класса
+    def __init__(self, name, hp, attack, defence):
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+        self.defence = defence
+
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <ol>
+                <li><strong>Создание класса.</strong><br>Первым шагом мы должны создать <strong>класс</strong>, который станет основой для создания объектов. Класс можно рассматривать как шаблон или трафарет, который определяет общие свойства и действия для всех объектов одного типа.</li>
+                <li><strong>Назовём класс <code class="code">Character</code>.</strong><br>Этот будет абстрактный персонаж. Классы всегда называются с заглавной буквы. Класс создаётся <strong>за пределами функции</strong> <code class="code">main()</code>, чтобы быть доступным везде в программе.</li>
+                <li><strong>Добавление свойств и методов.</strong><br>Внутри класса мы опишем свойства и методы будущих объектов. Свойства характеризуют объект (например, имя, количество жизней), а методы определяют его действия (например, атака, защита).</li>
+                <li><strong>Параллель с реальной жизнью.</strong><br>Чтобы лучше понять, представьте, что вокруг нас множество объектов: люди, автомобили, здания. У каждого из них есть характеристики (например, возраст, цвет, вес) и действия (учиться, ездить, строиться). В реальности у объектов могут быть миллионы свойств и действий, поэтому для решения задачи важно <strong>абстрагироваться</strong> — выделить только самые значимые свойства и методы, которые нам необходимы в данном случае.</li>
+                <li><strong>Добавляем свойства персонажа.</strong><br>В данном случае мы определим такие свойства, как имя, количество жизней, сила атаки и уровень защиты. В Python свойства объекта создаются в конструкторе класса.</li>
+                <li><strong>Создание конструктора класса.</strong><br>Для создания объектов нужен <strong>конструктор</strong>. В Python конструктор - это специальный метод с именем <code class="code">__init__</code>. Этот метод автоматически вызывается при создании объекта. В конструкторе мы перечисляем параметры, которые нужно указать при создании объекта, а затем инициализируем свойства значениями этих параметров.</li>
+                <li><strong>Ключевое слово <code class="code">self</code>.</strong><br>В Python первым параметром любого метода класса должно быть ключевое слово <code class="code">self</code>, которое ссылается на текущий объект. Это необходимо, чтобы чётко указать, что мы обращаемся к свойствам данного объекта, а не к переменным или значениям из внешней области видимости. Проще говоря, <code class="code">self</code> можно перевести как "себя" или "этот" объект. Обращение к самому себе.</li>
+                <li><strong>Особенности Python в создании свойств.</strong><br>В Python свойства объекта создаются динамически при их первом присвоении. Мы присваиваем значения свойствам через <code class="code">self.имя_свойства = значение</code>. Python автоматически создаёт эти свойства для объекта.</li>
+                <li><strong>Создание объекта.</strong><br>Теперь мы можем создать новый объект, используя новый тип данных (название нашего класса) и вызов конструктора. Этот объект будет обладать всеми свойствами и методами, описанными в классе.</li>
+            </ol>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    # Создание экземпляра класса (объекта)
+    character = Character("", 1, 1, 1)
+
+    character.hp = 100  # Изменение свойства
+    print(character.hp)  # Вывод свойства
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <p>Для создания нового экземпляра класса (новый объект), мы сначала указываем имя класса, затем в круглых скобках передаём параметры конструктора. Python автоматически вызывает метод <code class="code">__init__</code> и создаёт объект с указанными свойствами.</p>
+            <p>После этого у нас есть полностью готовый объект со своими уникальными свойствами. Чтобы обратиться к свойствам или методам объекта, используется <strong>точечный синтаксис</strong>. Например, мы можем узнать текущее значение свойства, вызвать метод объекта, или даже изменить значение свойства.</p>
+
+            <h3>Гибкость инициализации в Python.</h3>
+            <p>В Python можно создавать свойства объекта не только в конструкторе, но и в любой момент после создания объекта. Также можно задавать значения по умолчанию прямо в параметрах конструктора:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    def __init__(self, name="Неизвестный", hp=1, attack=1, defence=1):
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+        self.defence = defence
+        # Можно добавить дополнительные свойства
+        self.level = 1
+        self.experience = 0
+</code></pre>
+
+            <h3>Создание нескольких объектов</h3>
+            <p>Одно из главных преимуществ <strong>ООП</strong> — это возможность создавать множество уникальных объектов, используя один и тот же класс как основу.</p>
+            <p>Класс выступает в роли шаблона, который определяет общую структуру (свойства и методы), а каждый объект, созданный на его основе, может иметь собственные данные и поведение.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    # Создание экземпляра класса (объекта)
+    player = Character("Геральт из Ривии", 100, 20, 10)
+    monster1 = Character("Леший из Лихолесья", 50, 12, 8)
+    monster2 = Character("Злобный Бобр", 2000, 50, 1)
+
+    print(player.name)    # "Геральт из Ривии"
+    print(monster1.name)  # "Леший из Лихолесья"
+    print(monster2.name)  # "Злобный Бобр"
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <p>Мы создали три разных объекта, используя единственный шаблон класса <code class="code">Character</code>.</p>
+            <p>Это наглядно демонстрирует удобство и гибкость объектно-ориентированного программирования.</p>
+
+            <h3>Уникальные свойства объектов:</h3>
+            <p>Каждый объект — player, monster1, monster2 — обладает одинаковым набором свойств, например, name. Однако самое важное — у каждого из этих объектов значение свойства name уникально. Это позволяет хранить уникальную информацию для каждого объекта и работать с ними независимо.</p>
+
+            <h3>Связь с <code class="code">self</code></h3>
+            <p>Когда мы вызываем конструктор класса для создания нового объекта, ключевое слово self внутри класса автоматически связывается с этим объектом. Проще говоря, self обозначает "текущий объект", для которого выполняется код.</p>
+            <p>Если в конструкторе класса написано:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">self.name = name
+</code></pre>
+            <p>И создаётся объект player, то это выражение становится:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">player.name = name
+</code></pre>
+            <p>А если создаётся объект monster1, то оно трансформируется в:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">monster1.name = name
+</code></pre>
+            <p>Таким образом, <code class="code">self</code> автоматически заменяется текущим объектом, что делает создание и управление объектами простым и логичным.</p>
+
+            <h3>Добавим методы для вывода информации о персонаже</h3>
+            <p>Создадим метод <code class="code">show_stats</code>, который будет выводить основные характеристики объекта, такие как имя, здоровье, атака и защита.</p>
+            <p>После создания объекта мы можем вызвать его метод, используя <strong>точечный синтаксис</strong>. Обязательно ставьте круглые скобки после имени метода, как при вызове обычной функции.</p>
+            <p>Свойство объекта – вызывается через точку и без скобок<br>Метод объекта – вызывается через точку и со скобками</p>
+            <p>Методы позволяют делать объекты более «живыми» и взаимодействующими с данными. Это один из ключевых аспектов работы в стиле <strong>ООП</strong>.</p>
+            <p><strong>Важная особенность Python:</strong> Все методы класса должны принимать <code class="code">self</code> в качестве первого параметра, даже если они не используют его. Это позволяет методу получить доступ к свойствам и другим методам текущего объекта.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    # Конструктор
+    def __init__(self, name, hp, attack, defence):
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+        self.defence = defence
+
+    # Методы
+    def show_stats(self):
+        print(f"Имя: {self.name}")
+        print(f"Здоровье: {self.hp}")
+        print(f"Атака: {self.attack}")
+        print(f"Защита: {self.defence}")
+
+def main():
+    # Создание экземпляра класса (объекта)
+    player = Character("Геральт из Ривии", 100, 20, 10)
+    monster1 = Character("Леший из Лихолесья", 50, 12, 8)
+    monster2 = Character("Злобный Бобр", 2000, 50, 1)
+
+    player.show_stats()
+    monster1.show_stats()
+    monster2.show_stats()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <p>Теперь наш код стал <strong>структурированным и логичным</strong>, ведь все свойства и методы объекта объединены в одном месте — внутри класса. Такой подход не только делает код аккуратным, но и предотвращает путаницу, поскольку все элементы связаны по смыслу и удобно «упакованы».</p>
+
+            <p><strong>Преимущества, которые мы получили:</strong></p>
+            <ol>
+                <li><strong>Связанность данных и функций:</strong> Все свойства и методы, относящиеся к одному объекту, находятся внутри его класса, а не разбросаны по коду.</li>
+                <li><strong>Изоляция данных:</strong> Мы чётко определяем, к какому объекту относятся те или иные свойства и методы. Теперь невозможно случайно «перепутать» данные одного персонажа с данными другого.</li>
+                <li><strong>Легкость масштабирования:</strong> Для создания нового объекта достаточно использовать класс, без необходимости копирования кода.</li>
+            </ol>
+
+            <h3>Добавим остальные методы из процедурного примера</h3>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    # Конструктор
+    def __init__(self, name, hp, attack, defence):
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+        self.defence = defence
+
+    # Методы
+    def show_stats(self):
+        print(f"Имя: {self.name}")
+        print(f"Здоровье: {self.hp}")
+        print(f"Атака: {self.attack}")
+        print(f"Защита: {self.defence}")
+
+    def deal_damage(self, target):
+        damage = self.attack - target.defence
+        if damage < 0:
+            damage = 0
+        target.hp -= damage
+
+        if target.hp <= 0:
+            print(f"{target.name} проиграл")
+        else:
+            print(f"{self.name} наносит {target.name} {damage} урона. У {target.name} осталось {target.hp} HP.")
+
+    def level_up(self):
+        print(f"Поздравляем, {self.name}! Уровень повышен! Ваши статы усилены!")
+        self.hp += 10
+        self.attack += 5
+        self.defence += 2
+
+def main():
+    # Создание экземпляра класса (объекта)
+    player = Character("Геральт из Ривии", 100, 20, 10)
+    monster1 = Character("Леший из Лихолесья", 50, 12, 8)
+    monster2 = Character("Злобный Бобр", 2000, 50, 1)
+
+    # Выпускаем кракена
+    player.deal_damage(monster1)
+    player.deal_damage(monster1)
+    monster1.deal_damage(player)
+    player.deal_damage(monster1)
+    player.deal_damage(monster1)
+    player.deal_damage(monster1)
+
+    player.level_up()
+    player.show_stats()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <h3>Результат выполнения:</h3>
+            <pre><code>Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 38 HP.
+
+Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 26 HP.
+
+Леший из Лихолесья наносит Геральт из Ривии 2 урона. 
+У Геральт из Ривии осталось 98 HP.
+
+Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 14 HP.
+
+Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 2 HP.
+
+Леший из Лихолесья проиграл
+
+Поздравляем, Геральт из Ривии! Уровень повышен! Ваши статы усилены!
+
+Имя: Геральт из Ривии
+Здоровье: 108
+Атака: 25
+Защита: 12
+</code></pre>
+
+            <h2>Дополнительные возможности Python в ООП:</h2>
+
+            <h3>Аннотации типов в Python</h3>
+            <p>Python поддерживает аннотации типов, которые помогают сделать код более читаемым и позволяют IDE предоставлять лучшие подсказки:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Optional
+
+class Character:
+    def __init__(self, name: str, hp: int, attack: int, defence: int) -> None:
+        self.name: str = name
+        self.hp: int = hp
+        self.attack: int = attack
+        self.defence: int = defence
+
+    def show_stats(self) -> None:
+        print(f"Имя: {self.name}")
+        print(f"Здоровье: {self.hp}")
+        print(f"Атака: {self.attack}")
+        print(f"Защита: {self.defence}")
+
+    def deal_damage(self, target: 'Character') -> None:
+        damage: int = self.attack - target.defence
+        if damage < 0:
+            damage = 0
+        target.hp -= damage
+
+        if target.hp <= 0:
+            print(f"{target.name} проиграл")
+        else:
+            print(f"{self.name} наносит {target.name} {damage} урона. У {target.name} осталось {target.hp} HP.")
+
+    def level_up(self) -> None:
+        print(f"Поздравляем, {self.name}! Уровень повышен! Ваши статы усилены!")
+        self.hp += 10
+        self.attack += 5
+        self.defence += 2
+</code></pre>
+
+            <h3>Динамическое добавление свойств</h3>
+            <p>В Python можно добавлять новые свойства к объекту даже после его создания:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    player = Character("Геральт из Ривии", 100, 20, 10)
+    
+    # Добавляем новое свойство динамически
+    player.magic_power = 50
+    player.inventory = ["меч", "зелье лечения"]
+    
+    print(f"Магическая сила: {player.magic_power}")
+    print(f"Инвентарь: {player.inventory}")
+</code></pre>
+
+            <h3>Строковое представление объекта</h3>
+            <p>В Python можно определить, как объект будет выглядеть при выводе через <code class="code">print()</code> или <code class="code">str()</code>:</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    def __init__(self, name: str, hp: int, attack: int, defence: int) -> None:
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+        self.defence = defence
+
+    def __str__(self) -> str:
+        return f"{self.name} (HP: {self.hp}, ATK: {self.attack}, DEF: {self.defence})"
+
+    def __repr__(self) -> str:
+        return f"Character('{self.name}', {self.hp}, {self.attack}, {self.defence})"
+
+# Использование:
+def main():
+    player = Character("Геральт из Ривии", 100, 20, 10)
+    print(player)  # Выведет: Геральт из Ривии (HP: 100, ATK: 20, DEF: 10)
+    print(repr(player))  # Выведет: Character('Геральт из Ривии', 100, 20, 10)
+</code></pre>
+
+            <p>Эти особенности делают Python очень гибким языком для объектно-ориентированного программирования, позволяя писать выразительный и легко читаемый код.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

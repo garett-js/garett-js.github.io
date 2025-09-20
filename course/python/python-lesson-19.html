@@ -1,0 +1,603 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООП. Часть 5: Миксины в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 19: Миксины</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>ООП. Часть 5: Миксины в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Миксины</h2>
+            <p>Примеси должны содержать свой реализованный функционал, с методами и свойствами.</p>
+            <p>Этот готовый функционал можно примешать в существующие классы, который они будут использовать, и главная фишка, что таких примесей можно примешать сколько угодно (некая замена множественному наследованию)</p>
+            <p>Отличия от наследования в том, что при наследовании классы должны быть связаны по смыслу. Миксины же представляют собой отдельную функциональную единицу, любой миксин можно примешать к любому классу (Если только вручную не указать для каких классов используется миксин)</p>
+            <div class="note">
+                <p>Важный момент, что в отличии от интерфейсов, где мы говорим классу только КАКИЕ НАЗВАНИЯ должны быть у методов и свойств, то с помощью миксинов мы сразу примешиваем реализованный функционал!</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание миксинов в Python</h2>
+            <p>В Python миксины реализуются как обычные классы, которые предназначены для множественного наследования. По соглашению их названия заканчиваются на <code class="code">Mixin</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class DefensibleMixin:
+    """Миксин для добавления защитных способностей"""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.defense = 0
+    
+    def shield(self, defense_boost: float) -> None:
+        """Временно увеличить показатель брони"""
+        self.defense = defense_boost
+        print(f'Временно увеличить показатель брони на {defense_boost} у себя и союзников')
+    
+    def aggress(self) -> None:
+        """Агрить ближайших врагов на большом расстоянии"""
+        print('Агрить ближайших врагов на большом расстоянии')
+
+
+class WarriorableMixin:
+    """Миксин для добавления боевых способностей"""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.attack = 0
+    
+    def powerful_attack(self, damage: float = 50) -> None:
+        """Нанести мощную атаку"""
+        print(f'Нанести мощную атаку {damage} урона')
+
+
+class ArcherOnlyMixin:
+    """Миксин для баллистических способностей (только для лучников)"""
+    
+    def __init__(self, *args, **kwargs):
+        # Проверяем, что этот миксин используется с классом Archer
+        if not hasattr(self, '_archer_base') and not isinstance(self, Archer):
+            raise TypeError("ArcherOnlyMixin можно использовать только с классами-наследниками Archer")
+        super().__init__(*args, **kwargs)
+    
+    def shoot_to_target(self) -> None:
+        """Пустить снаряд точно в цель"""
+        print('Пустить снаряд точно в цель!')</code></pre>
+
+            <p><strong>Особенности Python миксинов:</strong></p>
+            <ol>
+                <li><strong><code class="code">super().__init__()</code></strong> - обязательно вызываем в каждом миксине для правильной инициализации цепочки наследования</li>
+                <li><strong><code class="code">*args, **kwargs</code></strong> - передаём все аргументы дальше по цепочке</li>
+                <li><strong>Проверка совместимости</strong> - можно добавить проверки для ограничения использования миксинов</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Использование миксинов через множественное наследование</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class BaseCharacter:
+    """Базовый класс персонажа"""
+    
+    def __init__(self, name: str):
+        self.name = name
+        super().__init__()  # Важно для корректной работы миксинов
+
+
+class Paladin(BaseCharacter, DefensibleMixin, WarriorableMixin):
+    """Паладин с защитными и боевыми способностями"""
+    
+    def __init__(self, name: str):
+        super().__init__(name)
+
+
+class Archer(BaseCharacter):
+    """Базовый класс лучника"""
+    
+    def __init__(self, name: str):
+        self._archer_base = True  # Маркер для проверки миксина
+        super().__init__(name)
+
+
+class WoodElf(Archer, WarriorableMixin, ArcherOnlyMixin):
+    """Лесной эльф с боевыми и баллистическими способностями"""
+    
+    def __init__(self, name: str):
+        super().__init__(name)
+
+
+# Попытка неправильного использования (это вызовет ошибку)
+# class CrazyProphet(Paladin, ArcherOnlyMixin):
+#     def __init__(self, name: str):
+#         super().__init__(name)</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Демонстрация работы</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    # Создание паладина
+    paladin = Paladin("Святой Рыцарь")
+    paladin.shield(20)
+    paladin.aggress()
+    paladin.powerful_attack()
+    print()
+    
+    # Создание лесного эльфа
+    elf = WoodElf("Лесной Страж")
+    elf.shoot_to_target()
+    elf.powerful_attack(100)
+    print()
+    
+    # Проверим доступные методы
+    print("Методы паладина:", [method for method in dir(paladin) 
+                               if not method.startswith('_') and callable(getattr(paladin, method))])
+    print("Методы эльфа:", [method for method in dir(elf) 
+                            if not method.startswith('_') and callable(getattr(elf, method))])
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат выполнения:</strong></p>
+            <pre><code>Временно увеличить показатель брони на 20 у себя и союзников
+Агрить ближайших врагов на большом расстоянии
+Нанести мощную атаку 50 урона
+
+Пустить снаряд точно в цель!
+Нанести мощную атаку 100 урона
+
+Методы паладина: ['aggress', 'powerful_attack', 'shield']
+Методы эльфа: ['powerful_attack', 'shoot_to_target']</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">MRO (Method Resolution Order) в Python</h2>
+            <p>Python использует алгоритм C3 для определения порядка разрешения методов. Это важно понимать при работе с миксинами.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class A:
+    def method(self):
+        print("Метод A")
+        super().method() if hasattr(super(), 'method') else None
+
+class B:
+    def method(self):
+        print("Метод B")
+        super().method() if hasattr(super(), 'method') else None
+
+class C:
+    def method(self):
+        print("Метод C")
+
+class Combined(A, B, C):
+    def method(self):
+        print("Метод Combined")
+        super().method()
+
+def main():
+    obj = Combined()
+    print("MRO:", Combined.__mro__)
+    print("Порядок вызовов:")
+    obj.method()
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат:</strong></p>
+            <pre><code>MRO: (&lt;class '__main__.Combined'&gt;, &lt;class '__main__.A'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.C'&gt;, &lt;class 'object'&gt;)
+Порядок вызовов:
+Метод Combined
+Метод A
+Метод B
+Метод C</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Продвинутые миксины для игр</h2>
+            <h3>Миксин для системы здоровья</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class HealthMixin:
+    """Миксин для добавления системы здоровья"""
+    
+    def __init__(self, max_hp: int = 100, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.max_hp = max_hp
+        self.current_hp = max_hp
+    
+    def take_damage(self, damage: int) -> None:
+        """Получить урон"""
+        self.current_hp = max(0, self.current_hp - damage)
+        print(f"{self.name} получает {damage} урона. HP: {self.current_hp}/{self.max_hp}")
+        
+        if self.current_hp == 0:
+            self.die()
+    
+    def heal(self, amount: int) -> None:
+        """Восстановить здоровье"""
+        old_hp = self.current_hp
+        self.current_hp = min(self.max_hp, self.current_hp + amount)
+        actual_heal = self.current_hp - old_hp
+        print(f"{self.name} восстанавливает {actual_heal} HP. HP: {self.current_hp}/{self.max_hp}")
+    
+    def die(self) -> None:
+        """Смерть персонажа"""
+        print(f"💀 {self.name} погиб!")
+    
+    @property
+    def is_alive(self) -> bool:
+        """Проверка, жив ли персонаж"""
+        return self.current_hp > 0
+    
+    @property
+    def hp_percentage(self) -> float:
+        """Процент здоровья"""
+        return (self.current_hp / self.max_hp) * 100 if self.max_hp > 0 else 0
+
+
+class ManaMixin:
+    """Миксин для добавления системы маны"""
+    
+    def __init__(self, max_mana: int = 50, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.max_mana = max_mana
+        self.current_mana = max_mana
+    
+    def use_mana(self, amount: int) -> bool:
+        """Использовать ману"""
+        if self.current_mana >= amount:
+            self.current_mana -= amount
+            return True
+        return False
+    
+    def restore_mana(self, amount: int) -> None:
+        """Восстановить ману"""
+        old_mana = self.current_mana
+        self.current_mana = min(self.max_mana, self.current_mana + amount)
+        actual_restore = self.current_mana - old_mana
+        print(f"{self.name} восстанавливает {actual_restore} маны. Мана: {self.current_mana}/{self.max_mana}")
+    
+    @property
+    def mana_percentage(self) -> float:
+        """Процент маны"""
+        return (self.current_mana / self.max_mana) * 100 if self.max_mana > 0 else 0
+
+
+class MagicAttackMixin:
+    """Миксин для магических атак (требует ManaMixin)"""
+    
+    def fireball(self, target, damage: int = 30, mana_cost: int = 20) -> None:
+        """Огненный шар"""
+        if not hasattr(self, 'use_mana'):
+            raise AttributeError("MagicAttackMixin требует ManaMixin")
+        
+        if self.use_mana(mana_cost):
+            print(f"🔥 {self.name} кастует огненный шар!")
+            if hasattr(target, 'take_damage'):
+                target.take_damage(damage)
+        else:
+            print(f"❌ У {self.name} недостаточно маны для огненного шара!")
+    
+    def lightning_bolt(self, target, damage: int = 40, mana_cost: int = 25) -> None:
+        """Молния"""
+        if not hasattr(self, 'use_mana'):
+            raise AttributeError("MagicAttackMixin требует ManaMixin")
+        
+        if self.use_mana(mana_cost):
+            print(f"⚡ {self.name} призывает молнию!")
+            if hasattr(target, 'take_damage'):
+                target.take_damage(damage)
+        else:
+            print(f"❌ У {self.name} недостаточно маны для молнии!")
+
+
+class StealthMixin:
+    """Миксин для скрытности"""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_hidden = False
+        self.stealth_damage_multiplier = 2.0
+    
+    def hide(self) -> None:
+        """Спрятаться"""
+        self.is_hidden = True
+        print(f"👤 {self.name} прячется в тенях...")
+    
+    def unhide(self) -> None:
+        """Выйти из укрытия"""
+        self.is_hidden = False
+        print(f"👁️ {self.name} выходит из укрытия")
+    
+    def sneak_attack(self, target, base_damage: int = 25) -> None:
+        """Скрытая атака"""
+        if self.is_hidden:
+            damage = int(base_damage * self.stealth_damage_multiplier)
+            print(f"🗡️ {self.name} наносит скрытый удар!")
+            self.unhide()  # После атаки выходим из укрытия
+        else:
+            damage = base_damage
+            print(f"🗡️ {self.name} атакует!")
+        
+        if hasattr(target, 'take_damage'):
+            target.take_damage(damage)</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание сложных персонажей</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Warrior(BaseCharacter, HealthMixin):
+    """Базовый воин"""
+    
+    def __init__(self, name: str):
+        super().__init__(name, max_hp=150)
+
+
+class Mage(BaseCharacter, HealthMixin, ManaMixin, MagicAttackMixin):
+    """Маг с магическими способностями"""
+    
+    def __init__(self, name: str):
+        super().__init__(name, max_hp=80, max_mana=100)
+
+
+class Rogue(BaseCharacter, HealthMixin, StealthMixin):
+    """Разбойник со скрытностью"""
+    
+    def __init__(self, name: str):
+        super().__init__(name, max_hp=100)
+
+
+class BattleMage(BaseCharacter, HealthMixin, ManaMixin, MagicAttackMixin, WarriorableMixin):
+    """Боевой маг"""
+    
+    def __init__(self, name: str):
+        super().__init__(name, max_hp=120, max_mana=80)
+
+
+class ShadowAssassin(BaseCharacter, HealthMixin, StealthMixin, ManaMixin, MagicAttackMixin):
+    """Теневой убийца со всеми способностями"""
+    
+    def __init__(self, name: str):
+        super().__init__(name, max_hp=90, max_mana=60)</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Демонстрация боевой системы</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def battle_demo():
+    """Демонстрация боевой системы с миксинами"""
+    
+    # Создание персонажей
+    warrior = Warrior("Конан")
+    mage = Mage("Гэндальф")
+    rogue = Rogue("Арагорн")
+    battle_mage = BattleMage("Элрон")
+    assassin = ShadowAssassin("Тень")
+    
+    print("=== НАЧАЛО БИТВЫ ===")
+    print()
+    
+    # Маг атакует воина
+    print("--- Ход 1: Маг атакует ---")
+    mage.fireball(warrior)
+    print(f"Воин HP: {warrior.hp_percentage:.1f}%")
+    print()
+    
+    # Разбойник прячется и атакует мага
+    print("--- Ход 2: Разбойник ---")
+    rogue.hide()
+    rogue.sneak_attack(mage)
+    print(f"Маг HP: {mage.hp_percentage:.1f}%")
+    print()
+    
+    # Боевой маг лечится и атакует
+    print("--- Ход 3: Боевой маг ---")
+    battle_mage.heal(20)
+    battle_mage.lightning_bolt(rogue)
+    battle_mage.powerful_attack()  # От WarriorableMixin
+    print()
+    
+    # Теневой убийца комбо
+    print("--- Ход 4: Теневой убийца ---")
+    assassin.hide()
+    assassin.fireball(warrior)
+    assassin.sneak_attack(mage)
+    print()
+    
+    # Показываем состояние всех персонажей
+    print("=== ИТОГОВОЕ СОСТОЯНИЕ ===")
+    characters = [warrior, mage, rogue, battle_mage, assassin]
+    
+    for char in characters:
+        status = "🟢 Жив" if char.is_alive else "💀 Мёртв"
+        hp_info = f"HP: {char.current_hp}/{char.max_hp}"
+        
+        mana_info = ""
+        if hasattr(char, 'current_mana'):
+            mana_info = f", Мана: {char.current_mana}/{char.max_mana}"
+        
+        stealth_info = ""
+        if hasattr(char, 'is_hidden'):
+            stealth_info = f", Скрыт: {'Да' if char.is_hidden else 'Нет'}"
+        
+        print(f"{char.name}: {status} ({hp_info}{mana_info}{stealth_info})")
+
+def main():
+    battle_demo()
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Проверка зависимостей миксинов</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def check_mixin_dependencies(cls):
+    """Декоратор для проверки зависимостей миксинов"""
+    
+    # Проверяем MagicAttackMixin
+    if issubclass(cls, MagicAttackMixin) and not issubclass(cls, ManaMixin):
+        raise TypeError(f"{cls.__name__} использует MagicAttackMixin, но не наследует ManaMixin")
+    
+    return cls
+
+@check_mixin_dependencies
+class ValidMage(BaseCharacter, HealthMixin, ManaMixin, MagicAttackMixin):
+    def __init__(self, name: str):
+        super().__init__(name, max_hp=80, max_mana=100)
+
+# Это вызовет ошибку:
+# @check_mixin_dependencies
+# class InvalidMage(BaseCharacter, MagicAttackMixin):
+#     pass</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Альтернативный подход: Композиция</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class HealthSystem:
+    """Система здоровья как компонент"""
+    
+    def __init__(self, max_hp: int = 100):
+        self.max_hp = max_hp
+        self.current_hp = max_hp
+    
+    def take_damage(self, damage: int) -> None:
+        self.current_hp = max(0, self.current_hp - damage)
+    
+    def heal(self, amount: int) -> None:
+        self.current_hp = min(self.max_hp, self.current_hp + amount)
+    
+    @property
+    def is_alive(self) -> bool:
+        return self.current_hp > 0
+
+class CompositionCharacter:
+    """Персонаж с композицией вместо миксинов"""
+    
+    def __init__(self, name: str, max_hp: int = 100):
+        self.name = name
+        self.health = HealthSystem(max_hp)
+    
+    def take_damage(self, damage: int) -> None:
+        """Делегируем вызов компоненту здоровья"""
+        self.health.take_damage(damage)
+        print(f"{self.name} получает {damage} урона. HP: {self.health.current_hp}/{self.health.max_hp}")
+
+# Сравнение подходов
+def comparison_demo():
+    # Миксин подход
+    mixin_char = Warrior("Миксин-воин")
+    
+    # Композиция подход
+    comp_char = CompositionCharacter("Композиция-воин")
+    
+    print("=== Сравнение подходов ===")
+    mixin_char.take_damage(30)
+    comp_char.take_damage(30)</code></pre>
+            <div class="note">
+                <p><strong>Польза от Миксинов</strong></p>
+                <p>Миксины позволяют <strong>добавлять функциональность</strong> к классам <strong>без необходимости создавать иерархию наследования</strong>, что обеспечивает большую гибкость</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Преимущества и недостатки миксинов в Python</h2>
+            <h3>Преимущества:</h3>
+            <ul>
+                <li>✅ <strong>Переиспользование кода</strong> - один миксин можно применить к разным классам</li>
+                <li>✅ <strong>Композиция поведения</strong> - можно комбинировать различные способности</li>
+                <li>✅ <strong>Избежание дублирования</strong> - общий функционал вынесен в миксины</li>
+                <li>✅ <strong>Гибкость</strong> - легко добавлять и убирать функциональность</li>
+            </ul>
+            <h3>Недостатки:</h3>
+            <ul>
+                <li>❌ <strong>Сложность MRO</strong> - порядок наследования важен</li>
+                <li>❌ <strong>Скрытые зависимости</strong> - миксины могут зависеть друг от друга</li>
+                <li>❌ <strong>Debugging</strong> - сложнее отслеживать источник методов</li>
+                <li>❌ <strong>Конфликты имён</strong> - методы могут перекрываться</li>
+            </ul>
+            <h3>Лучшие практики:</h3>
+            <ol>
+                <li><strong>Называйте миксины явно</strong> - используйте суффикс <code class="code">Mixin</code></li>
+                <li><strong>Документируйте зависимости</strong> - указывайте, какие другие миксины нужны</li>
+                <li><strong>Используйте <code class="code">super()</code></strong> - для корректной работы цепочки наследования</li>
+                <li><strong>Проверяйте совместимость</strong> - добавляйте проверки в <code class="code">__init__</code></li>
+                <li><strong>Предпочитайте композицию</strong> - для сложных случаев рассмотрите композицию</li>
+            </ol>
+            <div class="note">
+                <p>Миксины - мощный инструмент Python, который при правильном использовании позволяет создавать гибкие и переиспользуемые компоненты для игр!</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

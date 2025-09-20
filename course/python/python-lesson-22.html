@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продвинутые методы работы с коллекциями в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 22: Продвинутые методы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Продвинутые методы работы с коллекциями в Python</h1>
+
+        <section class="lesson-section">
+            <p>Python предоставляет множество мощных инструментов для работы с коллекциями. В отличие от объектно-ориентированного подхода некоторых языков, Python сочетает функциональные возможности со встроенными функциями и специальным синтаксисом.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>for</code> цикл и итерирование элементов</h2>
+            <p>В Python самый естественный способ обработки каждого элемента коллекции — использование <code>for</code> цикла.</p>
+            <p><strong>Когда использовать:</strong> Когда нужно просто выполнить действие для каждого элемента, не изменяя саму коллекцию и не создавая новую.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    languages = [
+        'Python', 'JavaScript', 'Go', 'Rust', 'TypeScript'
+    ]
+
+    # Простой перебор
+    for language in languages:
+        print(f'Я изучаю {language}!')
+    
+    # С индексами через enumerate
+    for index, language in enumerate(languages):
+        print(f'{index + 1}. Я изучаю {language}!')
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат выполнения:</strong></p>
+            <pre><code>Я изучаю Python!
+Я изучаю JavaScript!
+Я изучаю Go!
+Я изучаю Rust!
+Я изучаю TypeScript!
+
+1. Я изучаю Python!
+2. Я изучаю JavaScript!
+3. Я изучаю Go!
+4. Я изучаю Rust!
+5. Я изучаю TypeScript!</code></pre>
+            
+            <h3>Дополнительные возможности итерирования:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def iteration_examples():
+    languages = ['Python', 'JavaScript', 'Go']
+    scores = [95, 87, 92]
+    
+    # Одновременное итерирование с zip
+    for language, score in zip(languages, scores):
+        print(f'{language}: {score} баллов')
+    
+    # Обратный порядок
+    for language in reversed(languages):
+        print(f'Изучаю в обратном порядке: {language}')
+    
+    # С условием
+    for language in languages:
+        if len(language) > 4:
+            print(f'{language} - длинное название')
+
+if __name__ == "__main__":
+    iteration_examples()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>map()</code> преобразование элементов</h2>
+            <p>Функция <code>map()</code> применяет заданную функцию к каждому элементу итерируемого объекта и <strong>возвращает итератор</strong> с преобразованными элементами.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    numbers = [1, 2, 3, 4, 5]
+    languages = ['Python', 'JavaScript', 'Go', 'Rust', 'TypeScript']
+
+    # Увеличиваем каждый элемент в 2 раза
+    doubled = list(map(lambda x: x * 2, numbers))
+    print(doubled)
+
+    # Узнаём длину каждой строки
+    lengths = list(map(len, languages))
+    print(lengths)
+    
+    # Преобразование в верхний регистр
+    uppercase = list(map(str.upper, languages))
+    print(uppercase)
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат выполнения:</strong></p>
+            <pre><code>[2, 4, 6, 8, 10]
+[6, 10, 2, 4, 10]
+['PYTHON', 'JAVASCRIPT', 'GO', 'RUST', 'TYPESCRIPT']</code></pre>
+            
+            <h3>List Comprehensions - более Pythonic способ:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def comprehensions_examples():
+    numbers = [1, 2, 3, 4, 5]
+    languages = ['Python', 'JavaScript', 'Go', 'Rust', 'TypeScript']
+    
+    # Список удвоенных чисел
+    doubled = [x * 2 for x in numbers]
+    print(f"Удвоенные: {doubled}")
+    
+    # Длины строк
+    lengths = [len(lang) for lang in languages]
+    print(f"Длины: {lengths}")
+    
+    # Сложные преобразования
+    formatted = [f"{lang.upper()}: {len(lang)} символов" for lang in languages]
+    print("Форматированные:")
+    for item in formatted:
+        print(f"  {item}")
+
+if __name__ == "__main__":
+    comprehensions_examples()</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>filter()</code> фильтрация элементов</h2>
+            <p>Функция <code>filter()</code> применяет функцию-предикат к каждому элементу и <strong>возвращает итератор</strong>, содержащий только те элементы, для которых функция вернула <code>True</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    students = [
+        {'name': 'Артём', 'mark': 70},
+        {'name': 'Анна', 'mark': 85},
+        {'name': 'Наташа', 'mark': 65},
+        {'name': 'Юля', 'mark': 90},
+    ]
+
+    # Все студенты которые набрали больше 70 баллов
+    good_students = list(filter(lambda student: student['mark'] >= 70, students))
+    print("Студенты с баллами >= 70:")
+    print(good_students)
+
+    # Все студенты имена которых начинаются с буквы А
+    a_names = list(filter(lambda student: student['name'].startswith('А'), students))
+    print("\nСтуденты на букву А:")
+    print(a_names)
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат выполнения:</strong></p>
+            <pre><code>Студенты с баллами >= 70:
+[{'name': 'Артём', 'mark': 70}, {'name': 'Анна', 'mark': 85}, {'name': 'Юля', 'mark': 90}]
+
+Студенты на букву А:
+[{'name': 'Артём', 'mark': 70}, {'name': 'Анна', 'mark': 85}]</code></pre>
+            
+            <h3>List Comprehensions с условиями:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def filter_comprehensions():
+    students = [
+        {'name': 'Артём', 'mark': 70},
+        {'name': 'Анна', 'mark': 85},
+        {'name': 'Наташа', 'mark': 65},
+        {'name': 'Юля', 'mark': 90},
+    ]
+    
+    # Фильтрация с list comprehension
+    good_students = [student for student in students if student['mark'] >= 70]
+    print(f"Хорошие студенты: {good_students}")
+    
+    # Только имена отличников
+    excellent_names = [student['name'] for student in students if student['mark'] >= 85]
+    print(f"Имена отличников: {excellent_names}")
+    
+    # Комбинирование условий
+    a_good_students = [
+        student['name'] 
+        for student in students 
+        if student['name'].startswith('А') and student['mark'] >= 75
+    ]
+    print(f"Студенты на 'А' с баллами >= 75: {a_good_students}")
+
+if __name__ == "__main__":
+    filter_comprehensions()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>next()</code> и генераторы для поиска элементов</h2>
+            <p>Для поиска первого элемента, соответствующего условию, Python предлагает <code>next()</code> с генераторными выражениями.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    languages = ['Python', 'JavaScript', 'Go', 'Rust', 'TypeScript']
+    
+    # Найти первый элемент длина которого меньше 3
+    try:
+        short_language = next(lang for lang in languages if len(lang) < 3)
+        print(f"Короткий язык: {short_language}")
+    except StopIteration:
+        print("Нет языка короче 3 символов")
+    
+    # С значением по умолчанию
+    short_language_safe = next(
+        (lang for lang in languages if len(lang) < 3), 
+        'Нет такого элемента'
+    )
+    print(f"Результат с default: {short_language_safe}")
+    
+    # Поиск последнего элемента (через reversed)
+    last_long = next(
+        (lang for lang in reversed(languages) if len(lang) > 5),
+        'Не найдено'
+    )
+    print(f"Последний длинный язык: {last_long}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Дополнительные способы поиска:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def search_examples():
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    
+    # Поиск с enumerate для получения индекса
+    even_with_index = next(
+        ((i, num) for i, num in enumerate(numbers) if num % 2 == 0),
+        (-1, None)
+    )
+    print(f"Первое четное число: {even_with_index}")
+    
+    # Поиск в словарях
+    students = [
+        {'name': 'Артём', 'mark': 70, 'age': 20},
+        {'name': 'Анна', 'mark': 85, 'age': 19},
+        {'name': 'Наташа', 'mark': 65, 'age': 21},
+    ]
+    
+    top_student = next(
+        (student for student in students if student['mark'] >= 85),
+        {'name': 'Не найден', 'mark': 0}
+    )
+    print(f"Отличник: {top_student['name']} с баллом {top_student['mark']}")
+
+if __name__ == "__main__":
+    search_examples()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>any()</code> и <code>all()</code> проверка соответствия условиям</h2>
+            <p>Python имеет встроенные функции для проверки условий:</p>
+            <ul>
+                <li><code>any()</code> возвращает <code>True</code>, если <strong>хотя бы один</strong> элемент соответствует условию</li>
+                <li><code>all()</code> возвращает <code>True</code>, если <strong>все</strong> элементы соответствуют условию</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    numbers = [1, 2, 3, 4, 5]
+    languages = ['Python', 'JavaScript', 'Go', 'Rust', 'TypeScript']
+
+    # Есть ли четное число?
+    has_even = any(number % 2 == 0 for number in numbers)
+    print(f"Есть четные числа: {has_even}")
+
+    # Все ли числа положительные?
+    all_positive = all(number > 0 for number in numbers)
+    print(f"Все числа положительные: {all_positive}")
+
+    # Все языки программирования начинаются с заглавной буквы?
+    all_capitalized = all(language[0].isupper() for language in languages)
+    print(f"Все языки с заглавной буквы: {all_capitalized}")
+    
+    # Есть ли языки короче 3 символов?
+    has_short = any(len(language) < 3 for language in languages)
+    print(f"Есть короткие языки: {has_short}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат выполнения:</strong></p>
+            <pre><code>Есть четные числа: True
+Все числа положительные: True
+Все языки с заглавной буквы: True
+Есть короткие языки: True</code></pre>
+
+            <h3>Продвинутые примеры с any() и all():</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def advanced_any_all():
+    students = [
+        {'name': 'Артём', 'marks': [70, 75, 80]},
+        {'name': 'Анна', 'marks': [85, 90, 88]},
+        {'name': 'Наташа', 'marks': [65, 70, 68]},
+    ]
+    
+    # Есть ли студент с отличными оценками (все >= 80)?
+    has_excellent = any(all(mark >= 80 for mark in student['marks']) for student in students)
+    print(f"Есть отличники: {has_excellent}")
+    
+    # Все ли студенты имеют хотя бы одну оценку выше 70?
+    all_have_good = all(any(mark > 70 for mark in student['marks']) for student in students)
+    print(f"У всех есть хорошие оценки: {all_have_good}")
+    
+    # Проверка пустых коллекций
+    empty_list = []
+    print(f"any([]) = {any(empty_list)}")  # False
+    print(f"all([]) = {all(empty_list)}")  # True - вакуумная истина
+
+if __name__ == "__main__":
+    advanced_any_all()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>functools.reduce()</code> свертывание коллекции</h2>
+            <p>В Python есть <code>functools.reduce()</code> для агрегации коллекции в одно значение.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from functools import reduce
+
+def main():
+    numbers = [1, 2, 3, 4, 5]
+    students = [
+        {'name': 'Артём', 'mark': 70},
+        {'name': 'Анна', 'mark': 85},
+        {'name': 'Наташа', 'mark': 65},
+        {'name': 'Юля', 'mark': 90},
+    ]
+
+    # Сумма всех значений через reduce
+    total = reduce(lambda acc, x: acc + x, numbers)
+    print(f"Сумма через reduce: {total}")
+    
+    # То же самое с начальным значением
+    total_with_initial = reduce(lambda acc, x: acc + x, numbers, 0)
+    print(f"Сумма с начальным значением: {total_with_initial}")
+
+    # Получить строку всех имен студентов с баллами > 65
+    good_students_names = [
+        student['name'] 
+        for student in students 
+        if student['mark'] > 65
+    ]
+    
+    if good_students_names:
+        names_string = reduce(lambda acc, name: f"{acc}, {name}", good_students_names)
+        print(f"Хорошие студенты: {names_string}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Альтернативы reduce в Python:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def reduce_alternatives():
+    numbers = [1, 2, 3, 4, 5]
+    words = ['Python', 'is', 'awesome', 'language']
+    
+    # Сумма - лучше использовать sum()
+    total_sum = sum(numbers)
+    print(f"Сумма через sum(): {total_sum}")
+    
+    # Произведение
+    from math import prod  # Python 3.8+
+    try:
+        product = prod(numbers)
+        print(f"Произведение: {product}")
+    except AttributeError:
+        # Для старых версий Python
+        product = reduce(lambda x, y: x * y, numbers, 1)
+        print(f"Произведение (через reduce): {product}")
+    
+    # Соединение строк - лучше использовать join()
+    sentence = ' '.join(words)
+    print(f"Предложение: {sentence}")
+    
+    # Максимум - лучше использовать max()
+    maximum = max(numbers)
+    print(f"Максимум: {maximum}")
+    
+    # Сложная агрегация где reduce действительно полезен
+    students = [
+        {'name': 'Артём', 'scores': [70, 75]},
+        {'name': 'Анна', 'scores': [85, 90]},
+    ]
+    
+    # Общий словарь всех оценок
+    all_scores = reduce(
+        lambda acc, student: {**acc, student['name']: sum(student['scores'])},
+        students,
+        {}
+    )
+    print(f"Все итоговые баллы: {all_scores}")
+
+if __name__ == "__main__":
+    reduce_alternatives()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>itertools</code> для продвинутой работы с последовательностями</h2>
+            <p>Модуль <code>itertools</code> предоставляет множество полезных функций для работы с итераторами.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import itertools
+
+def main():
+    values = [-22, 1, 45, 68, 98, 0, 100, 2, 3, 42, 11]
+    
+    # takewhile - элементы до первого не удовлетворяющего условию
+    before_zero = list(itertools.takewhile(lambda x: x != 0, values))
+    print(f"До нуля: {before_zero}")
+    
+    # dropwhile - элементы после первого удовлетворяющего условию
+    after_zero = list(itertools.dropwhile(lambda x: x != 0, values))
+    print(f"От нуля и дальше: {after_zero}")
+    
+    # islice - взять n элементов (аналог take)
+    first_four = list(itertools.islice(values, 4))
+    print(f"Первые 4: {first_four}")
+    
+    # islice с start и stop
+    middle_elements = list(itertools.islice(values, 2, 7))
+    print(f"Элементы с 2 по 6: {middle_elements}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p><strong>Результат выполнения:</strong></p>
+            <pre><code>До нуля: [-22, 1, 45, 68, 98]
+От нуля и дальше: [0, 100, 2, 3, 42, 11]
+Первые 4: [-22, 1, 45, 68]
+Элементы с 2 по 6: [45, 68, 98]</code></pre>
+            
+            <h3>Дополнительные возможности itertools:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import itertools
+from collections import defaultdict
+
+def advanced_itertools():
+    # chain - объединение нескольких итераторов
+    list1 = [1, 2, 3]
+    list2 = [4, 5, 6]
+    list3 = [7, 8, 9]
+    
+    combined = list(itertools.chain(list1, list2, list3))
+    print(f"Объединенные списки: {combined}")
+    
+    # groupby - группировка соседних одинаковых элементов
+    data = ['a', 'a', 'b', 'b', 'b', 'c', 'a', 'a']
+    grouped = [(key, list(group)) for key, group in itertools.groupby(data)]
+    print(f"Группировка: {grouped}")
+    
+    # accumulate - накопительные суммы
+    numbers = [1, 2, 3, 4, 5]
+    cumulative = list(itertools.accumulate(numbers))
+    print(f"Накопительные суммы: {cumulative}")
+    
+    # compress - фильтрация по маске
+    data = ['a', 'b', 'c', 'd', 'e']
+    selectors = [1, 0, 1, 0, 1]
+    filtered = list(itertools.compress(data, selectors))
+    print(f"Фильтрация по маске: {filtered}")
+    
+    # combinations и permutations
+    items = ['A', 'B', 'C']
+    combinations = list(itertools.combinations(items, 2))
+    permutations = list(itertools.permutations(items, 2))
+    print(f"Сочетания: {combinations}")
+    print(f"Размещения: {permutations}")
+
+if __name__ == "__main__":
+    advanced_itertools()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Продвинутые техники с коллекциями</h2>
+            
+            <h3>Сортировка с ключевыми функциями:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def sorting_examples():
+    students = [
+        {'name': 'Артём', 'mark': 70, 'age': 20},
+        {'name': 'Анна', 'mark': 85, 'age': 19},
+        {'name': 'Наташа', 'mark': 65, 'age': 21},
+        {'name': 'Юля', 'mark': 90, 'age': 18},
+    ]
+    
+    # Сортировка по оценкам
+    by_mark = sorted(students, key=lambda s: s['mark'], reverse=True)
+    print("По убыванию оценок:")
+    for student in by_mark:
+        print(f"  {student['name']}: {student['mark']}")
+    
+    # Сложная сортировка (сначала по возрасту, потом по оценке)
+    by_age_then_mark = sorted(students, key=lambda s: (s['age'], -s['mark']))
+    print("\nПо возрасту, затем по убыванию оценок:")
+    for student in by_age_then_mark:
+        print(f"  {student['name']}: возраст {student['age']}, оценка {student['mark']}")
+
+if __name__ == "__main__":
+    sorting_examples()</code></pre>
+            
+            <h3>Группировка данных:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from collections import defaultdict
+from itertools import groupby
+
+def grouping_examples():
+    students = [
+        {'name': 'Артём', 'grade': 'A', 'subject': 'Math'},
+        {'name': 'Анна', 'grade': 'B', 'subject': 'Math'},
+        {'name': 'Наташа', 'grade': 'A', 'subject': 'Physics'},
+        {'name': 'Юля', 'grade': 'A', 'subject': 'Math'},
+        {'name': 'Петр', 'grade': 'B', 'subject': 'Physics'},
+    ]
+    
+    # Группировка через defaultdict
+    by_grade = defaultdict(list)
+    for student in students:
+        by_grade[student['grade']].append(student['name'])
+    
+    print("Группировка по оценкам:")
+    for grade, names in by_grade.items():
+        print(f"  {grade}: {', '.join(names)}")
+    
+    # Группировка через itertools.groupby (требует сортировки)
+    sorted_by_subject = sorted(students, key=lambda s: s['subject'])
+    by_subject = {
+        subject: list(group) 
+        for subject, group in groupby(sorted_by_subject, key=lambda s: s['subject'])
+    }
+    
+    print("\nГруппировка по предметам:")
+    for subject, group in by_subject.items():
+        names = [s['name'] for s in group]
+        print(f"  {subject}: {', '.join(names)}")
+
+if __name__ == "__main__":
+    grouping_examples()</code></pre>
+            
+            <h3>Set и Dictionary comprehensions:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def comprehensions_advanced():
+    students = [
+        {'name': 'Артём', 'marks': [70, 75, 80]},
+        {'name': 'Анна', 'marks': [85, 90, 88]},
+        {'name': 'Наташа', 'marks': [65, 70, 68]},
+        {'name': 'Анна', 'marks': [82, 87, 89]},  # Дубликат имени
+    ]
+    
+    # Set comprehension - уникальные имена
+    unique_names = {student['name'] for student in students}
+    print(f"Уникальные имена: {unique_names}")
+    
+    # Dictionary comprehension - средние баллы
+    average_marks = {
+        student['name']: sum(student['marks']) / len(student['marks'])
+        for student in students
+    }
+    print(f"Средние баллы: {average_marks}")
+    
+    # Nested comprehension - все оценки всех студентов
+    all_marks = [mark for student in students for mark in student['marks']]
+    print(f"Все оценки: {all_marks}")
+    
+    # Условные comprehensions
+    good_students_marks = {
+        student['name']: student['marks']
+        for student in students
+        if sum(student['marks']) / len(student['marks']) >= 75
+    }
+    print(f"Оценки хороших студентов: {good_students_marks}")
+
+if __name__ == "__main__":
+    comprehensions_advanced()</code></pre>
+            
+            <h3>Работа с генераторами:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def generator_examples():
+    # Генератор квадратов
+    def squares(n):
+        for i in range(n):
+            yield i ** 2
+    
+    # Генераторное выражение
+    even_squares = (x for x in squares(10) if x % 2 == 0)
+    
+    print("Четные квадраты:")
+    for square in even_squares:
+        print(f"  {square}")
+    
+    # Бесконечный генератор
+    def fibonacci():
+        a, b = 0, 1
+        while True:
+            yield a
+            a, b = b, a + b
+    
+    # Первые 10 чисел Фибоначчи
+    fib_gen = fibonacci()
+    first_ten_fib = [next(fib_gen) for _ in range(10)]
+    print(f"Первые 10 чисел Фибоначчи: {first_ten_fib}")
+    
+    # Генератор с отложенным вычислением
+    def process_large_data():
+        for i in range(1000000):
+            if i % 100000 == 0:
+                yield f"Processed {i} items"
+    
+    # Обрабатываем только первые 3 результата
+    processor = process_large_data()
+    for i, result in enumerate(processor):
+        if i >= 3:
+            break
+        print(result)
+
+if __name__ == "__main__":
+    generator_examples()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практический пример: Анализ игровых данных</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from functools import reduce
+from collections import defaultdict, Counter
+from itertools import groupby
+import json
+
+def game_data_analysis():
+    # Игровые данные
+    players = [
+        {'name': 'Артур', 'level': 25, 'class': 'Warrior', 'guild': 'Dragons', 'score': 1500},
+        {'name': 'Мерлин', 'level': 30, 'class': 'Mage', 'guild': 'Wizards', 'score': 2100},
+        {'name': 'Робин', 'level': 22, 'class': 'Archer', 'guild': 'Rangers', 'score': 1800},
+        {'name': 'Ланселот', 'level': 28, 'class': 'Warrior', 'guild': 'Dragons', 'score': 1950},
+        {'name': 'Гэндальф', 'level': 35, 'class': 'Mage', 'guild': 'Wizards', 'score': 2500},
+        {'name': 'Леголас', 'level': 26, 'class': 'Archer', 'guild': 'Rangers', 'score': 2000},
+    ]
+    
+    print("=== Анализ игровых данных ===\n")
+    
+    # 1. Базовая статистика
+    total_players = len(players)
+    avg_level = sum(player['level'] for player in players) / total_players
+    avg_score = sum(player['score'] for player in players) / total_players
+    
+    print(f"Общая статистика:")
+    print(f"  Игроков: {total_players}")
+    print(f"  Средний уровень: {avg_level:.1f}")
+    print(f"  Средний счет: {avg_score:.0f}")
+    
+    # 2. Топ игроки (сортировка)
+    top_players = sorted(players, key=lambda p: p['score'], reverse=True)[:3]
+    print(f"\nТоп-3 игрока:")
+    for i, player in enumerate(top_players, 1):
+        print(f"  {i}. {player['name']}: {player['score']} очков")
+    
+    # 3. Группировка по классам
+    players_by_class = defaultdict(list)
+    for player in players:
+        players_by_class[player['class']].append(player)
+    
+    print(f"\nИгроки по классам:")
+    for class_name, class_players in players_by_class.items():
+        avg_class_score = sum(p['score'] for p in class_players) / len(class_players)
+        print(f"  {class_name}: {len(class_players)} игроков, средний счет: {avg_class_score:.0f}")
+    
+    # 4. Фильтрация высокоуровневых игроков
+    high_level = [p for p in players if p['level'] >= 25]
+    high_level_names = [p['name'] for p in high_level]
+    print(f"\nВысокоуровневые игроки (25+): {', '.join(high_level_names)}")
+    
+    # 5. Проверки с any/all
+    has_max_level = any(p['level'] >= 35 for p in players)
+    all_scored = all(p['score'] > 1000 for p in players)
+    print(f"\nЕсть игроки 35+ уровня: {has_max_level}")
+    print(f"Все набрали больше 1000 очков: {all_scored}")
+    
+    # 6. Агрегация через reduce
+    total_guild_power = reduce(
+        lambda acc, player: {
+            **acc,
+            player['guild']: acc.get(player['guild'], 0) + player['score']
+        },
+        players,
+        {}
+    )
+    print(f"\nСила гильдий:")
+    for guild, power in sorted(total_guild_power.items(), key=lambda x: x[1], reverse=True):
+        print(f"  {guild}: {power} очков")
+    
+    # 7. Поиск элементов
+    best_warrior = next(
+        (p for p in players if p['class'] == 'Warrior'),
+        None
+    )
+    if best_warrior:
+        print(f"\nПервый найденный воин: {best_warrior['name']}")
+    
+    # 8. Сложная фильтрация и преобразование
+    elite_players = [
+        {
+            'name': p['name'],
+            'power_rating': p['level'] * 10 + p['score'] // 100,
+            'tier': 'Elite' if p['score'] > 2000 else 'Advanced' if p['score'] > 1500 else 'Beginner'
+        }
+        for p in players
+        if p['level'] >= 25
+    ]
+    
+    print(f"\nРейтинги элитных игроков:")
+    for player in sorted(elite_players, key=lambda p: p['power_rating'], reverse=True):
+        print(f"  {player['name']}: {player['power_rating']} ({player['tier']})")
+
+if __name__ == "__main__":
+    game_data_analysis()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Производительность и лучшие практики</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import time
+from functools import lru_cache
+
+def performance_tips():
+    # Большой список для тестов
+    large_list = list(range(1000000))
+    
+    # 1. Генераторы vs списки для больших данных
+    def time_operation(name, operation):
+        start = time.time()
+        result = operation()
+        end = time.time()
+        print(f"{name}: {end - start:.4f} секунд")
+        return result
+    
+    print("Сравнение производительности:")
+    
+    # List comprehension
+    time_operation(
+        "List comprehension", 
+        lambda: [x * 2 for x in large_list if x % 1000 == 0]
+    )
+    
+    # Generator expression (ленивое вычисление)
+    gen = time_operation(
+        "Generator creation", 
+        lambda: (x * 2 for x in large_list if x % 1000 == 0)
+    )
+    
+    # Использование генератора
+    time_operation(
+        "Generator consumption", 
+        lambda: list(gen)
+    )
+    
+    # 2. Кэширование результатов
+    @lru_cache(maxsize=128)
+    def expensive_calculation(n):
+        """Имитация дорогой операции"""
+        time.sleep(0.01)
+        return n ** 2
+    
+    print("\nКэширование:")
+    # Первый вызов - медленно
+    start = time.time()
+    result1 = expensive_calculation(10)
+    print(f"Первый вызов: {time.time() - start:.4f} сек")
+    
+    # Второй вызов - быстро (из кэша)
+    start = time.time()
+    result2 = expensive_calculation(10)
+    print(f"Второй вызов: {time.time() - start:.4f} сек")
+
+if __name__ == "__main__":
+    performance_tips()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Заключение и рекомендации</h2>
+            <p>Python предлагает множество способов работы с коллекциями:</p>
+            <ul>
+                <li>✅ <strong>List/Dict/Set Comprehensions</strong> - самый Pythonic способ для простых операций</li>
+                <li>✅ <strong>Built-in функции</strong> (<code>map()</code>, <code>filter()</code>, <code>any()</code>, <code>all()</code>) - для функционального стиля</li>
+                <li>✅ <strong>itertools</strong> - для сложных операций с итераторами</li>
+                <li>✅ <strong>Генераторы</strong> - для экономии памяти с большими данными</li>
+                <li>✅ <strong>functools.reduce()</strong> - только когда нет специализированной функции (<code>sum()</code>, <code>max()</code>, etc.)</li>
+            </ul>
+            <p><strong>Выбирайте инструмент по ситуации:</strong></p>
+            <ul>
+                <li>Для читаемости: comprehensions</li>
+                <li>Для производительности: генераторы и itertools</li>
+                <li>Для функционального стиля: map/filter/reduce</li>
+                <li>Для сложной логики: обычные циклы</li>
+            </ul>
+            <div class="note">
+                <p>Помните: "Простое лучше сложного" - основной принцип Python!</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

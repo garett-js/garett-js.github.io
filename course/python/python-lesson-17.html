@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 17. Python ООП. Часть 3 — Интерфейсы</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 17: ООП. Часть 3 — Интерфейсы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок 17. Python ООП. Часть 3 — Интерфейсы</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Интерфейсы: использование и отличие от абстрактного класса</h2>
+            <p>Итак, мы уже знаем, что <strong>полиморфизм</strong> позволяет работать с объектами разных классов, используя общий интерфейс или базовый класс. Но что, если нам нужно, чтобы класс не только "наследовал", но и "обязывался" реализовывать определённые методы, независимо от иерархии? Здесь в дело вступает <strong>интерфейс</strong>.</p>
+            <h3>Что такое интерфейс?</h3>
+            <p>Интерфейс — это набор "контрактов" (методов и свойств), которые обязуется реализовать класс, подключающийся к интерфейсу. В Python интерфейсы можно реализовать несколькими способами.</p>
+            <p><strong>Сравним это с абстрактным классом:</strong></p>
+            <ul>
+                <li>Абстрактный класс предоставляет <strong>как контракт</strong>, так и <strong>готовую реализацию некоторых методов или свойств</strong>. Классы, наследующие абстрактный класс, <strong>могут переопределять</strong> их.</li>
+                <li>Интерфейс — это <strong>чистый контракт</strong>. Он диктует, какие методы и свойства должен реализовать класс, но сам не содержит их реализации.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Способы реализации интерфейсов в Python</h2>
+            <p><strong>Python предоставляет несколько способов создания интерфейсов:</strong></p>
+            <ol>
+                <li><strong>ABC (Abstract Base Classes)</strong> - формальные интерфейсы</li>
+                <li><strong>Protocol</strong> - структурная типизация (Python 3.8+)</li>
+                <li><strong>Duck Typing</strong> - неформальные интерфейсы</li>
+            </ol>
+
+            <h3>Пример абстрактного класса и интерфейса</h3>
+            <p>Создадим абстрактный класс <code class="code">AbstractCharacter</code>, как мы делали раньше:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, level: int):
+        self.name = name
+        self.level = level
+
+    @abstractmethod
+    def attack(self) -> None:
+        """Абстрактный метод атаки"""
+        pass
+    
+    def level_up(self) -> None:
+        """Реализованный метод"""
+        self.level += 1
+        print(f"{self.name} повышает уровень до {self.level}!")
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Способ 1: Интерфейсы через ABC</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class IAttackable(ABC):
+    """Интерфейс для объектов, которые могут атаковать"""
+    
+    @abstractmethod
+    def attack(self) -> None:
+        """Метод атаки"""
+        pass
+
+class IHealable(ABC):
+    """Интерфейс для объектов, которые могут лечить"""
+    
+    @abstractmethod
+    def heal(self) -> None:
+        """Метод лечения"""
+        pass
+</code></pre>
+            <p><strong>Разберём отличия:</strong></p>
+            <ol>
+                <li>Абстрактный класс позволяет задать <strong>общую базу</strong> для всех наследников.</li>
+                <li>Интерфейс лишь говорит: "Я <strong>ожидаю</strong>, что у вас будет метод <code class="code">attack()</code>." <strong>Никакой реализации он не предоставляет.</strong></li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Способ 2: Protocol (структурная типизация)</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Protocol
+
+class Attackable(Protocol):
+    """Протокол для объектов, которые могут атаковать"""
+    
+    def attack(self) -> None:
+        """Метод атаки"""
+        ...
+
+class Healable(Protocol):
+    """Протокол для объектов, которые могут лечить"""
+    
+    def heal(self) -> None:
+        """Метод лечения"""
+        ...
+</code></pre>
+            <p><strong>Особенности Protocol:</strong></p>
+            <ul>
+                <li>Не требует явного наследования</li>
+                <li>Работает по принципу "структурной совместимости"</li>
+                <li>Объект соответствует протоколу, если у него есть нужные методы</li>
+                <li>Используется в основном для type checking</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Способ 3: Duck Typing (неформальные интерфейсы)</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Простой класс без явного интерфейса
+class SimpleWarrior:
+    def attack(self) -> None:
+        print("Воин атакует!")
+
+class SimpleMage:
+    def attack(self) -> None:
+        print("Маг кастует заклинание!")
+    
+    def heal(self) -> None:
+        print("Маг лечит!")
+
+# Функция принимает любой объект с методом attack
+def make_attack(attacker):
+    attacker.attack()  # "Если выглядит как атакующий и атакует как атакующий..."
+
+# Работает с любыми объектами, у которых есть метод attack
+make_attack(SimpleWarrior())  # Воин атакует!
+make_attack(SimpleMage())     # Маг кастует заклинание!
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Когда использовать абстрактный класс, а когда интерфейс?</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Абстрактный класс</th>
+                        <th>Интерфейс (ABC)</th>
+                        <th>Protocol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Используется для объектов с общей базой иерархии (например, персонажи игры, у которых есть общие свойства, такие как <code class="code">name</code> и <code class="code">level</code>).</td>
+                        <td>Используется для объектов, которые не обязательно имеют общую базу, но должны соблюдать определённый контракт.</td>
+                        <td>Используется для type hints и статической проверки типов.</td>
+                    </tr>
+                    <tr>
+                        <td>Может включать как <strong>абстрактные методы</strong>, так и готовую реализацию.</td>
+                        <td>Не содержит реализации — только контракт.</td>
+                        <td>Определяет структуру без принуждения к наследованию.</td>
+                    </tr>
+                    <tr>
+                        <td>Позволяет избегать дублирования кода.</td>
+                        <td>Гарантирует, что класс реализует обязательные методы.</td>
+                        <td>Гибкая типизация для существующего кода.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полиморфизм с интерфейсами</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class IAttackable(ABC):
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+
+class IHealable(ABC):
+    @abstractmethod
+    def heal(self) -> None:
+        pass
+
+# Воин реализует интерфейс IAttackable
+# Он обязан теперь создать метод attack
+class Warrior(IAttackable):
+    def attack(self) -> None:
+        print("Рыцарь наносит мощный удар мечом!")
+
+# Маг реализует интерфейсы IAttackable и IHealable
+# Он обязан теперь создать методы attack и heal
+class Mage(IAttackable, IHealable):
+    def attack(self) -> None:
+        print("Маг кастует заклинание огня!")
+
+    def heal(self) -> None:
+        print("Маг использует заклинание лечения.")
+</code></pre>
+            <h3>Особенности множественного наследования в Python</h3>
+            <p>Python поддерживает множественное наследование, что позволяет классу наследовать от нескольких интерфейсов одновременно:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin(IAttackable, IHealable):
+    """Паладин может и атаковать, и лечить"""
+    
+    def attack(self) -> None:
+        print("Паладин наносит священный удар!")
+    
+    def heal(self) -> None:
+        print("Паладин исцеляет светом!")
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полиморфизм с интерфейсами на практике</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import List
+
+def main():
+    # Работаем с объектами, реализующими интерфейсы
+    # У них гарантированно доступны методы из интерфейсов
+
+    attackers: List[IAttackable] = [Warrior(), Mage(), Paladin()]
+    for character in attackers:
+        character.attack()
+        # Гарантированно вызовется для каждого элемента списка
+
+    print()
+
+    # Только те, кто может лечить
+    healers: List[IHealable] = [Mage(), Paladin()]
+    # Warrior() здесь нельзя добавить - он не реализует IHealable
+    for healer in healers:
+        healer.heal()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Результат выполнения:</h3>
+            <pre><code>Рыцарь наносит мощный удар мечом!
+Маг кастует заклинание огня!
+Паладин наносит священный удар!
+
+Маг использует заклинание лечения.
+Паладин исцеляет светом!
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Protocol для type checking</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Protocol, List
+
+class AttackProtocol(Protocol):
+    def attack(self) -> None: ...
+
+class HealProtocol(Protocol):
+    def heal(self) -> None: ...
+
+# Классы не наследуют от Protocol, но соответствуют его структуре
+class Rogue:
+    def attack(self) -> None:
+        print("Разбойник наносит скрытую атаку!")
+
+class Priest:
+    def heal(self) -> None:
+        print("Жрец восстанавливает здоровье!")
+
+class Druid:
+    def attack(self) -> None:
+        print("Друид призывает силы природы!")
+    
+    def heal(self) -> None:
+        print("Друид исцеляет природной магией!")
+
+# Функции с типизацией через Protocol
+def perform_attack(attacker: AttackProtocol) -> None:
+    attacker.attack()
+
+def perform_healing(healer: HealProtocol) -> None:
+    healer.heal()
+
+# Использование
+rogue = Rogue()
+priest = Priest() 
+druid = Druid()
+
+perform_attack(rogue)   # ✓ У Rogue есть метод attack
+perform_attack(druid)   # ✓ У Druid есть метод attack
+# perform_attack(priest)  # ✗ У Priest нет метода attack
+
+perform_healing(priest) # ✓ У Priest есть метод heal
+perform_healing(druid)  # ✓ У Druid есть метод heal
+# perform_healing(rogue)  # ✗ У Rogue нет метода heal
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Комбинирование подходов</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+from typing import Protocol, List, Union
+
+# Формальный интерфейс через ABC
+class ILivingBeing(ABC):
+    @abstractmethod
+    def is_alive(self) -> bool:
+        pass
+
+# Протокол для структурной типизации
+class Movable(Protocol):
+    def move(self, distance: int) -> None: ...
+
+# Класс, реализующий ABC и Protocol
+class GameCharacter(ILivingBeing):
+    def __init__(self, name: str, hp: int):
+        self.name = name
+        self.hp = hp
+
+    def is_alive(self) -> bool:
+        return self.hp > 0
+    
+    def move(self, distance: int) -> None:
+        print(f"{self.name} перемещается на {distance} метров")
+
+# Duck typing класс
+class Vehicle:
+    def __init__(self, name: str):
+        self.name = name
+    
+    def move(self, distance: int) -> None:
+        print(f"{self.name} движется на {distance} км")
+
+# Функция принимает любой объект с методом move
+def move_something(movable: Movable, distance: int) -> None:
+    movable.move(distance)
+
+# Использование
+character = GameCharacter("Герой", 100)
+vehicle = Vehicle("Машина")
+
+move_something(character, 10)  # Герой перемещается на 10 метров
+move_something(vehicle, 50)    # Машина движется на 50 км
+
+print(character.is_alive())    # True
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Продвинутые возможности интерфейсов в Python</h2>
+            <h3>1. Регистрация типов как реализации интерфейса</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class ISerializable(ABC):
+    @abstractmethod
+    def serialize(self) -> str:
+        pass
+
+# Регистрируем встроенный тип как реализацию интерфейса
+ISerializable.register(str)
+
+# Теперь str считается реализацией ISerializable
+print(issubclass(str, ISerializable))  # True
+print(isinstance("hello", ISerializable))  # True
+</code></pre>
+
+            <h3>2. Миксины (Mixins) для расширения функциональности</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class LoggerMixin:
+    """Миксин для добавления логирования"""
+    def log(self, message: str) -> None:
+        print(f"[{self.__class__.__name__}] {message}")
+
+class HealthMixin:
+    """Миксин для добавления системы здоровья"""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.max_hp = 100
+        self.current_hp = 100
+    
+    def take_damage(self, damage: int) -> None:
+        self.current_hp = max(0, self.current_hp - damage)
+        self.log(f"Получен урон {damage}. Здоровье: {self.current_hp}/{self.max_hp}")
+
+class EnhancedWarrior(Warrior, LoggerMixin, HealthMixin):
+    """Воин с логированием и системой здоровья"""
+    def __init__(self, name: str):
+        self.name = name
+        super().__init__()
+    
+    def attack(self) -> None:
+        self.log("Атакует мечом!")
+        super().attack()
+
+# Использование
+warrior = EnhancedWarrior("Конан")
+warrior.attack()           # [EnhancedWarrior] Атакует мечом!
+                          # Рыцарь наносит мощный удар мечом!
+warrior.take_damage(25)   # [EnhancedWarrior] Получен урон 25. Здоровье: 75/100
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

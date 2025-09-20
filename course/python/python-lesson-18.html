@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 18. Python ООП. Часть 4.1 — Параметры конструктора</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 18: ООП. Часть 4.1 — Параметры конструктора</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок 18. Python ООП. Часть 4.1 — Параметры конструктора</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Параметры конструктора</h2>
+            <p>Например, есть класс паладин</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str, hp: int, mana: int):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+</code></pre>
+            <p>Чтобы создать объект паладина через конструктор, нам нужно передать данные в параметры этого конструктора в том же порядке, что они были определены. Сначала <strong>name</strong> потом <strong>hp</strong> потом <strong>mana</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    paladin = Paladin("Паладин", 100, 50)
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <p>Бывает не всегда удобно создавать так конструктор, поэтому есть несколько вариантов</p>
+            <ol>
+                <li>Использовать именованные параметры (keyword arguments)</li>
+                <li>Использовать Optional типы данных</li>
+                <li>Использовать значения по умолчанию</li>
+                <li>Использовать гибкие параметры (<code class="code">*args</code>, <code class="code">**kwargs</code>)</li>
+                <li>Использовать альтернативные конструкторы (<code class="code">@classmethod</code>)</li>
+                <li>Использовать dataclasses</li>
+                <li>Использовать property для валидации</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Именованные параметры (keyword arguments)</h2>
+            <p>В данном случае мы можем передавать параметры в любом порядке, используя их имена.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, *, name: str, hp: int, mana: int):
+        # Символ * означает, что все параметры после него - только именованные
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin = Paladin(
+        name="Паладин",
+        hp=100,
+        mana=50,
+    )
+    
+    # Можно менять порядок
+    paladin2 = Paladin(
+        mana=75,
+        name="Артур",
+        hp=120,
+    )
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <p><strong>Особенности Python:</strong></p>
+            <ul>
+                <li><code class="code">*</code> в параметрах означает, что все параметры после него могут быть переданы только по имени</li>
+                <li>Без <code class="code">*</code> параметры могут быть как позиционными, так и именованными</li>
+                <li>Именованные параметры улучшают читаемость кода</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Optional типы данных</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Optional
+
+class Paladin:
+    def __init__(self, name: Optional[str] = None, hp: Optional[int] = None, mana: Optional[int] = None):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin = Paladin(name="Паладин", hp=100)
+    print(paladin.mana)  # None
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Современный подход с Union:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Union
+
+class Paladin:
+    def __init__(self, name: Union[str, None] = None, hp: Union[int, None] = None, mana: Union[int, None] = None):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+</code></pre>
+            <h3>Python 3.10+ с новым синтаксисом:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str | None = None, hp: int | None = None, mana: int | None = None):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Значения по умолчанию</h2>
+            <h3>Позиционные параметры с значениями по умолчанию:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str = "Пал Палыч", hp: int = 0, mana: int = 0):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin = Paladin()
+    print(paladin.name)  # Пал Палыч
+    
+    # Можно передать только часть параметров
+    paladin2 = Paladin("Артур")
+    print(paladin2.name)  # Артур
+    print(paladin2.hp)    # 0
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Именованные параметры с значениями по умолчанию:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, *, name: str = "Пал Палыч", hp: int = 0, mana: int = 0):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin = Paladin(mana=200)
+    print(paladin.name)  # Пал Палыч
+    print(paladin.mana)  # 200
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Гибкие параметры (<code class="code">*args</code>, <code class="code">**kwargs</code>)</h2>
+            <h3>Произвольное количество позиционных аргументов:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str, *stats):
+        self.name = name
+        self.hp = stats[0] if len(stats) > 0 else 100
+        self.mana = stats[1] if len(stats) > 1 else 50
+        self.armor = stats[2] if len(stats) > 2 else 10
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin1 = Paladin("Артур")                    # hp=100, mana=50, armor=10
+    paladin2 = Paladin("Ланселот", 150)            # hp=150, mana=50, armor=10
+    paladin3 = Paladin("Галахад", 120, 80, 25)     # hp=120, mana=80, armor=25
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Произвольное количество именованных аргументов:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str, **kwargs):
+        self.name = name
+        self.hp = kwargs.get('hp', 100)
+        self.mana = kwargs.get('mana', 50)
+        self.armor = kwargs.get('armor', 10)
+        self.weapon = kwargs.get('weapon', 'меч')
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует с помощью {self.weapon}!")
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin1 = Paladin("Артур")
+    paladin2 = Paladin("Ланселот", hp=150, weapon="двуручный меч")
+    paladin3 = Paladin("Галахад", mana=120, armor=30, weapon="молот")
+    
+    paladin2.attack()  # Ланселот атакует с помощью двуручный меч!
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Комбинирование всех подходов:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str, *stats, weapon: str = "меч", **other_attributes):
+        self.name = name
+        self.hp = stats[0] if len(stats) > 0 else 100
+        self.mana = stats[1] if len(stats) > 1 else 50
+        self.weapon = weapon
+        
+        # Добавляем дополнительные атрибуты
+        for attr, value in other_attributes.items():
+            setattr(self, attr, value)
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует с помощью {self.weapon}!")
+
+    def heal(self) -> None:
+        pass
+
+def main():
+    paladin = Paladin(
+        "Артур", 150, 80,           # name и позиционные stats
+        weapon="экскалибур",        # именованный параметр
+        armor=25,                   # дополнительные атрибуты
+        guild="Рыцари круглого стола"
+    )
+    
+    print(paladin.armor)  # 25
+    print(paladin.guild)  # Рыцари круглого стола
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Альтернативные конструкторы (<code class="code">@classmethod</code>)</h2>
+            <p>У класса может быть несколько способов создания объектов через методы класса.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str, hp: int = 0, mana: int = 0):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+
+    @classmethod
+    def create_default(cls, name: str):
+        """Создает паладина с базовыми характеристиками"""
+        return cls(name, hp=0, mana=0)
+
+    @classmethod
+    def create_dark(cls, name: str):
+        """Создает темного паладина с высокими характеристиками"""
+        return cls(name, hp=1500, mana=1000)
+
+    @classmethod
+    def create_light(cls, name: str):
+        """Создает светлого паладина с сбалансированными характеристиками"""
+        return cls(name, hp=1000, mana=1200)
+
+    @classmethod
+    def from_string(cls, data: str):
+        """Создает паладина из строки формата 'имя,hp,mana'"""
+        parts = data.split(',')
+        name = parts[0].strip()
+        hp = int(parts[1].strip()) if len(parts) > 1 else 100
+        mana = int(parts[2].strip()) if len(parts) > 2 else 50
+        return cls(name, hp, mana)
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        """Создает паладина из словаря"""
+        return cls(
+            name=data['name'],
+            hp=data.get('hp', 100),
+            mana=data.get('mana', 50)
+        )
+
+    def attack(self) -> None:
+        pass
+
+    def heal(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"Имя = {self.name}, здоровье = {self.hp}, мана = {self.mana}"
+
+def main():
+    paladin = Paladin.create_default("Пал Палыч")
+    dark_paladin = Paladin.create_dark("Падший Пал Палыч")
+    light_paladin = Paladin.create_light("Просветленный Пал Палыч")
+    
+    # Создание из строки
+    string_paladin = Paladin.from_string("Артур, 200, 100")
+    
+    # Создание из словаря
+    dict_paladin = Paladin.from_dict({
+        'name': 'Ланселот',
+        'hp': 180,
+        'mana': 90
+    })
+
+    print(paladin)
+    print(dark_paladin)
+    print(light_paladin)
+    print(string_paladin)
+    print(dict_paladin)
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Результат выполнения:</h3>
+            <pre><code>Имя = Пал Палыч,               здоровье = 0,    мана = 0
+Имя = Падший Пал Палыч,        здоровье = 1500, мана = 1000
+Имя = Просветленный Пал Палыч, здоровье = 1000, мана = 1200
+Имя = Артур,                   здоровье = 200,  мана = 100
+Имя = Ланселот,                здоровье = 180,  мана = 90
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Dataclasses</h2>
+            <p>Python предоставляет декоратор <code class="code">@dataclass</code> для автоматической генерации конструкторов:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from dataclasses import dataclass, field
+from typing import Optional
+
+@dataclass
+class Paladin:
+    name: str
+    hp: int = 100
+    mana: int = 50
+    weapon: str = "меч"
+    inventory: list = field(default_factory=list)  # Изменяемые объекты требуют field
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует с помощью {self.weapon}!")
+
+    def heal(self) -> None:
+        print(f"{self.name} исцеляет!")
+
+def main():
+    # Автоматически генерируется __init__, __repr__, __eq__
+    paladin1 = Paladin("Артур")
+    paladin2 = Paladin("Ланселот", hp=150, weapon="копье")
+    paladin3 = Paladin(
+        name="Галахад", 
+        hp=120, 
+        mana=80, 
+        inventory=["зелье", "свиток"]
+    )
+    
+    print(paladin1)  # Paladin(name='Артур', hp=100, mana=50, weapon='меч', inventory=[])
+    print(paladin2)  # Paladin(name='Ланселот', hp=150, mana=50, weapon='копье', inventory=[])
+    
+    paladin1.attack()  # Артур атакует с помощью меч!
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Dataclass с дополнительными возможностями:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from dataclasses import dataclass, field
+from typing import ClassVar
+
+@dataclass
+class Paladin:
+    name: str
+    hp: int = 100
+    mana: int = 50
+    
+    # Поля класса (не экземпляра)
+    max_level: ClassVar[int] = 100
+    guild_name: ClassVar[str] = "Орден Света"
+    
+    # Исключенные из инициализации поля
+    level: int = field(default=1, init=False)
+    experience: int = field(default=0, init=False)
+    
+    def __post_init__(self):
+        """Вызывается после __init__"""
+        if self.hp < 0:
+            self.hp = 1
+        if self.mana < 0:
+            self.mana = 0
+        
+        # Расчет уровня на основе статов
+        self.level = max(1, (self.hp + self.mana) // 50)
+
+    def attack(self) -> None:
+        print(f"{self.name} (уровень {self.level}) атакует!")
+
+def main():
+    paladin = Paladin("Артур", hp=200, mana=100)
+    print(paladin.level)  # 6 (вычислено в __post_init__)
+    paladin.attack()      # Артур (уровень 6) атакует!
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Property для валидации</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    def __init__(self, name: str, hp: int = 100, mana: int = 50):
+        self.name = name
+        self._hp = 0
+        self._mana = 0
+        self._level = 1
+        
+        # Используем сеттеры для валидации
+        self.hp = hp
+        self.mana = mana
+
+    @property
+    def hp(self) -> int:
+        return self._hp
+
+    @hp.setter
+    def hp(self, value: int) -> None:
+        if value < 0:
+            raise ValueError("HP не может быть отрицательным")
+        if value > 1000:
+            print("Предупреждение: Очень высокое HP!")
+        self._hp = value
+
+    @property
+    def mana(self) -> int:
+        return self._mana
+
+    @mana.setter
+    def mana(self, value: int) -> None:
+        if value < 0:
+            raise ValueError("Мана не может быть отрицательной")
+        self._mana = value
+
+    @property
+    def level(self) -> int:
+        """Вычисляемое свойство на основе статов"""
+        return max(1, (self._hp + self._mana) // 50)
+
+    @property
+    def power_rating(self) -> float:
+        """Общий рейтинг силы"""
+        return (self._hp * 0.6 + self._mana * 0.4) * self.level
+
+    def attack(self) -> None:
+        print(f"{self.name} (уровень {self.level}, сила {self.power_rating:.1f}) атакует!")
+
+    def heal(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"{self.name}: HP={self.hp}, Mana={self.mana}, Level={self.level}"
+
+def main():
+    try:
+        paladin = Paladin("Артур", hp=200, mana=100)
+        print(paladin)  # Артур: HP=200, Mana=100, Level=6
+        paladin.attack()  # Артур (уровень 6, сила 1080.0) атакует!
+        
+        # paladin.hp = -50  # Вызовет ValueError
+        
+    except ValueError as e:
+        print(f"Ошибка: {e}")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Продвинутые техники инициализации</h2>
+            <h3>Использование __new__ для особых случаев:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Paladin:
+    _instances = {}  # Кэш экземпляров
+    
+    def __new__(cls, name: str, *args, **kwargs):
+        # Паттерн Flyweight - переиспользование объектов с одинаковыми именами
+        if name in cls._instances:
+            print(f"Возвращаем существующего паладина {name}")
+            return cls._instances[name]
+        
+        instance = super().__new__(cls)
+        cls._instances[name] = instance
+        return instance
+    
+    def __init__(self, name: str, hp: int = 100, mana: int = 50):
+        # Проверяем, что объект не был инициализирован ранее
+        if not hasattr(self, 'initialized'):
+            self.name = name
+            self.hp = hp
+            self.mana = mana
+            self.initialized = True
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует!")
+
+def main():
+    paladin1 = Paladin("Артур", 100, 50)
+    paladin2 = Paladin("Артур", 200, 100)  # Вернет тот же объект
+    
+    print(paladin1 is paladin2)  # True
+    print(paladin1.hp)           # 100 (не изменилось)
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Фабричный паттерн с автоматической регистрацией:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Dict, Type, Callable
+
+class PaladinFactory:
+    _builders: Dict[str, Callable] = {}
+    
+    @classmethod
+    def register(cls, paladin_type: str):
+        """Декоратор для регистрации строителей"""
+        def decorator(func: Callable):
+            cls._builders[paladin_type] = func
+            return func
+        return decorator
+    
+    @classmethod
+    def create(cls, paladin_type: str, name: str, **kwargs):
+        """Создает паладина указанного типа"""
+        if paladin_type not in cls._builders:
+            raise ValueError(f"Неизвестный тип паладина: {paladin_type}")
+        return cls._builders[paladin_type](name, **kwargs)
+
+class Paladin:
+    def __init__(self, name: str, hp: int, mana: int, special_ability: str):
+        self.name = name
+        self.hp = hp
+        self.mana = mana
+        self.special_ability = special_ability
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует!")
+
+    def use_ability(self) -> None:
+        print(f"{self.name} использует {self.special_ability}!")
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.special_ability}): HP={self.hp}, Mana={self.mana}"
+
+# Регистрируем строителей
+@PaladinFactory.register("holy")
+def create_holy_paladin(name: str, **kwargs):
+    return Paladin(name, hp=100, mana=150, special_ability="Святой свет")
+
+@PaladinFactory.register("dark")
+def create_dark_paladin(name: str, **kwargs):
+    return Paladin(name, hp=150, mana=100, special_ability="Темная магия")
+
+@PaladinFactory.register("battle")
+def create_battle_paladin(name: str, **kwargs):
+    return Paladin(name, hp=200, mana=50, special_ability="Боевой раж")
+
+def main():
+    holy_pal = PaladinFactory.create("holy", "Артур")
+    dark_pal = PaladinFactory.create("dark", "Мордред")
+    battle_pal = PaladinFactory.create("battle", "Ланселот")
+    
+    for paladin in [holy_pal, dark_pal, battle_pal]:
+        print(paladin)
+        paladin.use_ability()
+        print()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h3>Результат:</h3>
+            <pre><code>Артур (Святой свет): HP=100, Mana=150
+Артур использует Святой свет!
+
+Мордред (Темная магия): HP=150, Mana=100
+Мордред использует Темная магия!
+
+Ланселот (Боевой раж): HP=200, Mana=50
+Ланселот использует Боевой раж!
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

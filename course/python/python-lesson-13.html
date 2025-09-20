@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 13. Python Функции. Часть 1</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 13: Функции. Часть 1</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+            <div id="main-content">
+        <h1>Урок 13. Python Функции. Часть 1</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Зачем нужны функции</h2>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008002328.png" alt="Зачем нужны функции 1">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008002513.png" alt="Зачем нужны функции 2">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008002622.png" alt="Зачем нужны функции 3">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008002659.png" alt="Зачем нужны функции 4">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008002745.png" alt="Зачем нужны функции 5">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008001754.png" alt="Зачем нужны функции 6">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008001556.png" alt="Зачем нужны функции 7">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008001507.png" alt="Зачем нужны функции 8">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008001419.png" alt="Зачем нужны функции 9">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241008001327.png" alt="Зачем нужны функции 10">
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание функции</h2>
+            <div class="note">
+                <p><strong>Функция</strong><br>Функция — это блок кода, который выполняет определенную задачу и может быть вызван по имени. Функции помогают организовывать код и избегать его повторения.</p>
+            </div>
+            <p><strong>Преимущества функций</strong></p>
+            <ul>
+                <li>Упрощают код.</li>
+                <li>Улучшают читаемость.</li>
+                <li>Позволяют многократно использовать один и тот же блок.</li>
+                <li>Облегчают тестирование и поддержку программы.</li>
+            </ul>
+
+            <h5>Объявление функции</h5>
+            <p>В Python функции объявляются с ключевым словом <code class="code">def</code>, за которым следует имя и список параметров в скобках. После двоеточия пишется тело функции с <strong>отступом 4 пробела</strong>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def greet() -> None:
+    """Выводит приветствие в консоль."""
+    print("Привет!")
+</code></pre>
+
+            <p>Чтобы выполнить код внутри функции, вызовите её по имени:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">greet()  # Привет!
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Функции с параметрами</h2>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241203114646.png" alt="Параметры 1">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241203114748.png" alt="Параметры 2">
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def add(a: int, b: int) -> int:
+    return a + b
+
+result = add(3, 5)
+print(result)  # 8
+</code></pre>
+            <blockquote><p>В Python типы <strong>не проверяются</strong> во время выполнения, но <code class="code">mypy</code> или другие анализаторы могут проверить аннотации.</p></blockquote>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241203114820.png" alt="Параметры 3">
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">«Стрелочная» функция</h2>
+            <p>Для компактных выражений в Python используется <strong><code class="code">lambda</code></strong> либо однострочная запись <code class="code">def</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">add_lambda = lambda a, b: a + b
+print(add_lambda(2, 3))  # 5
+
+# Однострочная обычная функция
+def add_short(a: int, b: int) -> int: return a + b
+</code></pre>
+            <div class="note"><p><strong>Важно:</strong> <code class="code">lambda</code> в Python ограничена одним выражением — никаких <code class="code">print()</code> / <code class="code">if</code> / <code class="code">for</code> внутри.</p></div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметры по умолчанию</h2>
+            <p>В Python значения по умолчанию указываются через знак <code class="code">=</code> прямо в списке параметров.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def greet(name: str = "Гость") -> None:
+    print(f"Привет, {name}!")
+
+greet()          # Привет, Гость!
+greet("Анна")    # Привет, Анна!
+</code></pre>
+            <blockquote><p>Значения по умолчанию вычисляются <strong>один раз</strong> при определении функции — избегайте изменяемых объектов (<code class="code">list</code>, <code class="code">dict</code>) как дефолтные значения.</p></blockquote>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Именованные (ключевые) аргументы</h2>
+            <p>Python позволяет передавать аргументы по имени, что делает вызов более читаемым и даёт возможность изменять порядок.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def create_character(name: str, *, race: str = "Human", level: int = 1) -> None:
+    print(f"{name} — {race} уровня {level}")
+
+create_character("Геральт", race="Witcher", level=42)
+create_character("Лара")
+</code></pre>
+            <blockquote>
+                <p>Параметры после <code class="code">*</code> обязательны к передаче по имени.<br>
+                До <code class="code">*</code> — позиционные либо именованные.<br>
+                Аналог Dart-овских «именованных обязательных/необязательных» параметров.</p>
+            </blockquote>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Переменное число аргументов (<code class="code">*args</code>, <code class="code">**kwargs</code>)</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def sum_all(*numbers: int) -> int:
+    return sum(numbers)
+
+print(sum_all(1, 2, 3, 4))  # 10
+</code></pre>
+            <p><code class="code">**kwargs</code> собирает именованные аргументы в словарь.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Возврат нескольких значений</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def stats(a: int, b: int):
+    return a + b, a * b
+
+s, m = stats(2, 5)
+print(s, m)  # 7 10
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практические советы</h2>
+            <ol>
+                <li><strong>Докстринги</strong> — строки сразу после <code class="code">def</code>, описывающие функцию. Используются IDE и <code class="code">help()</code>.</li>
+                <li><strong>Type Hints</strong> — облегчает чтение и статическую проверку (<code class="code">mypy</code>).</li>
+                <li><strong>PEP 8 отступы</strong> — 4 пробела, а не табы.</li>
+                <li><strong>Не злоупотребляйте глобальными переменными</strong> — передавайте данные параметрами.</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241203114922.png" alt="Иллюстрация 1">
+            </div>
+            <div class="gif-container">
+                <img src="images/l8/Pasted image 20241203115206.png" alt="Иллюстрация 2">
+            </div>
+            <div class="note">
+                <p>Используйте аннотации типов и докстринги — это облегчает поддержку кода и позволяет инструментам, таким как <code class="code">mypy</code>, находить ошибки до запуска программы.</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

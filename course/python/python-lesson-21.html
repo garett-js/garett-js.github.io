@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООП. Часть 7: Обобщённые типы (Generics) в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 21: Обобщённые типы (Generics)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Обобщённые типы (Generics) в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Обобщённые типы (Generics) в Python</h2>
+            <p>Generics (обобщённые типы) позволяют <strong>писать гибкий и безопасный код</strong>, который может работать с разными типами данных <strong>без дублирования кода</strong>.</p>
+            <p>Это как универсальный шаблон, в который можно подставить <strong>любой тип</strong>, и Python (с помощью статических анализаторов типов) автоматически будет следить за правильностью типов.</p>
+            <p>В Python для работы с обобщёнными типами используется модуль <code class="code">typing</code>.</p>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Улучшение читаемости и безопасности кода</h2>
+            <p>Допустим, у нас есть список. По умолчанию в него можно добавить <strong>что угодно</strong>.</p>
+            
+            <h3>Проблема без аннотаций типов:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    data = []  # Нет ограничений на тип данных
+    
+    data.append(42)
+    data.append("Python")
+    data.append(True)
+    
+    # IDE и статические анализаторы не знают, что лежит в списке
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Решение с аннотациями типов:</h3>
+            <div class="note">
+                <p>В квадратных скобках <code class="code">[]</code> после типа указываем нужный тип данных</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import List
+
+def main():
+    names: List[str] = []  # Теперь в список можно добавлять только строки
+    names.append("Python")
+    names.append("FastAPI")
+    
+    # names.append(42)  # IDE покажет предупреждение
+    
+    print(names)  # ['Python', 'FastAPI']
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Современный синтаксис Python 3.9+:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    names: list[str] = []  # Встроенные типы теперь поддерживают generics
+    ages: dict[str, int] = {}  # Словарь с строковыми ключами и числовыми значениями
+    coordinates: tuple[float, float] = (10.5, 20.3)  # Кортеж из двух float
+    
+    print(f"Имена: {names}")
+    print(f"Возрасты: {ages}")
+    print(f"Координаты: {coordinates}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p>Теперь IDE и статические анализаторы (mypy, pylance) <strong>помогают</strong> следовать правилам типов и предотвращают ошибки.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Избегаем дублирования кода</h2>
+            <p>Представь, что мы пишем <strong>систему кеширования данных</strong>.<br>
+            Без Generics нам пришлось бы делать <strong>отдельный класс</strong> для каждого типа данных:</p>
+            
+            <h3>Много лишнего кода</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class StringCache(ABC):
+    @abstractmethod
+    def get_by_key(self, key: str) -> str:
+        pass
+    
+    @abstractmethod
+    def set_by_key(self, key: str, value: str) -> None:
+        pass
+
+class IntCache(ABC):
+    @abstractmethod
+    def get_by_key(self, key: str) -> int:
+        pass
+    
+    @abstractmethod
+    def set_by_key(self, key: str, value: int) -> None:
+        pass</code></pre>
+
+            <h3>Используем Generics и избавляемся от дублирования</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+from typing import TypeVar, Generic
+
+# Объявляем обобщённый тип
+T = TypeVar('T')
+
+class Cache(ABC, Generic[T]):
+    @abstractmethod
+    def get_by_key(self, key: str) -> T:
+        pass
+    
+    @abstractmethod
+    def set_by_key(self, key: str, value: T) -> None:
+        pass</code></pre>
+            <p>Теперь можно создать <strong>универсальный кеш</strong>, который хранит <strong>любой тип</strong>:</p>
+            <div class="note">
+                <p><code class="code">TypeVar('T')</code> создаёт переменную типа, которая будет заменена конкретным типом при использовании</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+from typing import TypeVar, Generic, Dict, Optional
+
+T = TypeVar('T')
+
+class Cache(ABC, Generic[T]):
+    @abstractmethod
+    def get_by_key(self, key: str) -> Optional[T]:
+        pass
+    
+    @abstractmethod
+    def set_by_key(self, key: str, value: T) -> None:
+        pass
+
+class MyIntCache(Cache[int]):
+    def __init__(self):
+        self._cache: Dict[str, int] = {}
+    
+    def get_by_key(self, key: str) -> Optional[int]:
+        return self._cache.get(key)
+    
+    def set_by_key(self, key: str, value: int) -> None:
+        self._cache[key] = value
+
+class MyStringCache(Cache[str]):
+    def __init__(self):
+        self._cache: Dict[str, str] = {}
+    
+    def get_by_key(self, key: str) -> Optional[str]:
+        return self._cache.get(key)
+    
+    def set_by_key(self, key: str, value: str) -> None:
+        self._cache[key] = value
+
+def main():
+    int_cache = MyIntCache()
+    int_cache.set_by_key('age', 25)
+    print(int_cache.get_by_key('age'))  # 25
+    
+    string_cache = MyStringCache()
+    string_cache.set_by_key('name', 'Наташа')
+    print(string_cache.get_by_key('name'))  # Наташа
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p>Теперь <strong>неважно, что мы кешируем (строки, числа, объекты)</strong> — <strong>один класс</strong> справится со всеми случаями!</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Современная типизация с Union и Optional</h2>
+            <p>Python предоставляет дополнительные возможности для работы с типами:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Union, Optional, List, Dict, Any
+from dataclasses import dataclass
+
+# Union - один из нескольких типов
+def process_id(user_id: Union[int, str]) -> str:
+    return str(user_id)
+
+# Optional - может быть None (сокращение для Union[T, None])
+def find_user(user_id: int) -> Optional[str]:
+    users = {1: "Алиса", 2: "Боб"}
+    return users.get(user_id)
+
+# Современный синтаксис Python 3.10+ с | оператором
+def modern_union(value: int | str | float) -> str:
+    return f"Значение: {value}"
+
+def modern_optional(name: str | None) -> str:
+    return name or "Неизвестно"
+
+@dataclass
+class Player:
+    name: str
+    level: int
+    items: List[str]
+    stats: Dict[str, int]
+    guild: Optional[str] = None
+
+def main():
+    # Union в действии
+    print(process_id(123))       # "123"
+    print(process_id("user_42")) # "user_42"
+    
+    # Optional в действии
+    print(find_user(1))  # "Алиса"
+    print(find_user(99)) # None
+    
+    # Создание игрока с типизацией
+    player = Player(
+        name="Артур",
+        level=10,
+        items=["меч", "щит", "зелье"],
+        stats={"сила": 15, "ловкость": 12, "интеллект": 8}
+    )
+    print(f"Игрок: {player.name}, уровень: {player.level}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Реализация стека (Stack)</h2>
+            <p>Сделаем <strong>универсальный стек</strong>, который работает <strong>с любыми типами</strong>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import TypeVar, Generic, List, Optional
+from dataclasses import dataclass
+
+T = TypeVar('T')
+
+class Stack(Generic[T]):
+    def __init__(self):
+        self._storage: List[T] = []
+    
+    def push(self, item: T) -> None:
+        """Добавить элемент в стек"""
+        self._storage.append(item)
+    
+    def pop(self) -> T:
+        """Извлечь последний элемент из стека"""
+        if not self._storage:
+            raise IndexError("Стек пуст")
+        return self._storage.pop()
+    
+    def peek(self) -> Optional[T]:
+        """Посмотреть верхний элемент без извлечения"""
+        if not self._storage:
+            return None
+        return self._storage[-1]
+    
+    def is_empty(self) -> bool:
+        """Проверить, пуст ли стек"""
+        return len(self._storage) == 0
+    
+    def size(self) -> int:
+        """Получить размер стека"""
+        return len(self._storage)
+    
+    def __len__(self) -> int:
+        return len(self._storage)
+    
+    def __str__(self) -> str:
+        return f"Stack({self._storage})"
+
+def main():
+    # Стек для чисел
+    stack_int: Stack[int] = Stack()
+    stack_int.push(42)
+    stack_int.push(100)
+    print(f"Извлечено: {stack_int.pop()}")  # 100
+    print(f"Верхний элемент: {stack_int.peek()}")  # 42
+    
+    # Стек для строк
+    stack_str: Stack[str] = Stack()
+    stack_str.push("Hello")
+    stack_str.push("World")
+    print(f"Извлечено: {stack_str.pop()}")  # "World"
+    
+    # Стек для пользовательских объектов
+    @dataclass
+    class Item:
+        name: str
+        value: int
+    
+    stack_items: Stack[Item] = Stack()
+    stack_items.push(Item("Меч", 100))
+    stack_items.push(Item("Щит", 50))
+    print(f"Извлечен предмет: {stack_items.pop().name}")  # "Щит"
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Generics в функциях</h2>
+            <p>Можно использовать <strong>Generics не только в классах, но и в функциях</strong>.
+            Эти функции <strong>работают с любыми типами</strong> и автоматически подставляют нужный тип.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import TypeVar, List, Optional, Callable, Tuple
+
+T = TypeVar('T')
+U = TypeVar('U')
+
+def first(items: List[T]) -> T:
+    """Возвращает первый элемент списка"""
+    if not items:
+        raise IndexError("Список пуст")
+    return items[0]
+
+def last(items: List[T]) -> T:
+    """Возвращает последний элемент списка"""
+    if not items:
+        raise IndexError("Список пуст")
+    return items[-1]
+
+def find_first(items: List[T], predicate: Callable[[T], bool]) -> Optional[T]:
+    """Находит первый элемент, удовлетворяющий условию"""
+    for item in items:
+        if predicate(item):
+            return item
+    return None
+
+def map_list(items: List[T], func: Callable[[T], U]) -> List[U]:
+    """Применяет функцию к каждому элементу списка"""
+    return [func(item) for item in items]
+
+def zip_lists(list1: List[T], list2: List[U]) -> List[Tuple[T, U]]:
+    """Объединяет два списка в список кортежей"""
+    return list(zip(list1, list2))
+
+def main():
+    # Работа с числами
+    numbers = [1, 2, 3, 4, 5]
+    print(first(numbers))  # 1
+    print(last(numbers))   # 5
+    
+    # Работа со строками
+    words = ["Python", "Java", "JavaScript", "Go"]
+    print(first(words))  # "Python"
+    print(last(words))   # "Go"
+    
+    # Поиск с предикатом
+    long_word = find_first(words, lambda w: len(w) > 6)
+    print(f"Длинное слово: {long_word}")  # "JavaScript"
+    
+    # Преобразование типов
+    lengths = map_list(words, len)
+    print(f"Длины слов: {lengths}")  # [6, 4, 10, 2]
+    
+    # Объединение списков разных типов
+    names = ["Алиса", "Боб", "Чарли"]
+    ages = [25, 30, 35]
+    paired = zip_lists(names, ages)
+    print(f"Пары: {paired}")  # [('Алиса', 25), ('Боб', 30), ('Чарли', 35)]
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Ограничение типов с bound</h2>
+            <p>Иногда <strong>Generics должны работать только с определёнными типами</strong>. 
+            Например, мы хотим, чтобы функция могла работать <strong>только с числовыми типами</strong>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import TypeVar, Protocol, List
+from abc import ABC, abstractmethod
+
+# Протокол для объектов, которые можно сравнивать
+class Comparable(Protocol):
+    def __lt__(self, other) -> bool: ...
+    def __le__(self, other) -> bool: ...
+    def __gt__(self, other) -> bool: ...
+    def __ge__(self, other) -> bool: ...
+
+# Ограничение через bound - только сравнимые типы
+ComparableT = TypeVar('ComparableT', bound=Comparable)
+
+def max_value(items: List[ComparableT]) -> ComparableT:
+    """Находит максимальное значение среди сравнимых объектов"""
+    if not items:
+        raise ValueError("Список не может быть пустым")
+    
+    max_item = items[0]
+    for item in items[1:]:
+        if item > max_item:
+            max_item = item
+    return max_item
+
+def sort_items(items: List[ComparableT]) -> List[ComparableT]:
+    """Сортирует сравнимые объекты"""
+    return sorted(items)
+
+# Ограничение через конкретные типы
+NumberT = TypeVar('NumberT', int, float, complex)
+
+def add_numbers(a: NumberT, b: NumberT) -> NumberT:
+    """Складывает числа одинакового типа"""
+    return a + b
+
+# Базовый класс для ограничения
+class GameEntity(ABC):
+    def __init__(self, name: str, hp: int):
+        self.name = name
+        self.hp = hp
+    
+    @abstractmethod
+    def attack(self) -> int:
+        pass
+    
+    def __lt__(self, other) -> bool:
+        return self.hp < other.hp
+
+# Ограничение наследниками класса
+EntityT = TypeVar('EntityT', bound=GameEntity)
+
+class Warrior(GameEntity):
+    def attack(self) -> int:
+        return 25
+
+class Mage(GameEntity):
+    def attack(self) -> int:
+        return 35
+
+def find_strongest(entities: List[EntityT]) -> EntityT:
+    """Находит сущность с наибольшим HP"""
+    return max_value(entities)
+
+def heal_entity(entity: EntityT, amount: int) -> EntityT:
+    """Лечит игровую сущность"""
+    entity.hp += amount
+    return entity
+
+def main():
+    # Работа с числами
+    numbers = [1, 5, 3, 9, 2]
+    print(f"Максимальное число: {max_value(numbers)}")  # 9
+    print(f"Отсортированные: {sort_items(numbers)}")    # [1, 2, 3, 5, 9]
+    
+    # Сложение чисел одного типа
+    print(f"Сумма int: {add_numbers(5, 3)}")           # 8
+    print(f"Сумма float: {add_numbers(2.5, 1.5)}")     # 4.0
+    
+    # Работа с игровыми сущностями
+    warrior = Warrior("Конан", 100)
+    mage = Mage("Гэндальф", 80)
+    entities = [warrior, mage]
+    
+    strongest = find_strongest(entities)
+    print(f"Сильнейший: {strongest.name} с {strongest.hp} HP")
+    
+    # Лечение
+    healed_mage = heal_entity(mage, 20)
+    print(f"После лечения у {healed_mage.name}: {healed_mage.hp} HP")
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Продвинутые возможности типизации</h2>
+            
+            <h3>Literal типы:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Literal, Union
+
+GameMode = Literal["easy", "normal", "hard", "nightmare"]
+PlayerClass = Literal["warrior", "mage", "archer", "rogue"]
+
+def set_difficulty(mode: GameMode) -> str:
+    difficulty_settings = {
+        "easy": "Враги слабые, много ресурсов",
+        "normal": "Сбалансированная игра",
+        "hard": "Сильные враги, мало ресурсов",
+        "nightmare": "Экстремальная сложность"
+    }
+    return difficulty_settings[mode]
+
+def create_character(name: str, char_class: PlayerClass) -> str:
+    return f"Создан персонаж {name} класса {char_class}"
+
+def main():
+    print(set_difficulty("hard"))  # Работает
+    print(create_character("Артур", "warrior"))  # Работает
+    # print(set_difficulty("impossible"))  # IDE покажет ошибку
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>NewType для создания различимых типов:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import NewType
+
+UserId = NewType('UserId', int)
+ItemId = NewType('ItemId', int)
+GuildId = NewType('GuildId', int)
+
+def get_user_name(user_id: UserId) -> str:
+    users = {UserId(1): "Алиса", UserId(2): "Боб"}
+    return users.get(user_id, "Неизвестный")
+
+def get_item_name(item_id: ItemId) -> str:
+    items = {ItemId(100): "Меч", ItemId(101): "Щит"}
+    return items.get(item_id, "Неизвестный предмет")
+
+def main():
+    user_id = UserId(1)
+    item_id = ItemId(100)
+    
+    print(get_user_name(user_id))  # "Алиса"
+    print(get_item_name(item_id))  # "Меч"
+    
+    # get_user_name(item_id)  # IDE покажет предупреждение о несоответствии типов
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Final для неизменяемых значений:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Final, ClassVar
+
+class GameConfig:
+    MAX_PLAYERS: Final[int] = 100
+    DEFAULT_HEALTH: Final[int] = 100
+    GAME_VERSION: Final[str] = "1.0.0"
+    
+    def __init__(self):
+        self.player_count: int = 0
+        # self.MAX_PLAYERS = 200  # Ошибка: нельзя изменить Final переменную
+
+class Player:
+    # ClassVar для переменных класса с типизацией
+    total_players: ClassVar[int] = 0
+    
+    def __init__(self, name: str):
+        self.name: Final[str] = name  # Имя нельзя изменить после создания
+        Player.total_players += 1
+
+def main():
+    config = GameConfig()
+    print(f"Максимум игроков: {config.MAX_PLAYERS}")
+    
+    player = Player("Геральт")
+    print(f"Игрок: {player.name}")
+    print(f"Всего игроков: {Player.total_players}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Callable типы для функций:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import Callable, TypeVar, List
+
+T = TypeVar('T')
+U = TypeVar('U')
+
+# Типизация функций как параметров
+def apply_to_all(items: List[T], func: Callable[[T], U]) -> List[U]:
+    """Применяет функцию к каждому элементу списка"""
+    return [func(item) for item in items]
+
+def filter_items(items: List[T], predicate: Callable[[T], bool]) -> List[T]:
+    """Фильтрует элементы по предикату"""
+    return [item for item in items if predicate(item)]
+
+# Сложные Callable типы
+ProcessorFunc = Callable[[str, int], bool]
+EventHandler = Callable[[str], None]
+
+def process_data(data: str, count: int, processor: ProcessorFunc) -> bool:
+    """Обрабатывает данные с помощью переданной функции"""
+    return processor(data, count)
+
+def register_event(event_name: str, handler: EventHandler) -> None:
+    """Регистрирует обработчик события"""
+    print(f"Зарегистрирован обработчик для события: {event_name}")
+    handler(event_name)
+
+def main():
+    # Применение функций к спискам
+    numbers = [1, 2, 3, 4, 5]
+    doubled = apply_to_all(numbers, lambda x: x * 2)
+    print(f"Удвоенные числа: {doubled}")  # [2, 4, 6, 8, 10]
+    
+    words = ["Python", "Java", "Go", "Rust"]
+    lengths = apply_to_all(words, len)
+    print(f"Длины слов: {lengths}")  # [6, 4, 2, 4]
+    
+    # Фильтрация
+    long_words = filter_items(words, lambda w: len(w) > 3)
+    print(f"Длинные слова: {long_words}")  # ['Python', 'Java', 'Rust']
+    
+    # Обработка с Callable
+    def is_valid_input(text: str, min_length: int) -> bool:
+        return len(text) >= min_length
+    
+    result = process_data("Python", 5, is_valid_input)
+    print(f"Данные валидны: {result}")  # True
+    
+    # Обработчик событий
+    def on_player_join(event: str) -> None:
+        print(f"Обработка события: {event}")
+    
+    register_event("player_joined", on_player_join)
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практический пример: Система инвентаря в игре</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import TypeVar, Generic, Dict, List, Optional, Protocol, Callable
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
+from enum import Enum
+
+# Протокол для предметов, которые можно стакать
+class Stackable(Protocol):
+    max_stack_size: int
+    
+    def can_stack_with(self, other: 'Stackable') -> bool: ...
+
+# Базовые типы предметов
+ItemT = TypeVar('ItemT', bound='Item')
+
+class ItemType(Enum):
+    WEAPON = "weapon"
+    ARMOR = "armor"
+    CONSUMABLE = "consumable"
+    QUEST = "quest"
+    MATERIAL = "material"
+
+@dataclass
+class Item:
+    id: int
+    name: str
+    item_type: ItemType
+    value: int
+    max_stack_size: int = 1
+    
+    def can_stack_with(self, other: 'Item') -> bool:
+        return (self.id == other.id and 
+                self.max_stack_size > 1)
+
+@dataclass
+class ItemStack(Generic[ItemT]):
+    item: ItemT
+    quantity: int = 1
+    
+    def can_add(self, amount: int) -> bool:
+        return self.quantity + amount <= self.item.max_stack_size
+    
+    def add_items(self, amount: int) -> int:
+        """Добавляет предметы в стак, возвращает количество не помещённых"""
+        can_add = min(amount, self.item.max_stack_size - self.quantity)
+        self.quantity += can_add
+        return amount - can_add
+    
+    def remove_items(self, amount: int) -> int:
+        """Удаляет предметы из стака, возвращает фактически удалённое количество"""
+        removed = min(amount, self.quantity)
+        self.quantity -= removed
+        return removed
+
+class Inventory(Generic[ItemT]):
+    def __init__(self, max_slots: int = 20):
+        self.max_slots = max_slots
+        self.items: List[Optional[ItemStack[ItemT]]] = [None] * max_slots
+    
+    def add_item(self, item: ItemT, quantity: int = 1) -> int:
+        """Добавляет предмет в инвентарь, возвращает количество не помещённых"""
+        remaining = quantity
+        
+        # Сначала пытаемся добавить к существующим стакам
+        for slot in self.items:
+            if slot and slot.item.can_stack_with(item) and remaining > 0:
+                remaining = slot.add_items(remaining)
+        
+        # Затем создаём новые стаки в пустых слотах
+        for i, slot in enumerate(self.items):
+            if slot is None and remaining > 0:
+                stack_size = min(remaining, item.max_stack_size)
+                self.items[i] = ItemStack(item, stack_size)
+                remaining -= stack_size
+        
+        return remaining
+    
+    def remove_item(self, item_id: int, quantity: int = 1) -> int:
+        """Удаляет предмет из инвентаря, возвращает фактически удалённое количество"""
+        removed = 0
+        
+        for i, slot in enumerate(self.items):
+            if slot and slot.item.id == item_id and removed < quantity:
+                need_to_remove = quantity - removed
+                actually_removed = slot.remove_items(need_to_remove)
+                removed += actually_removed
+                
+                if slot.quantity == 0:
+                    self.items[i] = None
+        
+        return removed
+    
+    def find_item(self, item_id: int) -> Optional[ItemStack[ItemT]]:
+        """Находит первый стак предмета с указанным ID"""
+        for slot in self.items:
+            if slot and slot.item.id == item_id:
+                return slot
+        return None
+    
+    def get_total_quantity(self, item_id: int) -> int:
+        """Получает общее количество предмета в инвентаре"""
+        total = 0
+        for slot in self.items:
+            if slot and slot.item.id == item_id:
+                total += slot.quantity
+        return total
+    
+    def filter_by_type(self, item_type: ItemType) -> List[ItemStack[ItemT]]:
+        """Фильтрует предметы по типу"""
+        result = []
+        for slot in self.items:
+            if slot and slot.item.item_type == item_type:
+                result.append(slot)
+        return result
+    
+    def apply_to_all(self, func: Callable[[ItemStack[ItemT]], None]) -> None:
+        """Применяет функцию ко всем непустым слотам"""
+        for slot in self.items:
+            if slot:
+                func(slot)
+    
+    def get_total_value(self) -> int:
+        """Вычисляет общую стоимость всех предметов"""
+        total = 0
+        for slot in self.items:
+            if slot:
+                total += slot.item.value * slot.quantity
+        return total
+
+def main():
+    # Создание предметов
+    sword = Item(1, "Железный меч", ItemType.WEAPON, 100)
+    potion = Item(2, "Зелье здоровья", ItemType.CONSUMABLE, 50, max_stack_size=10)
+    arrow = Item(3, "Стрела", ItemType.MATERIAL, 5, max_stack_size=100)
+    
+    # Создание инвентаря
+    inventory: Inventory[Item] = Inventory(max_slots=10)
+    
+    # Добавление предметов
+    print(f"Добавляем меч: осталось {inventory.add_item(sword)} шт.")
+    print(f"Добавляем 15 зелий: осталось {inventory.add_item(potion, 15)} шт.")
+    print(f"Добавляем 150 стрел: осталось {inventory.add_item(arrow, 150)} шт.")
+    
+    # Проверка содержимого
+    print(f"\nВсего зелий в инвентаре: {inventory.get_total_quantity(2)}")
+    print(f"Всего стрел в инвентаре: {inventory.get_total_quantity(3)}")
+    
+    # Фильтрация по типу
+    consumables = inventory.filter_by_type(ItemType.CONSUMABLE)
+    print(f"\nРасходники в инвентаре:")
+    for stack in consumables:
+        print(f"  {stack.item.name}: {stack.quantity} шт.")
+    
+    # Общая стоимость
+    print(f"\nОбщая стоимость инвентаря: {inventory.get_total_value()} золота")
+    
+    # Применение функции ко всем предметам
+    print("\nВсе предметы в инвентаре:")
+    inventory.apply_to_all(
+        lambda stack: print(f"  {stack.item.name}: {stack.quantity} шт. "
+                          f"(стоимость: {stack.item.value * stack.quantity})")
+    )
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Преимущества обобщённых типов в Python</h2>
+            <ul>
+                <li>✅ <strong>Безопасность типов</strong> - IDE и статические анализаторы помогают находить ошибки</li>
+                <li>✅ <strong>Автодополнение</strong> - IDE знает типы и предлагает правильные методы</li>
+                <li>✅ <strong>Читаемость кода</strong> - понятно, какие типы ожидаются</li>
+                <li>✅ <strong>Рефакторинг</strong> - легче изменять код без ошибок</li>
+                <li>✅ <strong>Документация</strong> - типы служат документацией</li>
+                <li>✅ <strong>Повторное использование</strong> - один код работает с разными типами</li>
+            </ul>
+            <div class="note">
+                <p>Обобщённые типы делают Python код более надёжным и понятным, особенно в больших проектах!</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

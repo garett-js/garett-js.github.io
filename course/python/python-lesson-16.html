@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 16. Python ООП. Часть 2</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">← Назад</a> Урок 16: ООП. Часть 2</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок 16. Python ООП. Часть 2</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Принципы ООП</h2>
+            <div class="note"><p><strong>Абстракция</strong><br>Абстракция - это выделение только важных характеристик объекта.<br>Например, у телефона основные свойства — это возможность звонить и принимать звонки. Его внутреннее устройство нас не интересует.</p></div>
+            <div class="note"><p><strong>Наследование</strong><br>Наследование позволяет одному классу (дочернему) перенимать свойства и методы другого класса (родительского).<br>Например, все смартфоны — это телефоны, но они могут обладать дополнительными функциями, такими как запуск приложений.</p></div>
+            <div class="note"><p><strong>Инкапсуляция</strong><br>Инкапсуляция — это сокрытие внутренней реализации объекта.<br>Внешний мир взаимодействует с объектом через публичные методы, а не напрямую с его внутренними данными.</p></div>
+            <div class="note"><p><strong>Полиморфизм</strong><br>Полиморфизм позволяет одному и тому же методу работать по-разному в зависимости от объекта, который его вызывает.<br>Например, разные модели телефонов могут совершать вызов по-разному.</p></div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Абстракция</h2>
+            <p>Продолжим рассматривать все эти принципы на примере RPG персонажей. Начнем с создания абстрактного класса <strong>AbstractCharacter</strong></p>
+            <ol>
+                <li>Создадим папку <strong>character</strong></li>
+                <li>Добавим файл <strong>character.py</strong> , где будут находится только классы</li>
+                <li>Добавим файл <strong>main.py</strong> , где будет находится главная функция main</li>
+            </ol>
+            <p>В RPG мире все персонажи обладают базовыми способностями: атаковать и защищаться. Имеют базовые характеристики имя, количество жизней, уровень.</p>
+            <p>Вместо того чтобы прописывать эти способности каждому типу (рыцари, маги, лучники), мы выделяем общую "абстракцию" — базовый класс, описывающий основные функции любого персонажа.</p>
+            <p>Пропишем все классы внутри файла <code class="code">character.py</code></p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name
+        self.hp = hp
+        self.level = level
+    
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+    
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+</code></pre>
+            <p><strong>Абстрактный класс</strong>: Это шаблон, который задаёт базовые характеристики и поведение для всех наследников, но не может быть создан напрямую.</p>
+            <p><strong>Методы без тела</strong>: Абстрактный метод (например, attack) будет реализован позже, в классах-наследниках.</p>
+            <p><strong>Особенности Python:</strong></p>
+            <ol>
+                <li><strong>Модуль <code class="code">abc</code></strong>: В Python для создания абстрактных классов используется модуль <code class="code">abc</code> (Abstract Base Classes)</li>
+                <li><strong><code class="code">ABC</code></strong>: Класс должен наследоваться от <code class="code">ABC</code> чтобы стать абстрактным</li>
+                <li><strong><code class="code">@abstractmethod</code></strong>: Декоратор указывает, что метод является абстрактным и должен быть переопределён в дочерних классах</li>
+                <li><strong>Аннотации типов</strong>: <code class="code">-> None</code> указывает, что метод ничего не возвращает</li>
+            </ol>
+            <p>Теперь, любой персонаж может быть создан на основе этой абстракции</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Наследование</h2>
+            <ul>
+                <li>Родительским классом с базовыми характеристиками общими для всех персонажей будет абстрактный класс персонажа <strong>AbstractCharacter</strong></li>
+                <li>От него унаследуют характеристики два других класса: <strong>Воин</strong> и <strong>Маг</strong></li>
+                <li><strong>Воин</strong> и <strong>Маг</strong> будут иметь полностью все характеристики своего <strong>родителя</strong> + свои <strong>уникальные</strong> характеристики.</li>
+                <li>У Мага, в свою очередь, тоже есть два наследника: <strong>Темный маг</strong> и <strong>Белый маг</strong></li>
+                <li><strong>Темный маг</strong> и <strong>Белый маг</strong> будут иметь полностью все характеристики своего <strong>родителя</strong> мага + полностью все характеристики родителя мага <strong>AbstractCharacter</strong> + свои <strong>уникальные</strong> характеристики.</li>
+            </ul>
+            <div class="note"><p>Используем синтаксис <code class="code">class Child(Parent):</code> чтобы унаследовать характеристики от другого класса</p></div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Класс Warrior наследуется от AbstractCharacter
+class Warrior(AbstractCharacter):
+    def __init__(self, name: str, hp: int, level: int, strength: int):
+        super().__init__(name, hp, level)  # Вызов конструктора родителя
+        self.strength = strength  # Сила воина
+
+    # Переопределяем метод атаки
+    def attack(self) -> None:
+        print(f"Воин {self.name} атакует врага с силой {self.strength}!")
+
+    # Переопределяем метод защиты
+    def defend(self) -> None:
+        print(f"Воин {self.name} ставит щит и защищается!")
+</code></pre>
+            <ol>
+                <li><code class="code">class Warrior(AbstractCharacter):</code> означает что <code class="code">Warrior</code> унаследует все характеристики <code class="code">AbstractCharacter</code></li>
+                <li><code class="code">self.strength = strength</code> Уникальное свойство для класса <code class="code">Warrior</code></li>
+                <li><code class="code">super().__init__(name, hp, level)</code> вызов конструктора при наследовании. Обязательно нужно сначала вызывать конструктор родителя через <code class="code">super()</code>, потом инициализировать свойства наследника. Чтобы сначала инициализировать свойства родительского класса, а потом уже класса потомка.</li>
+                <li><code class="code">def attack(self) -> None:</code> переопределяем родительские методы, т.е. берем методы родителя с тем же названием, но переделываем внутренний функционал, меняем форму (вид полиморфизма)</li>
+            </ol>
+            <p><strong>Особенности Python в наследовании:</strong></p>
+            <ol>
+                <li><strong><code class="code">super()</code></strong>: Функция для вызова методов родительского класса. В Python можно вызывать <code class="code">super()</code> без параметров</li>
+                <li><strong>Множественное наследование</strong>: Python поддерживает наследование от нескольких классов одновременно: <code class="code">class Child(Parent1, Parent2):</code></li>
+                <li><strong>MRO (Method Resolution Order)</strong>: Python определяет порядок поиска методов в иерархии наследования</li>
+            </ol>
+            <p>Далее попробуем создать новый объект класса <code class="code">Warrior</code> и посмотрим какие у него теперь есть свойства и методы.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from character import Warrior
+
+def main():
+    knight = Warrior("Арагорн", 100, 80, 20)
+
+    print(knight.name)  # Арагорн
+    print(knight.hp)    # 100
+
+    knight.attack()     # Воин Арагорн атакует врага с силой 20!
+    knight.defend()     # Воин Арагорн ставит щит и защищается!
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <ul>
+                <li>Чтоб воспользоваться классами из другого файла, внутри файла <code class="code">main.py</code> нужно импортировать файл с этими классами <code class="code">from character import Warrior</code></li>
+                <li>При обращении к объекту через точку, можно увидеть что теперь у война, есть доступ для всех характеристик как своих, так и характеристик родительского класса!</li>
+            </ul>
+            <p>Можно обратить внимание что кроме характеристик объекта, которые мы придумали сами, есть ещё множество других методов, например, <code class="code">__str__</code> или <code class="code">__hash__</code></p>
+            <p>Откуда они взялись?</p>
+            <div class="note"><p><code class="code">object</code><br>У <strong>каждого объекта</strong> в языке программирования Python, существует, один <strong>главный</strong>, но по умолчанию невидимый, родительский класс <code class="code">object</code><br>От класса <code class="code">object</code> наследуются некоторые общие методы, такие как <code class="code">__hash__</code> и <code class="code">__str__</code><br>Таким образом, даже у нашего абстрактного базового класса <code class="code">AbstractCharacter</code> есть "супер-родитель" — класс <code class="code">object</code></p></div>
+            <ul>
+                <li><code class="code">__hash__</code> — это специальный метод, который возвращает целое число (хэш-код) для данного объекта. Хэш-код используется для сравнения объектов</li>
+                <li><code class="code">__str__</code> — это специальный метод, который возвращает строковое представление объекта.</li>
+            </ul>
+
+            <p>Переопределим метод <code class="code">__str__</code> для отображения информации о всех наших будущих персонажах</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name
+        self.level = level
+        self.hp = hp
+
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"Имя={self.name}, уровень={self.level}, здоровье={self.hp}"
+</code></pre>
+
+            <p>Теперь реализуем более глубокое наследование с помощью персонажа Мага</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Класс Mage наследуется от AbstractCharacter
+class Mage(AbstractCharacter):
+    def __init__(self, name: str, hp: int, level: int, mana: int):
+        super().__init__(name, hp, level)
+        self.mana = mana  # Магическая энергия
+
+    # Метод для применения заклинания
+    def cast_spell(self, mana_cost: int) -> None:
+        if self.mana <= 0 or self.mana < mana_cost:
+            print("Не могу колдовать! Мана закончилась! Ааааа!")
+            return
+        print(f"{self.name} кастует фаербол, затрачивая {mana_cost} маны!")
+        self.mana -= mana_cost
+
+    def attack(self) -> None:
+        print(f"Маг {self.name} атакует врага магическим кинжалом")
+
+    def defend(self) -> None:
+        print(f"Маг {self.name} кастует защитный купол")
+</code></pre>
+            <p>А теперь создадим еще наследников, для которых родителем будет обычный Маг</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class DarkMage(Mage):
+    def __init__(self, name: str, hp: int, level: int, mana: int):
+        super().__init__(name, hp, level, mana)
+        self.dark_power = "Испепеление тьмой"
+
+    def use_dark_power(self) -> None:
+        print(f"{self.name} использует {self.dark_power}")
+        print("Всё в радиусе 100км было уничтожено!")
+
+class LightMage(Mage):
+    def __init__(self, name: str, hp: int, level: int, mana: int):
+        super().__init__(name, hp, level, mana)
+        self.heal_power = "Исцеление"
+
+    def use_light_power(self) -> None:
+        print(f"{self.name} использует {self.heal_power}")
+        print("Теперь всё хорошо!")
+</code></pre>
+            <p>Создадим объекты персонажей темного и светлого магов и убедимся, что для всех доступны все характеристики от всех родительских классов.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from character import DarkMage, LightMage
+
+def main():
+    dark_wizard = DarkMage("Паймон", 200, 50, 1200)
+    dark_wizard.attack()
+    dark_wizard.defend()
+    dark_wizard.cast_spell(20)
+    dark_wizard.use_dark_power()
+
+    light_wizard = LightMage("Василий", 80, 50, 2000)
+    light_wizard.defend()
+    light_wizard.use_light_power()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Инкапсуляция</h2>
+            <p>Инкапсуляцию можно представить как состав из двух слов "в" "капсуле". Т.е. условно и упрощенно можно привести такой, пример, что когда мы создали класс <code class="code">AbstractCharacter</code> и добавили в него свойства и методы, то все эти характеристики мы инкапсулировали в пределах этого класса.</p>
+            <p>Как-будто поместили всё в защитную капсулу, как таблетку.</p>
+            <ol>
+                <li>Таким образом мы связали свойства и методы по смыслу, что они относятся к классу Персонаж</li>
+                <li>Мы можем управлять доступом к свойствам и методам. Где-то приоткрыть капсулу для доступа извне, или наоборот полностью закрыться.</li>
+                <li>"Приоткрывать" капсулу можно не для всех характеристик сразу, а выборочно для определенных свойств или методов.</li>
+            </ol>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name
+        self.level = level
+        self.hp = hp
+
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"Имя={self.name}, уровень={self.level}, здоровье={self.hp}"
+</code></pre>
+            <p>В данном случае данные инкапсулированы по смыслу с привязкой к классу данных. Но все данные являются доступными извне, т.е. публичными (<strong>public</strong>)</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from character import Warrior
+
+def main():
+    knight = Warrior("Воин", 100, 50, 20)
+
+    knight.hp = 200  # Мы можем внаглую взять и изменить хп
+    print(knight.hp)  # Есть возможность посмотреть данные хп
+
+    # А теперь можно сделать что-то читерское
+    # Взять и обнулить жизни персонажу ... что не очень хорошо
+
+    knight.hp = 0  # !!!
+    print(knight.hp)  # Упс ...
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <p>Не очень приятная получилась ситуация ... но можно воспользоваться инкапсуляцией и установить уровни доступа к данным.</p>
+            <p><strong>В Python существуют три уровня видимости:</strong></p>
+            <ul>
+                <li><strong>Public</strong> (публичные) — <code class="code">name</code> — доступны всем</li>
+                <li><strong>Protected</strong> (защищённые) — <code class="code">_name</code> — доступны классу и его наследникам (соглашение)</li>
+                <li><strong>Private</strong> (приватные) — <code class="code">__name</code> — доступны только внутри класса</li>
+            </ul>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name        # Публичное свойство
+        self.level = level      # Публичное свойство  
+        self._hp = hp          # Защищённое свойство (одно подчёркивание)
+
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"Имя={self.name}, уровень={self.level}, здоровье={self._hp}"
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from character import Warrior
+
+def main():
+    knight = Warrior("Воин", 100, 50, 20)
+
+    knight._hp = 0  # Технически возможно, но нарушает соглашение Python
+    
+    print(knight._hp)  # Можно получить, но это нарушение соглашения
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <div class="note"><p><strong>Protected в Python</strong><br>Одно подчёркивание <code class="code">_hp</code> — это соглашение Python, означающее "используйте осторожно". Технически доступ есть, но это сигнал разработчикам, что свойство внутреннее.</p></div>
+
+            <p>Для более строгой приватности используем двойное подчёркивание:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name
+        self.level = level
+        self.__hp = hp  # Приватное свойство (два подчёркивания)
+
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"Имя={self.name}, уровень={self.level}, здоровье={self.__hp}"
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from character import Warrior
+
+def main():
+    knight = Warrior("Воин", 100, 50, 20)
+
+    # knight.__hp = 0  # Ошибка! Атрибут недоступен
+    # print(knight.__hp)  # Ошибка! Атрибут недоступен
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <div class="note"><p><strong>Полный Private</strong><br>Отлично! Мы полностью закрыли доступ к свойству hp! Часто это очень нужно и важно скрыть внутреннюю реализацию класса, чтобы ничего не сломать!<br><strong>Особенность Python:</strong> Двойное подчёркивание <code class="code">__hp</code> вызывает name mangling — Python автоматически переименовывает атрибут в <code class="code">_AbstractCharacter__hp</code>, делая его сложнодоступным извне.</p></div>
+
+            <p>Но в данном случае это как-то слишком радикально. Хотелось бы немного гибкости, чтобы можно было посмотреть значения свойства и как-то обработать ситуацию когда кто-то решил присвоить значение ноль</p>
+            <p>Есть специальные механизмы для работы со свойствами класса</p>
+            <ul>
+                <li><strong>Setter</strong> - позволяет гибко управлять инициализацией свойства</li>
+                <li><strong>Getter</strong> - позволяет гибко управлять доступом к свойству</li>
+            </ul>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name
+        self.level = level
+        self._hp = hp  # Приватное свойство
+
+    # Геттер для доступа к закрытому полю
+    @property
+    def hp(self) -> int:
+        return self._hp
+
+    # Сеттер для изменения закрытого поля
+    @hp.setter
+    def hp(self, value: int) -> None:
+        if value <= 0:
+            print("Здоровье не может быть отрицательным!")
+            print("И обнулять тоже читерство! :)")
+            return
+        else:
+            self._hp = value
+
+    @abstractmethod
+    def attack(self) -> None:
+        pass
+
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+
+    def __str__(self) -> str:
+        return f"Имя={self.name}, уровень={self.level}, здоровье={self._hp}"
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from character import Warrior
+
+def main():
+    knight = Warrior("Воин", 100, 50, 20)
+
+    knight.hp = 200
+    knight.hp = 0
+
+    print(knight.hp)
+
+if __name__ == "__main__":
+    main()
+
+# Здоровье не может быть отрицательным!
+# И обнулять тоже читерство! :)
+# 200
+</code></pre>
+
+            <p><strong>Особенности Python properties:</strong></p>
+            <ol>
+                <li><strong><code class="code">@property</code></strong> — превращает метод в свойство (геттер)</li>
+                <li><strong><code class="code">@property_name.setter</code></strong> — создаёт сеттер для свойства</li>
+                <li><strong><code class="code">@property_name.deleter</code></strong> — создаёт делетер для свойства (необязательно)</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Дополнительные возможности Python</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    def __init__(self, name: str, hp: int):
+        self.name = name
+        self._hp = hp
+        self._max_hp = hp
+
+    @property
+    def hp(self) -> int:
+        return self._hp
+
+    @hp.setter
+    def hp(self, value: int) -> None:
+        if value < 0:
+            self._hp = 0
+        elif value > self._max_hp:
+            self._hp = self._max_hp
+            print(f"HP не может превышать максимум: {self._max_hp}")
+        else:
+            self._hp = value
+
+    @property
+    def is_alive(self) -> bool:
+        """Только геттер — вычисляемое свойство"""
+        return self._hp > 0
+
+    @property
+    def hp_percentage(self) -> float:
+        """Процент здоровья"""
+        return (self._hp / self._max_hp) * 100
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полиморфизм</h2>
+            <p>Полиморфизм можно разбить на два слова: "поли" — много, "морфизм" — форм. Это позволяет одному и тому же коду принимать множество форм и вести себя по-разному в зависимости от ситуации.</p>
+            <p>Чтобы понять, зачем это нужно, давай начнём с примера. Вернёмся к нашим игровым персонажам. Мы создали базовый класс <code class="code">AbstractCharacter</code>, но нам нужно, чтобы у разных классов-наследников (например, воинов, магов и лучников) были свои уникальные способности.</p>
+            <p><strong>Код без полиморфизма — сплошной хаос!</strong><br>Потому что мы с вами, ещё сами того не понимая, уже использовали правильный подход к созданию классов с полиморфизмом, но рассмотрим пример без применения этого подхода.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Warrior:
+    def __init__(self, name: str, strength: int):
+        self.name = name
+        self.strength = strength
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует мечом с уроном {self.strength}!")
+
+class Mage:
+    def __init__(self, name: str, mana: int):
+        self.name = name
+        self.mana = mana
+
+    def attack(self) -> None:
+        print(f"{self.name} использует магию с силой {self.mana}!")
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    knight = Warrior("Рыцарь", 50)  # Создаём рыцаря
+    wizard = Mage("Маг", 30)        # Создаём мага
+    rogue = "Разбойник"             # Строка вместо объекта
+
+    # Представим, что мы собираем их в команду
+    team = [knight, wizard, rogue]
+
+    # Попробуем у каждого вызывать метод attack()
+    for character in team:
+        character.attack()  # Ошибка! У строки нет метода attack()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <p>И будет конечно же <strong>ошибка</strong>! Потому что к нам в команду попал персонаж Разбойник у которого нет метода <strong>attack()</strong><br>Нужно теперь делать дополнительные проверки для каждого класса.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    knight = Warrior("Рыцарь", 50)  # Создаём рыцаря
+    wizard = Mage("Маг", 30)        # Создаём мага
+    rogue = "Разбойник"
+
+    # Представим, что мы собираем их в команду
+    team = [knight, wizard, rogue]
+
+    for character in team:
+        # Проверяем, кто именно находится в команде
+        if isinstance(character, Warrior):
+            # Если рыцарь, вызываем `attack()` рыцаря
+            character.attack() 
+        elif isinstance(character, Mage):
+            # Если маг, вызываем `attack()` мага
+            character.attack() 
+        else:
+            print("Неизвестный персонаж в команде!")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <pre><code>Рыцарь атакует мечом с уроном 50!
+Маг использует магию с силой 30!
+Неизвестный персонаж в команде!
+</code></pre>
+            <p>Это простой пример, где можно сразу заметить ошибку до выполнения кода, но в реальном приложении это будет уже проблематично! У нас не будет гарантии, например, что все объекты которые мы обрабатываем будут иметь вызываемые методы! Эту проблему в данном случае решает абстрактный класс, который предоставляет одинаковый интерфейс для взаимодействия между всеми объектами.</p>
+            <ul>
+                <li>У абстрактного класса Персонаж есть метод <code class="code">attack()</code></li>
+                <li>Все другие классы которые являются потомками абстрактного класса Персонаж, гарантированно имеют методы <code class="code">attack()</code></li>
+                <li>И самое главное реализация (форма) этих методов будет уникальная. Один метод <code class="code">attack()</code>, но множество форм его реализации - Полиморфизм</li>
+            </ul>
+
+            <p>Повторим код теперь с применением полиморфизма</p>
+            <p>Мы определяем базовый класс с методом <code class="code">attack()</code></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class AbstractCharacter(ABC):
+    def __init__(self, name: str, hp: int, level: int):
+        self.name = name
+        self.level = level
+        self.hp = hp
+
+    @abstractmethod
+    def attack(self) -> None:
+        pass  # Абстрактный метод — каждая реализация своя!
+</code></pre>
+            <p>А теперь у каждого потомка этого класса будет своя реализация метода <code class="code">attack()</code></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Warrior(AbstractCharacter):
+    def __init__(self, name: str, hp: int, level: int, strength: int):
+        super().__init__(name, hp, level)
+        self.strength = strength
+
+    def attack(self) -> None:
+        print(f"{self.name} атакует мечом! Урон: {self.strength * self.level}")
+
+class Mage(AbstractCharacter):
+    def __init__(self, name: str, hp: int, level: int, mana: int):
+        super().__init__(name, hp, level)
+        self.mana = mana
+
+    def attack(self) -> None:
+        print(f"{self.name} использует заклинание! Магическая сила: {self.mana * self.level}")
+</code></pre>
+            <p>Теперь всё гораздо проще. Мы можем собрать всех персонажей в общий список и использовать один вызов <code class="code">attack()</code> для всех:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import List
+from character import AbstractCharacter, Warrior, Mage
+
+def main():
+    team: List[AbstractCharacter] = [
+        Warrior("Рыцарь", 100, 50, 20),
+        Mage("Маг", 80, 30, 50),
+        Warrior("Паладин", 120, 70, 25),
+    ]
+
+    # Полиморфизм в действии:
+    for character in team:
+        character.attack()  # Вызовется своя реализация у каждого!
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <div class="note"><p><strong>Гарантия и Гибкость работы</strong><br>Указание типа <strong>AbstractCharacter</strong> гарантирует, что будут использоваться только те объекты у которых есть нужный метод <code class="code">attack()</code></p></div>
+
+            <p>Если мы добавим нового наследника (например, лучника), он автоматически подхватится:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Archer(AbstractCharacter):
+    def __init__(self, name: str, hp: int, level: int, agility: int):
+        super().__init__(name, hp, level)
+        self.agility = agility
+
+    def attack(self) -> None:
+        print(f"{self.name} стреляет из лука с точностью {self.agility}!")
+</code></pre>
+            <p>Просто добавь его в список <code class="code">team</code>, и всё будет работать:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from typing import List
+from character import AbstractCharacter, Warrior, Mage, Archer
+
+def main():
+    team: List[AbstractCharacter] = [
+        Warrior("Рыцарь", 100, 50, 20),
+        Mage("Маг", 80, 30, 50),
+        Warrior("Паладин", 120, 70, 25),
+    ]
+
+    ranger = Archer("Лучник", 40, 100, 100)
+    team.append(ranger)
+
+    # Полиморфизм в действии:
+    for character in team:
+        character.attack()  # Вызовется своя реализация у каждого!
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <pre><code>Рыцарь атакует мечом! Урон: 1000
+Маг использует заклинание! Магическая сила: 1500
+Паладин атакует мечом! Урон: 1750
+Лучник стреляет из лука с точностью 100!
+</code></pre>
+
+            <h3>Duck Typing</h3>
+            <p>Python поддерживает "утиную типизацию" — "Если это выглядит как утка и крякает как утка, то это утка"</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Duck:
+    def quack(self) -> None:
+        print("Кря!")
+
+class Robot:
+    def quack(self) -> None:
+        print("Звук кряканья из динамика!")
+
+def make_it_quack(duck_like):
+    duck_like.quack()  # Неважно, что это за объект
+
+# Оба объекта "ведут себя как утки"
+real_duck = Duck()
+robot_duck = Robot()
+
+make_it_quack(real_duck)  # Кря!
+make_it_quack(robot_duck) # Звук кряканья из динамика!
+</code></pre>
+
+            <h3>Множественное наследование и полиморфизм</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Flyable(ABC):
+    @abstractmethod
+    def fly(self) -> None:
+        pass
+
+class Swimmable(ABC):
+    @abstractmethod  
+    def swim(self) -> None:
+        pass
+
+class Dragon(AbstractCharacter, Flyable):
+    def __init__(self, name: str, hp: int, level: int, fire_power: int):
+        super().__init__(name, hp, level)
+        self.fire_power = fire_power
+
+    def attack(self) -> None:
+        print(f"{self.name} дышит огнём! Урон: {self.fire_power}")
+
+    def fly(self) -> None:
+        print(f"{self.name} парит в небесах!")
+
+# Использование
+dragon = Dragon("Смауг", 1000, 100, 500)
+dragon.attack()  # Полиморфизм от AbstractCharacter
+dragon.fly()     # Полиморфизм от Flyable
+</code></pre>
+            <p>Эти особенности делают Python очень гибким для полиморфизма и позволяют создавать выразительные объектно-ориентированные программы.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

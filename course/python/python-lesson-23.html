@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Работа со временем и датами в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 23: Дата и время</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Работа со временем и датами в Python 🕰️</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Зачем управлять временем?</h2>
+            <p>Управление временем — одна из ключевых задач в программировании, особенно в играх. От отката способностей до ежедневных наград — всё завязано на времени.</p>
+            <p>В Python есть два основных модуля для работы со временем:</p>
+            <ul>
+                <li><code>time</code> — для простых операций, связанных с системным временем и производительностью.</li>
+                <li><code>datetime</code> — мощный инструмент для работы с датами, временем и временными интервалами.</li>
+            </ul>
+            <div class="note">
+                <p><strong>Главное правило:</strong> для реальных дат и времени (события, дни рождения, логи) почти всегда используйте <code>datetime</code>. Модуль <code>time</code> хорош для измерения длительности выполнения кода или простых пауз.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Модуль <code>time</code>: Основы основ</h2>
+            <p>Модуль <code>time</code> предоставляет низкоуровневый доступ к системному времени.</p>
+            
+            <h3>Timestamp — время в секундах</h3>
+            <p>Самая базовая единица — это <strong>timestamp</strong> (временная метка). Это просто количество секунд, прошедших с начала "Эпохи Unix" (1 января 1970 года).</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import time
+
+def time_basics():
+    # Получить текущий timestamp
+    current_timestamp = time.time()
+    print(f"Секунд с начала Эпохи: {current_timestamp}")
+
+    # Преобразовать timestamp в читаемую строку
+    readable_time = time.ctime(current_timestamp)
+    print(f"Читаемое время: {readable_time}")
+
+if __name__ == "__main__":
+    time_basics()</code></pre>
+            
+            <h3>Пауза с <code>time.sleep()</code></h3>
+            <p>Очень полезная функция, когда нужно приостановить выполнение программы. Например, для имитации каста заклинания.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import time
+
+def cast_spell():
+    print("Маг начинает кастовать огненный шар... 🔥")
+    time.sleep(2.5)  # Пауза на 2.5 секунды
+    print("Огненный шар запущен!")
+
+if __name__ == "__main__":
+    cast_spell()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Модуль <code>datetime</code>: Швейцарский нож для времени</h2>
+            <p>Это ваш основной инструмент. Он предоставляет удобные объекты для работы с датами и временем.</p>
+
+            <h3>Получение текущей даты и времени</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime
+
+def datetime_now():
+    # Текущее локальное время
+    now = datetime.now()
+    print(f"Сейчас: {now}")
+    
+    # Компоненты объекта datetime
+    print(f"Год: {now.year}, Месяц: {now.month}, День: {now.day}")
+    print(f"Час: {now.hour}, Минута: {now.minute}, Секунда: {now.second}")
+    
+    # Создание своего объекта datetime
+    event_start = datetime(2025, 12, 31, 23, 59, 0)
+    print(f"Начало события: {event_start}")
+
+if __name__ == "__main__":
+    datetime_now()</code></pre>
+
+            <h3>Форматирование: <code>strftime()</code> (Объект -> Строка)</h3>
+            <p>Когда нужно красиво отобразить дату для пользователя.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime
+
+def formatting_dates():
+    now = datetime.now()
+    
+    # Формат: День.Месяц.Год Часы:Минуты
+    formatted_1 = now.strftime("%d.%m.%Y %H:%M")
+    print(f"Формат 1: {formatted_1}")
+    
+    # Формат: "Суббота, 20 Сентябрь 2025"
+    formatted_2 = now.strftime("%A, %d %B %Y")
+    print(f"Формат 2: {formatted_2}")
+
+if __name__ == "__main__":
+    formatting_dates()</code></pre>
+
+            <h3>Парсинг: <code>strptime()</code> (Строка -> Объект)</h3>
+            <p>Когда нужно прочитать дату из файла, базы данных или от пользователя.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime
+
+def parsing_dates():
+    date_string = "25-07-2025 10:30"
+    
+    # Преобразуем строку в объект datetime
+    date_object = datetime.strptime(date_string, "%d-%m-%Y %H:%M")
+    
+    print(f"Строка: {date_string}")
+    print(f"Объект: {date_object}")
+    print(f"Год из объекта: {date_object.year}")
+
+if __name__ == "__main__":
+    parsing_dates()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;"><code>timedelta</code>: Арифметика со временем</h2>
+            <p>Объект <code>timedelta</code> представляет собой разницу между двумя датами или временными метками. Это ваш инструмент для всех вычислений!</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime, timedelta
+
+def timedelta_examples():
+    now = datetime.now()
+    print(f"Сейчас: {now.strftime('%d.%m.%Y %H:%M')}")
+    
+    # Что будет через 3 дня и 5 часов?
+    future_date = now + timedelta(days=3, hours=5)
+    print(f"В будущем: {future_date.strftime('%d.%m.%Y %H:%M')}")
+    
+    # Сколько времени прошло с начала года?
+    start_of_year = datetime(now.year, 1, 1)
+    time_passed = now - start_of_year
+    print(f"С начала года прошло: {time_passed.days} дней")
+
+if __name__ == "__main__":
+    timedelta_examples()</code></pre>
+            
+            <h3>Пример из игры: Откат способности</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime, timedelta
+import time
+
+class Skill:
+    def __init__(self, name: str, cooldown_seconds: int):
+        self.name = name
+        self.cooldown = timedelta(seconds=cooldown_seconds)
+        self.last_used_time = None
+    
+    def use(self):
+        now = datetime.now()
+        if self.last_used_time and (now - self.last_used_time) < self.cooldown:
+            remaining = self.cooldown - (now - self.last_used_time)
+            print(f"Способность '{self.name}' на откате! Осталось: {remaining.seconds} сек.")
+        else:
+            print(f"Используем способность '{self.name}'!")
+            self.last_used_time = now
+
+def game_loop():
+    fireball = Skill("Огненный шар", 5)
+    
+    fireball.use()  # Первое использование
+    time.sleep(2)
+    fireball.use()  # Попытка использовать на откате
+    time.sleep(3)
+    fireball.use()  # Готово к использованию
+
+if __name__ == "__main__":
+    game_loop()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Часовые пояса: Не попадайтесь в ловушку!</h2>
+            <p>Если ваши игроки находятся в разных странах, часовые пояса становятся критически важными. Python различает "наивные" (naive) и "осведомлённые" (aware) объекты <code>datetime</code>.</p>
+            <div class="note">
+                <p><strong>Золотое правило:</strong> всегда храните время на сервере в формате <strong>UTC</strong>. Преобразуйте его в локальное время пользователя только для отображения.</p>
+            </div>
+            <p>Начиная с Python 3.9, используйте встроенный модуль <code>zoneinfo</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime
+from zoneinfo import ZoneInfo
+
+def timezone_example():
+    # Создаем "осведомленный" объект времени в UTC
+    utc_time = datetime.now(ZoneInfo("UTC"))
+    print(f"Время по UTC: {utc_time.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+    
+    # Конвертируем в разные часовые пояса
+    moscow_time = utc_time.astimezone(ZoneInfo("Europe/Moscow"))
+    print(f"Время в Москве: {moscow_time.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+    
+    tokyo_time = utc_time.astimezone(ZoneInfo("Asia/Tokyo"))
+    print(f"Время в Токио: {tokyo_time.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+
+if __name__ == "__main__":
+    timezone_example()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практический пример: Игровой ивент</h2>
+            <p>Давайте напишем логику для игрового события, которое длится 3 дня.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+def check_event_status():
+    # Всегда используем UTC для определения начала и конца событий
+    event_start = datetime(2025, 9, 20, 12, 0, 0, tzinfo=ZoneInfo("UTC"))
+    event_duration = timedelta(days=3)
+    event_end = event_start + event_duration
+    
+    now_utc = datetime.now(ZoneInfo("UTC"))
+    
+    print(f"Событие проходит с {event_start.strftime('%d.%m.%Y')} по {event_end.strftime('%d.%m.%Y')}")
+    
+    if event_start <= now_utc < event_end:
+        time_left = event_end - now_utc
+        print(f"✅ Событие активно! Осталось: {time_left.days} д. и {time_left.seconds // 3600} ч.")
+    elif now_utc < event_start:
+        time_to_start = event_start - now_utc
+        print(f"⏳ Событие еще не началось. Старт через: {time_to_start.days} д. и {time_to_start.seconds // 3600} ч.")
+    else:
+        print("❌ Событие уже завершилось.")
+
+if __name__ == "__main__":
+    check_event_status()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Заключение и лучшие практики</h2>
+            <p>Работа со временем может быть сложной, но Python предоставляет отличные инструменты.</p>
+            <ul>
+                <li>✅ <strong>Используйте <code>datetime</code></strong> для всего, что связано с календарными датами.</li>
+                <li>✅ <strong>Храните время в UTC</strong> на сервере, чтобы избежать путаницы.</li>
+                <li>✅ <strong>Используйте <code>timedelta</code></strong> для любых вычислений с датами.</li>
+                <li>✅ <strong>Используйте <code>zoneinfo</code></strong> для работы с часовыми поясами.</li>
+                <li>✅ <strong>Будьте внимательны с форматами</strong> при парсинге и форматировании строк (<code>strptime</code>, <code>strftime</code>).</li>
+            </ul>
+            <div class="note">
+                <p>Правильное управление временем — залог предсказуемой и корректной работы вашего приложения, будь то игра или любой другой сервис!</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

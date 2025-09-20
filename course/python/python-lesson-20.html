@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООП. Часть 6: Ссылочная модель в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 20: Ссылочная модель</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>ООП. Часть 6: Ссылочная модель в Python</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">1. Копирование значений и ссылочная модель</h2>
+            <p>В языке Python есть <strong>важное различие между типами данных</strong>:</p>
+            <ul>
+                <li><strong>Неизменяемые (immutable) типы ведут себя как значения</strong> 📦</li>
+                <li><strong>Изменяемые (mutable) объекты передаются по ссылке</strong> 🔗</li>
+            </ul>
+            <p>Неизменяемые типы в Python:</p>
+            <ul>
+                <li>✅ <code class="code">int</code>, <code class="code">float</code>, <code class="code">bool</code>, <code class="code">str</code>, <code class="code">tuple</code></li>
+                <li>✅ <code class="code">frozenset</code>, <code class="code">bytes</code></li>
+                <li>✅ <code class="code">Enum</code> (перечисления, о них поговорим позже)</li>
+            </ul>
+            <p>Изменяемые типы в Python:</p>
+            <ul>
+                <li>🔗 <code class="code">list</code>, <code class="code">dict</code>, <code class="code">set</code></li>
+                <li>🔗 <code class="code">bytearray</code></li>
+                <li>🔗 Пользовательские классы (по умолчанию)</li>
+            </ul>
+            <div class="note">
+                <p><strong>Копирование неизменяемых данных</strong></p>
+                <p>Когда ты присваиваешь значение одной переменной в другую с неизменяемым типом, фактически создаётся <strong><code class="code">ссылка на тот же объект</code></strong>, но поскольку объект неизменяемый, это выглядит как копирование.</p>
+            </div>
+            <p>👉 <strong>Неизменяемые типы ведут себя как отдельные значения!</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    a = 10
+    b = a  # b получает ссылку на тот же объект int(10)
+    print(f"a = {a}, b = {b}")  # a = 10, b = 10
+    print(f"id(a) = {id(a)}, id(b) = {id(b)}")  # Одинаковые id!
+
+    b = 20  # b теперь ссылается на новый объект int(20)
+    print(f"a = {a}, b = {b}")  # a = 10, b = 20
+    print(f"id(a) = {id(a)}, id(b) = {id(b)}")  # Разные id
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Как работают ссылки в изменяемых объектах?</h3>
+            <p>Изменяемые объекты (например, <code class="code">list</code>, <code class="code">dict</code>, <code class="code">set</code>, пользовательские классы) <strong>не копируются</strong>, а передаются <strong>по ссылке</strong>. Это значит, что если одна переменная изменит объект, то изменения отразятся на всех переменных, которые ссылаются на этот объект.</p>
+            
+            <p>👉 <strong>Пример с <code class="code">list</code> (списками)</strong></p>
+            <p>👉 <strong>Объект изменяется, потому что обе переменные указывают на одну область памяти!</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def main():
+    list1 = [1, 2, 3]
+    list2 = list1  # list2 получает ссылку на тот же объект!
+
+    print(f"list1 = {list1}, list2 = {list2}")  # [1, 2, 3], [1, 2, 3]
+    print(f"id(list1) = {id(list1)}, id(list2) = {id(list2)}")  # Одинаковые id
+
+    list2[0] = 99  # Меняем элемент через list2
+
+    print(f"list1 = {list1}, list2 = {list2}")  # [99, 2, 3], [99, 2, 3]
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <p>👉 <strong>Сравнение своих объектов</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Player:
+    def __init__(self, name: str):
+        self.name = name
+
+def main():
+    p1 = Player("Игрок")
+    p2 = p1
+
+    p2.name = "Новый Игрок"
+
+    print(p1.name)  # "Новый Игрок"
+    print(p2.name)  # "Новый Игрок"
+
+    # Значения не копируются
+    # p1 и p2 ссылаются на один и тот же объект в памяти
+    print(f"id(p1) = {id(p1)}, id(p2) = {id(p2)}")  # Одинаковые id
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Player:
+    def __init__(self, name: str):
+        self.name = name
+
+def main():
+    p1 = Player("Игрок")
+    p2 = Player("Игрок")
+
+    print(p1 == p2)  # False (разные объекты в памяти)
+    
+    # Или воспользоваться оператором is
+    print(p1 is p2)  # False (разные объекты в памяти)
+    
+    # Проверка через id()
+    print(id(p1) == id(p2))  # False
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p>Даже если у объектов одинаковые данные (<code class="code">name</code>), они хранятся в разных местах памяти, и Python считает их разными.</p>
+            <p><strong>Операторы сравнения в Python:</strong></p>
+            <ul>
+                <li><strong><code class="code">==</code></strong> - сравнивает <strong>значения</strong> объектов (можно переопределить)</li>
+                <li><strong><code class="code">is</code></strong> - сравнивает <strong>идентичность</strong> объектов (ссылки на один объект)</li>
+                <li><strong><code class="code">id()</code></strong> - возвращает уникальный идентификатор объекта в памяти</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def comparison_demo():
+    # Неизменяемые объекты
+    a = 1000
+    b = 1000
+    print(f"a == b: {a == b}")  # True (одинаковые значения)
+    print(f"a is b: {a is b}")  # False (разные объекты для больших чисел)
+    
+    # Малые числа кэшируются Python
+    x = 5
+    y = 5
+    print(f"x is y: {x is y}")  # True (Python кэширует числа от -5 до 256)
+    
+    # Строки
+    s1 = "hello"
+    s2 = "hello"
+    print(f"s1 is s2: {s1 is s2}")  # True (строки интернируются)
+    
+    # Списки
+    list1 = [1, 2, 3]
+    list2 = [1, 2, 3]
+    print(f"list1 == list2: {list1 == list2}")  # True (одинаковые значения)
+    print(f"list1 is list2: {list1 is list2}")  # False (разные объекты)
+
+if __name__ == "__main__":
+    comparison_demo()</code></pre>
+
+            <h3>Как сравнить объекты по содержимому?</h3>
+            <p>Чтобы сравнить объекты <strong>по их полям</strong>, нужно <strong>переопределить метод <code class="code">__eq__</code></strong> и <strong>хеш-функцию <code class="code">__hash__</code></strong>.</p>
+            <p>Каждый объект в Python автоматически предоставляет целочисленный хэш-код через <code class="code">hash()</code>. 
+            Однако можно переопределить метод <code class="code">__hash__</code>, чтобы сгенерировать собственный.
+            Если это сделать, нужно обязательно переопределить метод <code class="code">__eq__</code>.
+            Равные объекты (через <code class="code">==</code>) должны иметь одинаковые хэш-коды.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Player:
+    def __init__(self, name: str):
+        self.name = name
+
+    def __eq__(self, other) -> bool:
+        if self is other:
+            return True
+        if not isinstance(other, Player):
+            return False
+        return self.name == other.name
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+    
+    def __repr__(self) -> str:
+        return f"Player('{self.name}')"
+
+def main():
+    p1 = Player("Игрок")
+    p2 = Player("Игрок")
+
+    print(p1 == p2)  # True (сравниваем по имени)
+    print(p1 is p2)  # False (разные объекты в памяти)
+    
+    # Теперь можно использовать в множествах и как ключи словарей
+    players = {p1, p2}  # Множество содержит только один элемент
+    print(f"Множество игроков: {players}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <p><strong>Особенности Python для сравнения:</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def python_specific_features():
+    # Цепочка сравнений
+    x = 5
+    print(1 < x < 10)  # True
+    
+    # Сравнение с None
+    value = None
+    print(value is None)  # Правильно
+    print(value == None)  # Работает, но не рекомендуется
+    
+    # Сравнение разных типов
+    try:
+        print(5 < "hello")  # TypeError в Python 3
+    except TypeError as e:
+        print(f"Ошибка: {e}")
+
+if __name__ == "__main__":
+    python_specific_features()</code></pre>
+
+            <p><strong>Вывод</strong></p>
+            <ul>
+                <li>🔗 <code class="code">is</code> проверяет, <strong>указывают ли две переменные на один и тот же объект в памяти</strong>.</li>
+                <li>📦 <code class="code">==</code> можно переопределить, поэтому он сравнивает <strong>по значению, если мы так захотим</strong>.</li>
+                <li>🆔 <code class="code">id()</code> возвращает уникальный идентификатор объекта в памяти.</li>
+            </ul>
+
+            <p>👉 <strong>Неизменяемые объекты и интернирование</strong></p>
+            <p>Python автоматически <strong>переиспользует</strong> некоторые неизменяемые объекты для экономии памяти.</p>
+            <p><strong>Интернирование в Python:</strong></p>
+            <ul>
+                <li>✅ Малые целые числа (от -5 до 256) переиспользуются</li>
+                <li>✅ Короткие строки без специальных символов</li>
+                <li>✅ Объекты <code class="code">None</code>, <code class="code">True</code>, <code class="code">False</code></li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def interning_demo():
+    # Числа
+    a = 100
+    b = 100
+    print(f"a is b: {a is b}")  # True (кэшируется)
+    
+    c = 1000
+    d = 1000
+    print(f"c is d: {c is d}")  # False (не кэшируется)
+    
+    # Строки
+    s1 = "hello"
+    s2 = "hello"
+    print(f"s1 is s2: {s1 is s2}")  # True (интернируется)
+    
+    # Принудительное интернирование
+    import sys
+    x = sys.intern("dynamic string")
+    y = sys.intern("dynamic string")
+    print(f"x is y: {x is y}")  # True
+
+if __name__ == "__main__":
+    interning_demo()</code></pre>
+
+            <p>👉 <strong>Существует два вида памяти Стек и Куча</strong></p>
+            <p>В Стек попадают ссылки на объекты и локальные переменные функций.
+            Здесь хранятся указатели на объекты, что позволяет быстро получить доступ к ним.
+            Куча — это огромная область памяти, в которой создаются все объекты Python. Доступ в эту память имеется по всему приложению.
+            Она работает медленнее + накладные расходы на работу "Сборщика Мусора"</p>
+            <p>В Python все данные являются объектами и хранятся в куче, но ссылки на них хранятся в стеке.</p>
+            <p><strong>1. Stack (Стек) — для ссылок и локальных переменных</strong></p>
+            <p>📌 <strong>Быстрая память, предназначенная для временных данных (ссылок на объекты).</strong></p>
+            <p><strong>Тут хранятся:</strong></p>
+            <ul>
+                <li>✅ Ссылки на объекты (не сами объекты!)</li>
+                <li>✅ Локальные переменные внутри функций</li>
+                <li>✅ Аргументы функций</li>
+            </ul>
+            <p><strong>Как это работает?</strong></p>
+            <ul>
+                <li>Когда функция вызывается, все её ссылки на объекты <strong>попадают в Stack</strong>.</li>
+                <li>Когда функция завершает работу, <strong>ссылки удаляются</strong> из Stack.</li>
+                <li><strong>Быстро, но мало памяти</strong>.</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def my_function():
+    a = 10  # Ссылка на объект int(10) хранится в Stack
+    b = 20.5  # Ссылка на объект float(20.5) хранится в Stack
+    result = a + b  # Ссылка на объект float(30.5) хранится в Stack
+    print(result)
+
+def main():
+    my_function()  # После выполнения ссылки a, b, result удалятся
+
+if __name__ == "__main__":
+    main()</code></pre>
+            <p>✔ Ссылки на объекты живут <strong>только внутри своей функции</strong>, а потом исчезают.</p>
+
+            <p><strong>2. Heap (Куча) — для всех объектов</strong></p>
+            <p>📌 <strong>Большая память для хранения всех объектов Python.</strong></p>
+            <p><strong>Тут хранятся:</strong></p>
+            <ul>
+                <li>✅ Все объекты без исключения (даже числа и строки!)</li>
+                <li>✅ Данные, которые <strong>живут дольше функции</strong></li>
+            </ul>
+            <p>🔹 <strong>Объект хранится в <code class="code">Heap</code>, а переменные <code class="code">p1</code> и <code class="code">p2</code> ссылаются на него!</strong><br>
+            🔹 Если объект больше <strong>не используется</strong>, Python удаляет его из памяти (Garbage Collection).</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Player:
+    def __init__(self, name: str):
+        self.name = name
+
+def main():
+    p1 = Player("Игрок 1")  # Объект создаётся в Heap
+    p2 = p1  # p2 получает ту же ссылку
+
+    p2.name = "Изменённый Игрок"
+
+    print(p1.name)  # "Изменённый Игрок" (оба указывают на один объект!)
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <p><strong>Сборка мусора в Python:</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">import gc
+
+def garbage_collection_demo():
+    class TestObject:
+        def __init__(self, name: str):
+            self.name = name
+        
+        def __del__(self):
+            print(f"Объект {self.name} удалён из памяти")
+    
+    # Создаём объекты
+    obj1 = TestObject("Объект1")
+    obj2 = TestObject("Объект2")
+    
+    # Удаляем ссылки
+    del obj1
+    obj2 = None
+    
+    # Принудительная сборка мусора
+    gc.collect()
+    print("Сборка мусора завершена")
+
+if __name__ == "__main__":
+    garbage_collection_demo()</code></pre>
+
+            <p><strong>Циклические ссылки:</strong></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def circular_reference_demo():
+    class Node:
+        def __init__(self, value: int):
+            self.value = value
+            self.next = None
+        
+        def __del__(self):
+            print(f"Узел {self.value} удалён")
+    
+    # Создаём циклическую ссылку
+    node1 = Node(1)
+    node2 = Node(2)
+    node1.next = node2
+    node2.next = node1  # Циклическая ссылка!
+    
+    # Удаляем ссылки
+    del node1, node2
+    
+    # Python автоматически обнаружит и удалит циклические ссылки
+    import gc
+    gc.collect()
+
+if __name__ == "__main__":
+    circular_reference_demo()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">2. Что такое <code class="code">static</code> и где оно используется?</h2>
+            <p>В Python аналогами <code class="code">static</code> являются:</p>
+            <ul>
+                <li><strong>Переменные класса</strong> - относятся ко всему классу</li>
+                <li><strong><code class="code">@staticmethod</code></strong> - методы, не требующие экземпляра класса</li>
+                <li><strong><code class="code">@classmethod</code></strong> - методы, получающие класс как первый аргумент</li>
+            </ul>
+
+            <h3>Переменные класса:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    # Переменная класса (аналог static)
+    count = 0
+    guild_name = "Герои Света"
+    
+    def __init__(self, name: str, hp: int):
+        self.name = name  # Переменная экземпляра
+        self.hp = hp      # Переменная экземпляра
+        Character.count += 1  # Увеличиваем счётчик класса
+
+def main():
+    knight = Character("Воин", 100)
+    mage = Character("Маг", 80)
+    paladin = Character("Паладин", 120)
+
+    # Выводит общее количество созданных персонажей
+    # Обращаемся к переменной класса!
+    print(f"Создано персонажей: {Character.count}")
+    print(f"Гильдия: {Character.guild_name}")
+    
+    # Можем изменить для всех экземпляров
+    Character.guild_name = "Защитники Мира"
+    print(f"Новая гильдия: {knight.guild_name}")  # Наследуется от класса
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>@staticmethod - статические методы:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class MathUtils:
+    """Утилитарный класс для математических операций"""
+    
+    @staticmethod
+    def calculate_damage(attack: int, defense: int) -> int:
+        """Расчёт урона (не требует экземпляра класса)"""
+        return max(0, attack - defense)
+    
+    @staticmethod
+    def calculate_distance(x1: float, y1: float, x2: float, y2: float) -> float:
+        """Расчёт расстояния между точками"""
+        return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+    
+    @staticmethod
+    def is_critical_hit(chance: float) -> bool:
+        """Проверка критического удара"""
+        import random
+        return random.random() < chance
+
+def main():
+    # Вызываем без создания экземпляра класса
+    damage = MathUtils.calculate_damage(50, 20)
+    print(f"Урон: {damage}")
+    
+    distance = MathUtils.calculate_distance(0, 0, 3, 4)
+    print(f"Расстояние: {distance}")
+    
+    if MathUtils.is_critical_hit(0.2):
+        print("Критический удар!")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>@classmethod - методы класса:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Character:
+    count = 0
+    
+    def __init__(self, name: str, hp: int, level: int = 1):
+        self.name = name
+        self.hp = hp
+        self.level = level
+        Character.count += 1
+    
+    @classmethod
+    def get_character_count(cls) -> int:
+        """Получить количество созданных персонажей"""
+        return cls.count
+    
+    @classmethod
+    def create_warrior(cls, name: str):
+        """Фабричный метод для создания воина"""
+        return cls(name, hp=150, level=1)
+    
+    @classmethod
+    def create_mage(cls, name: str):
+        """Фабричный метод для создания мага"""
+        return cls(name, hp=80, level=1)
+    
+    @classmethod
+    def reset_count(cls):
+        """Сброс счётчика персонажей"""
+        cls.count = 0
+
+def main():
+    # Используем фабричные методы
+    warrior = Character.create_warrior("Конан")
+    mage = Character.create_mage("Гэндальф")
+    
+    print(f"Создано персонажей: {Character.get_character_count()}")
+    
+    # Сброс счётчика
+    Character.reset_count()
+    print(f"После сброса: {Character.get_character_count()}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Различия между методами:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class Example:
+    class_var = "Я переменная класса"
+    
+    def __init__(self, value):
+        self.instance_var = value
+    
+    def instance_method(self):
+        """Обычный метод - нужен экземпляр"""
+        return f"Экземпляр: {self.instance_var}"
+    
+    @classmethod
+    def class_method(cls):
+        """Метод класса - получает класс как первый аргумент"""
+        return f"Класс: {cls.class_var}"
+    
+    @staticmethod
+    def static_method():
+        """Статический метод - не получает ни self, ни cls"""
+        return "Статический метод"
+
+def main():
+    obj = Example("значение")
+    
+    # Все способы вызова
+    print(obj.instance_method())     # Только через экземпляр
+    print(obj.class_method())        # Через экземпляр или класс
+    print(Example.class_method())    # Через класс
+    print(obj.static_method())       # Через экземпляр или класс
+    print(Example.static_method())   # Через класс
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Синглтон с использованием переменных класса:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">class GameManager:
+    """Синглтон - единственный экземпляр игрового менеджера"""
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        if not hasattr(self, 'initialized'):
+            self.score = 0
+            self.level = 1
+            self.initialized = True
+
+def main():
+    # Оба объекта ссылаются на один экземпляр
+    game1 = GameManager()
+    game2 = GameManager()
+    
+    print(f"game1 is game2: {game1 is game2}")  # True
+    
+    game1.score = 100
+    print(f"game2.score: {game2.score}")  # 100
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">3. Перечисления Enum</h2>
+            <p>Перечисления <code class="code">enum</code> <strong>создаёт фиксированные наборы значений</strong>, удобные для работы со статусами, направлениями и режимами.</p>
+            <p>В Python для работы с перечислениями используется модуль <code class="code">enum</code>.</p>
+            <p>Используются, когда есть <strong>фиксированный список возможных значений</strong>:</p>
+            <ul>
+                <li>✅ Направления (<code class="code">север</code>, <code class="code">юг</code>, <code class="code">запад</code>, <code class="code">восток</code>)</li>
+                <li>✅ Дни недели (<code class="code">понедельник</code>, <code class="code">вторник</code>, …)</li>
+                <li>✅ Статусы (<code class="code">loading</code>, <code class="code">success</code>, <code class="code">error</code>)</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import Enum
+
+class Status(Enum):
+    LOADING = "loading"
+    SUCCESS = "success"
+    ERROR = "error"
+
+def check_status(status: Status) -> None:
+    if status == Status.LOADING:
+        print("⏳ Загружается...")
+    elif status == Status.SUCCESS:
+        print("✅ Успешно!")
+    elif status == Status.ERROR:
+        print("❌ Ошибка!")
+
+def main():
+    check_status(Status.LOADING)  # ⏳ Загружается...
+    check_status(Status.SUCCESS)  # ✅ Успешно!
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Enum с автоматическими значениями:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import Enum, auto
+
+class Direction(Enum):
+    NORTH = auto()
+    SOUTH = auto()
+    EAST = auto()
+    WEST = auto()
+
+def move_character(direction: Direction) -> str:
+    direction_map = {
+        Direction.NORTH: "Персонаж движется на север ⬆️",
+        Direction.SOUTH: "Персонаж движется на юг ⬇️",
+        Direction.EAST: "Персонаж движется на восток ➡️",
+        Direction.WEST: "Персонаж движется на запад ⬅️"
+    }
+    return direction_map[direction]
+
+def main():
+    for direction in Direction:
+        print(f"{direction.name}: {move_character(direction)}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>IntEnum - числовые перечисления:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import IntEnum
+
+class Priority(IntEnum):
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
+    CRITICAL = 4
+
+def main():
+    # Можно сравнивать с числами
+    print(Priority.HIGH == 3)  # True
+    print(Priority.HIGH > Priority.LOW)  # True
+    
+    # Можно использовать в арифметических операциях
+    print(Priority.HIGH + 1)  # 4
+    
+    # Сортировка
+    priorities = [Priority.HIGH, Priority.LOW, Priority.CRITICAL, Priority.MEDIUM]
+    sorted_priorities = sorted(priorities)
+    print(sorted_priorities)  # [Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL]
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Enum с методами:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import Enum
+
+class Planet(Enum):
+    MERCURY = (3.303e+23, 2.4397e6)
+    VENUS   = (4.869e+24, 6.0518e6)
+    EARTH   = (5.976e+24, 6.37814e6)
+    MARS    = (6.421e+23, 3.3972e6)
+    
+    def __init__(self, mass: float, radius: float):
+        self.mass = mass       # в килограммах
+        self.radius = radius   # в метрах
+    
+    @property
+    def surface_gravity(self) -> float:
+        # универсальная гравитационная постоянная
+        G = 6.67300E-11
+        return G * self.mass / (self.radius * self.radius)
+
+def main():
+    print(f"Гравитация на Земле: {Planet.EARTH.surface_gravity:.2f} м/с²")
+    print(f"Гравитация на Марсе: {Planet.MARS.surface_gravity:.2f} м/с²")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Функциональное создание Enum:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import Enum
+
+# Создание Enum из списка
+Color = Enum('Color', 'RED GREEN BLUE')
+
+# Создание Enum из словаря
+HttpStatus = Enum('HttpStatus', {
+    'OK': 200,
+    'NOT_FOUND': 404,
+    'SERVER_ERROR': 500
+})
+
+def main():
+    print(Color.RED)  # Color.RED
+    print(Color.RED.name)  # RED
+    print(Color.RED.value)  # 1
+    
+    print(HttpStatus.OK.value)  # 200
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Enum в играх:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import Enum, auto
+from typing import Dict, List
+
+class CharacterClass(Enum):
+    WARRIOR = auto()
+    MAGE = auto()
+    ARCHER = auto()
+    ROGUE = auto()
+
+class AttackType(Enum):
+    PHYSICAL = "physical"
+    MAGICAL = "magical"
+    RANGED = "ranged"
+
+class Character:
+    def __init__(self, name: str, char_class: CharacterClass):
+        self.name = name
+        self.char_class = char_class
+        self.stats = self._get_base_stats()
+    
+    def _get_base_stats(self) -> Dict[str, int]:
+        """Получить базовые характеристики в зависимости от класса"""
+        stats_by_class = {
+            CharacterClass.WARRIOR: {"hp": 150, "attack": 80, "defense": 70},
+            CharacterClass.MAGE: {"hp": 80, "attack": 120, "defense": 40},
+            CharacterClass.ARCHER: {"hp": 100, "attack": 90, "defense": 50},
+            CharacterClass.ROGUE: {"hp": 90, "attack": 100, "defense": 45}
+        }
+        return stats_by_class[self.char_class]
+    
+    def get_attack_type(self) -> AttackType:
+        """Получить тип атаки персонажа"""
+        attack_types = {
+            CharacterClass.WARRIOR: AttackType.PHYSICAL,
+            CharacterClass.MAGE: AttackType.MAGICAL,
+            CharacterClass.ARCHER: AttackType.RANGED,
+            CharacterClass.ROGUE: AttackType.PHYSICAL
+        }
+        return attack_types[self.char_class]
+
+def main():
+    # Создание персонажей
+    characters = [
+        Character("Конан", CharacterClass.WARRIOR),
+        Character("Гэндальф", CharacterClass.MAGE),
+        Character("Леголас", CharacterClass.ARCHER),
+        Character("Арагорн", CharacterClass.ROGUE)
+    ]
+    
+    # Вывод информации
+    for char in characters:
+        attack_type = char.get_attack_type()
+        print(f"{char.name} ({char.char_class.name}): "
+              f"HP={char.stats['hp']}, "
+              f"Attack={char.stats['attack']} ({attack_type.value})")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Уникальный декоратор для Enum:</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">from enum import Enum, unique
+
+@unique
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+    # CRIMSON = 1  # Это вызовет ValueError из-за @unique
+
+def main():
+    print("Все цвета уникальны!")
+    for color in Color:
+        print(f"{color.name} = {color.value}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <h3>Преимущества Enum в Python:</h3>
+            <ul>
+                <li>✅ <strong>Типобезопасность</strong> - нельзя передать неправильное значение</li>
+                <li>✅ <strong>Автодополнение</strong> - IDE знает все возможные значения</li>
+                <li>✅ <strong>Читаемость</strong> - код становится более понятным</li>
+                <li>✅ <strong>Рефакторинг</strong> - легко изменить значения в одном месте</li>
+                <li>✅ <strong>Итерация</strong> - можно перебрать все значения</li>
+                <li>✅ <strong>Сравнение</strong> - безопасное сравнение значений</li>
+            </ul>
+            <div class="note">
+                <p>Enum помогает писать более надёжный и читаемый код, особенно в игровых проектах с множественными состояниями и типами объектов!</p>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
