@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Множества Set в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 11: Множества Set</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Множества Set в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Что такое множества</h2>
+            <p>Коллекция Set (множество) в программировании — это структура данных, которая хранит только уникальные элементы. Это означает, что если попытаться добавить один и тот же элемент несколько раз, Set сохранит его только один раз. Это делает Set очень полезным в ситуациях, когда необходимо исключить дубликаты и работать только с уникальными значениями.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Проблема дублирования данных</h2>
+            <p><strong>Система голосования:</strong> Каждый человек должен иметь только один голос. Если бы дублирование было разрешено, результаты голосования были бы искажены.</p>
+            <p><strong>Уникальные идентификаторы (ID):</strong> В любой системе (паспортные данные, номера счетов в банке) каждому объекту присваивается уникальный ID. Дублирование ID приведет к путанице и потере данных.</p>
+            <p><strong>Билеты на концерт:</strong> Каждый билет должен быть уникальным и использоваться только один раз. Дублирование билетов приведет к тому, что на одно место могут претендовать несколько человек.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Как решали проблему дублирования до Set? Писали велосипеды ...</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Решение без Set</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  List<String> uniqueVotes = [];
+
+  void addVote(String email) {
+    bool exists = false;
+    for (var vote in uniqueVotes) {
+      // O(n) — медленно!
+      if (vote == email) {
+        exists = true;
+        break;
+      }
+    }
+    if (!exists) {
+      uniqueVotes.add(email);
+    }
+  }
+
+  addVote('artem@ya.ru');
+  addVote('artem@ya.ru');
+  addVote('anna@ya.ru');
+  addVote('natasha@ya.ru');
+
+  print(uniqueVotes); 
+  // [artem@ya.ru, anna@ya.ru, natasha@ya.ru]
+}</code></pre>
+
+            <p><strong>Проблемы такого подхода:</strong></p>
+            <ul>
+                <li>Сложность O(n) для каждой проверки</li>
+                <li>Риск ошибок в ручной реализации</li>
+                <li>Нет гарантии уникальности при параллельном доступе</li>
+                <li>Требует дополнительной памяти для временных переменных</li>
+            </ul>
+
+            <p><strong>То же решение с использованием множества:</strong></p>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Решение с Set</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Set<String> uniqueVotes = {}; // Создание пустого множества
+
+  void addVote(String email) {
+    uniqueVotes.add(email);
+  }
+
+  addVote('artem@ya.ru');
+  addVote('artem@ya.ru');
+  addVote('anna@ya.ru');
+  addVote('natasha@ya.ru');
+
+  print(uniqueVotes); 
+  // [artem@ya.ru, anna@ya.ru, natasha@ya.ru]
+}</code></pre>
+
+            <p><strong>Достоинства:</strong></p>
+            <ul>
+                <li>Хеш-таблица с временем доступа O(1)</li>
+                <li>Гарантированная уникальность элементов</li>
+                <li>Встроенные операции: объединение, пересечение, разность</li>
+            </ul>
+
+            <table>
+                <tr>
+                    <th>Количество элементов</th>
+                    <th>List (мс)</th>
+                    <th>Set (мс)</th>
+                </tr>
+                <tr>
+                    <td>1 000</td>
+                    <td>15</td>
+                    <td>0.2</td>
+                </tr>
+                <tr>
+                    <td>10 000</td>
+                    <td>1 500</td>
+                    <td>0.3</td>
+                </tr>
+                <tr>
+                    <td>100 000</td>
+                    <td>150 000</td>
+                    <td>0.5</td>
+                </tr>
+            </table>
+
+            <p><strong>Множества особенно эффективны в сценариях, когда:</strong></p>
+            <ul>
+                <li>Требуется уникальность элементов</li>
+                <li>Порядок элементов не важен</li>
+                <li>Необходимо быстро проверять наличие элемента</li>
+                <li>Требуется выполнять операции над наборами данных (объединение, пересечение, разность)</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Пример простого множества</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Простое множество</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">Set<String> games = {
+  'Witcher', 
+  'MTGA', 
+  'GTA6', 
+  'HSR', 
+  'LostArk',
+  'LostArk',
+  'LostArk',
+};
+
+print(games); // {'Witcher', 'MTGA', 'GTA6', 'HSR', 'LostArk'}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Типы реализаций Set в Dart</h2>
+            <p>В Dart существуют различные реализации множеств, каждая со своими особенностями:</p>
+            
+            <ul>
+                <li><strong>HashSet</strong> — неупорядоченная реализация, порядок итерации не определен.</li>
+                <li><strong>LinkedHashSet</strong> — сохраняет порядок вставки элементов (реализация по умолчанию).</li>
+                <li><strong>SplayTreeSet</strong> — поддерживает элементы в отсортированном порядке.</li>
+            </ul>
+            
+            <p>Выбор конкретной реализации зависит от требований вашего приложения: если важен порядок добавления — используйте LinkedHashSet, если необходима сортировка — SplayTreeSet, если важна только скорость — HashSet</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание множеств</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Создание с помощью литералов</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Создание с помощью литералов
+Set<String> games = {
+  'Witcher', 
+  'MTGA', 
+  'GTA6', 
+  'HSR', 
+  'LostArk',
+  'LostArk',
+  'LostArk',
+};
+
+// !!! ВНИМАНИЕ: var names = {}; создаст Map, а не Set!
+
+// Создание пустого множества (важно указать тип!)
+var names = <String>{};</code></pre>
+
+            <h3>Специальные конструкторы</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Создание из списка</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+
+  List<String> gameList = [
+    'Witcher',
+    'MTGA',
+    'GTA6',
+    'HSR',
+    'LostArk',
+    'LostArk',
+    'LostArk',
+  ];
+
+  print(gameList); // [Witcher, MTGA, GTA6, HSR, LostArk, LostArk, LostArk]
+
+  // Создание Множества из Списка
+  // Все дубликаты в списке удаляются! Очень удобно!
+  Set<String> gameSet = Set.from(gameList);
+
+  print(gameSet); // {Witcher, MTGA, GTA6, HSR, LostArk}
+}</code></pre>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Константное множество</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Создание константного множества
+final constantGames = const {'Witcher', 'Gwint', 'DMC', 'FF', 'LostArk'};
+
+// constantGames.add('Gothic2'); 
+// Ошибка: Cannot modify unmodifiable set</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Основные свойства и методы Set</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Основные свойства</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var games = {'Witcher', 'Gwint', 'DMC', 'FF', 'LostArk'};
+ 
+print(games.length);     // 5 - количество элементов
+print(games.first);      // Первый элемент
+print(games.last);       // Последний элемент
+print(games.isEmpty);    // false - проверка на пустоту
+print(games.isNotEmpty); // true - проверка на непустоту</code></pre>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Методы доступа</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var games = {'Witcher', 'Gwint', 'DMC', 'FF', 'LostArk'};
+
+// Получение элемента по индексу
+print(games.elementAt(0)); // Элемент с индексом 0
+
+// Проверка наличия элемента
+print(games.contains('Witcher')); // true
+
+// Поиск элемента (возвращает сам элемент или null)
+print(games.lookup('Witcher')); // Witcher
+print(games.lookup('Skyrim')); // null</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Методы для модификации множества</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Добавление и удаление</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var games = {'Witcher', 'Gwint'};
+
+// Добавление одного элемента
+games.add('TES');
+
+// Добавление нескольких элементов
+games.addAll({'Langrisser', 'Gothic2', 'Gothic2'});
+print(games); // {Witcher, Gwint, TES, Langrisser, Gothic2}
+
+// Обратите внимание: 'Gothic2' добавится только один раз!
+
+// Удаление элемента
+games.remove('Gwint');
+
+// Удаление элементов по условию
+games.removeWhere((game) => game.length > 5);
+
+// Очистка множества
+games.clear();</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операции над множествами</h2>
+            <p>Set предоставляет мощные методы для выполнения математических операций над множествами</p>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Операции над множествами</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var setA = {'Witcher', 'Gwint', 'DMC', 'FF', 'LostArk'};
+var setB = {'Warcraft', 'Witcher', 'Gwint', 'Diablo'};
+
+// Разность множеств (A - B): элементы из A, которых нет в B
+print(setA.difference(setB)); // {DMC, FF, LostArk}
+
+// Пересечение множеств (A ∩ B): элементы, общие для A и B
+print(setA.intersection(setB)); // {Witcher, Gwint}
+
+// Объединение множеств (A ∪ B): все элементы из A и B
+print(setA.union(setB)); // {Witcher, Gwint, DMC, FF, LostArk, Warcraft, Diablo}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Отношения между множествами</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проверка отношений</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var setA = {'Witcher', 'Gwint', 'DMC'};
+var setB = {'Witcher', 'Gwint'};
+var setC = {'Warcraft', 'Diablo'};
+
+
+// Проверка, является ли setB подмножеством setA
+print(setB.every((element) => setA.contains(element))); // true
+
+// или
+
+print(setA.containsAll(setB)); // true
+  
+// Проверка, являются ли множества непересекающимися
+print(setA.intersection(setC).isEmpty); // true - множества не пересекаются</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Spread-операторы</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Spread-операторы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var basicGames = {'Witcher', 'Gwint'};
+var additionalGames = {'DMC', 'FF'};
+
+// Использование spread-оператора для объединения множеств
+var allGames = {...basicGames, ...additionalGames};
+print(allGames); // {Witcher, Gwint, DMC, FF}
+
+// Null-aware spread оператор
+Set<String>? nullableGames;
+var safeGames = {...basicGames, ...?nullableGames};
+print(safeGames); // {Witcher, Gwint}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Условные конструкции и циклы</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Условные конструкции и циклы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var isRPGFan = true;
+var adventureGames = {'Tomb Raider', 'Uncharted'};
+
+// Условное добавление элементов с помощью if
+var games = {
+  'Witcher',
+  'DMC',
+  if (isRPGFan) 'Final Fantasy',
+};  
+
+// Добавление элементов с помощью for
+var moreGames = {
+  'Witcher',
+  'DMC',
+  for (var game in adventureGames) 'Adventure: $game',
+};</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Особенности и ограничения</h2>
+            <p>При работе с множествами в Dart следует помнить о следующих особенностях</p>
+            
+            <ul>
+                <li><strong>Производительность:</strong> Set быстрее List при поиске элементов, особенно в больших коллекциях, благодаря хеш-таблицам.</li>
+                <li><strong>Сравнение множеств:</strong> Два множества считаются равными, если они содержат одинаковые элементы, независимо от порядка.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практическое применение</h2>
+            <p>Set особенно полезен в следующих сценариях:</p>
+
+            <h3>1. Удаление дубликатов из списка:</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Удаление дубликатов</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var listWithDuplicates = ['A', 'B', 'A', 'C', 'B'];
+var uniqueItems = Set.from(listWithDuplicates).toList();
+print(uniqueItems); // [A, B, C]</code></pre>
+
+            <h3>2. Проверка уникальности элементов:</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проверка уникальности</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">bool hasUniqueElements(List list) {
+  return list.length == Set.from(list).length;
+}</code></pre>
+
+            <h3>3. Фильтрация данных:</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Фильтрация данных</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var allUsers = {'Анна', 'Артём', 'Настя', 'Антон'};
+var activeUsers = {'Анна', 'Настя'};
+
+var inactiveUsers = allUsers.difference(activeUsers);
+print(inactiveUsers); // {Артём, Антон}</code></pre>
+
+            <h3>4. Нахождение общих элементов:</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Общие элементы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var teamA = {'Анна', 'Юля', 'Наташа'};
+var teamB = {'Юля', 'Антон', 'Артём'};
+
+var inBothTeams = teamA.intersection(teamB);
+print(inBothTeams); // {Юля}</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

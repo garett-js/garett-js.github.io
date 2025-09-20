@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 19: Копирование значений и ссылочная модель</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 19: Копирование и ссылки</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Копирование значений и ссылочная модель</h1>
+
+        <section class="lesson-section">
+            <h2>Типы хранения данных</h2>
+            <p>В языке Dart есть&nbsp;два способа хранения данных:</p>
+            <ul>
+                <li><code class="code">Простые</code> (<code class="code">примитивные</code>) типы передаются <code class="code">по значению&nbsp;</code></li>
+                <li><code class="code">Объекты</code> передаются <code class="code">по ссылке</code></li>
+            </ul>
+            <p>Простые типы в Dart — это:<br />
+            &nbsp;<code class="code">int</code>,&nbsp;<code class="code">double</code>,&nbsp;<code class="code">bool</code>,&nbsp;<code class="code">String</code>,&nbsp;<code class="code">num</code><br />
+            &nbsp;<code class="code">enum</code>&nbsp;(перечисления, о них поговорим позже)</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Копирование простых данных</h2>
+            <p>Когда ты присваиваешь значение одной переменной в другую, создаётся&nbsp;<code class="code">копия</code>&nbsp;данных.<br />
+            Оригинальная переменная&nbsp;<code class="code">не изменяется</code>.</p>
+            <p><strong>Каждая переменная хранит своё значение отдельно!</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Копирование по значению</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  int a = 10;
+  int b = a; // b получает КОПИЮ значения a
+  print("a = $a, b = $b"); // a = 10, b = 10
+
+  b = 20; // Изменяем b, но a не трогается
+  print("a = $a, b = $b"); // a = 10, b = 20
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Как работают ссылки в объектах?</strong></h2>
+            <p>Объекты (например,&nbsp;<code class="code">List</code>,&nbsp;<code class="code">Map</code>,&nbsp;<code class="code">Set</code>,&nbsp;<code class="code">class</code>)&nbsp;<code class="code">не копируются</code>, а передаются&nbsp;<code class="code">по ссылке</code>.</p>
+            <p>Это значит, что если одна переменная изменит объект, то изменения отразятся на всех переменных, которые ссылаются на этот объект.</p>
+            <p><strong>Пример с&nbsp;<code class="code">List</code>&nbsp;(списками)</strong><br />
+            Объект изменяется, потому что обе переменные указывают на одну область памяти!</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Передача по ссылке (List)</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  List&lt;int&gt; list1 = [1, 2, 3];
+  List&lt;int&gt; list2 = list1; // list2 получает ссылку на тот же объект!
+
+  print("list1 = $list1, list2 = $list2"); // [1, 2, 3], [1, 2, 3]
+
+  list2[0] = 42; // Меняем элемент через list2
+
+  print("list1 = $list1, list2 = $list2"); // [42, 2, 3], [42, 2, 3]
+}
+</code></pre>
+            <p><strong>Сравнение своих объектов</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Ссылки на один объект</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Player {
+  String name;
+  Player(this.name);
+}
+
+void main() {
+  Player p1 = Player("Игрок");
+  Player p2 = p1;
+
+  p2.name = "Новый Игрок";
+
+  print(p1.name); // "Новый Игрок"
+  print(p2.name); // "Новый Игрок"
+
+  // Значния не копируются
+  // p1 и p2 ссылаются на один и тот же объект в памяти
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Ссылки на разные объекты</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Player {
+  String name;
+  Player(this.name);
+}
+
+void main() {
+  Player p1 = Player("Игрок");
+  Player p2 = Player("Игрок");
+
+  print(p1 == p2); // false (разные объекты в памяти)
+  
+  // Или воспользоваться методом identical
+  print(identical(p1, p2)); // false (разные объекты в памяти)
+}
+</code></pre>
+            <p style="text-align:center"><img alt="" name="image.png" src="images/l19/image.png" width="521" /></p>
+            <p>Даже если у объектов одинаковые данные (<code class="code">name</code>), они хранятся <code class="code">в разных местах памяти</code>, и Dart считает их разными.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Как сравнить объекты по содержимому?</strong></h2>
+            <p>Чтобы сравнить объекты&nbsp;<code class="code">по их полям</code>, нужно&nbsp;<strong>переопределить метод&nbsp;<code class="code">operator ==</code></strong>&nbsp;и&nbsp;<strong>хеш-функцию&nbsp;<code class="code">hashCode</code></strong>.</p>
+            <p>- Каждый объект в Dart автоматически предоставляет <code class="code">целочисленный хэш-код</code><br />
+            - Однако его можно переопределить, чтобы сгенерировать собственный<br />
+            - Если это сделать, нужно обязательно переопределить и оператор <code class="code">==</code><br />
+            - Равные объекты (<code class="code">==</code>) должны иметь одинаковые <code class="code">хэш-коды</code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Переопределение == и hashCode</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Player {
+  String name;
+
+  Player(this.name);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Player &amp;&amp; other.name == name;
+  }
+
+  // Переопределение hashCode используя алгоритм из книги "Effective Java"
+  @override
+  int get hashCode {
+    int result = 17;
+    return 37 * result + name.hashCode;
+  }
+}
+
+void main() {
+  Player p1 = Player("Игрок");
+  Player p2 = Player("Игрок");
+
+  print(p1 == p2); // true (сравниваем по имени)
+}
+</code></pre>
+            <ul>
+                <li>В&nbsp;Dart&nbsp;нет&nbsp;<code class="code">===</code>, но есть&nbsp;<code class="code">identical(a, b)</code>, который делает&nbsp;то же самое</li>
+                <li><code class="code">identical(a, b)</code>&nbsp;проверяет,&nbsp;<code class="code">указывают ли две переменные на один и тот же объект в памяти</code>.</li>
+                <li><code class="code">==</code>&nbsp;можно переопределить</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Константные конструкторы (<code>const</code>)</strong></h2>
+            <p>Обычные объекты создаются&nbsp;<code class="code">каждый раз заново</code>, но&nbsp;<code class="code">константные объекты с одинаковыми значениями могут переиспользоваться</code>.</p>
+            <p>- Константные объекты хранятся&nbsp;в специальной памяти&nbsp;и не дублируются.<br>
+            - Если объект&nbsp;<code class="code">неизменяемый</code>, его&nbsp;<code class="code">выгодно делать&nbsp;<strong>const</strong></code>&nbsp;для экономии памяти.</p>
+            <p><strong>Обычный конструктор</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Обычный конструктор</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Point {
+  int x, y;
+  Point(this.x, this.y);
+}
+
+void main() {
+  var p1 = Point(10, 20);
+  var p2 = Point(10, 20);
+  
+  print(identical(p1, p2)); // false (разные объекты в памяти)
+}
+</code></pre>
+            <p><strong>Константный конструктор</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Константный конструктор</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Point {
+  // 👉 Свойства обязательно final
+  final int x, y;
+  // 👉 Добавляем перед конструктором const
+  const Point(this.x, this.y);
+}
+
+void main() {
+  var p1 = const Point(10, 20);
+  var p2 = const Point(10, 20);
+  
+  print(identical(p1, p2)); // true (один объект на всю программу!)
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Стек (Stack) и Куча (Heap)</strong></h2>
+            <p>В <code class="code">Стек</code> попадают все <code class="code">простые типы данных</code>: <code class="code">числа</code>, <code class="code">функции</code>,&nbsp; и т.п.<br>
+            Здесь компилятору понятно, сколько места он занимает, сколько использует памяти и работает очень шустро</p>
+            <p><code class="code">Куча</code> — это огромная область памяти, в которой можно создать <code class="code">объекты</code>.<br>
+            Доступ в эту память имеется по всему приложению.<br>
+            Она работает <code class="code">медленнее</code> + накладные расходы на работу "<code class="code">Сборщика Мусора</code>"</p>
+            <p>В случае с простыми типами данных переменные копируются.<br>
+            В случае с объектами работает ссылочная модель данных.</p>
+
+            <h3><strong>Stack (Стек) — для простых типов</strong></h3>
+            <p>Быстрая память, предназначенная для временных данных (локальных переменных).</p>
+            <p>Тут хранятся:<br>
+            &nbsp;<code class="code">int</code>,&nbsp;<code class="code">double</code>,&nbsp;<code class="code">bool</code>,&nbsp;<code class="code">String</code>,&nbsp;<code class="code">enum</code><br>
+            Локальные переменные внутри функций</p>
+            <p><strong>Как это работает?</strong></p>
+            <ul>
+                <li>Когда функция вызывается, все её переменные&nbsp;<strong>попадают в Stack</strong>.</li>
+                <li>Когда функция завершает работу,&nbsp;<strong>данные удаляются</strong>&nbsp;из Stack.</li>
+                <li><strong>Быстро, но мало памяти</strong>.</li>
+            </ul>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Работа со стеком</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void myFunction() {
+  int a = 10; // Хранится в Stack
+  double b = 20.5; // Хранится в Stack
+  print(a + b);
+}
+
+void main() {
+  myFunction(); // После выполнения данные a и b удалятся
+}
+</code></pre>
+            <p>Простые переменные живут&nbsp;<strong>только внутри своей функции</strong>, а потом исчезают.</p>
+
+            <h3><strong>Heap (Куча) — для объектов</strong></h3>
+            <p>Большая память для хранения объектов</p>
+            <p><strong>Тут хранятся:</strong><br>
+            Все объекты (<code class="code">class</code>,&nbsp;<code class="code">List</code>,&nbsp;<code class="code">Map</code>,&nbsp;<code class="code">Set</code>)<br>
+            Данные, которые&nbsp;<strong>живут дольше функции</strong></p>
+            <ul>
+                <li>Объект хранится в&nbsp;<code class="code">Heap</code>, а переменные&nbsp;<code class="code">p1</code>&nbsp;и&nbsp;<code class="code">p2</code>&nbsp;ссылаются на него!</li>
+                <li>Если объект больше&nbsp;<code class="code">не используется</code>, Dart удаляет его из памяти (<code class="code">Сборщик Мусора</code>)</li>
+            </ul>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Работа с кучей</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Player {
+  String name;
+  Player(this.name);
+}
+
+void main() {
+  Player p1 = Player("Игрок 1");
+  Player p2 = p1;
+
+  p2.name = "Изменённый Игрок";
+
+  print(p1.name); // "Изменённый Игрок" (оба указывают на один объект!)
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Что такое&nbsp;<code>static</code>&nbsp;и где оно используется?</strong></h2>
+            <p><code class="code">static</code>&nbsp;-&nbsp;относится <code class="code">ко всему классу</code>, а не к конкретному объекту</p>
+            <ul>
+                <li><strong>Обычные свойства и методы</strong>&nbsp;принадлежат конкретному объекту класса.</li>
+                <li><strong><code>static</code>&nbsp;cвойства и методы</strong>&nbsp;принадлежат&nbsp;<code class="code">всему классу</code>, а не его экземпляру.</li>
+            </ul>
+            <p><strong>Где используется&nbsp;<code class="code">static</code>?</strong></p>
+            <ul>
+                <li>Для хранения глобальных данных (например, констант)</li>
+                <li>Для счётчиков, логики работы со всеми объектами класса</li>
+                <li>Для утилитных методов, которые не зависят от конкретного объекта</li>
+            </ul>
+            <p>Например, можно посчитать сколько объектов определенного класса было создано</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Статические свойства</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Character {
+  String name;
+  int hp;
+
+  static int count = 0;
+
+  Character(this.name, this.hp) {
+    count++;
+  }
+}
+
+void main() {
+  Character knight = Character("Воин", 100);
+  Character mage = Character("Маг", 80);
+  Character paladin = Character("Паладин", 120);
+
+  // Выводит общее количество созданных персонажей
+  // static вызывается у самого класса!
+  // объект создавать не нужно!
+  print(Character.count);
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Перечисления Enum</strong></h2>
+            <p>Перечисления&nbsp;<code class="code">enum</code>&nbsp;<strong>создаёт фиксированные наборы значений</strong>, удобные для работы со статусами, направлениями и режимами.</p>
+            <p>Используются, когда есть&nbsp;<strong>фиксированный список возможных значений</strong>:</p>
+            <ul>
+                <li>Направления (<code class="code">север</code>,&nbsp;<code class="code">юг</code>,&nbsp;<code class="code">запад</code>,&nbsp;<code class="code">восток</code>)</li>
+                <li>Дни недели (<code class="code">понедельник</code>,&nbsp;<code class="code">вторник</code>, …)</li>
+                <li>Статусы (<code class="code">loading</code>,&nbsp;<code class="code">success</code>,&nbsp;<code class="code">error</code>)</li>
+            </ul>
+            <p>Например, мы часто будем работать с состоянием во <code class="code">Flutter</code> Приложениях, используя статусы:</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Enum</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">enum Status { loading, success, error }
+
+void checkStatus(Status status) {
+  switch (status) {
+    case Status.loading:
+      print("Загружается...");
+      break;
+    case Status.success:
+      print("Успешно!");
+      break;
+    case Status.error:
+      print("Ошибка!");
+      break;
+  }
+}
+
+void main() {
+  checkStatus(Status.loading);  // Загружается...
+  checkStatus(Status.success);  // Успешно!
+}</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООП Часть 1 в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 14: ООП Часть 1</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>ООП Часть 1 в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Объектно-Ориентированное Программирование</h2>
+            
+            <img src="images/l14/op1.png" alt="ООП схема" width="700">
+
+            <p>До настоящего момента мы разрабатывали программы, используя <code class="code">процедурный подход</code>. В рамках данного подхода весь код, включая <code class="code">переменные</code> и <code class="code">функции</code>, размещается в одном файле, <code class="code">без чёткой структурной связи</code> между его компонентами. В результате создаётся монолитная структура, где различные элементы программы <code class="code">хаотично смешаны</code>.</p>
+
+            <p>Основные характеристики <code class="code">процедурного подхода</code>:</p>
+
+            <img src="images/l14/op2.png" alt="Характеристики процедурного подхода" width="700">
+
+            <ul>
+                <li>Программа строится с использованием <code class="code">процедур</code> (<code class="code">функций</code>) как ключевых структурных элементов.</li>
+                <li>Данные и функции существуют <code class="code">отдельно друг от друга</code>, без явной привязки.</li>
+                <li>Использование <code class="code">глобальных переменных</code> для хранения данных, <code class="code">повышает риск ошибок</code>: такие переменные доступны для просмотра и изменения любым элементам программы, что затрудняет контроль и отладку, потому что эти переменные может видеть и изменять кто хочет 🤨</li>
+            </ul>
+
+            <p>Рассмотрим пример программы в процедурном стиле и выделим её <code class="code">ограничения</code> и <code class="code">проблемы</code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Процедурный подход</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  String playerName = "Геральт из Ривии";
+  int playerHp = 100;
+  int playerAttack = 20;
+  int playerDefence = 10;
+
+  String monsterName = "Леший из Лихолесья";
+  int monsterHp = 50;
+  int monsterAttack = 12;
+  int monsterDefence = 8;
+
+  /// Функция, с помощью которой игрок наносит урон монстру.
+  void playerDealsDamage() {
+    int damage = playerAttack - monsterDefence;
+    if (damage < 0) damage = 0;
+    monsterHp -= damage;
+
+    if (monsterHp < 0) {
+      print("Монстр проиграл");
+      return;
+    }
+
+    print("Игрок наносит монстру $damage урона");
+    print("У монстра осталось $monsterHp HP");
+  }
+
+  /// Функция, с помощью которой монстр наносит урон игроку.
+  void monsterDealsDamage() {
+    int damage = monsterAttack - playerDefence;
+    if (damage < 0) damage = 0;
+    playerHp -= damage;
+    
+    print("Монстр наносит игроку $damage урона");
+    print("У игрока осталось $playerHp HP");
+  }
+
+  /// Функция повышения уровня игрока.
+  void levelUp() {
+    print("Поздравляем! Уровень повышен! Ваши статы усилены!");
+    playerHp += 10;
+    playerAttack += 5;
+    playerDefence += 2;
+  }
+
+  /// Функция для отображения текущих характеристик игрока.
+  showPlayerStats() {
+    print("Имя игрока: $playerName");
+    print("Здоровье игрока: $playerHp");
+    print("Атака игрока: $playerAttack");
+    print("Защита игрока: $playerDefence");
+  }
+
+  /// Функция для отображения текущих характеристик монстра.
+  showMonsterStats() {
+    print("Имя монстра: $monsterName");
+    print("Здоровье монстра: $monsterHp");
+    print("Атака монстра: $monsterAttack");
+    print("Защита монстра: $monsterDefence");
+  }
+
+  // Выпускаем кракена — последовательность ходов
+  playerDealsDamage();
+  playerDealsDamage();
+  monsterDealsDamage();
+  playerDealsDamage();
+  playerDealsDamage();
+  playerDealsDamage();
+
+  levelUp();
+  showPlayerStats();
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Проблемы процедурного подхода</h2>
+            
+            <p>На данном этапе всё кажется упорядоченным, однако попробуем добавить <code class="code">ещё одного монстра</code>, похожего на существующего. Это приведёт к <code class="code">необходимости создавать дополнительные переменные</code> для нового монстра, а также <code class="code">писать отдельные функции</code>, "связанные" с ним.</p>
+
+            <img src="images/l14/op3.png" alt="Проблемы с добавлением монстров" width="700">
+
+            <p>Проблема заключается в том, что эти переменные и функции <code class="code">не имеют структурной связи друг с другом</code>.<br>
+            Это делает код менее понятным и увеличивает вероятность ошибок.</p>
+
+            <p>Например, можно случайно обратиться к переменным, не относящимся к конкретному монстру, что приведёт к некорректной работе программы и непредсказуемым результатам.</p>
+
+            <img src="images/l14/op4.png" alt="Схема проблем с переменными" width="487">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проблема с множественными монстрами</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  String playerName = "Геральт из Ривии";
+  int playerHp = 100;
+  int playerAttack = 20;
+  int playerDefence = 10;
+
+  String monsterName = "Леший из Лихолесья";
+  int monsterHp = 50;
+  int monsterAttack = 12;
+  int monsterDefence = 8;
+
+  // 👉👉👉 Ещё пачка переменных 😨
+  String monster2Name = "Злобный Бобр";
+  int monster2Hp = 7000;
+  int monster2Attack = 20;
+  int monster2Defence = 0;
+
+  void playerDealsDamage() {
+    // ...
+  }
+
+  // 👉👉👉 Придётся дополнительно создать ещё функцию для битвы с новым монстром
+  void playerDealsDamageToMonster2() {
+    int damage = playerAttack - monster2Defence;
+    if (damage < 0) damage = 0;
+    monster2Hp -= damage;
+
+    if (monster2Hp < 0) {
+      print("Монстр проиграл");
+      return;
+    }
+
+    print("Игрок наносит монстру $damage урона. У монстра осталось $monster2Hp HP.");
+  }
+
+  void monsterDealsDamage() {
+    // ...
+  }
+
+  // 👉👉👉 Так же придётся делать и функцию атаки для нового монстра
+  void monster2DealsDamage() {
+    int damage = monster2Attack - playerDefence;
+    if (damage < 0) damage = 0;
+    playerHp -= damage;
+    print("Монстр наносит игроку $damage урона. У игрока осталось $playerHp HP.");
+  }
+
+  void levelUp() {
+    //...
+  }
+  showPlayerStats() {
+    //...
+  }
+  showMonsterStats() {
+    //...
+  }
+
+  // Выпускаем кракена
+  playerDealsDamage();
+  playerDealsDamage();
+  monsterDealsDamage();
+  playerDealsDamage();
+  playerDealsDamage();
+  playerDealsDamage();
+
+  levelUp();
+  showPlayerStats();
+}</code></pre>
+
+            <img src="images/l14/op5.png" alt="Хаос в коде" width="700">
+
+            <p>А теперь представьте, что монстров в игре может быть <code class="code">несколько десятков</code> или <code class="code">сотен</code>, или же появляется необходимость поддерживать <code class="code">несколько игроков</code>. В таких условиях наш код быстро превратится в <code class="code">хаотичный и неподдающийся управлению массив, полный дублирования и путаницы</code>. Это усложнит не только чтение и поддержку кода, но и внесение изменений или исправление ошибок.</p>
+
+            <img src="images/l14/op6.png" alt="Хаотичный код" width="500">
+
+            <p><strong>Как справиться с подобной ситуацией?</strong> Решение заключается в использовании другой парадигмы программирования, известной как <code class="code">Объектно-Ориентированное Программирование</code> (<code class="code">ООП</code>). Этот подход помогает структурировать код, связывая данные и функциональность в единые логические блоки.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Введение в ООП</h2>
+            
+            <p><strong>Как справиться с подобной ситуацией?</strong> Решение заключается в использовании другой парадигмы программирования, известной как <code class="code">Объектно-Ориентированное Программирование</code> (<code class="code">ООП</code>). Этот подход помогает структурировать код, связывая данные и функциональность в единые логические блоки.</p>
+
+            <p>Давайте сразу преобразуем наш пример в стиле <code class="code">ООП</code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Первый класс</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Character {
+  // Свойства класса
+  String name = "";
+  int hp = 1;
+  int attack = 1;
+  int defence = 1;
+
+  // Конструктор
+  Character(String name, int hp, int attack, int defence) {
+    this.name = name;
+    this.hp = hp;
+    this.attack = attack;
+    this.defence = defence;
+  }
+}
+
+void main() {
+
+}</code></pre>
+
+            <img src="images/l14/op7.png" alt="Объяснение класса 1" width="700">
+            <img src="images/l14/op8.png" alt="Объяснение класса 2" width="700">
+            <img src="images/l14/op9.png" alt="Объяснение класса 3" width="700">
+            <img src="images/l14/op10.png" alt="Объяснение класса 4" width="700">
+            <img src="images/l14/op11.png" alt="Объяснение класса 5" width="700">
+            <img src="images/l14/op12.png" alt="Объяснение класса 6" width="700">
+            <img src="images/l14/op13.png" alt="Объяснение класса 7" width="700">
+
+            <p>1. <strong>Создание <code class="code">класса</code></strong><br>
+            Первым шагом мы должны создать <code class="code"><strong>класс</strong></code>, который станет основой для создания объектов. Класс можно рассматривать как <code class="code">шаблон</code> или трафарет, который определяет общие свойства и действия для всех объектов одного типа.</p>
+
+            <p>2. <strong>Назовём класс</strong> <code class="code">Character</code><br>
+            Этот будет абстрактный персонаж. Классы всегда называются с заглавной буквы. Класс создаётся <strong>за пределами функции</strong> <code class="code">main()</code>, чтобы быть доступным везде в программе.</p>
+
+            <p>3. <strong>Добавление <code class="code">свойств и методов</code></strong><br>
+            Внутри фигурных скобок <code class="code">{ }</code> класса мы опишем свойства и методы будущих объектов. Свойства характеризуют объект (например, имя, количество жизней), а методы определяют его действия (например, атака, защита).</p>
+
+            <p>4. <strong>Параллель с реальной жизнью</strong><br>
+            Чтобы лучше понять, представьте, что вокруг нас множество <code class="code">объектов</code>: <em>люди, автомобили, здания</em>.</p>
+
+            <p>У любого объекта есть 2 важные <code class="code">характеристики</code> (например для человека):<br>
+            <code class="code">Свойства</code> - <em>возраст, рост, цвет глаз, вес, ...</em><br>
+            <code class="code">Действия</code> - <em>учиться, спать, работать, играть в зельду ...</em></p>
+
+            <p>В реальности у объектов могут быть миллионы свойств и действий, поэтому для решения задачи важно <code class="code"><strong>абстрагироваться</strong></code> - выделить только самые значимые свойства и методы, которые нам необходимы в данном случае.</p>
+
+            <p>5. <strong>Добавляем <code class="code">свойства</code> персонажа</strong><br>
+            В данном случае мы определим такие свойства, как имя, количество жизней, сила атаки и уровень защиты. При этом каждому из них установим значения по умолчанию, соответствующие базовому случаю.</p>
+
+            <p>6. <strong>Создание <code class="code">конструктора</code> класса</strong><br>
+            Для удобства работы с классом необходимо добавить <code class="code"><strong>конструктор</strong></code>. Это специальный метод, который <code class="code">автоматически вызывается при создании объекта</code>. Его имя совпадает с именем класса. В конструкторе мы перечисляем параметры, которые нужно указать при создании объекта, а затем инициализируем свойства значениями этих параметров.</p>
+
+            <p>7. <strong>Ключевое слово</strong> <code class="code">this</code><br>
+            Внутри конструктора используется ключевое слово <code class="code">this</code>, которое <code class="code">ссылается на текущий объект</code>. Это необходимо, чтобы чётко указать, что мы обращаемся к свойствам <code class="code">данного</code> объекта, а не к переменным или значениям из внешней области видимости. Проще говоря, <code class="code">this</code> можно перевести как "<code class="code">этот</code>" или "<code class="code">текущий</code>" объект. <code class="code">Обращение к самому себе</code>.</p>
+
+            <p>8. <strong>Создание <code class="code">объекта</code></strong><br>
+            Теперь мы можем создать новый объект, используя новый тип данных (название нашего класса) и вызов конструктора. Этот объект будет обладать всеми свойствами и методами, описанными в классе.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание и использование объектов</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Создание объекта</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  // Создание экземпляра класса (объекта)
+  Character character = Character("", 1, 1, 1);
+
+  character.hp = 100; // Измнение свойства
+  print(character.hp); // Вывод свойства
+}</code></pre>
+
+            <p>Для создания нового <code class="code">экземпляра класса</code> (<code class="code">новый объект</code>), мы сначала указываем <code class="code">тип данных</code> (<code class="code">имя класса</code>), затем задаём <code class="code">имя объекта</code>, а после этого <code class="code">вызываем конструктор класса</code>, чтобы <code class="code">инициализировать свойства</code> нового объекта.</p>
+
+            <p>После этого у нас есть полностью готовый объект со своими уникальными свойствами. Чтобы обратиться к свойствам или методам объекта, используется <code class="code"><strong>точечный синтаксис</strong></code>. Например, мы можем узнать текущее значение свойства, вызвать метод объекта, или даже изменить значение свойства.</p>
+
+            <img src="images/l14/op14.png" alt="Точечный синтаксис" width="400">
+
+            <p>В языке <code class="code">Dart</code> предусмотрен более <code class="code">удобный и компактный</code> способ создания стандартного конструктора с помощью сокращённого синтаксиса. Используя этот подход, мы можем не дублировать присвоение параметров вручную, поскольку всё делается автоматически.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Сокращённый конструктор</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Character {
+  // Свойства класса
+  String name;
+  int hp;
+  int attack;
+  int defence;
+
+  // Конструктор
+  Character(this.name, this.hp, this.attack, this.defence);
+}</code></pre>
+
+            <img src="images/l14/op15.png" alt="Сокращённый синтаксис" width="700">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Множественные объекты из одного класса</h2>
+            
+            <p>Одно из главных преимуществ <code class="code"><strong>ООП</strong></code> — это возможность <code class="code">создавать множество уникальных объектов</code>, используя <code class="code">один и тот же класс</code> как основу.</p>
+
+            <img src="images/l14/op16.png" alt="Множественные объекты" width="700">
+
+            <p>Класс выступает в роли <code class="code">шаблона</code>, который определяет <code class="code">общую структуру</code> (свойства и методы), а каждый <code class="code">объект</code>, созданный на его основе, может иметь <code class="code">собственные</code> данные и поведение.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Создание множественных объектов</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  // Создание экземпляра класса (объекта)
+  Character player = Character("Геральт из Ривии", 100, 20, 10);
+  Character monster1 = Character("Леший из Лихолесья", 50, 12, 8);
+  Character monster2 = Character("Злобный Бобр", 2000, 50, 1);
+
+  print(player.name); // "Геральт из Ривии"
+  print(monster1.name); // "Леший из Лихолесья"
+  print(monster2.name); // "Злобный Бобр"
+}</code></pre>
+
+            <p>Мы создали <code class="code">три разных объекта</code>, используя единственный шаблон класса <code class="code">Character</code></p>
+
+            <p>Это наглядно демонстрирует <code class="code">удобство</code> и <code class="code">гибкость</code> объектно-ориентированного программирования.</p>
+
+            <h3><strong>Уникальные свойства объектов</strong></h3>
+
+            <p>Каждый объект — <code class="code">player</code>, <code class="code">monster1</code>, <code class="code">monster2</code> — обладает <code class="code">одинаковым набором свойств</code>, например, <code class="code">name</code>. Однако <code class="code">самое важное</code> — у каждого из этих объектов <code class="code"><strong>значение </strong>свойства name <strong>уникально</strong></code>. Это позволяет хранить уникальную информацию для каждого объекта и работать с ними независимо.</p>
+
+            <img src="images/l14/o11.png" alt="Уникальные свойства" width="500">
+
+            <h3><strong>Связь с</strong> <code class="code"><strong>this</strong></code></h3>
+
+            <p>Когда мы вызываем <code class="code">конструктор класса</code> для создания <code class="code">нового объекта</code>, ключевое слово <strong><code class="code">this</code></strong> внутри класса автоматически связывается с этим объектом.</p>
+
+            <p>Проще говоря, <strong><code class="code">this</code></strong> обозначает <strong><code class="code">текущий объект</code></strong>, для которого выполняется код.</p>
+
+            <p>Если в конструкторе класса написано:</p>
+
+            <pre><code class="code">this.name = name;</code></pre>
+
+            <p>И создаётся объект <code class="code">player</code>, то это выражение становится:</p>
+
+            <pre><code class="code">player.name = name;</code></pre>
+
+            <p>А если создаётся объект <code class="code">monster1</code>, то оно трансформируется в:</p>
+
+            <pre><code class="code">monster1.name = name;</code></pre>
+
+            <p>Таким образом, <code class="code">this</code> автоматически заменяется текущим объектом, что делает создание и управление объектами простым и логичным.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Добавление методов к классу</h2>
+            
+            <h3>Добавим методы для вывода информации о персонаже</h3>
+
+            <p>Создадим метод <code class="code">displayInfo</code>, который будет выводить основные характеристики объекта, такие как имя, здоровье, атака и защита.</p>
+
+            <p>После создания объекта мы можем вызвать его метод, используя <code class="code"><strong>точечный синтаксис</strong></code>. Обязательно ставьте круглые скобки после имени метода, как при вызове обычной функции.</p>
+
+            <p>Свойство объекта – вызывается через точку и без скобок<br>
+            Метод объекта – вызывается через точку и со скобками</p>
+
+            <img src="images/l14/op17.png" alt="Точечный синтаксис для методов" width="300">
+
+            <p>Методы позволяют делать объекты более «живыми» и взаимодействующими с данными.<br>
+            Это один из ключевых аспектов работы в стиле <code class="code"><strong>ООП</strong></code>.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Класс с методами</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Character {
+  // Свойства
+  String name;
+  int hp;
+  int attack;
+  int defence;
+
+  // Конструктор
+  Character(this.name, this.hp, this.attack, this.defence);
+
+  // Методы
+  void showStats() {
+    print("Имя: $name");
+    print("Здоровье: $hp");
+    print("Атака: $attack");
+    print("Защита: $defence");
+  }
+}
+
+void main() {
+  // Создание экземпляра класса (объекта)
+  Character player = Character("Геральт из Ривии", 100, 20, 10);
+  Character monster1 = Character("Леший из Лихолесья", 50, 12, 8);
+  Character monster2 = Character("Злобный Бобр", 2000, 50, 1);
+
+  player.showStats();
+  monster1.showStats();
+  monster2.showStats();
+}</code></pre>
+
+            <p>Теперь наш код стал <code class="code"><strong>структурированным и логичным</strong></code>, ведь все свойства и методы объекта объединены в одном месте — внутри класса. Такой подход не только делает код аккуратным, но и предотвращает путаницу, поскольку все элементы связаны по смыслу и удобно «упакованы».</p>
+
+            <p><strong>Преимущества, которые мы получили:</strong></p>
+
+            <ol>
+                <li>
+                <p><strong><code class="code">Связанность данных и функций</code>:</strong> Все свойства и методы, относящиеся к одному объекту, находятся внутри его класса, а не разбросаны по коду.</p>
+                </li>
+                <li>
+                <p><strong><code class="code">Изоляция данных</code>:</strong> Мы чётко определяем, к какому объекту относятся те или иные свойства и методы. Теперь невозможно случайно «перепутать» данные одного персонажа с данными другого.</p>
+                </li>
+                <li>
+                <p><strong><code class="code">Легкость масштабирования</code>:</strong> Для создания нового объекта достаточно использовать класс, без необходимости копирования кода.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полный пример с боевой системой</h2>
+            
+            <p><strong>Добавим остальные методы из процедурного примера</strong></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Полный класс Character</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Character {
+  // Свойства
+  String name;
+  int hp;
+  int attack;
+  int defence;
+
+  // Конструктор
+  Character(this.name, this.hp, this.attack, this.defence);
+
+  // Методы
+  void showStats() {
+    print("Имя: $name");
+    print("Здоровье: $hp");
+    print("Атака: $attack");
+    print("Защита: $defence");
+  }
+
+  void dealDamage(Character target) {
+    int damage = attack - target.defence;
+    if (damage < 0) damage = 0;
+    target.hp -= damage;
+
+    if (target.hp <= 0) {
+      print("${target.name} проиграл");
+    } else {
+      print("$name наносит ${target.name} $damage урона. У ${target.name} осталось ${target.hp} HP.");
+    }
+  }
+
+  void levelUp() {
+    print("Поздравляем, $name! Уровень повышен! Ваши статы усилены!");
+    hp += 10;
+    attack += 5;
+    defence += 2;
+  }
+}
+
+void main() {
+  // Создание экземпляра класса (объекта)
+  Character player = Character("Геральт из Ривии", 100, 20, 10);
+  Character monster1 = Character("Леший из Лихолесья", 50, 12, 8);
+  Character monster2 = Character("Злобный Бобр", 2000, 50, 1);
+
+  // Выпускаем кракена
+  player.dealDamage(monster1);
+  player.dealDamage(monster1);
+  monster1.dealDamage(player);
+  player.dealDamage(monster1);
+  player.dealDamage(monster1);
+  player.dealDamage(monster1);
+
+  player.levelUp();
+  player.showStats();
+}</code></pre>
+
+            <div class="note">
+                <p><strong>Результат выполнения:</strong></p>
+            </div>
+            <pre><code class="code">Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 38 HP.
+
+Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 26 HP.
+
+Леший из Лихолесья наносит Геральт из Ривии 2 урона. 
+У Геральт из Ривии осталось 98 HP.
+
+Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 14 HP.
+
+Геральт из Ривии наносит Леший из Лихолесья 12 урона. 
+У Леший из Лихолесья осталось 2 HP.
+
+Леший из Лихолесья проиграл
+
+Поздравляем, Геральт из Ривии! Уровень повышен! Ваши статы усилены!
+
+Имя: Геральт из Ривии
+Здоровье: 108
+Атака: 25
+Защита: 12</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

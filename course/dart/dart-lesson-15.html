@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООП Часть 2 в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 15: ООП Часть 2</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>ООП Часть 2 в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Принципы ООП</h2>
+            
+            <img src="images/l15/op1.png" alt="Принципы ООП" width="700">
+
+            <p><strong><code class="code">Абстракция</code></strong> - это выделение только важных характеристик объекта.</p>
+
+            <p>Например, у телефона основные свойства — это возможность звонить и принимать звонки. Его внутреннее устройство нас не интересует.</p>
+
+            <img src="images/l15/op2.png" alt="Абстракция телефона" width="500">
+
+            <p><strong><code class="code">Наследование</code></strong> позволяет одному классу (дочернему) перенимать свойства и методы другого класса (родительского).</p>
+
+            <p>Например, все смартфоны — это телефоны, но они могут обладать дополнительными функциями, такими как запуск приложений.</p>
+
+            <img src="images/l15/op3.png" alt="Наследование смартфонов" width="500">
+
+            <p><strong><code class="code">Инкапсуляция</code></strong> — это сокрытие внутренней реализации объекта.</p>
+
+            <p>Внешний мир взаимодействует с объектом через публичные методы, а не напрямую с его внутренними данными.</p>
+
+            <img src="images/l15/op4.png" alt="Инкапсуляция" width="500">
+
+            <p><strong><code class="code">Полиморфизм</code></strong> позволяет одному и тому же методу работать по-разному в зависимости от объекта, который его вызывает.</p>
+
+            <p>Например, разные модели телефонов могут совершать вызов по-разному.</p>
+
+            <img src="images/l15/op5.png" alt="Полная схема принципов ООП" width="1384">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Абстракция</h2>
+            
+            <p>Продолжим рассматривать все эти принципы на примере RPG персонажей. Начнем с создания абстрактного класса <code class="code"><strong>AbstractCharacter</strong></code></p>
+
+            <ol>
+                <li>Создадим в проекте папку <code class="code"><strong>character</strong></code></li>
+                <li>Добавим файл <code class="code"><strong>character.dart</strong></code>, где будут находится только классы</li>
+                <li>Добавим файл <code class="code"><strong>main.dart</strong></code>, где будет находится главная функция <code class="code">main</code></li>
+            </ol>
+
+            <img src="images/l15/op6.png" alt="Структура проекта" width="250">
+
+            <p>В нашем <code class="code">RPG</code> мире все персонажи обладают базовыми способностями: <code class="code">атаковать</code> и <code class="code">защищаться</code>.<br>
+            Имеют базовые характеристики <code class="code">имя</code>, <code class="code">количество жизней</code>, <code class="code">уровень</code>.</p>
+
+            <p>Вместо того чтобы прописывать эти способности каждому типу (<code class="code">рыцари</code>, <code class="code">маги</code>, <code class="code">лучники</code>), выделим общую <code class="code">абстракцию</code> — базовый класс, описывающий основные функции любого персонажа.</p>
+
+            <p>Пропишем все классы внутри файла <code class="code">characters.dart</code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Абстрактный класс</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int hp; 
+  final int level;
+  
+  AbstractCharacter(this.name, this.hp, this.level);
+
+  void attack();
+  void defend();
+}</code></pre>
+
+            <img src="images/l15/op7.png" alt="Объяснение абстрактного класса" width="700">
+
+            <p><code class="code"><strong>Абстрактный класс</strong></code>: Это шаблон, который задаёт базовые характеристики и поведение для всех наследников, но не может быть создан напрямую.</p>
+
+            <p><code class="code"><strong>Методы без тела</strong></code>: Абстрактный метод (например, attack) будет реализован позже, в классах-наследниках.</p>
+
+            <p>Теперь, любой персонаж может быть создан на основе этой абстракции</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Наследование</h2>
+            
+            <ul>
+                <li>Родительским классом с базовыми характеристиками общими для всех персонажей будет абстрактный класс персонажа <code class="code"><strong>AbstractCharacter</strong></code></li>
+                <li>От него унаследуют характеристики два других класса: <code class="code">Воин</code> и <code class="code">Маг</code></li>
+                <li><code class="code">Воин</code> и <code class="code">Маг</code> будут иметь полностью все характеристики <code class="code">родителя</code> + свои <code class="code">уникальные</code> характеристики.</li>
+                <li>У Мага, в свою очередь, тоже есть два наследника: <code class="code">Темный Маг</code> и <code class="code">Белый Маг</code></li>
+                <li>Темный Маг и Белый Маг будут иметь полностью все характеристики своего <code class="code">родителя</code> мага + полностью все характеристики родителя мага <code class="code">AbstractCharacter</code> + свои <code class="code">уникальные</code> характеристики.</li>
+            </ul>
+
+            <img src="images/l15/op8.png" alt="Схема наследования" width="700">
+            <img src="images/l15/op9.png" alt="Иерархия классов" width="500">
+
+            <p>Используем <strong>extends</strong> чтобы унаследовать характеристики от другого класса</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Класс Warrior</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Класс Warrior наследуется от AbstractCharacter
+class Warrior extends AbstractCharacter {
+  final int strength; // Сила воина
+
+  // Новый удобный синтаксис конструктора через super
+  Warrior(super.name, super.level, super.hp, this.strength);
+
+  // Переопределяем метод атаки
+  @override
+  void attack() {
+    print("Воин $name атакует врага с силой $strength!");
+  }
+
+  // Переопределяем метод защиты
+  @override
+  void defend() {
+    print("Воин $name ставит щит и защищается!");
+  }
+}</code></pre>
+
+            <ol>
+                <li><code class="code">class Warrior extends AbstractCharacter</code> означает что <code class="code">Warrior</code> унаследует все характеристики <code class="code">AbstractCharacter</code></li>
+                <li><code class="code">final int strength</code> Уникальное свойство для класса <code class="code">Warrior</code></li>
+                <li><code class="code">Warrior(super.name, super.level, super.hp, this.strength)</code> вызов конструктора при наследовании. Обязательно нужно сначала вызывать конструктор родителя, потом конструктор наследника (через <code class="code">super</code>). Чтобы инициализировать свойства родительского класса, а потом уже класса потомка (через <code class="code">this</code>).</li>
+                <li><code class="code">@override void attack()</code> переопределяем родительские методы, т.е. берем методы родителя с тем же названием, но переделываем внутренний функционал, меняем форму (вид полиморфизма)</li>
+            </ol>
+
+            <p>Далее попробуем создать новый объект класса <code class="code">Warrior</code> и посмотрим какие у него теперь есть свойства и методы.</p>
+
+            <p><code class="code">Файл</code> <strong><code class="code">main.dart</code></strong></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Использование Warrior</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'characters.dart'; // 👈👈👈 импортируем файл для доступа к Warrior
+
+void main() {
+  Warrior knight = Warrior("Арагорн", 100, 80, 20);
+
+  print(knight.name); // Арагорн
+  print(knight.hp); // 100
+
+  knight.attack(); // Воин Арагорн атакует врага с силой 20!
+  knight.defend(); // Воин Арагорн ставит щит и защищается!
+}</code></pre>
+
+            <ul>
+                <li>Чтоб воспользоваться классами из другого файла, внутри файла <code class="code">main.dart</code> нужно импортировать файл с эти классами <code class="code">import 'characters.dart'</code></li>
+                <li>При обращении к объекту через точку, можно увидеть что теперь у воина, есть доступ для всех характеристик как своих, так и характеристик родительского класса!</li>
+            </ul>
+
+            <img src="images/l15/op10.png" alt="Доступные свойства и методы" width="253">
+
+            <p>Можно обратить внимание, что кроме характеристик объекта, которые мы придумали сами, здесь есть ещё, например, <code class="code">hashCode</code> или <code class="code">toString()</code></p>
+
+            <p><strong>Откуда они взялись?</strong></p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Класс Object и глубокое наследование</h2>
+            
+            <h3><code class="code">Object</code></h3>
+
+            <p>У <code class="code"><strong>каждого объекта</strong></code> в языке <code class="code">Dart</code>, существует, один <code class="code"><strong>главный</strong></code>, но по умолчанию невидимый, родительский класс <code class="code">Object</code></p>
+
+            <p>От класса <code class="code">Object</code> наследуются общие методы, такие как <code class="code">hashCode</code> и <code class="code">toString()</code></p>
+
+            <p>Таким образом, даже у нашего абстрактного базового класса <code class="code">AbstractCharacter</code> есть "<code class="code">супер-родитель</code>" — класс <code class="code">Object</code></p>
+
+            <ul>
+                <li><code class="code">hashCode</code> — это свойство, которое возвращает целое число (хэш-код) для данного объекта. Хэш-код используется для сравнения объектов</li>
+                <li><code class="code">toString</code> — это метод, который возвращает строковое представление объекта.</li>
+            </ul>
+
+            <img src="images/l15/op11.png" alt="Иерархия Object" width="700">
+
+            <p>Переопределим метод <code class="code">toString</code> для отображения информации о всех наших будущих персонажей</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Переопределение toString</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int level;
+  final int hp;
+
+  AbstractCharacter(this.name, this.hp, this.level);
+
+  void attack();
+  void defend();
+
+  @override
+  String toString() {
+    super.toString();
+    return "Имя=$name, уровень=$level, здоровье=$hp";
+  }
+}</code></pre>
+
+            <p>Теперь реализуем более глубокое наследование с помощью персонажа Мага</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Класс Mage</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Класс Mage наследуется от AbstractCharacter
+class Mage extends AbstractCharacter {
+  int mana; // Магическая энергия
+
+  Mage(super.name, super.hp, super.level, this.mana);
+
+  // Метод для применения заклинания
+  void castSpell(int manaCost) {
+    if (mana <= 0 || mana < manaCost) {
+      print("Не могу колдовать! Мана закончилась! Ааааа!");
+      return;
+    }
+    print("$name кастует фаербол, затрачивая $manaCost маны!");
+    this.mana -= manaCost;
+  }
+
+  @override
+  void attack() {
+    print("Маг $name атакует врага магическим кинжалом");
+  }
+
+  @override
+  void defend() {
+    print("Маг $name кастует защитный купол");
+  }
+}</code></pre>
+
+            <p>А теперь создадим еще наследников, для которых родителем будет обычный Маг</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Классы DarkMage и LightMage</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class DarkMage extends Mage {
+  String darkPower = "Испепеление тьмой";
+
+  DarkMage(super.name, super.hp, super.level, super.mana);
+
+  void useDarkPower() {
+    print("$name использует $darkPower");
+    print("Всё в радиусе 100км было уничтожено!");
+  }
+}
+
+class LightMage extends Mage {
+  String healPower = "Исцеление";
+
+  LightMage(super.name, super.hp, super.level, super.mana);
+
+  void useLightPower() {
+    print("$name использует $healPower");
+    print("Теперь всё хорошо!");
+  }
+}</code></pre>
+
+            <img src="images/l15/op12.png" alt="Полная иерархия классов" width="700">
+
+            <p>Создадим объекты персонажей темного и светлого магов и убедимся, что для всех доступны все характеристики от всех родительских классов.</p>
+
+            <p><code class="code">Файл <strong>main.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Использование магов</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'characters.dart';
+
+void main() {
+  DarkMage darkWizard = DarkMage("Паймон", 200, 50, 1200);
+  darkWizard.attack();
+  darkWizard.defend();
+  darkWizard.castSpell(20);
+  darkWizard.useDarkPower();
+
+  LightMage lightWizard = LightMage("Василий", 80, 50, 2000);
+  lightWizard.defend();
+  lightWizard.useLightPower();
+}</code></pre>
+
+            <img src="images/l15/o13.png" alt="Результат выполнения" width="500">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Инкапсуляция</h2>
+            
+            <p>Инкапсуляцию можно представить как состав из двух слов <code class="code">в</code> <code class="code">капсуле</code></p>
+
+            <img src="images/l15/op13.png" alt="Инкапсуляция как капсула" width="700">
+
+            <p>Можно <code class="code">упрощенно</code> привести такой пример, что когда мы создали класс <code class="code">AbstractCharacter</code> и добавили в него свойства и методы, то все эти характеристики мы <code class="code">инкапсулировали</code> в пределах этого класса и поместили всё в защитную <code class="code">капсулу</code>, как <code class="code">таблетку</code>.</p>
+
+            <ol>
+                <li>Таким образом мы <code class="code">связали</code> свойства и методы по смыслу, что они относятся к классу <code class="code">Персонаж</code></li>
+                <li>Мы можешь <code class="code">управлять доступом</code> к свойствам и методам. Где-то <code class="code">приоткрыть капсулу</code> для доступа из вне, или наоборот <code class="code">полностью закрыться</code>.</li>
+                <li><code class="code">Приоткрывать</code> капсулу можно не для все характеристик сразу, а <code class="code">выборочно</code> для определенных свойств или методов.</li>
+            </ol>
+
+            <img src="images/l15/o14.png" alt="Управление доступом" width="700">
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Публичные свойства</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int level;
+  final int hp;
+
+  AbstractCharacter(this.name, this.hp, this.level);
+
+  void attack();
+  void defend();
+
+  @override
+  String toString() {
+    super.toString();
+    return "Имя=$name, уровень=$level, здоровье=$hp";
+  }
+}</code></pre>
+
+            <p>В данном случае данные инкапсулированны <code class="code">по смыслу</code> с привязкой к классу данных.<br>
+            Но все данные являются доступными из вне, т.е. публичными (<code class="code"><strong>public</strong></code>)<br>
+            Хотя в данном случае и будет проблематично изменить значения свойств, потому что они являются <code class="code"><strong>final</strong></code> константами.<br>
+            Но допустим, мы сделаем свойство <code class="code"><strong>hp</strong></code> обычной переменной и доступной.</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Изменяемое свойство hp</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int level;
+  int hp;
+
+  //...
+}</code></pre>
+
+            <p>В файле <code class="code">main.dart</code> мы можем сделать что-то такое</p>
+
+            <p><code class="code">Файл main<strong>.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проблема с публичными данными</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'characters.dart';
+
+void main() {
+  Warrior knight = Warrior("Воин", 100, 50, 20);
+
+  knight.hp = 200; // Мы можем внаглую взять и изменить хп
+  print(knight.hp); // Есть возможность посмотреть данные хп
+
+  // А теперь можно сделать что-то читерское
+  // Взять и обнулить жизни персонажу ... что не очень хорошо
+
+  knight.hp = 0; // !!!
+  print(knight.hp); // Упс ...
+}</code></pre>
+
+            <p>Не очень приятная получилась ситуация ... но можно воспользоваться <code class="code">инкапсуляцией</code> и установить уровни доступа к данным.</p>
+
+            <ul>
+                <li>В языке <code class="code">Dart</code> существуют два модификатора доступа <code class="code"><strong>public</strong></code> и <code class="code"><strong>private</strong></code></li>
+                <li>Все свойства и методы по умолчанию <code class="code"><strong>public</strong></code></li>
+                <li>Чтобы сделать свойства и методы приватными, нужно поставить <code class="code"><strong>знак нижнего подчеркивания</strong></code> перед именем</li>
+                <li>Приватность будет работать, только если класс в котором установлены приватные модификаторы, находится <code class="code">в отдельном файле</code>, а вызов объекта <code class="code">в другом файле</code>.</li>
+            </ul>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Приватное свойство</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int level;
+  int _hp; // Приватное свойство
+
+  AbstractCharacter(this.name, this._hp, this.level);
+
+  void attack();
+  void defend();
+
+  @override
+  String toString() {
+    super.toString();
+    return "Имя=$name, уровень=$level, здоровье=$_hp";
+  }
+}</code></pre>
+
+            <p><code class="code">Файл <strong>main.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Ошибка доступа к приватному свойству</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'characters.dart';
+
+void main() {
+  Warrior knight = Warrior("Воин", 100, 50, 20);
+
+  knight.hp = 0; // ! Ошибка доступа. Теперь так делать нельзя!
+  
+  print(knight.hp); // Но и получить данные теперь тоже нельзя :(
+}</code></pre>
+
+            <h3>Полный <code class="code">Private</code></h3>
+
+            <p>Отлично! Мы полностью <code class="code">закрыли доступ</code> к свойству <code class="code">hp</code>!<br>
+            Часто это очень нужно и важно скрыть внутреннюю реализацию класса, чтобы ничего не сломать!</p>
+
+            <p>Но в данном, случае это как-то слишком радикально.<br>
+            Хотелось бы немного <code class="code">гибкости</code>, чтобы можно было посмотреть значения свойства и как-то обработать ситуацию когда кто-то решил присвоить значение ноль</p>
+
+            <p>Есть специальные механизмы для работы со свойствами класса</p>
+
+            <ul>
+                <li><code class="code"><strong>Setter</strong></code> - позволяет гибко управлять <code class="code">инициализацией</code> свойства</li>
+                <li><code class="code"><strong>Getter</strong></code> - позволяет гибко управлять <code class="code">доступом</code> свойства</li>
+            </ul>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Getter и Setter</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int level;
+  int _hp;
+
+  // геттер для доступа к закрытому полю
+  int get hp => _hp;
+
+  // сеттер для доступа к закрытому полю
+  set hp(int value) {
+    if (value <= 0) {
+      print("Здоровье не может быть отрицательным!");
+      print("И обнулять тоже читерство! :)");
+      return;
+    } else {
+      _hp = value;
+    }
+  }
+
+  AbstractCharacter(this.name, this._hp, this.level);
+
+  void attack();
+  void defend();
+
+  @override
+  String toString() {
+    super.toString();
+    return "Имя=$name, уровень=$level, здоровье=$_hp";
+  }
+}</code></pre>
+
+            <p><code class="code">Файл <strong>main.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Использование getter и setter</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'characters.dart';
+
+void main() {
+  Warrior knight = Warrior("Воин", 100, 50, 20);
+
+  knight.hp = 200;
+  knight.hp = 0;
+
+  print(knight.hp); 
+}
+
+// Здоровье не может быть отрицательным!
+// И обнулять тоже читерство! :)
+// 200</code></pre>
+
+            <ul>
+                <li><code class="code"><strong>Геттеры</strong></code> защищают данные, добавляя слой обработки перед их возвратом.</li>
+                <li><code class="code"><strong>Сеттеры</strong></code> дают возможность валидировать или контролировать данные, которые присваиваются свойству.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полиморфизм</h2>
+            
+            <p>Полиморфизм можно разбить на два слова: "<code class="code">поли</code>" — <code class="code">много</code>, "<code class="code">морфизм</code>" — <code class="code">форм</code>.</p>
+
+            <p>Это позволяет <code class="code">одному и тому</code> же коду принимать <code class="code">множество форм</code> и вести себя по-разному в зависимости от ситуации.</p>
+
+            <p>Чтобы понять, зачем это нужно, давай начнём с примера. Вернёмся к нашим игровым персонажам. Мы создали базовый класс <code class="code">AbstractCharacter</code>, но нужно, чтобы у разных классов-наследников (например, воинов, магов и лучников) были свои уникальные способности.</p>
+
+            <p><strong>Код без полиморфизма — сплошной хаос!</strong></p>
+
+            <p>Потому что мы с вами, ещё сами того не понимая, уже использовали правильный подход к созданию классов с полиморфизмом, но рассамотрим пример без применения этого подхода.</p>
+
+            <p>Представим, что у нас есть два разных класса персонажей: <code class="code">Warrior</code> и <code class="code">Mage</code>. У каждого из них своя реализация метода <code class="code">attack()</code>. Теперь мы хотим вызвать атаку для всех персонажей, но нам придётся учитывать их типы.</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Код без полиморфизма</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Warrior {
+  final String name;
+  final int strength;
+
+  Warrior(this.name, this.strength);
+
+  void attack() {
+    print("$name атакует мечом с уроном $strength!");
+  }
+}
+
+class Mage {
+  final String name;
+  final int mana;
+
+  Mage(this.name, this.mana);
+
+  void attack() {
+    print("$name использует магию с силой $mana!");
+  }
+}</code></pre>
+
+            <p><code class="code">Файл <strong>main.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проблема без полиморфизма</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Warrior knight = Warrior("Рыцарь", 50); // Создаём рыцаря
+  Mage wizard = Mage("Маг", 30); // Создаём мага
+  String rouge = "Разбойник";
+
+  // Представим, что мы собираем их в команду
+  List team = [knight, wizard, rouge];
+
+  // Попробуем у каждого вызывать метод attack()
+  for (var character in team) {
+    character.attack();
+  }
+}</code></pre>
+
+            <p>И будет конечно же <code class="code"><strong>ошибка</strong></code>! Потому что к нам в команду попал, объект <code class="code">Разбойник</code> у которого нет, метода<code class="code"> <strong>attack()</strong></code></p>
+
+            <p>Нужно теперь делать дополнительные проверки для каждого класса.</p>
+
+            <p><code class="code">Файл main<strong>.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Решение без полиморфизма</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Warrior knight = Warrior("Рыцарь", 50); // Создаём рыцаря
+  Mage wizard = Mage("Маг", 30); // Создаём мага
+  String rouge = "Разбойник";
+
+  // Представим, что мы собираем их в команду
+  List team = [knight, wizard, rouge];
+
+  for (var character in team) {
+    // Проверяем, кто именно находится в команде
+    if (character is Warrior) {
+      // Если рыцарь, вызываем attack() рыцаря
+      character.attack(); 
+    } else if (character is Mage) {
+      // Если маг, вызываем attack() мага
+      character.attack(); 
+    } else {
+      print("Неизвестный персонаж в команде!");
+    }
+  }
+}</code></pre>
+
+            <p>Результат:</p>
+
+            <div class="note">
+                <p><strong>Результат выполнения:</strong></p>
+            </div>
+            <pre><code class="code">Рыцарь атакует мечом с уроном 50!
+Маг использует магию с силой 30!
+Неизвестный персонаж в команде!</code></pre>
+
+            <p>Это простой пример, где можно сразу заметить ошибку до компиляции кода, но в реальном приложении, это будет уже проблематично!<br>
+            У нас не будет гарантии, например, что все объекты которые мы обрабатываем будут иметь, вызываемые методы!</p>
+
+            <p>Эту проблему в данном случае, решает <code class="code">абстрактный класс</code>, который предоставляет одинаковый <code class="code">интерфейс</code> для взаимодействия между всеми объектами.</p>
+
+            <ul>
+                <li>У абстрактного класса Персонаж есть метод <code class="code">attack()</code></li>
+                <li>Все другие классы которые являются потомками абстрактного класса Персонаж, гарантированно имеют методы <code class="code">attack()</code></li>
+                <li>И самое главное реализация (<code class="code">форма</code>) этих методов будет <code class="code">уникальная</code></li>
+                <li><code class="code">Один метод attack()</code>, но <code class="code">множество форм</code> его реализации - <code class="code">Полиморфизм</code></li>
+            </ul>
+
+            <p>Повторим код теперь с применением полиморфизма</p>
+
+            <p>Мы определяем базовый класс с методом <code class="code">attack()</code></p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Абстрактный класс для полиморфизма</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  final String name;
+  final int level;
+  int _hp;
+
+  AbstractCharacter(this.name, this._hp, this.level);
+
+  void attack(); // Абстрактный метод — каждая реализация своя!
+}</code></pre>
+
+            <p>А теперь у каждого потомка этого класса будет своя реализация метода <code class="code">attack()</code></p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Полиморфные классы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Warrior extends AbstractCharacter {
+  final int strength;
+
+  Warrior(super.name, super.hp, super.level, this.strength);
+
+  @override // 👈👈👈 переопрделяем метод
+  void attack() {
+    print("$name атакует мечом! Урон: ${strength * level}");
+  }
+}
+
+class Mage extends AbstractCharacter {
+  final int mana;
+
+  Mage(super.name, super.hp, super.level, this.mana);
+
+  @override // 👈👈👈 переопрделяем метод
+  void attack() {
+    print("$name использует заклинание! Магическая сила: ${mana * level}");
+  }
+}</code></pre>
+
+            <p>Теперь всё гораздо проще. Мы можем собрать всех персонажей в общий список и использовать один вызов <code class="code">attack()</code> для всех:</p>
+
+            <p><code class="code">Файл <strong>main.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Полиморфизм в действии</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  List&lt;AbstractCharacter&gt; team = [
+    Warrior("Рыцарь", 100, 50, 20),
+    Mage("Маг", 80, 30, 50),
+    Warrior("Паладин", 120, 70, 25),
+  ];
+
+  // Полиморфизм в действии:
+  for (AbstractCharacter character in team) {
+    character.attack(); // Вызовется своя реализация у каждого!
+  }
+}</code></pre>
+
+            <h3>Гарантия и Гибкость работы</h3>
+
+            <p>Указание типа <code class="code"><strong>AbstractCharacter</strong></code> гарантирует, что будут использоваться <code class="code">только те объекты</code> у которых есть нужный метод <code class="code">attack()</code></p>
+
+            <p>Если мы добавим нового наследника (например, лучника), он автоматически подхватится:</p>
+
+            <p><code class="code">Файл <strong>characters.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Новый класс Archer</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Archer extends AbstractCharacter {
+  final int agility;
+
+  Archer(super.name, super.hp, super.level, this.agility);
+
+  @override
+  void attack() {
+    print("$name стреляет из лука с точностью $agility!");
+  }
+}</code></pre>
+
+            <p>Просто добавим его в список <code class="code">team</code>, и всё будет работать:</p>
+
+            <p><code class="code">Файл <strong>main.dart</strong></code></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Расширение команды</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  List&lt;AbstractCharacter&gt; team = [
+    Warrior("Рыцарь", 100, 50, 20),
+    Mage("Маг", 80, 30, 50),
+    Warrior("Паладин", 120, 70, 25),
+  ];
+
+  Archer ranger = Archer("Лучник", 40, 100, 100); 
+  team.add(ranger);
+
+  // Полиморфизм в действии:
+  for (AbstractCharacter character in team) {
+    character.attack(); // Вызовется своя реализация у каждого!
+  }
+}</code></pre>
+
+            <p>Результат:</p>
+
+            <div class="note">
+                <p><strong>Результат выполнения:</strong></p>
+            </div>
+            <pre><code class="code">Рыцарь атакует мечом! Урон: 1000
+Маг использует заклинание! Магическая сила: 1500
+Паладин атакует мечом! Урон: 1750
+Лучник стреляет из лука с точностью 100!</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

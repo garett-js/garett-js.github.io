@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Словари Map в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 10: Словари Map</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Словари Map в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Проблема с использованием списков для связанных данных</h2>
+            <p>Возьмём обычный школьный журнал. В нем есть список учеников, и для каждого ученика оценки по разным предметам. Как можно связать ученика с его оценками, используя списки и переменные?</p>
+
+            <h3>Пробуем хранить данные в списках:</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Хранение в списках</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  List<String> students = ['Аня', 'Боря', 'Наташа', 'Глеб', 'Даша'];
+  List<List<int>> studentGrades = [
+    [5, 4, 5], // Оценки Ани по Математике, Физике, Информатике
+    [3, 5, 4], // Оценки Бори
+    [5, 5, 5], // Оценки Наташи
+    [4, 3, 4], // Оценки Глеба
+    [5, 4, 3], // Оценки Даши
+  ];
+
+  String student = 'Наташа';
+
+  // Узнать оценки ученика
+  int indexOfStudent = -1; // Переменная для хранения индекса
+  for (int i = 0; i < students.length; i++) {
+    if (students[i] == student) {
+      indexOfStudent = i;
+      break; // Если нашли, то выходим из цикла
+    }
+  }
+
+  if (indexOfStudent != -1) {
+    print('$student: ${studentGrades[indexOfStudent]}');
+  } else {
+    print('Ученик $student не найден.');
+  }
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Наташа: [5, 5, 5]</code></pre>
+
+            <p><strong>Почему это "плохо"?</strong></p>
+            <p>На первый взгляд это работает. Но давайте подумаем о <strong>производительности</strong> и <strong>удобстве</strong>.</p>
+            
+            <ol>
+                <li><strong>Производительность (Скорость поиска):</strong>
+                    <ul>
+                        <li>Когда мы ищем "Наташу", нам приходится <strong>перебирать весь список <code class="code">students</code> элемент за элементом</strong>, пока не найдем ее имя.</li>
+                        <li>Если 5 учеников, это быстро, а если 5 000 000 ? Нам все равно придется начинать с первого ученика и идти по порядку.</li>
+                        <li>В худшем случае (если ученик в конце списка или его нет вообще), придется проверить <em>все</em> N элементов. Это называется <strong>линейное время</strong>, или O(N) в Big O нотации.</li>
+                        <li>Это очень долго и не производительно!</li>
+                    </ul>
+                </li>
+                <li><strong>Связь данных:</strong>
+                    <ul>
+                        <li>Также приходится поддерживать два отдельных списка (<code class="code">students</code> и <code class="code">studentGrades</code>), где соответствие между именем и оценками держится <em>только</em> за счет одинаковых индексов.</li>
+                        <li>Что, если мы случайно удалим имя из одного списка, но не из другого? Данные рассинхронизируются! Это хрупко и подвержено ошибкам!</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Используем вложенные списки</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Вложенные списки</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  List<List<dynamic>> students = [
+    ['Аня', [5, 4, 5]],
+    ['Боря', [3, 5, 4]],
+    ['Наташа', [5, 5, 5]],
+    ['Глеб', [4, 3, 4]],
+    ['Даша', [5, 4, 3]],
+  ];
+
+  String student = 'Наташа';
+  List<int>? studentGrades;
+
+  for (var studentEntry in students) {
+    if (studentEntry[0] == student) {
+      // Приводим тип
+      studentGrades = studentEntry[1] as List<int>; 
+      break;
+    }
+  }
+
+  if (studentGrades != null) {
+    print('$student: $studentGrades');
+  } else {
+    print('Ученик $student не найден.');
+  }
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Наташа: [5, 5, 5]</code></pre>
+
+            <p><strong>Почему это все еще "плохо"?</strong></p>
+            <ol>
+                <li><strong>Проблема скорости поиска (O(N)) осталась:</strong> Перебираем <em>каждый</em> элемент списка <code class="code">students</code> в поисках нужного имени.</li>
+                <li><strong>Типобезопасность страдает:</strong> Приходится делать приведение типов (<code class="code">as List&lt;int&gt;</code>), что может привести к ошибкам в рантайме, если данные не соответствуют ожиданиям. Код становится менее надежным.</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Решение проблемы: Map</h2>
+            <p>Именно для таких сценариев, где есть пары "<code class="code">ключ-значение</code>" и нужен <strong>быстрый поиск по ключу</strong>, была придумана структура данных <code class="code">Map</code> (также известная как <strong>словарь</strong>, <strong>хеш-таблица</strong> или <strong>ассоциативный массив</strong>).</p>
+            
+            <p>В <code class="code">Map</code> обращаемся по <code class="code">ключу</code> (имя ученика), дай <code class="code">значение</code> (его оценки), связанное с этим ключом". И <code class="code">Map</code> делает это <strong>почти мгновенно</strong>, независимо от того, сколько у вас данных!</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Использование Map</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Map<String, List<int>> students = {
+    'Аня': [5, 4, 5],
+    'Боря': [3, 5, 4],
+    'Наташа': [5, 5, 5],
+    'Глеб': [4, 3, 4],
+    'Даша': [5, 4, 3],
+  };
+
+  // Вот так просто! И Главное очень быстро!
+  List<int>? studentGrades = students['Наташа']; 
+  
+  studentGrades != null
+    ? print(studentGrades)
+    : print('Ученик не найден');
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">[5, 5, 5]</code></pre>
+
+            <h3>Почему Map это круто и легко?</h3>
+            <ol>
+                <li><strong>Мгновенный поиск (O(1) - Константное время)!</strong>
+                    <ul>
+                        <li>Поиск элемента по ключу занимает <strong>константное время</strong> (O(1)). Это означает, что время поиска <em>не зависит от количества элементов</em>. Будь у вас 5 учеников или 5 миллионов, поиск займет примерно одно и то же минимальное время!</li>
+                    </ul>
+                </li>
+                <li><strong>Естественная связь данных:</strong>
+                    <ul>
+                        <li>Пары "ключ-значение" в <code class="code">Map</code> неразрывно связаны. Не нужно беспокоиться о синхронизации двух списков.</li>
+                        <li><code class="code">Map</code> обеспечивает типобезопасность: <code class="code">Map&lt;String, List&lt;int&gt;&gt;</code> четко указывает, что ключи — строки, а значения — списки целых чисел.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="note">
+                <p><strong>Map</strong></p>
+                <p><code class="code">Map</code> решает проблему <strong>эффективного поиска</strong> и <strong>логичной организации связанных данных</strong>, что делает код быстрее, чище и надежнее.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Что такое Map</h2>
+            <p><code class="code">Map</code> одна из самых мощных и часто используемых структур данных!</p>
+            <p><code class="code">Map</code> Это объект, который представляет собой коллекцию пар <strong><code class="code">ключ</code>-<code class="code">значение</code></strong>.</p>
+            
+            <img src="images/l10/map1.png" alt="Map концепция" width="800">
+
+            <p>Другой пример, вместо школьного журнала представьте <code class="code">телефонные контакты</code>. У каждого телефона (<code class="code">уникального ключа</code>) есть свое определение (<code class="code">значение</code>).</p>
+            <p>Ключ уникален, и по нему вы можете быстро найти соответствующее значение.</p>
+
+            <img src="images/l10/map2.png" alt="Телефонные контакты" width="800">
+
+            <p><strong>Важные характеристики Map</strong></p>
+            <ul>
+                <li><strong><code class="code">Уникальность ключей</code></strong> - каждый ключ в Map должен быть уникальным.</li>
+                <li><code class="code"><strong>Гибкость типов</strong></code> - ключи и значения могут быть объектами любого типа.</li>
+                <li><code class="code"><strong>Итерация</strong></code> - можно перебирать ключи, значения или пары "ключ-значение".</li>
+                <li><code class="code"><strong>Отображение</strong></code> - каждый ключ связан ровно с одним значением.</li>
+            </ul>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Основы работы с Map</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+
+  // Имя (ключ) : Номер телефона (значение)
+  Map<String, String> phoneBook = {
+    'Маша': '+7 911 987 65 43',
+    'Артём': '+7 922 555 11 22',
+  };
+    
+  // Получаем значение по ключу
+  print('Телефон Маши: ${phoneBook['Маша']}'); 
+    
+  // Обновляем номер Маши
+  phoneBook['Маша'] = '+7 900 777 88 99';
+  print('Новый телефон Маши: ${phoneBook['Маша']}');
+  
+  // Добавляем новый контакт
+  phoneBook['Юля'] = '+7 933 444 00 11'; 
+  print('Телефон Юли: ${phoneBook['Юля']}');
+  
+  // Если нет значения в словаре, то будет null
+  print('Телефон Джигана: ${phoneBook['Джиган']}');
+
+  print('Вся телефонная книга: $phoneBook');
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Телефон Маши: +7 911 987 65 43
+Новый телефон Маши: +7 900 777 88 99
+Телефон Юли: +7 933 444 00 11
+Телефон Джигана: null
+
+Вся телефонная книга: 
+{
+  Маша: +7 900 777 88 99, 
+  Артём: +7 922 555 11 22, 
+  Юля: +7 933 444 00 11
+}</code></pre>
+
+            <img src="images/l10/map3.png" alt="Работа с Map" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Очень быстрый поиск, добавление и удаление данных</h2>
+            <p>В отличие от списков (List), где для поиска элемента часто приходится перебирать каждый элемент по порядку (в худшем случае — до конца списка), Map позволяет найти нужное значение <code class="code"><strong>практически мгновенно</strong></code>!</p>
+
+            <p><strong>Производительность: O(1) – Константное время</strong><br>
+            Это одно из самых важных понятий в программировании!</p>
+
+            <ol>
+                <li><p><strong>List (список):</strong> Поиск элемента по значению может занимать <code class="code"><strong>линейное время O(n)</strong></code>, где n - количество элементов.<br>
+                То есть, чем больше список, тем дольше поиск.</p></li>
+                <li><p><strong>Map (словарь):</strong> Поиск элемента по ключу в Map (в среднем) занимает <code class="code"><strong>константное время O(1)</strong></code>. Это означает, что время поиска <code class="code">не зависит от количества элементов</code>. Будь у вас 10 элементов или 10 миллионов, поиск по ключу займет примерно одно и то же время!</p></li>
+            </ol>
+
+            <img src="images/l10/map4.png" alt="Сравнение производительности" width="800">
+
+            <p><strong>Как это работает? Хеш-таблицы в двух словах</strong><br>
+            Map в Dart, по умолчанию (для LinkedHashMap), реализован на основе <strong>хеш-таблиц</strong></p>
+
+            <ol>
+                <li><strong><code class="code">Хеширование ключа</code></strong> - при добавлении пар "ключ-значение" в Map, Dart берет ключ и вычисляет его <strong>хеш-код (hashCode)</strong>.</li>
+                <li><strong><code class="code">Индексация</code></strong> - на основе этого хеш-кода вычисляется <strong>индекс</strong> во внутреннем массиве данных Map.</li>
+                <li><strong><code class="code">Хранение</code></strong> - пара "ключ-значение" затем помещается в соответствующую "ячейку" этого массива.</li>
+                <li><strong><code class="code">Поиск</code></strong> - запрашивает значение по ключу, вычисляет хеш-код ключа, ищет индекс и мгновенно извлекает значение.</li>
+            </ol>
+
+            <div class="note">
+                <p><strong>Более подробно</strong></p>
+                <p>Более подробно как устроена <code class="code">Map</code> внутри и что такое <code class="code">Хэш Таблица</code>, будем изучать в курсе «<code class="code">Алгоритмы и структуры данных</code>»</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Получение значений</h2>
+            
+            <img src="images/l10/map5.png" alt="Получение значений" width="800">
+
+            <p><code class="code"><strong>Индексатор [ ]</strong></code> - Самый простой способ получить значение по ключу. Если ключа нет, вернет null.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Индексатор</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">Map<String, String> user = {'name': 'Юля', 'age': '18'};  
+
+print(user['name']); // Юля  
+print(user['city']); // null</code></pre>
+
+            <p><code class="code"><strong>containsKey(Object? key)</strong></code> - Проверяет, содержит ли Map указанный ключ.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - containsKey</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print(user.containsKey('name')); // true  
+print(user.containsKey('address')); // false</code></pre>
+
+            <p><code class="code"><strong>containsValue(Object? value)</strong></code> - Проверяет, содержит ли Map указанное значение.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - containsValue</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print(user.containsValue('Юля')); // true  
+print(user.containsValue('25')); // false</code></pre>
+
+            <p><code class="code"><strong>entries</strong></code> - Возвращает итерируемый объект, содержащий все пары "ключ-значение"</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - entries</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print(user.entries); // (MapEntry(name: Юля), MapEntry(age: 18))  
+print(user.entries.first.key); // name</code></pre>
+
+            <p><code class="code"><strong>keys</strong></code> - Возвращает все ключи (итерируемый объект)<br>
+            <code class="code"><strong>values</strong></code> - Возвращает все значения (итерируемый объект)</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - keys и values</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">print(user.keys); // (name, age)  
+print(user.values); // (Юля, 18)</code></pre>
+
+            <img src="images/l10/map6.png" alt="Методы получения" width="800">
+            <img src="images/l10/map7.png" alt="Дополнительные методы" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Добавление и обновление значений</h2>
+
+            <p><strong><code class="code">Индексатор []=</code></strong> для добавления новой пары "ключ-значение" или обновления значения, если ключ уже существует.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Добавление и обновление</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">main() {
+  Map<String, int> programmerSalary = {'Python': 150000, 'Go': 300000};  
+
+  programmerSalary['Flutter'] = 200000; // Добавление  
+  programmerSalary['Python'] = 180000; // Обновление  
+
+  print(programmerSalary);
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">{
+  Python: 180000, 
+  Go: 300000, 
+  Flutter: 200000,
+}</code></pre>
+
+            <p><code class="code"><strong>putIfAbsent()</strong></code> метод работает как "Запиши, если ещё нет"</p>
+
+            <p>Помогает добавить что-то в <code class="code">Map</code> только если этого "чего-то" там ещё нет.<br>
+            Если ключ уже есть, то "новое" значение (которое добавляем) даже не будет создаваться</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - putIfAbsent</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Map<String, int> mathGrades = {
+    'Юля': 5, 
+    'Максим': 4,
+  };
+
+  print('Начальные оценки: $mathGrades');
+
+  // Добавляем Артёма (его ещё нет в списке)
+  mathGrades.putIfAbsent("Артём", () {
+    print("Артёма не было, ставим ему 3");
+    return 3; // Это значение вернется, если Артёма не было
+  });
+
+  print(mathGrades); // Показываем весь словарь
+
+  // Пытаемся добавить Максима, но он уже есть в словаре
+  mathGrades.putIfAbsent("Максим", () {
+    // Если ключ "Максим" уже есть в словаре, то код ниже не выполнится
+    print("Максим не было, ставим ему 3");
+    return 3;
+  });
+
+  print(mathGrades); // Показываем весь словарь
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Начальные оценки: {Юля: 5, Максим: 4}
+Артёма не было, ставим ему 3
+
+{
+  Юля: 5, 
+  Максим: 4, 
+  Артём: 3,
+}</code></pre>
+
+            <p><code class="code"><strong>update()</strong></code> обновляет значение, связанное с key.</p>
+
+            <p><code class="code">update</code> вызывается для обновления существующего значения. Получает текущее значение и возвращает новое.</p>
+
+            <p><code class="code">ifAbsent</code> вызывается, если key не найден в Map. Если не указан, и ключ не найден, будет выброшена ошибка.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - update</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">Map<String, int> productCounts = {'BitCoins': 100, 'Ethereum': 400};  
+  
+// Обновляем существующее значение  
+productCounts.update('BitCoins', (value) => value + 100);  
+print(productCounts); 
+  
+// Обновляем или добавляем, если нет
+productCounts.update('ShibaInu',  
+  (value) => value + 100, // Эта часть не будет вызвана, т.к. 'ShibaInu' нет  
+  ifAbsent: () => 100000000, // Добавляем 'ShibaInu'  
+);  
+
+print(productCounts);</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">{
+  BitCoins: 200, 
+  Ethereum: 400, 
+  ShibaInu: 100000000,
+}</code></pre>
+
+            <p><code class="code"><strong>updateAll( )</strong></code> обновляет все значения в Map, применяя функцию update к каждой паре "ключ-значение".</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - updateAll</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">Map<String, int> prices = {'milk': 2, 'bread': 3, 'eggs': 4};  
+
+prices.updateAll((key, value) => value * 2); // Удваиваем все цены  
+print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
+
+            <img src="images/l10/map8.png" alt="Добавление и обновление 1" width="800">
+            <img src="images/l10/map9.png" alt="Добавление и обновление 2" width="800">
+            <img src="images/l10/map10.png" alt="Добавление и обновление 3" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Удаление значений</h2>
+
+            <p><code class="code"><strong>remove()</strong></code> удаляет пару "ключ-значение" по указанному ключу. Возвращает удаленное значение или null, если ключ не найден.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - remove</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+
+  Map<String, String> settings = {
+    'sound': 'on', 
+    'vibrate': 'on', 
+    'notifications': 'off',
+  }; 
+	
+  final removedValue = settings.remove('sound');  
+  print('Removed: $removedValue'); // Удаленное значение: on  
+	
+  print(settings); // {vibrate: on, notifications: off}  
+	
+  settings.remove('none'); // Проигнорируется  
+
+}</code></pre>
+
+            <p><code class="code"><strong>removeWhere()</strong></code> удаляет все пары "ключ-значение", для которых функция колбэк возвращает true.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - removeWhere</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  Map<String, int> students = {
+    'Маша': 17, 
+    'Юля': 20, 
+    'Артём': 15, 
+    'Антон': 21,
+  };
+
+  // Удаляем Студентов возраст которых меньше 18
+  students.removeWhere((key, value) => value < 18);
+  
+  print(students); // { Юля: 20, Антон: 21 }
+}</code></pre>
+
+            <p><code class="code"><strong>clear()</strong></code> удаляет все элементы из Map.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - clear</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">main() {
+
+  Map<String, int> students = {
+    'Маша': 17, 
+    'Юля': 20, 
+    'Артём': 15, 
+    'Антон': 21,
+  };
+	
+  students.clear();
+
+  print(students); // { }
+
+}</code></pre>
+
+            <img src="images/l10/map11.png" alt="Удаление 1" width="800">
+            <img src="images/l10/map12.png" alt="Удаление 2" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Перебор значений в Map</h2>
+
+            <p><code class="code"><strong>forEach()</strong></code> выполняет функцию колбэк для каждой пары "ключ-значение".</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - forEach</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main(List<String> args) {
+
+  Map<String, int> students = {
+    'Маша': 17,
+    'Юля': 20,
+    'Артём': 15,
+    'Антон': 21,
+  };
+
+  students.forEach((key, value) => print("Студент $key, возраст $value"));
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Студент Маша, возраст 17
+Студент Юля, возраст 20
+Студент Артём, возраст 15
+Студент Антон, возраст 21</code></pre>
+
+            <p><code class="code"><strong>for-in</strong></code></p>
+
+            <p><code class="code">for-in с entries</code> перебор пар MapEntry.<br>
+            <code class="code">for-in с keys или values</code> перебор только ключей или только значений.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - for-in циклы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main(List<String> args) {
+
+  Map<String, int> students = {'Маша': 17, 'Юля': 20, 'Артём': 15, 'Антон': 21};
+
+  for (var entry in students.entries) {
+    print('Ключ: ${entry.key}, Значение: ${entry.value}');
+  }
+
+  for (var key in students.keys) {
+    print('Ключ: $key');
+  }
+
+  for (var value in students.values) {
+    print('Значение: $value');
+  }
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Ключ: Маша, Значение: 17
+Ключ: Юля, Значение: 20
+Ключ: Артём, Значение: 15
+Ключ: Антон, Значение: 21
+
+Ключ: Маша
+Ключ: Юля
+Ключ: Артём
+Ключ: Антон
+
+Значение: 17
+Значение: 20
+Значение: 15
+Значение: 21</code></pre>
+
+            <img src="images/l10/map13.png" alt="Перебор 1" width="800">
+            <img src="images/l10/map14.png" alt="Перебор 2" width="800">
+
+            <h3>Дополнительно</h3>
+
+            <p><code class="code"><strong>length</strong></code> <code class="code"><strong>isEmpty</strong></code> <code class="code"><strong>isNotEmpty</strong></code> <code class="code"><strong>containsKey</strong></code> - получение размера Map, проверка на пустоту, проверка на ключи или значения</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Дополнительные методы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main(List<String> args) {
+
+  Map<String, int> students = {'Маша': 17, 'Юля': 20, 'Артём': 15, 'Антон': 21};
+
+  print(students.length); // 4 пары
+  print(students.isEmpty); // false
+  print(students.isNotEmpty); // true
+  
+  // ! Содержит ли Map значение или ключ
+  print(students.containsKey('Маша'));  // true
+  print(students.containsValue('Андрей')); // false
+  
+}</code></pre>
+
+            <img src="images/l10/map15.png" alt="Дополнительные методы" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Использование Spread-оператора, if и for для создания данных Map</h2>
+
+            <p>Как и для списков, в Dart можно использовать spread-оператор (...) для объединения Map, а также if и for для условного добавления элементов или создания Map на основе итерации.</p>
+
+            <p><strong><code class="code">Spread-оператор</code> <code class="code">...</code></strong></p>
+
+            <p>Это инструмент, который позволяет "высыпать" содержимое одной коллекции (<code class="code">List</code>, <code class="code">Set</code> или <code class="code">Map</code>) в другую, новую коллекцию. Проще говоря, spread-оператор <code class="code"><strong>распаковывает</strong></code> элементы из одной коллекции и <strong><code class="code">вставляет</code></strong> их в другую коллекцию.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Spread-оператор</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  // Обычный завтрак
+  final Map<String, int> basicBreakfast = {
+    'Молоко': 1,
+    'Хлопья': 1,
+  };
+
+  // Переменная, которая говорит, сегодня праздник или нет
+  final bool isHoliday = true; 
+
+  // Делаем "супер-завтрак"!
+  final Map<String, int> superBreakfast = {
+    ...basicBreakfast, // Развернём сюда данные из другой Map
+    'Ягоды': 5, // Добавим ягоды
+    
+    // Если сегодня праздник, то будет торт
+    if (isHoliday) 'Торт': 1, 
+
+    // Сколько ложек сахара
+    for (int i = 1; i <= 3; i++) 'Ложек_Сахара_$i': i, 
+  };
+
+  print('Мой супер завтрак: $superBreakfast');
+
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Мой супер завтрак: 
+{
+  Молоко: 1, 
+  Хлопья: 1, 
+  Ягоды: 5, 
+  Торт: 1, 
+  Ложек_Сахара_1: 1, 
+  Ложек_Сахара_2: 2, 
+  Ложек_Сахара_3: 3
+}</code></pre>
+
+            <img src="images/l10/map16.png" alt="Spread-оператор" width="800">
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 20: Generics - Обобщённые типы</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 20: Generics</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Generics - Обобщённые типы</h1>
+
+        <section class="lesson-section">
+            <h2>Что такое Generics?</h2>
+            <p><code class="code">Generics</code>&nbsp; позволяют&nbsp;<strong>писать гибкий и безопасный код</strong>, который может работать с разными типами данных&nbsp;<strong>без дублирования кода</strong>.</p>
+            <p>Это как универсальный шаблон, в который можно подставить&nbsp;<strong>любой тип</strong>, и Dart автоматически будет следить за правильностью типов.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Улучшение читаемости и безопасности кода</h2>
+            <p>Допустим, у нас есть список&nbsp;<code class="code">List</code>. По умолчанию в него можно добавить&nbsp;<strong>что угодно</strong>.</p>
+            <p><strong>Проблема без Generics</strong>:</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Список без Generics</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {  
+  List data = []; // Нет ограничений на тип данных  
+  
+  data.add(42);  
+  data.add("Dart");  
+  data.add(true);  
+}
+</code></pre>
+            <p><strong>Решение с Generics</strong>:</p>
+            <p>В треугольных скобках&nbsp;<code class="code">&lt; &gt;</code>&nbsp;указываем нужный тип данных</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Список с Generics</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {  
+  List&lt;String&gt; names = []; // Теперь в список можно добавлять только строки  
+  names.add("Dart");  
+  names.add("Flutter");  
+  
+  // names.add(42); // Ошибка: Нельзя добавить число в список  
+  
+  print(names); // [Dart, Flutter]  
+}
+</code></pre>
+            <p>Теперь Dart&nbsp;<strong>заставляет</strong>&nbsp;следовать правилам типов и предотвращает ошибки.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Избегаем дублирования кода</h2>
+            <p>Представь, что мы пишем&nbsp;<strong>систему кеширования данных</strong>.<br />
+            Без Generics нам пришлось бы делать&nbsp;<strong>отдельный класс</strong>&nbsp;для каждого типа данных:</p>
+            <p><strong>Много лишнего кода</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Дублирование кода</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract class StringCache {  
+  String getByKey(String key);  
+  void setByKey(String key, String value);  
+}  
+  
+abstract class IntCache {  
+  int getByKey(String key);  
+  void setByKey(String key, int value);  
+}
+</code></pre>
+            <p><strong>Используем Generics и избавляемся от дублирования</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Универсальный класс с Generics</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract class Cache&lt;T&gt; {  
+  T getByKey(String key);  
+  void setByKey(String key, T value);  
+}
+</code></pre>
+            <p>Теперь можно создать&nbsp;<strong>универсальный кеш</strong>, который хранит&nbsp;<strong>любой тип</strong>:</p>
+            <p>Вместо&nbsp;<code class="code">T</code>&nbsp;внутри скобок&nbsp;<code class="code">&lt;T&gt;</code>&nbsp;будет подставляться тип который мы укажем при вызове</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Реализация универсального кеша</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract class Cache&lt;T&gt; {  
+  T getByKey(String key);  
+  void setByKey(String key, T value);  
+}  
+  
+class MyIntCache implements Cache&lt;int&gt; {  
+  Map&lt;String, int&gt; _cache = {};  
+  @override  
+  int getByKey(String key) =&gt; _cache[key] ?? 0;  
+  @override  
+  void setByKey(String key, int value) {  
+    _cache[key] = value;  
+  }  
+}  
+  
+class MyStringCache implements Cache&lt;String&gt; {  
+  Map&lt;String, String&gt; _cache = {};  
+  @override  
+  String getByKey(String key) =&gt; _cache[key] ?? '';  
+  @override  
+  void setByKey(String key, String value) {  
+    _cache[key] = value;  
+  }  
+}  
+  
+void main() {  
+  final intCache = MyIntCache();  
+  intCache.setByKey('age', 18);  
+  print(intCache.getByKey('age')); // 30  
+  
+  final stringCache = MyStringCache();  
+  stringCache.setByKey('name', 'Наташа');  
+  print(stringCache.getByKey('name')); // John  
+}
+</code></pre>
+            <p>Теперь&nbsp;<strong>неважно, что мы кешируем (строки, числа, объекты)</strong>&nbsp;&mdash;&nbsp;<strong>один класс</strong>&nbsp;справится со всеми случаями!</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Реализация стека (Stack)</h2>
+            <p>Сделаем&nbsp;<code class="code">универсальный стек</code>, который работает&nbsp;<code class="code">с любыми типами</code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Универсальный стек</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Stack&lt;T&gt; {  
+  List&lt;T&gt; _storage = [];  
+  void push(T item) =&gt; _storage.add(item);  
+  T pop() =&gt; _storage.removeLast();  
+}  
+  
+void main() {  
+  var stackInt = Stack&lt;int&gt;();  
+  stackInt.push(42);  
+  print(stackInt.pop()); // 42  
+  var stackString = Stack&lt;String&gt;();  
+  stackString.push("Hello");  
+  print(stackString.pop()); // "Hello"  
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Generics в методах</h2>
+            <p>Можно использовать&nbsp;<code class="code">Generics</code> не только в классах, но и в <code class="code">методах</code>.<br />
+            Этот метод&nbsp;<code class="code">работает с любыми типами</code>&nbsp;и автоматически подставляет нужный тип</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Generic-метод</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">T first&lt;T&gt;(List&lt;T&gt; list) {  
+  return list[0]; // Возвращаем первый элемент списка  
+}  
+  
+void main() {  
+  print(first([1, 2, 3])); // 1  
+  print(first(["A", "B", "C"])); // "A"  
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Ограничение типов с&nbsp;<code class="code">extends</code></h2>
+            <p>Иногда<strong>&nbsp;</strong><code class="code">Generics</code> должны работать только с <code class="code">определёнными типами</code>.<br />
+            Например, мы хотим, чтобы класс мог работать&nbsp;только с наследниками&nbsp;<code class="code">BaseClass</code>.<br />
+            Теперь <code class="code">ChildClass&lt;T&gt;</code>&nbsp;может работать&nbsp;только с <code class="code">BaseClass</code> и его наследниками.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Ограничение типов</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class BaseClass {}  
+  
+class ChildClass&lt;T extends BaseClass&gt; {  
+  String toString() =&gt; "Экземпляр класса 'ChildClass&lt;$T&gt;'";  
+}  
+  
+class Extender extends BaseClass {}  
+  
+void main() {  
+  var obj1 = ChildClass&lt;BaseClass&gt;(); // Работает  
+  var obj2 = ChildClass&lt;Extender&gt;(); // Работает  
+  var obj3 = ChildClass&lt;int&gt;(); // Ошибка: int не является BaseClass
+}</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

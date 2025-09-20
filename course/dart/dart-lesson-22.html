@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 22: Продвинутые методы работы с коллекциями</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 22: Методы коллекций</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Продвинутые методы работы с коллекциями</h1>
+
+        <section class="lesson-section">
+            <h2>Перебор элементов&nbsp;<code class="code">forEach</code></h2>
+            <p><code class="code">forEach</code>&nbsp;принимает в качестве аргумента анонимную функцию колбэк, которая будет выполнена&nbsp;<code class="code">для каждого элемента</code>&nbsp;коллекции.</p>
+            <p>Используем когда нужно выполнить действие для каждого элемента, <code class="code">не изменяя</code> саму коллекцию и не создавая новую.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - forEach</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  List<String> languages = [
+    'Dart', 'Flutter', 'Python', 'Go', 'AI'
+  ];
+
+  languages.forEach((language) {
+    print('Я изучаю $language!');
+  });
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Вывод в консоль</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="shell">Я изучаю Dart!
+Я изучаю Flutter!
+Я изучаю Python!
+Я изучаю Go!
+Я изучаю AI!
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Преобразование элементов&nbsp;<code class="code">map</code></h2>
+            <p>Метод&nbsp;<code class="code">map</code>&nbsp;берет каждый элемент коллекции, применяет к нему заданную функцию и&nbsp;<code class="code">возвращает новую коллекцию (Iterable)</code>&nbsp;с преобразованными элементами.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - map</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  List<int> numbers = [1, 2, 3, 4, 5];
+
+  List<String> languages = [
+    'Dart', 'Flutter', 'Python', 'Go', 'AI'
+  ];
+
+  // Увеличиваем каждый элемент в 2 раза
+  final result = numbers.map((number) => number * 2);
+  print(result.toList());
+
+  // Узнаём длину каждой строки
+  final result2 = languages.map((language) => language.length);
+  print(result2.toList());
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Вывод в консоль</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="shell">[2, 4, 6, 8, 10]
+[4, 7, 6, 2, 2] // Длина каждой строки в списке languages
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Фильтрация элементов&nbsp;<code class="code">where</code></h2>
+            <p>Метод&nbsp;<code class="code">where</code>&nbsp;берет каждый элемент, применяет к нему условие (функцию, которая возвращает true или false) и&nbsp;<code class="code">возвращает новую коллекцию (Iterable)</code>, содержащую только те элементы, для которых условие вернуло true.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - where</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">  List<Map<String, dynamic>> students = [
+    {'name': 'Артём', 'mark': 70},
+    {'name': 'Анна', 'mark': 85},
+    {'name': 'Наташа', 'mark': 65},
+    {'name': 'Юля', 'mark': 90},
+  ];
+
+  // Все студенты которые набрали больше 70 баллов
+  final result3 = students.where((student) => student['mark'] >= 70);
+  print(result3.toList());
+
+  // Все студенты имена которых начинаются с буквы А
+  final result4 = students.where((student) => student['name'].startsWith('А'));
+  print(result4.toList());
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Вывод в консоль</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="shell">// Все студенты которые набрали больше 70 баллов
+[
+  {name: Артём, mark: 70}, 
+  {name: Анна, mark: 85}, 
+  {name: Юля, mark: 90}
+]
+
+// Все студенты имена которых начинаются с буквы А
+[
+  {name: Артём, mark: 70}, 
+  {name: Анна, mark: 85}
+]
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Поиск конкретного элемента&nbsp;<code class="code">firstWhere</code>&nbsp;<code class="code">lastWhere</code></h2>
+            <p>Иногда нужен не список отфильтрованных элементов, а&nbsp;<strong>первый (или последний) элемент</strong>, который соответствует условию.</p>
+            <ul>
+                <li><code class="code">firstWhere</code>&nbsp;возвращает первый элемент, который соответствует условию. Если ни один не найден, то, по умолчанию, выбрасывает ошибку.</li>
+                <li><code class="code">lastWhere</code>&nbsp;возвращает последний элемент, который соответствует условию.</li>
+            </ul>
+            <p>Оба метода могут принимать необязательный параметр&nbsp;<code>orElse</code>, который является функцией, возвращающей значение, если элемент не найден.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - firstWhere</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List<String> languages = ['Dart', 'Flutter', 'Python', 'Go', 'AI'];
+  
+// Найти первый элемент длина которого меньше 3
+final result5 = languages.firstWhere(
+  (language) => language.length < 3,
+  orElse: () => 'Нет такого элемента',
+);
+
+print(result5); // Go
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Проверка соответствия условиям&nbsp;<code class="code">any</code>&nbsp;и&nbsp;<code class="code">every</code></h2>
+            <p>Иногда не нужно получать элементы, а просто проверить, соответствует ли&nbsp;<strong>хотя бы один</strong>&nbsp;элемент условию или&nbsp;<strong>все</strong>&nbsp;элементы условию.</p>
+            <p><code class="code">any</code>&nbsp;возвращает true, если&nbsp;<strong>хотя бы один</strong>&nbsp;элемент коллекции соответствует заданному условию.<br>
+            <code class="code">every</code>&nbsp;возвращает true, если&nbsp;<strong>все</strong>&nbsp;элементы коллекции соответствуют заданному условию.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - any, every</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List<int> numbers = [1, 2, 3, 4, 5];
+List<String> languages = ['Dart', 'Flutter', 'Python', 'Go', 'AI'];
+
+// Хоть одно число является чётным?
+final result6 = numbers.any((number) => number % 2 == 0);
+print(result6); // true
+
+// Все ли числа положительные?
+final result7 = numbers.every((number) => number > 0);
+print(result7); // true
+
+// Все языки программирования начинаются с буквы D?
+final result8 = languages.every((language) => language.startsWith('D'));
+print(result8); // false
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Свертывание (агрегация) коллекции&nbsp;<code class="code">fold</code>&nbsp;(<code class="code">reduce</code>)</h2>
+            <p>Методы fold и reduce используются для&nbsp;<strong>агрегации</strong>&nbsp;(или "свертывания") коллекции в одно единственное значение. Это может быть сумма всех чисел, конкатенация всех строк, или даже создание нового объекта на основе всех элементов.</p>
+            <p><strong>reduce:</strong>&nbsp;Объединяет элементы коллекции в одно значение, используя заданную функцию.&nbsp;<strong>Не имеет начального значения.</strong>&nbsp;Начинает с первого и второго элемента. Если коллекция пуста, будет ошибка.</p>
+            <p><strong>fold:</strong>&nbsp;То же, что reduce, но позволяет указать&nbsp;<strong>начальное значение</strong>&nbsp;(initial value). Это делает его более безопасным для пустых коллекций.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - fold, reduce</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List<int> numbers = [1, 2, 3, 4, 5];
+List<Map<String, dynamic>> students = [
+  {'name': 'Артём', 'mark': 70},
+  {'name': 'Анна', 'mark': 85},
+  {'name': 'Наташа', 'mark': 65},
+  {'name': 'Юля', 'mark': 90},
+];
+
+// Сумма всех значений через reduce
+final result9 = numbers.reduce((value, element) => value + element);
+print(result9); // 15
+
+// Сумма всех значений через fold
+final result10 = numbers.fold(0, (prev, element) => prev + element);
+print(result10); // 15
+
+// Получить строку всех имен студентов баллы которых больше 65 через reduce
+final result11 = students
+  .where((student) => student['mark'] > 65)
+  .map((student) => student['name'])
+  .reduce((value, element) => '$value, $element');
+
+print(result11); // Артём, Анна, Юля
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2><code class="code">take</code>,&nbsp;<code class="code">takeWhile()</code>,&nbsp;<code class="code">skipWhile()</code></h2>
+            <p><code class="code">takeWhile()</code>&nbsp;возвращает Iterable, содержащий все элементы, которые находятся&nbsp;<code class="code">ДО</code>&nbsp;элемента, удовлетворяющему условию в колбэке.</p>
+            <p><code class="code">skipWhile()</code>&nbsp;возвращает Iterable, содержащий все элементы, которые находятся&nbsp;<code class="code">ПОСЛЕ</code>&nbsp;элемента, удовлетворяющему условию в колбэке.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - take, skip</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">final values = [-22, 1, 45, 68, 98, 0, 100, 2, 3, 42, 11];
+ 
+print(values.takeWhile((value) => value != 0)); // (-22, 1, 45, 68, 98)
+print(values.skipWhile((value) => value != 0)); // (0, 100, 2, 3, 42, 11)
+
+// take(n) - вернуть n элементов коллекции
+print(values.take(4)); // (-22, 1, 45, 68)</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

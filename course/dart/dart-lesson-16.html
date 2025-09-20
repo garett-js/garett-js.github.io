@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 16: Интерфейсы в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 16: Интерфейсы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Интерфейсы</h1>
+
+        <section class="lesson-section">
+            <h2>Что такое интерфейс?</h2>
+            <p>Итак, мы уже знаем, что&nbsp;<code class="code"><span style="color:#065a9d;"><strong>полиморфизм</strong></span></code>&nbsp;позволяет работать с объектами разных классов, используя общий интерфейс или базовый класс. Но что, если нам нужно, чтобы класс не только "<code class="code"><span style="color:#065a9d;">наследовал</span></code>", но и "<code class="code"><span style="color:#065a9d;">обязывался</span></code>" реализовывать определённые методы, независимо от иерархии? Здесь в дело вступает&nbsp;<code class="code"><span style="color:#065a9d;"><strong>интерфейс</strong></span></code>.</p>
+            <p><img alt="" height="142" name="image.png" src="https://ucarecdn.com/8e8f769c-6ffe-41a0-83ed-7332e7d19d7e/" style="float:left;" width="142"><code class="code"><span style="color:#065a9d;">Интерфейс</span></code> — это набор "контрактов" (<code class="code"><span style="color:#065a9d;">методов</span></code> и <code class="code"><span style="color:#065a9d;">свойств</span></code>), которые обязуется реализовать класс, подключающийся к интерфейсу (<code class="code"><span style="color:#065a9d;">реализующий интерфейс</span></code>).</p>
+            <p>Теперь в Dart для создания интерфейсов появилось ключевое слово&nbsp;<code class="code"><span style="color:#065a9d;">interface</span></code>.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Использование и отличие от абстрактного класса</h2>
+            <p>Сравним с абстрактным классом:</p>
+            <ul>
+                <li>Абстрактный класс предоставляет&nbsp;<code class="code"><span style="color:#065a9d;">как контракт</span></code>, <code class="code"><span style="color:#065a9d;">так и готовую реализацию некоторых методов или свойств.</span></code> Классы, наследующие абстрактный класс,&nbsp;<code class="code"><span style="color:#065a9d;">могут переопределять</span></code>&nbsp;их.</li>
+                <li>Интерфейс — это&nbsp;<code class="code"><span style="color:#065a9d;">чистый контракт</span></code>. Он диктует, какие методы и свойства должен реализовать класс, но сам не содержит их реализации.</li>
+            </ul>
+
+            <h3>Пример абстрактного класса и интерфейса</h3>
+            <p>Добавим абстрактный класс&nbsp;<code><span style="color:#065a9d;">AbstractCharacter</span></code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Абстрактный класс</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract class AbstractCharacter {
+  String name;
+  int level;
+
+  AbstractCharacter(this.name, this.level); 
+
+  // Абстрактный метод
+  void attack(); 
+  
+  // Реализованный метод
+  void levelUp() {
+    level++;
+    print("$name повышает уровень до $level!");
+  }
+}
+</code></pre>
+            <p>Добавим интерфейс&nbsp;<code><span style="color:#065a9d;">IAttackable</span></code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Интерфейс</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract interface class IAttackable {
+  void attack();
+}
+</code></pre>
+            <p>Разберём отличия:</p>
+            <ol>
+                <li>Абстрактный класс позволяет задать&nbsp;<code class="code"><span style="color:#065a9d;"><strong>общую базу</strong></span></code>&nbsp;для всех наследников.</li>
+                <li>Интерфейс лишь говорит: "Я&nbsp;<code class="code"><span style="color:#065a9d;">ожидаю</span></code>, что у вас будет метод&nbsp;<code class="code"><span style="color:#065a9d;">attack()</span></code>."&nbsp;<code class="code"><span style="color:#065a9d;">Никакой реализации он не предоставляет</span></code><strong>.</strong></li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Когда использовать абстрактный класс, а когда интерфейс?</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Абстрактный класс</th>
+                        <th>Интерфейс</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Используется для объектов с общей базой иерархии (например, персонажи игры, у которых есть общие свойства, такие как <code class="code"><span style="color:#065a9d;">name</span></code> и <code class="code"><span style="color:#065a9d;">level</span></code>).</td>
+                        <td>Используется для объектов, которые не обязательно имеют общую базу, но должны соблюдать определённый контракт.</td>
+                    </tr>
+                    <tr>
+                        <td>Может включать как <code class="code"><span style="color:#065a9d;">абстрактные методы</span></code>, так и готовую реализацию.</td>
+                        <td>Не содержит реализации — только контракт.</td>
+                    </tr>
+                    <tr>
+                        <td>Позволяет избегать дублирования кода.</td>
+                        <td>Гарантирует, что класс реализует обязательные методы.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Использование интерфейса для полиморфизма</h2>
+            <p>Добавим два интерфейса, которые обязывают реализовать методы <code><span style="color:#065a9d;">attack()</span></code> и <code><span style="color:#065a9d;">heal()</span></code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Интерфейс IAttackable</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract interface class IAttackable {
+  void attack();
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Интерфейс IHealable</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">abstract interface class IHealable {
+  void heal();
+}
+</code></pre>
+            <p>И реализуем оба интерфейса,&nbsp;<code><span style="color:#065a9d;">IAttackable</span></code>&nbsp;и&nbsp;<code><span style="color:#065a9d;">IHealable</span></code>, в разных классах:</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Реализация интерфейсов</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">import '../interfaces/i_attakable.dart';
+import '../interfaces/i_healable.dart';
+
+// Воин реализует интерфейс IAttackable
+// Он обязан теперь создать метод attack
+class Warrior implements IAttackable {
+
+  @override
+  void attack() {
+    print("Рыцарь наносит мощный удар мечом!");
+  }
+}
+
+// Маг реализует интерфейсы IAttackable и IHealable
+// Он обязан теперь создать методы attack и heal
+class Mage implements IAttackable, IHealable {
+
+  @override
+  void attack() {
+    print("Маг кастует заклинание огня!");
+  }
+
+  @override
+  void heal() {
+    print("Маг использует заклинание лечения.");
+  }
+}
+</code></pre>
+            <p style="text-align:center;"><img alt="" name="image.png" src="images/l16/i1.png" width="700"></p>
+            <p style="text-align:center;"><img alt="" name="image.png" src="images/l16/i2.png" width="700"></p>
+            <p><strong>Ключевые моменты:</strong></p>
+            <ol>
+                <li>Мы используем интерфейсы как контракт для классов.</li>
+                <li>Классы могут реализовывать несколько интерфейсов, что невозможно при наследовании абстрактного класса (Dart не поддерживает множественное наследование).</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Полиморфизм с интерфейсами</h2>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Полиморфизм с интерфейсами</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">import 'classes/classes.dart';
+import './interfaces/i_attakable.dart';
+import './interfaces/i_healable.dart';
+
+void main() {
+
+  // Работаем с объектами, реализующими интерфейсы
+  // У них гарантированно доступны методы из интерфейсов
+
+  List&lt;IAttackable&gt; attackers = [Warrior(), Mage()];
+  for (var character in attackers) {
+    character.attack();
+    // Гарантировано вызовется для каждого элемента списка
+  }
+
+  // ! Ошибка. Воин не реализует интерфейс IHealable
+  List&lt;IHealable&gt; healers = [Warrior(), Mage()]; 
+}
+</code></pre>
+            <p><strong>Что сделали:</strong></p>
+            <ol>
+                <li>Мы собрали всех "нападающих" (<code class="code"><span style="color:#065a9d;">IAttackable</span></code>) в один список, независимо от их класса.</li>
+                <li>Интерфейс помог гарантировать наличие метода&nbsp;<code class="code"><span style="color:#065a9d;">attack()</span></code>&nbsp;у всех объектов списка.</li>
+                <li>Маг (<code class="code"><span style="color:#065a9d;">Mage</span></code>) поддерживает дополнительный интерфейс&nbsp;<code class="code"><span style="color:#065a9d;">Healer</span></code>, который расширяет его способности.</li>
+            </ol>
+            <p><strong>Интерфейсы полезны:</strong></p>
+            <ul>
+                <li>Когда нужно определить <code class="code"><span style="color:#065a9d;">общий контракт</span></code> для <code class="code"><span style="color:#065a9d;">несвязанных</span></code> классов.</li>
+                <li>Чтобы гарантировать, что определённые методы доступны, независимо от базы иерархии.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Решайте задачи в своей IDE</h2>
+            <p style="text-align:center;"><img alt="" height="345" name="prk.png" src="https://ucarecdn.com/dfc8d582-785c-435e-a6a4-1baf953d019b/" width="600"></p>
+            <h3>Задача: Интерфейсы</h3>
+            <p>Представь виды транспорта, такие как&nbsp;<code class="code"><span style="color:#065a9d;">Автомобиль (Car)</span></code>,<strong>&nbsp;</strong><code class="code"><span style="color:#065a9d;">Велосипед (Bicycle)</span></code>&nbsp;и&nbsp;<code class="code"><span style="color:#065a9d;">Поезд (Train)</span></code>.</p>
+            <p>Все транспортные средства имеют&nbsp;<code class="code"><span style="color:#065a9d;">метод move()</span></code>, который отвечает за движение.<br>
+            Но у разных видов транспорта есть свои особенности:</p>
+            <ul>
+                <li><strong>Автомобиль</strong>&nbsp;может включать двигатель перед движением.</li>
+                <li><strong>Велосипед</strong>&nbsp;просто начинает двигаться, без необходимости включать что-либо.</li>
+                <li><strong>Поезд</strong>&nbsp;перед движением должен открыть ворота на переезде.</li>
+            </ul>
+            <p>Чтобы обеспечить гибкость и использовать&nbsp;<code class="code"><span style="color:#065a9d;">полиморфизм</span></code>, нужно использовать&nbsp;<code class="code"><span style="color:#065a9d;">интерфейс Transport</span></code>.</p>
+            <p>Дополни интерфейс&nbsp;<code class="code"><span style="color:#065a9d;">методом&nbsp;stop()</span></code>, который реализуют все виды транспорта. Пусть каждый вид транспорта останавливается по-своему (например, у поезда может быть торможение поезда, у велосипеда — плавная остановка и т. д.).</p>
+            <h3><strong>Шаги решения:</strong></h3>
+            <ol>
+                <li>Создай интерфейс&nbsp;<code class="code"><span style="color:#065a9d;">Transport</span></code>&nbsp;с методом&nbsp;<code class="code"><span style="color:#065a9d;">void move()</span></code></li>
+                <li>Реализуй интерфейс&nbsp;<code class="code"><span style="color:#065a9d;">Transport</span></code>&nbsp;в классах&nbsp;<code class="code"><span style="color:#065a9d;">Car</span></code>,&nbsp;<code class="code"><span style="color:#065a9d;">Bicycle</span></code>&nbsp;и&nbsp;<code class="code"><span style="color:#065a9d;">Train</span></code></li>
+                <li>В методах&nbsp;<code class="code"><span style="color:#065a9d;">move</span></code>&nbsp;добавь реализацию, которая отображает особенности каждого типа транспорта.</li>
+                <li>Создай список&nbsp;<code class="code"><span style="color:#065a9d;">List&lt;Transport&gt; fleet</span></code>, в котором будут храниться все виды транспорта.</li>
+                <li>Используй цикл, чтобы вызвать&nbsp;<code class="code"><span style="color:#065a9d;">move()</span></code>&nbsp;у каждого объекта без проверки типов!</li>
+            </ol>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 18: Миксины в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 18: Миксины</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Миксины</h1>
+
+        <section class="lesson-section">
+            <h2>Что такое Миксины?</h2>
+            <p><code class="code">Mixin</code> или&nbsp;<code class="code">Примеси</code>&nbsp; содержат свой уже реализованный функционал с методами и свойствами.</p>
+            <p>Этот готовый функционал можно <code class="code">примешать</code> в существующие классы, который они будут использовать.<br />
+            Главная фишка, что таких примесей можно <code class="code">примешать сколько угодно</code> (некая замена множественному наследованию)</p>
+            <p>Отличия от наследования в том, что <code class="code">при наследовании</code> классы должны быть <code class="code">связаны по смыслу</code>. Миксины же представляют собой отдельную функциональную единицу, <code class="code">любой миксин</code> можно примешать <code class="code">к любому классу</code> (Если только вручную не указать для каких классов используется миксин)</p>
+            <p><strong>Важный момент</strong>, что в отличии от интерфейсов, где мы говорим классу только что должны быть у методов и свойств, то с помощью миксинов мы сразу примешиваем реализованный функционал!</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Создание Миксинов</h2>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Определение миксинов</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">mixin DefensibleMixin {
+  double? defense;
+  void shield(double defense) {
+    this.defense = defense;
+    print('Временно увеличить показатель брони на $defense у себя и союзников');
+  }
+
+  void aggress() {
+    print('Агрить ближайших врагов на большом расстоянии');
+  }
+}
+
+mixin WarriorableMixin {
+  double? attack;
+  void powerfulAttack() {
+    print('Нанести мощную атаку');
+  }
+}
+
+// ! Данный миксин можно примешать только к наследникам класса Archer
+// ! on Archer
+mixin BalistickableMixin on Archer {
+  void shootToTarget() {
+    print('Пустить снаряд точно в цель!');
+  }
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Использование миксинов</h2>
+            <p>Использование миксинов через ключевое слово&nbsp;<code class="code">with</code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Применение миксинов</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin with DefensibleMixin, WarriorableMixin {}
+
+// Ошибка! Только наследники Archer могут примешать BalistickableMixin
+class CrazyProphet extends Paladin with BalistickableMixin {}
+
+class Archer {}
+class WoodElf extends Archer with WarriorableMixin, BalistickableMixin {}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Пример использования</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  Paladin paladin = Paladin();
+  paladin.shield(20);
+  paladin.aggress();
+  paladin.powerfulAttack(20);
+
+  WoodElf elf = WoodElf();
+  elf.shootToTarget();
+  elf.powerfulAttack(100);
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Результат</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="code">Временно увеличить показатель брони на 20.0 у себя и союзников
+Агрить ближайших врагов на большом расстоянии
+Нанести мощную атаку 20.0 урона
+
+Пустить снаряд точно в цель!
+Нанести мощную атаку 100.0 урона
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Польза от Миксинов</h2>
+            <p>Миксины позволяют&nbsp;<code class="code"><strong>добавлять функциональность</strong></code>&nbsp;к классам&nbsp;<code class="code"><strong>без необходимости создавать иерархию наследования</strong></code>, что обеспечивает большую гибкость.</p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

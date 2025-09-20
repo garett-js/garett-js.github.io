@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функции в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 12: Функции</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Функции в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Зачем нужны функции</h2>
+            <img src="images/l12/Pasted image 20241008002328.png" alt="Зачем нужны функции" width="800">
+            <img src="images/l12/Pasted image 20241008002513.png" alt="Проблема повторения кода 1" width="800">
+            <img src="images/l12/Pasted image 20241008002622.png" alt="Проблема повторения кода 2" width="800">
+            <img src="images/l12/Pasted image 20241008002659.png" alt="Проблема повторения кода 3" width="800">
+            <img src="images/l12/Pasted image 20241008002745.png" alt="Проблема повторения кода 4" width="800">
+            <img src="images/l12/Pasted image 20241008001754.png" alt="Решение с функциями" width="800">
+            <img src="images/l12/Pasted image 20241008001556.png" alt="Преимущества функций 1" width="800">
+            <img src="images/l12/Pasted image 20241008001507.png" alt="Преимущества функций 2" width="800">
+            <img src="images/l12/Pasted image 20241008001419.png" alt="Преимущества функций 3" width="800">
+            <img src="images/l12/Pasted image 20241008001327.png" alt="Преимущества функций 4" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание функции</h2>
+            
+            <div class="note">
+                <p><strong>Функция</strong></p>
+                <p>Функция — это блок кода, который выполняет определенную задачу и может быть вызван по имени. Функции помогают организовывать код и избегать его повторения.</p>
+            </div>
+
+            <p><strong>Преимущества функций:</strong></p>
+            <ul>
+                <li>Упрощают код.</li>
+                <li>Улучшают его читаемость.</li>
+                <li>Позволяют многократно использовать один и тот же блок кода.</li>
+                <li>Облегчают тестирование и поддержку программы.</li>
+            </ul>
+
+            <p>В Dart функции объявляются с использованием ключевого слова <code class="code">void</code> (если функция ничего не возвращает) или указанием типа возвращаемого значения. Сначала пишется тип, затем имя функции и список параметров в круглых скобках. После этого идет тело функции в фигурных скобках <code class="code">{}</code>.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Простая функция</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void greet() { 
+  print('Привет!'); 
+}</code></pre>
+
+            <p>Здесь <code class="code">greet</code> это имя функции, которая выводит на экран слово «Привет!». Она не принимает параметров и не возвращает значения.</p>
+            <p>Чтобы выполнить код внутри функции, нужно <code class="code">вызвать функцию</code> по её имени.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Вызов функции</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">greet(); // Привет!</code></pre>
+
+            <p>Функции могут <code class="code">принимать параметры</code>, которые передают данные в функцию.</p>
+            <p>Функции могут <code class="code">возвращать значение</code> с использованием ключевого слова <code class="code">return</code>.</p>
+            <p>В этом случае вместо <code class="code">void</code> указывается тип возвращаемого значения.</p>
+
+            <img src="images/l12/Pasted image 20241008000927.png" alt="Функции с параметрами и возвращаемым значением" width="800">
+            <img src="images/l12/Pasted image 20241008004015.png" alt="Пример функции с return" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Функции с несколькими параметрами</h2>
+            
+            <img src="images/l12/Pasted image 20241203114646.png" alt="Функции с несколькими параметрами 1" width="800">
+            <img src="images/l12/Pasted image 20241203114748.png" alt="Функции с несколькими параметрами 2" width="800">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Функция с несколькими параметрами</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int add(int a, int b) {
+  return a + b; 
+}  
+
+int result = add(3, 5); // Выполнит код 3 + 5 и вернёт значение в переменную
+print(result); // 8</code></pre>
+
+            <img src="images/l12/Pasted image 20241203114820.png" alt="Схема работы функции" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Стрелочная функция</h2>
+            <p>Если тело функции содержит только одну инструкцию/возвращаемое значение.</p>
+            <p>Тогда можно убрать ключевое слово return, фигурные скобки и использовать стрелочную функцию.</p>
+
+            <img src="images/l12/Pasted image 20241203114922.png" alt="Стрелочная функция" width="800">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Стрелочная функция</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int sum(int a, int b) {
+  return a + b;
+};
+
+int sum(int a, int b) => a + b;</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметры по умолчанию</h2>
+            <p>Можно назначить значения по умолчанию для параметров функции.</p>
+            <p>Эта возможность позволяет вызывать функцию без необходимости явной передачи всех аргументов, прибегая к значениям по умолчанию.</p>
+
+            <div class="note">
+                <p><strong>Значения по умолчанию</strong></p>
+                <p>Значения по умолчанию указываются с помощью оператора <code class="code">=</code></p>
+                <p>Аргументы нужно обернуть в <code class="code">{ }</code> или <code class="code">[ ]</code> скобки и они обязательно должны быть в самом конце списка аргументов</p>
+            </div>
+
+            <img src="images/l12/Pasted image 20241203115206.png" alt="Параметры по умолчанию" width="800">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Параметры по умолчанию</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">String hello(String name, { String message = 'Привет' }) {
+  return '$message, $name!';
+}
+
+void main() {
+  print(hello('Андрей'));
+  print(hello( message: 'Здравствуйте', name: 'Наташа'));
+}</code></pre>
+
+            <p><strong>Результат:</strong></p>
+            <pre><code class="code">Привет, Андрей!
+Здравствуйте, Наташа!</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Именованные аргументы</h2>
+            
+            <div class="note">
+                <p><strong>Именованные аргументы</strong></p>
+                <p>Позволяют указывать имена параметров при вызове функции.</p>
+                <p>По умолчанию значения передаются параметрам по позиции: первое значение - первому параметру, второе значение - второму параметру и так далее.</p>
+                <p>Однако, используя <code class="code">именованные аргументы</code>, можно <code class="code">переопределить порядок</code> их передачи параметрам.</p>
+            </div>
+
+            <img src="images/l12/Pasted image 20241203115359.png" alt="Именованные аргументы" width="800">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Именованные аргументы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">String hello(String name, int age, {String message = "Привет"}) {
+  return "$message, меня зовут $name! Мне $age лет";
+}
+
+main() {
+  print(hello("Маша",18));
+  // Привет, меня зовут Маша! Мне 18 лет
+  print(hello("Маша", 18, message: "Здравствуйте"));
+  // Здравствуйте, меня зовут Маша! Мне 18 лет
+
+  // Именованный параметр не зависит от порядка
+  print(hello(message: "Здравствуйте", "Маша", 18));
+
+  // Ошибка! Первый параметр должен быть строкой
+  print(hello(18, "Маша"));
+}</code></pre>
+
+            <img src="images/l12/Pasted image 20241203115525.png" alt="Именованные аргументы пример 1" width="800">
+            <img src="images/l12/Pasted image 20241203115541.png" alt="Именованные аргументы пример 2" width="800">
+            <img src="images/l12/Pasted image 20241203115603.png" alt="Именованные аргументы пример 3" width="800">
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Создание своей функции</h2>
+            <p>Функция — это блок кода, который выполняет определенную задачу и может быть вызван по имени. Функции помогают организовывать код и избегать его повторения.</p>
+
+            <p><strong>Преимущества функций:</strong></p>
+            <ul>
+                <li>Упрощают код.</li>
+                <li>Улучшают его читаемость.</li>
+                <li>Позволяют многократно использовать один и тот же блок кода.</li>
+                <li>Облегчают тестирование и поддержку программы.</li>
+            </ul>
+
+            <p>В Dart функции объявляются с использованием ключевого слова void (если функция ничего не возвращает) или указанием типа возвращаемого значения.</p>
+            <p>Сначала пишется тип данных, затем имя функции и список параметров в круглых скобках. После этого идет тело функции в фигурных скобках <code class="code">{ }</code>.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Простая функция</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void greet() { 
+  print('Привет!'); 
+}</code></pre>
+
+            <p>Здесь greet это имя функции, которая выводит на экран слово «Привет!». Она не принимает параметров и не возвращает значения.</p>
+            <p>Чтобы выполнить код внутри функции, нужно вызвать функцию по её имени.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Вызов функции</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">greet(); // Привет!</code></pre>
+
+            <p>Функции могут принимать параметры, которые передают данные в функцию.</p>
+            <p>Функции могут возвращать значение с использованием ключевого слова return.</p>
+            <p>В этом случае вместо void указывается тип возвращаемого значения.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Необязательные параметры</h2>
+            <p>Чтобы параметры по умолчанию передавать как позиционные нужно обернуть их в квадратные скобки</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Необязательные параметры</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">String hello(String name, int age, [String message = "Привет"]) {
+  return "$message я $name! Мне $age лет!";
+}
+
+main() {
+  hello("Андрей", 20); // Привет я Андрей! Мне 20 лет!
+  hello("Маша", 18, "Здравствуйте"); // Здравствуйте я Маша! Мне 18 лет!
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Возвращение пустого return</h2>
+            <p>Полезное применение — возвращать пустой return</p>
+            <p>Это означает, что выполнение функции закончилось и мы выходим из нее в этот момент</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Пустой return</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void checkAge(int age) {
+  if (age < 16) {
+    print("Сорян! Но ты не пройдёшь!");
+    return;
+  }
+  print("Всё норм! Проходи...");
+}
+
+main() {
+  checkAge(10); // Сорян! Но ты не пройдёшь!
+  checkAge(17); // Всё норм! Проходи...
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Функция main</h2>
+            <p>Каждое приложение должно иметь top-level функцию main(), которая есть входная точка для любого приложения на языке Dart.</p>
+            <p>Из этого следует, что любой файл, в котором содержится функция main, может выступать в роли того, с которого начинается запуск приложения.</p>
+            <p>Функция это тоже объект, она имеет специальный тип Function.</p>
+            <p>Функцию можно присвоить переменной или передать как параметр в другую функцию</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Функция как объект</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">main() {
+  void printValue(int value) {
+    print(value);
+  }
+
+  printValue(42);
+}</code></pre>
+
+            <p>Когда при выполнении приложения в коде встречается вызов функции, то поток управления переходит в неё и выполняет её код, после управление возвращается в точку вызова функции и продолжается последовательная отработка кода основной программы.</p>
+            <p>Примитивные типы данных передаются в функцию по значению, а все другие – по ссылке</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Возвращаемые значения</h2>
+            
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Возвращаемые значения</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+
+emptyFunction() {}
+print(emptyFunction()); // Если не указать return то функция вернёт null
+
+// Используем тип данных record
+// Чтобы функция могла вернуть два значения
+(int, int) getPoint() {
+  return (12, 2);
+}
+
+var point = getPoint();
+print("Координата х = ${point.$1}");
+print("Координата y = ${point.$2}");
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Анонимные функции</h2>
+            <p>Дополнительно можно создавать анонимные функции Лямбда-функции, то есть функции без имени.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Анонимная функция</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">() { return "Я анонимная функция"; }</code></pre>
+
+            <p>Чаще всего они используются для передачи колбэка в функцию</p>
+            <p>Например:</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Использование анонимной функции</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var list = [1, 2, 3, 4, 5];
+list.forEach((item) => print('Элемент списка: $item'));</code></pre>
+
+            <p>Здесь в метод forEach передаётся анонимная функция <code class="code">(item) => print('Элемент списка: $item')</code>, которая вызывается для каждого элемента списка и выводит его в консоль</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Стрелочная функция (подробнее)</h2>
+            <p>Стрелочная функция предоставляет форму для объявления однострочных именованных или анонимных функций. Их поведение аналогично обычным функциям за тем исключением, что они по умолчанию всегда возвращают значение, то есть оператор return в этих функциях не используется, но его наличие подразумевается.</p>
+            <p>Чаще всего используются как анонимные функции <code class="code">(value) => value</code>.</p>
+            <p>Если тело функции содержит один оператор, то можно return можно не указывать.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Стрелочная функция</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">  // Обычная функция
+  String getMessage(int count) { 
+    return "У вас $count сообщений";
+  }
+
+  // Стрелочная функция
+  String getMessage(int count) => "У вас $count сообщений";
+
+
+  // ! Функцию можно сохранить в переменную
+  //   В таком виде функция называется анонимной (без имени)
+  var getMsg = (int count) => "У вас $count сообщений";
+  print(getMsg(42));</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Типы параметров функций</h2>
+            <p>Функция может иметь любое количество обязательных required позиционных параметров. За ними могут следовать именованные параметры или необязательные позиционные параметры (НО НЕ ОБА СРАЗУ).</p>
+
+            <h3>Именованные параметры</h3>
+            <p>Для определения именованных параметров нужно их обернуть в</p>
+            <pre><code class="code">{ параметр1, параметр2, параметр3, ... }</code></pre>
+
+            <p>Нужно у параметров:</p>
+            <ol>
+                <li>Задавать значения по умолчанию или</li>
+                <li>Указывать ключ. слово required, для обязательного параметра или</li>
+                <li>В теле функции, обрабатывать поведение с проверками на null</li>
+            </ol>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Именованные параметры</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Значения параметров по умолчанию параметр = значение
+int getSuperValue1({int value1=0, int value2=0}) {
+  return value1 * value2 - 42;
+}
+
+// Обязательные параметры, которые нужно указать при вызове функции
+int getSuperValue2({required int value1, required int value2}) {
+  return value1 * value2 - 42;
+}
+
+// Nullable параметры
+int getSuperValue3({int? value1, int? value2}) {
+  return (value1 ?? 0) * (value2 ?? 0) - 42;
+}</code></pre>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Вызов с именованными параметрами</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">getSuperValue1(value2: 10); // У параметров есть значения по умолчанию
+getSuperValue2(value1: 10, value2: 10); // Параметры указывать обязательно
+getSuperValue3(value1: 10); // Здесь внутренняя проверка на null</code></pre>
+
+            <h3>Позиционные параметры</h3>
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Позиционные параметры</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">String hello(String name, String msg, [int age = 18]) {
+  var result = '$msg! Меня зовут $name! и мне $age';
+  return result;
+}
+
+print(hello('Маша', 'Привет', 20));
+print(hello('Роман', 'Привет'));</code></pre>
+
+            <p>Функция НЕ МОЖЕТ иметь ОДНОВРЕМЕННО как необязательные позиционные, так и необязательные именованные параметры.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Область видимости функций</h2>
+            <p>Область видимости функций в Dart можно понять как границы, в которых переменные доступны для использования. В Dart используется лексическая область видимости. Это значит, что доступ к переменным определяется тем, где они находятся в коде.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Область видимости</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">void main() {
+  var insideMain = true;  // Переменная объявлена внутри main
+  
+  void myFunction() {  // Функция вложена в main
+    var insideMyFunction = true; // Переменная объявлена внутри myFunction
+    print(insideMain); // Можно использовать, она объявлена уровнем выше
+    print(insideMyFunction); // Можно использовать, она объявлена здесь
+  }
+  
+  print(insideMyFunction); // Ошибка! Переменная недоступна здесь
+  myFunction(); // Вызываем myFunction, что напечатает значения переменных
+}</code></pre>
+
+            <p>Вложенные функции имеют доступ ко всем переменным уровнем выше.</p>
+            <p>Внутри функции myFunction можно обращаться к переменной insideMain, так как myFunction находится "внутри" функции main.</p>
+            <p>Но переменные, объявленные во вложенных функциях, недоступны уровнем выше.</p>
+            <p>Переменная insideMyFunction объявлена в myFunction и существует только внутри этой функции.</p>
+            <p>При попытке напечатать insideMyFunction в функции main произойдет ошибка, потому что main не знает о переменной insideMyFunction.</p>
+            <p>Это и есть принцип лексической области видимости: функции видят переменные, определенные "выше" по коду, но не "ниже".</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Замыкания</h2>
+            <p>Замыкания представляют собой довольно мощный инструмент, в основе которого лежит возможность функций запоминать значения переменных из внешних областей видимости. То есть из тех областей видимости, где данная функция была объявлена.</p>
+            <p>В основе идеи замыкания лежит то, что функция может возвращать функцию, которая в свою очередь может на вход принимать совершенно отличные значения от тех, что подаются функции верхнего уровня, но использует в своей работе данные, определенные в функции верхнего уровня.</p>
+            <p>Например, есть функция add, которая создаёт и возвращает новую функцию. Эта новая функция использует переменную из функции add. Переменная, к которой обращается функция, замыкается внутри неё, и её значение сохраняется, даже когда функция используется позже.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Замыкания</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// Тип данных Function означает, что функция возвращает другую функцию
+Function add(num add) {
+  return (num i) => add + i;
+}
+
+var add2 = add(2); // Создаем функцию add2, которая всегда добавляет 2
+
+print(add2(3)); // 2 + 3 = 5
+print(add2(4)); // 2 + 4 = 6</code></pre>
+
+            <p>Ещё пример</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Замыкание со счетчиком</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">Function makeCounter(int increment) {
+  int count = 0; // Инициализируем счётчик, который будет "запомнен"
+
+  return () {
+    count += increment; // Прибавляем increment к count при каждом вызове
+    return count; // Возвращаем текущее значение count
+  };
+}
+
+void main() {
+  var counter1 = makeCounter(1); // счётчик, который увеличивается на 1
+  var counter2 = makeCounter(2); // счётчик, который увеличивается на 2
+
+  print(counter1()); // 1
+  print(counter1()); // 2
+  print(counter1()); // 3
+
+  print(counter2()); // 2
+  print(counter2()); // 4
+  print(counter2()); // 6
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Рекурсия</h2>
+            <p>Рекурсия - это когда функция вызывает саму себя для выполнения какой-то задачи.</p>
+            <p>"Чтобы понять рекурсию, нужно сначала понять рекурсию" (с)</p>
+            <p>Этот механизм часто используется вместо циклов, когда нужно работать с данными, которые могут иметь сложную и неизвестную заранее структуру или глубину, например, при работе с деревьями или списками.</p>
+
+            <p><strong>Рекурсивная функция всегда должна:</strong></p>
+            <ol>
+                <li>Иметь базовый случай, который останавливает рекурсию. Если его нет, функция будет вызывать себя бесконечно, что приведет к ошибке.</li>
+                <li>Выполнять шаг, приближающий её к базовому случаю. То есть она должна как-то изменять свои данные, чтобы рано или поздно дойти до остановки.</li>
+            </ol>
+
+            <p><strong>Пример рекурсии: нахождение суммы элементов списка</strong></p>
+            <p>Функция sum, которая считает сумму чисел в списке. Она выполняет это рекурсивно, разбивая задачу на подзадачи, пока не останется один элемент.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Рекурсивная функция</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int sum(List<int> numbers) {
+  print(numbers); // Печатаем текущий список для наглядности
+
+  // Базовый случай: если в списке 1 элемент, возвращаем его
+  if (numbers.length == 1) return numbers[0];
+
+  // Рекурсивный случай: возвращаем первый элемент + сумма оставшихся
+  return numbers[0] + sum(numbers.sublist(1));
+}
+
+print(sum([1, 2, 3, 4, 5, 6, 7, 8, 9])); // Выводит 45</code></pre>
+
+            <p><strong>Пошаговое объяснение работы:</strong></p>
+            <ol>
+                <li><strong>Первый вызов:</strong> sum([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                    <ul>
+                        <li>Функция получает список [1, 2, 3, 4, 5, 6, 7, 8, 9]</li>
+                        <li>Проверка: длина списка больше 1, так что базовый случай ещё не достигнут</li>
+                        <li>Возвращаем 1 + sum([2, 3, 4, 5, 6, 7, 8, 9])</li>
+                    </ul>
+                </li>
+                <li><strong>Второй вызов:</strong> sum([2, 3, 4, 5, 6, 7, 8, 9])
+                    <ul>
+                        <li>Теперь список: [2, 3, 4, 5, 6, 7, 8, 9]</li>
+                        <li>Возвращаем 2 + sum([3, 4, 5, 6, 7, 8, 9])</li>
+                    </ul>
+                </li>
+                <li><strong>Третий вызов:</strong> sum([3, 4, 5, 6, 7, 8, 9])
+                    <ul>
+                        <li>Список: [3, 4, 5, 6, 7, 8, 9]</li>
+                        <li>Возвращаем 3 + sum([4, 5, 6, 7, 8, 9])</li>
+                    </ul>
+                </li>
+                <li>Так продолжается, пока список не сократится до одного элемента.</li>
+            </ol>
+
+            <p>...</p>
+
+            <p><strong>Последний вызов:</strong> sum([9])
+                <ul>
+                    <li>Список: [9]</li>
+                    <li>Базовый случай: длина списка равна 1. Функция возвращает 9, и дальнейшие вызовы останавливаются.</li>
+                </ul>
+            </p>
+
+            <p><strong>Подсчёт суммы</strong></p>
+            <p>После того как функция достигла базового случая и вернула 9, каждый вызов начинает возвращать результат обратно по цепочке:</p>
+            <ul>
+                <li>8 + 9 → возвращает 17</li>
+                <li>7 + 17 → возвращает 24</li>
+                <li>и так далее, пока не вернётся к первому вызову.</li>
+            </ul>
+            <p>Функция sum последовательно складывает элементы, возвращая конечный результат — 45</p>
+
+            <p><strong>Преимущества и Важные моменты</strong></p>
+            <ul>
+                <li><strong>Преимущество:</strong> упрощает код, особенно когда нужно работать с деревьями или обходить вложенные структуры.</li>
+                <li><strong>Важно помнить:</strong> нужно всегда задавать базовый случай, иначе программа "зависнет" в бесконечном вызове.</li>
+                <li>Используйте рекурсию с осторожно и только когда оно реально нужно! В большинстве случаев это приведёт только к потере производительности, особенно если ещё используются циклы.</li>
+            </ul>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

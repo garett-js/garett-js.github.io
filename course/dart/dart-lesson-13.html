@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Null Safety в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 13: Null Safety</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Null Safety в Dart</h1>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Ошибка на миллиард долларов</h2>
+            
+            <p>Представьте себе большую коробку с чипсами. Ты с радостью открываешь её, чтобы взять чипсинку, но …</p>
+            <p>Но вместо неё находишь <code class="code">пустоту</code> … Это очень разочаровывает, правда?</p>
+
+            <img src="images/l13/null1.png" alt="Пустая коробка с чипсами" width="700">
+            <img src="images/l13/null2.png" alt="Разочарование от пустой коробки" width="700">
+
+            <p>В программировании есть похожая ситуация, только вместо упаковки с чипсами есть <code class="code">переменная</code>.<br>
+            А вместо чипсинки – <code class="code">какое-то значение</code>.</p>
+
+            <p>Иногда эта <code class="code">переменная может быть пустой</code>, то есть не содержать никакого значения. Это как пустая упаковка.</p>
+
+            <p><code class="code">NullPointerException</code> – это та исключительная ситуация, когда программа пытается использовать пустую переменную. Такая переменная содержит значение <code class="code">null</code></p>
+
+            <p>Это как попытаться съесть чипсинку, <code class="code">которой нет</code>. Программа не знает, что делать в такой ситуации, и поэтому выдает ошибку – <code class="code">NullPointerException</code></p>
+
+            <h3>Почему <code class="code">NullPointerException</code> это <code class="code">очень плохо</code></h3>
+
+            <ul>
+                <li><strong><code class="code">Программа "падает"</code></strong> - при <code class="code">NullPointerException</code>, программа останавливается и перестает выполнять свои задачи.</li>
+                <li><strong><code class="code">Трудно найти ошибку</code></strong> - очень сложно найти место в программе, где возникает эта ошибка. Это как искать иголку в стоге сена.</li>
+                <li><strong><code class="code">Непредсказуемое поведение</code></strong> - если программа не обрабатывает <code class="code">NullPointerException</code>, она может начать вести себя непредсказуемо. Например, показывать неправильные результаты или даже повреждать данные.</li>
+            </ul>
+
+            <img src="images/l13/null3.png" alt="Программа не знает длину null" width="372">
+
+            <p>Программа не знает, какая длина у <code class="code">ничего</code></p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">История создания null</h2>
+            
+            <img src="images/l13/null4.png" alt="Тони Хоар" width="203" style="float:left; margin-right: 20px;">
+
+            <p>Создатель концепции <code class="code">null</code>, Тони Хоар, назвал своё изобретение <strong>"ошибкой на миллиард долларов"</strong> из-за неисчислимых убытков, которые она принесла за десятилетия в виде сбоев программ, уязвимостей и потраченного времени разработчиков.</p>
+
+            <p>В 1965 году Тони Хоар (Sir Tony Hoare), работая над языком программирования ALGOL W, ввёл концепцию <em>null reference</em> — специального значения, обозначающего "отсутствие объекта" или "ничего" для ссылочных типов.</p>
+
+            <p>Позже, выступая на конференции в 2009 году, Хоар публично извинился за это решение и назвал его "ошибкой на миллиард долларов" ("billion-dollar mistake")</p>
+
+            <p><em>Прямая цитата Тони Хоара:</em></p>
+
+            <blockquote>
+                <p>"Я называю это своей ошибкой на миллиард долларов. Это было изобретение null-ссылки в 1965 году. В то время я разрабатывал первую комплексную систему типов для ссылок в объектно-ориентированном языке (ALGOL W). Моя цель была — сделать все использования ссылок абсолютно безопасными, с автоматической проверкой компилятором. Но я не смог устоять перед искушением добавить null-ссылку, просто потому что это было так легко реализовать. Это привело к бесчисленным ошибкам, уязвимостям и сбоям систем, которые, вероятно, причинили боли и убытков на миллиард долларов за последние сорок лет."</p>
+            </blockquote>
+
+            <p><strong>Как справлялись раньше?</strong></p>
+
+            <p>Программистам приходилось вручную писать бесчисленные проверки.<br>
+            Это работало, но было громоздко, и главное — можно было легко забыть про проверку.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Старый подход</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">if (name != null) {
+  print(name.length);
+} else {
+  print(0);
+}</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Философия Null Safety в Dart</h2>
+            
+            <p>Начиная с версии <code class="code">2.12</code>, Dart ввёл строгую <strong><code class="code">Null Safety</code> (<code class="code">нулевую безопасность</code>)</strong>.</p>
+
+            <p><strong>Основная идея гениальна и проста:</strong></p>
+
+            <blockquote>
+                <p>По умолчанию, ни одна переменная не может быть <code class="code">null</code>.</p>
+            </blockquote>
+
+            <p>Это означает, что компилятор теперь — ваш лучший друг и защитник. Он просто не позволит вам создать переменную, которая может случайно стать <code class="code">null</code>.</p>
+
+            <img src="images/l13/null5.png" alt="Компилятор защищает от null" width="490">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Null Safety в действии</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int a = 42;
+a = null; // ОШИБКА КОМПИЛЯЦИИ! 'a' не может быть null.
+
+String text; // ОШИБКА КОМПИЛЯЦИИ! Переменная должна быть инициализирована.</code></pre>
+
+            <p><em>Преимущества этого подхода</em></p>
+
+            <ol>
+                <li><strong>Надёжность:</strong> Огромный класс ошибок просто исчезает. Ваш код становится предсказуемым.</li>
+                <li><strong>Производительность:</strong> Компилятор уверен, что переменные не <code class="code">null</code>, и может проводить оптимизации, делая ваш код быстрее и компактнее.</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Nullable и Non-Nullable типы</h2>
+            
+            <p>В Dart есть два вида типов:</p>
+
+            <ol>
+                <li><strong><code class="code">Non-nullable</code> (не могут <code class="code">null</code>)</strong>: Все типы по умолчанию. <code class="code">int</code>, <code class="code">String</code>, <code class="code">List&lt;double&gt;</code></li>
+                <li><strong><code class="code">Nullable</code> (могут <code class="code">null</code>)</strong>: Те же типы, но с добавлением знака <code class="code">?</code> в конце. <code class="code">int?</code>, <code class="code">String?</code>, <code class="code">List&lt;double&gt;?</code></li>
+            </ol>
+
+            <p><em>Например</em></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Nullable и Non-Nullable типы</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int nonNullableInt = 10;
+// nonNullableInt = null; // Ошибка
+
+int? nullableInt = 10;
+nullableInt = null; // Всё в порядке</code></pre>
+
+            <p>Даже <code class="code">var</code> подчиняется этому правилу. Если вы не инициализируете <code class="code">var</code> сразу, она считается <code class="code">dynamic</code>, которая может быть <code class="code">null</code>.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - var и dynamic</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var someVar; // Тип dynamic, значение - null
+print(someVar); // Выведет: null</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Работа с Nullable-переменными</h2>
+            
+            <h3>1. Прямая проверка на <code class="code">null</code></h3>
+
+            <p>Это самый понятный способ.<br>
+            Компилятор <code class="code">Dart</code> умён и понимает, что внутри блока <code class="code">if (variable != null)</code> переменная точно не <code class="code">null</code>.</p>
+
+            <img src="images/l13/null6.png" alt="Проверка на null" width="700">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Проверка на null</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int getLength(String? str) {
+  if (str != null) {
+    // Внутри этого блока str считается non-nullable String
+    return str.length;
+  }
+  return 0;
+}
+
+print(getLength("Hello")); // 5
+print(getLength(null));    // 0</code></pre>
+
+            <h3>2. Оператор <code class="code">??</code></h3>
+
+            <p>Очень удобен для предоставления значения по умолчанию.<br>
+            Читается как "<code class="code">если слева null, то взять то, что справа</code>".</p>
+
+            <img src="images/l13/null7.png" alt="Оператор ??" width="700">
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Оператор ??</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int? nullableInt;
+int value = nullableInt ?? 0; // Если nullableInt равен null, value станет 0.
+print(value); // 0</code></pre>
+
+            <p>Есть также оператор <code class="code">??=</code>, который присваивает значение, только если переменная <code class="code">null</code>.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Оператор ??=</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int? value2 = null;
+value2 ??= 42; // value2 был null, поэтому ему присвоили 42
+print(value2); // 42
+
+value2 ??= 99; // value2 уже не null, ничего не произойдет
+print(value2); // 42</code></pre>
+
+            <h3>3. Оператор <code class="code">?.</code></h3>
+
+            <p>Позволяет вызвать метод или получить свойство, только если объект не <code class="code">null</code>. Если объект <code class="code">null</code>, всё выражение вернёт <code class="code">null</code> и программа не упадет.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Оператор ?.</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">String? text; // null
+
+// Вместо того чтобы упасть, это выражение просто вернёт null
+print(text?.length); // Выведет: null
+
+text = "Dart";
+print(text?.length); // Выведет: 4</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Операторы ! и late</h2>
+            
+            <h3>4. Оператор <code class="code">!</code></h3>
+
+            <p>Этот оператор — способ сказать компилятору:<br>
+            "<code class="code">Я на <strong>100%</strong> уверен, что в этом месте переменная не null. Поверь мне и позволь мне её использовать</code>".</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Оператор !</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">List&lt;int?&gt; listWithNulls = [2, null, 4];
+int firstItem = listWithNulls.first!; // Мы уверены, что первый элемент не null
+print(firstItem); // 2</code></pre>
+
+            <blockquote>
+                <p><strong>Используйте с огромной осторожностью!</strong> Если вы ошиблись и переменная окажется <code class="code">null</code>, ваша программа упадёт с ошибкой. Оператор <code class="code">!</code> — это, по сути, отключение защиты для одной конкретной операции.</p>
+            </blockquote>
+
+            <img src="images/l13/null8.png" alt="Осторожно с оператором !" width="700">
+
+            <h3>5. Модификатор <code class="code">late</code></h3>
+
+            <p><code class="code">late</code> говорит компилятору: "<code class="code">Обещаю, я инициализирую эту non-nullable переменную позже, но точно до того, как попытаюсь её использовать</code>".</p>
+
+            <p>У <code class="code">late</code> есть два основных применения:</p>
+
+            <p><strong>а) <code class="code">Отложенная инициализация</code>:</strong> Полезно для полей класса, которые не могут быть инициализированы сразу.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Отложенная инициализация</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class MyClass {
+  late String description; // Обещаем инициализировать позже
+
+  MyClass(String initialText) {
+    // Выполняем какую-то сложную логику и только потом инициализируем
+    description = 'This is a description: $initialText';
+  }
+}</code></pre>
+
+            <p><strong>б) <code class="code">Ленивая инициализация</code>:</strong> Переменная будет инициализирована не в момент объявления, а только при первом обращении к ней. Это полезно, если инициализация — ресурсозатратная операция.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Ленивая инициализация</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">int _calculateHeavyValue() {
+  print('Выполняется очень сложный расчет...');
+  return 42;
+}
+
+// как будто вызывает функцию _calculateHeavyValue()
+// но нет ... пока не вызовим heavyValue функция не сработает
+late int heavyValue = _calculateHeavyValue();
+
+void main() {
+  print('Программа запущена.');
+  // Функция _calculateHeavyValue() еще не вызвана
+  print('Сейчас мы обратимся к переменной...');
+  print(heavyValue); // Вот здесь будет вызван _calculateHeavyValue()
+}</code></pre>
+
+            <blockquote>
+                <p><strong>Внимание!</strong> Если вы пометили переменную как <code class="code">late</code>, но забыли её инициализировать и попытались прочитать, вы получите ошибку времени выполнения (<code class="code">LateInitializationError</code>).</p>
+            </blockquote>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Null Safety и коллекции (List, Map)</h2>
+            
+            <p><code class="code">Null Safety</code> позволяет очень гибко настраивать коллекции. Вы можете контролировать, может ли сама коллекция быть <code class="code">null</code> и могут ли её элементы быть <code class="code">null</code>.</p>
+
+            <p><strong>Списки <code class="code">List</code></strong></p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Null Safety в списках</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">// ни список, ни его элементы не могут быть null
+List&lt;String&gt; = ['Dart', 'Swift'];
+
+// список не может быть null, но его элементы могут
+List&lt;String?&gt; = ['Dart', null, 'Swift'];
+
+// список может быть null
+List&lt;String&gt;? = null;
+
+// и сам список, и его элементы могут быть null
+List&lt;String?&gt;? = ['Dart', null, 'Swift'];</code></pre>
+
+            <p><strong>Особый случай Словари <code class="code">Map</code></strong></p>
+
+            <p>При обращении к <code class="code">Map</code> по ключу, которого там нет, он возвращает <code class="code">null</code>. Поэтому результат такого обращения всегда <code class="code">nullable</code>.</p>
+
+            <div class="code-block-header">
+                <h4 class="code-block-title">Dart - Null Safety в Map</h4>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')">
+                        <img class="icon" src="images/light.png" alt="Светлая тема">
+                    </span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')">
+                        <img class="icon" src="images/dark.png" alt="Темная тема">
+                    </span>
+                </div>
+            </div>
+            <pre><code class="language-dart">var myMap = &lt;String, int&gt;{'one': 1};
+print(myMap['two']); // Выведет: null
+
+// int value = myMap['one']; // ОШИБКА! Вдруг ключа 'one' не будет?
+int? value1 = myMap['one']; // Правильно. value1 имеет тип int?
+int value2 = myMap['one']!;   // Уверенность, что ключ есть.
+int value3 = myMap['two'] ?? 0; // Безопасно с значением по умолчанию.</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 17: Конструкторы в Dart</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 17: Конструкторы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Конструкторы</h1>
+
+        <section class="lesson-section">
+            <h2>Параметры конструктора</h2>
+            <p>Например, есть класс паладин</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Класс Paladin</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  Paladin(this.name, this.hp, this.mana);
+
+  void attack() {}
+  void heal() {}
+}
+</code></pre>
+            <p>Чтобы создать объект паладина через конструктор, нам нужно передать данные в параметры этого конструктора в том же порядке, что они были определены.</p>
+            <p>👉 сначала&nbsp;<code class="code">name</code>&nbsp;потом&nbsp;<code class="code">hp</code>&nbsp;потом&nbsp;<code class="code">mana</code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Создание объекта</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  Paladin paladin = Paladin("Паладин", 100, 50);
+}
+</code></pre>
+            <p>Бывает не всегда удобно, создавать так конструктор, поэтому есть несколько вариантов</p>
+            <ol>
+                <li>Использовать обязательные именованные параметры</li>
+                <li>Использовать Null Безопасные типы данных</li>
+                <li>Использовать значения по умолчанию</li>
+                <li>Использовать инициализаторы</li>
+                <li>Использовать именованные конструкторы</li>
+            </ol>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Обязательные именованные параметры</h2>
+            <p>В данном случае мы обязаны передать все параметры в конструктор.<br />
+            Но теперь можно передавать их в <code class="code">любом порядке</code> и удобное через именную метку.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Обязательные именованные параметры</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  Paladin({
+    required this.name,
+    required this.hp,
+    required this.mana,
+  });
+
+  void attack() {}
+  void heal() {}
+}
+
+void main() {
+  Paladin paladin = Paladin(
+    name: "Паладин",
+    hp: 100,
+    mana: 50,
+  );
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Null Безопасные типы данных</h2>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Null Безопасные типы</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String? name;
+  int? hp;
+  int? mana;
+
+  Paladin( {this.name, this.hp, this.mana} );
+
+  void attack() {}
+  void heal() {}
+}
+
+void main() {
+  Paladin paladin = Paladin(name: "Паладин", hp: 100);
+
+  print(paladin.mana); // null
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Значения по умолчанию</h2>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Необязательные параметры</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  // Необязательные параметры с значением по умолчанию
+  Paladin([
+    this.name = "Пал Палыч",
+    this.hp = 0,
+    this.mana = 0,
+  ]);
+
+  void attack() {}
+  void heal() {}
+}
+
+void main() {
+  Paladin paladin = Paladin();
+  print(paladin.name); // Пал Палыч
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Именованные параметры</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  // Именованные параметры с значением по умолчанию
+  Paladin({
+    this.name = "Пал Палыч",
+    this.hp = 0,
+    this.mana = 0,
+  });
+
+  void attack() {}
+  void heal() {}
+}
+
+void main() {
+  Paladin paladin = Paladin(mana: 200);
+  print(paladin.name); // Пал Палыч
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Инициализаторы</h2>
+            <p><strong>ВАЖНО</strong>: Правая часть инициализатора <code class="code">не имеет</code> доступа до <code class="code">this</code></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Инициализаторы</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  Paladin() : name = "Пал Палыч", hp = 0, mana = 0;
+
+  void attack() {}
+  void heal() {}
+}
+
+void main() {
+  Paladin paladin = Paladin();
+
+  print(paladin.name); // Пал Палыч
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>Именованные конструкторы</h2>
+            <p>У класса может быть<code class="code"> несколько конструкторов</code> + главный конструктор по умолчанию который скрытый.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Именованные конструкторы</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  Paladin({required this.name}) : hp = 0, mana = 0;
+  Paladin.dark({required this.name}) : hp = 1500, mana = 1000;
+  Paladin.light({required this.name}) : hp = 1000, mana = 1200;
+
+  void attack() {}
+  void heal() {}
+
+  @override
+  String toString() {
+    super.toString();
+    return "Имя = $name, здоровье = $hp, мана = $mana";
+  }
+}
+
+void main() {
+  Paladin paladin = Paladin(name: "Пал Палыч");
+  Paladin darkPaladin = Paladin.dark(name: "Падший Пал Палыч");
+  Paladin lightPaladin = Paladin.light(name: "Просветленный Пал Палыч");
+
+  print(paladin);
+  print(darkPaladin);
+  print(lightPaladin);
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Результат</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="code">Имя = Пал Палыч,               здоровье = 0,    мана = 0
+Имя = Падший Пал Палыч,        здоровье = 1500, мана = 1000
+Имя = Просветленный Пал Палыч, здоровье = 1000, мана = 1200</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h1><img alt="" height="150" name="Group 104.png" src="https://ucarecdn.com/fdfa235f-54ce-449b-ad45-1a2ffe6d6d96/" width="150">&nbsp;ООП Часть 4</h1>
+            <h2>Фабричный конструктор</h2>
+            <p>Фабричные конструкторы используются, когда необходимо вернуть не новый экземпляр класса, а уже <code class="code">существующий</code> или <code class="code">подкласс</code>. Они объявляются с помощью ключевого слова&nbsp;<code class="code">factory</code>.</p>
+            <p>В отличие от обычного конструктора,&nbsp;<code class="code">фабричный конструктор <strong>не создаёт</strong> новый объект напрямую</code>, а может:</p>
+            <ul>
+                <li><strong>Возвращать уже созданный объект</strong>.</li>
+                <li><strong>Возвращать объект другого класса</strong>.</li>
+                <li><strong>Использовать сложную логику при создании объектов</strong>.</li>
+            </ul>
+            <p>Контроль над созданием объекта.</p>
+            <p>Допустим, у нас есть&nbsp;<strong>игровая система</strong>, и мы хотим&nbsp;<strong>создавать классы персонажей</strong>&nbsp;на основе переданного типа.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Фабричный конструктор</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Paladin {
+  String name;
+  int hp;
+  int mana;
+
+  // Приватный конструктор
+  Paladin._internal(this.name, this.hp, this.mana);
+
+  // Фабричный конструктор
+  factory Paladin({required String type, required String name}) {
+    if (type == 'dark') {
+      return Paladin._internal(name, 1500, 1000);
+    } else if (type == 'light') {
+      return Paladin._internal(name, 1000, 1200);
+    } else {
+      return Paladin._internal(name, 0, 0);
+    }
+  }
+
+  void attack() {}
+  void heal() {}
+
+  @override
+  String toString() {
+    return "Имя = $name, здоровье = $hp, мана = $mana";
+  }
+}
+
+void main() {
+  Paladin darkPaladin = Paladin(type: 'dark', name: "Падший Пал Палыч");
+  Paladin lightPaladin = Paladin(type: 'light', name: "Просветленный Пал Палыч");
+
+  print(darkPaladin);
+  print(lightPaladin);
+}
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2><strong>Шаблон Синглтон</strong></h2>
+            <p>Синглтон это, по сути, <code class="code">глобальное хранилище</code>. Объект этого класса создается <code class="code">только один раз</code> и <code class="code">всегда доступен</code>. С одной стороны это очень удобная штука, а с другой может причинить некую боль в будущем.</p>
+            <p>Например, можно хранить глобальные настройки пользователя.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Шаблон Синглтон</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class Settings {
+  static Settings? _instance;
+
+  String language = "en";
+
+  // Фабричный конструктор всегда возвращает один и тот же объект
+  factory Settings() {
+    // Если экземпляр уже создан, вернуть его, иначе создать новый
+    return _instance ??= Settings._internal();
+  }
+
+  // Приватный конструктор для предотвращения создания новых объектов
+  Settings._internal();
+}
+</code></pre>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Использование Синглтона</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">void main() {
+  var settings1 = Settings();
+  var settings2 = Settings();
+
+  settings1.language = "ru"; // Меняем язык в одном объекте
+  print(settings2.language); // ru (значение изменилось в обоих объектах)
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Фабричный конструктор с кэшированием</strong></h2>
+            <p>Иногда выгодно&nbsp;<code class="code">повторно использовать уже созданные объекты</code>, например, при&nbsp;работе с базой данных&nbsp;или&nbsp;создании ресурсов.</p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Кэширование</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class User {
+  final String username;
+  static final Map&lt;String, User&gt; _cache = {};
+
+  // Фабричный конструктор возвращает уже созданный объект
+  factory User(String username) {
+    return _cache.putIfAbsent(username, () =&gt; User._internal(username));
+  }
+
+  User._internal(this.username);
+}
+
+void main() {
+  var user1 = User("Юля");
+  var user2 = User("Юля");
+  var user3 = User("Артём");
+
+  print(identical(user1, user2)); // true (Юля уже есть в кэше)
+  print(identical(user1, user3)); // false (Артём создаётся отдельно)
+}
+</code></pre>
+            <p>Теперь,&nbsp;<code class="code"><strong>если объект уже есть в кэше</strong></code>, фабричный конструктор&nbsp;<code class="code"><strong>не создаёт новый экземпляр</strong></code>, а возвращает старый!</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2><strong>Асинхронный фабричный конструктор</strong></h2>
+            <p><code class="code">Асинхронное программирование будет в <strong>Главе 8</strong></code></p>
+            <p>Допустим, нам нужно&nbsp;<strong>загружать данные из сети перед созданием объекта</strong>. В обычном конструкторе&nbsp;<strong><code class="code">async</code>&nbsp;использовать нельзя</strong>, но&nbsp;<strong>в фабричном — можно!</strong></p>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Асинхронный конструктор</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class UserProfile {
+  String name;
+  int level;
+
+  UserProfile._(this.name, this.level);
+
+  // Асинхронный фабричный конструктор
+  static Future&lt;UserProfile&gt; create(String userId) async {
+    print("Загружаем данные о пользователе $userId...");
+    await Future.delayed(Duration(seconds: 2)); // Имитация запроса в базу данных
+
+    return UserProfile._("Герой $userId", 10 + userId.length);
+  }
+}
+
+void main() async {
+  var user = await UserProfile.create("player_123");
+  print("Создан профиль: ${user.name}, уровень ${user.level}");
+}
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
