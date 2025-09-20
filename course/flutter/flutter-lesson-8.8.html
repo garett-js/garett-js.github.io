@@ -27,8 +27,8 @@
       
       <p>В этом уроке мы создадим простое приложение-каталог покемонов. Пользователь увидит список покемонов, сможет нажать на любого из них и перейти на экран с подробной информацией.</p>
       
-      <img src="images/l10.8/Pasted image 20250612142603.png" alt="Pokemon App List" width="200" style="display: inline-block; margin: 20px 10px; max-width: 45%;">
-      <img src="images/l10.8/Pasted image 20250612142623.png" alt="Pokemon App Detail" width="200" style="display: inline-block; margin: 20px 10px; max-width: 45%;">
+      <img src="images/l8.8/Pasted image 20250612142603.png" alt="Pokemon App List" width="200" style="display: inline-block; margin: 20px 10px; max-width: 45%;">
+      <img src="images/l8.8/Pasted image 20250612142623.png" alt="Pokemon App Detail" width="200" style="display: inline-block; margin: 20px 10px; max-width: 45%;">
       
       <p><strong>Используемый стек технологий:</strong></p>
       <ul>
@@ -92,7 +92,7 @@ flutter pub add provider</code></pre>
         </ul>
         
         <p><em>Структура папок и файлов</em></p>
-        <img src="images/l10.8/chrome_y8bsVmZTMy.png" alt="Project Structure" width="400" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.8/chrome_y8bsVmZTMy.png" alt="Project Structure" width="400" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <section id="section-3" class="lesson-section">
@@ -105,13 +105,13 @@ flutter pub add provider</code></pre>
         </ol>
         
         <p>По запросу https://pokeapi.co/api/v2/pokemon?limit=151 будет представлен такой список объектов</p>
-        <img src="images/l10.8/chrome_Xm3pcVFRCr.png" alt="Pokemon List API Response" width="400" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.8/chrome_Xm3pcVFRCr.png" alt="Pokemon List API Response" width="400" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <p>Детальный запрос представляет собой значительно детальный <code class="code">JSON объект</code>, заберём из него только некоторые данные</p>
         
         <p>Например, для https://pokeapi.co/api/v2/pokemon/1/</p>
         
-        <img src="images/l10.8/SXnGHvXxi6.png" alt="Pokemon Detail API Response" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.8/SXnGHvXxi6.png" alt="Pokemon Detail API Response" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <h3><strong>Модель для списка покемонов</strong></h3>
         
@@ -708,19 +708,19 @@ class MyApp extends StatelessWidget {
           <li>Можно перейти на экран с подробной информацией, там данные так же загружаются через сеть</li>
         </ul>
         
-        <img src="images/l10.8/poremon1.gif" alt="Pokemon App Working" width="300" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.8/poremon1.gif" alt="Pokemon App Working" width="300" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <ul>
           <li>Если в процессе использования приложения пропал интернет, изображения не будут загружаться, будет показано сообщение об ошибке</li>
         </ul>
         
-        <img src="images/l10.8/poremon_error_1.gif" alt="Pokemon App Image Error" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.8/poremon_error_1.gif" alt="Pokemon App Image Error" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <ul>
           <li>Если включить приложение без интернета список покемонов не будет загружен, будет сообщение об ошибке</li>
         </ul>
         
-        <img src="images/l10.8/poremon_error_3.gif" alt="Pokemon App Network Error" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.8/poremon_error_3.gif" alt="Pokemon App Network Error" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <button id="scrollToTop" title="Наверх"></button>

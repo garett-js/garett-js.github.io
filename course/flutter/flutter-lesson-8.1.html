@@ -75,9 +75,9 @@ print('Ok');
 
         <p><strong>Рассмотрим пример работы синхронной и асинхронной операции в приложении.</strong></p>
         <p>1. При нажатии на кнопку <code class="code">Синхронная загрузка</code> начинается выполнение тяжёлой операции, весь UI зависает, ничего не возможно сделать, пока условно не загрузится картинка. Тыкаем на чекбокс, увеличивает счётчик и ничего не происходит.</p>
-        <img src="images/l10/sync.gif" alt="sync" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.1/sync.gif" alt="sync" style="display: block; margin: 20px auto; max-width: 100%;">
         <p>2. При нажатии на кнопку <code class="code">Асинхронная загрузка</code>, UI не замораживается и можно продолжать с ним взаимодействовать без проблем.</p>
-        <img src="images/l10/async.gif" alt="async" width="310" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.1/async.gif" alt="async" width="310" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <section id="section-3" class="lesson-section">
@@ -118,7 +118,7 @@ print('Ok');
   });  
 }
 </code></pre>
-        <img src="images/l10/then.gif" alt="then" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.1/then.gif" alt="then" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <section id="section-4" class="lesson-section">
@@ -207,7 +207,7 @@ void main() {
 🥣 Все ингредиенты готовы. Начинаю смешивать окрошку!
 🎉 Окрошка готова!
 </code></pre>
-        <img src="images/l10/await.gif" alt="await" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.1/await.gif" alt="await" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <section id="section-5" class="lesson-section">
@@ -344,23 +344,23 @@ void eventLoop() {
         <h3><strong>Как это работает вместе</strong></h3>
         <ol>
             <li><strong>Начало:</strong> Повар (основной поток) начинает выполнять рецепт (функцию <code class="code">main()</code>).<br>
-                <img src="images/l10/event-loop-1.png" alt="event-loop-1" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+                <img src="images/l8.1/event-loop-1.png" alt="event-loop-1" style="display: block; margin: 20px auto; max-width: 100%;"></li>
             <li><strong>Запуск асинхронной задачи:</strong> Пункт "сварить картошку". Он дает команду плите, ставит таймер на 15 минут (<code class="code">Future</code>) и <strong>сразу же идет дальше по рецепту</strong>. Он не ждет перед плитой пока сварится картошка</li>
             <li>Тоже самое для пункта "Сварить яйца"<br>
-                <img src="images/l10/event-loop-2.png" alt="event-loop-2" style="display: block; margin: 20px auto; max-width: 100%;">
-                <img src="images/l10/event-loop-3.png" alt="event-loop-3" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+                <img src="images/l8.1/event-loop-2.png" alt="event-loop-2" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l8.1/event-loop-3.png" alt="event-loop-3" style="display: block; margin: 20px auto; max-width: 100%;"></li>
             <li><strong>Выполнение синхронного кода:</strong> Теперь поток свободен, и повар начинает резать огурцы и лук (выполняет синхронный код, который идет после вызова асинхронной функции).<br>
-                <img src="images/l10/event-loop-4.png" alt="event-loop-4" style="display: block; margin: 20px auto; max-width: 100%;">
-                <img src="images/l10/event-loop-5.png" alt="event-loop-5" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+                <img src="images/l8.1/event-loop-4.png" alt="event-loop-4" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l8.1/event-loop-5.png" alt="event-loop-5" style="display: block; margin: 20px auto; max-width: 100%;"></li>
             <li><strong>Событие:</strong> Через 10 минут звенит таймер для яиц. Это событие (<code class="code">Event</code>) попадает в <strong>Event Queue</strong>. (Будет 1й в очереди)</li>
             <li><strong>Событие:</strong> Через 15 минут звенит таймер для картошки. Это событие (<code class="code">Event</code>) попадает в <strong>Event Queue</strong>. (Будет 2й в очереди)<br>
-                <img src="images/l10/event-loop-6.png" alt="event-loop-6" style="display: block; margin: 20px auto; max-width: 100%;">
-                <img src="images/l10/event-loop-7.png" alt="event-loop-7" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+                <img src="images/l8.1/event-loop-6.png" alt="event-loop-6" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l8.1/event-loop-7.png" alt="event-loop-7" style="display: block; margin: 20px auto; max-width: 100%;"></li>
             <li><strong>Обработка события:</strong> Как только повар закончит нарезать текущий огурец (завершит текущую синхронную операцию), нужно проверить очередь микротасков и очередь событий. В очереди событий сейчас ждут два действия, но в это момент выполняется микротаска "Добавить соль", а очередь микротасков имеет больший приоритет, поэтому выполняется сначала действие от туда<br>
-                <img src="images/l10/event-loop-8.png" alt="event-loop-8" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+                <img src="images/l8.1/event-loop-8.png" alt="event-loop-8" style="display: block; margin: 20px auto; max-width: 100%;"></li>
             <li>Теперь Event Loop проверит очередь событий. Он увидит событие "яйца сварились", возьмет его из очереди и начнет выполнять соответствующий код, тоже самое для события "картошка сварилась."<br>
-                <img src="images/l10/event-loop-9.png" alt="event-loop-9" style="display: block; margin: 20px auto; max-width: 100%;">
-                <img src="images/l10/event-loop-10.png" alt="event-loop-10" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+                <img src="images/l8.1/event-loop-9.png" alt="event-loop-9" style="display: block; margin: 20px auto; max-width: 100%;">
+                <img src="images/l8.1/event-loop-10.png" alt="event-loop-10" style="display: block; margin: 20px auto; max-width: 100%;"></li>
             <li>Теперь когда оба асинхронных события выполнились, можно запустить синхронное событие "Дорезать и перемешать"<br>
             <p><i>В коде это место</i></p>
             <div class="code-block-header">
@@ -375,7 +375,7 @@ void eventLoop() {
   mixIngredients();  
 });
 </code></pre>
-            <img src="images/l10/event-loop-11.png" alt="event-loop-11" style="display: block; margin: 20px auto; max-width: 100%;">
+            <img src="images/l8.1/event-loop-11.png" alt="event-loop-11" style="display: block; margin: 20px auto; max-width: 100%;">
             </li>
         </ol>
         <p>Эта аналогия идеально ложится на модель Dart: один "повар" (поток) эффективно управляет множеством задач, делегируя долгие операции "плите" (ОС) и реагируя на "звонки таймеров" (<code class="code">Future</code>'ы, попадающие в Event Queue), в то время как в свободные промежутки выполняет быструю работу (синхронный код).</p>

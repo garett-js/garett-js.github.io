@@ -42,7 +42,7 @@
         <li><strong><code class="code">Клиент</code></strong> (flutter-приложение) отправляет запрос сервер (<code class="code">Request</code>) чтобы выполнить какие-то действия с данными.</li>
         <li><strong><code class="code">Сервер</code></strong> принимает запросы от клиента, выполняет бизнес логику, и отправляет назад клиенту ответ (<code class="code">Response</code>)</li>
       </ul>
-      <img src="images/l10.2/client-server.gif" alt="client-server" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/client-server.gif" alt="client-server" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
       <p><strong><code class="code">Удаленный сервер</code></strong> - мощный компьютер с данными, с подключением к интернету.</p>
       <p><strong><code class="code">Облако</code></strong> - красивое название для сети таких мощных серверов.</p>
     </section>
@@ -52,13 +52,13 @@
       <p>Большинство приложений постоянно взаимодействует с сетью с помощью протокола <code class="code">HTTP</code></p>
       <p><strong><code class="code">HTTP</code></strong>&nbsp;(<code class="code">HyperText Transfer Protocol</code>, протокол передачи гипертекста) - протокол обмена данными между клиентом и сервером. В современном применении этот протокол позволяет обмениваться ни только гипертекстом, а вообще любой информацией: тексты, изображения, аудио, видео.</p>
       <p>Клиент отправляет <em>HTTP-запрос</em> (<code class="code">HTTP Request</code>) серверу, он его обрабатывает и отправляет клиенту <em>HTTP-ответ</em> (<code class="code">HTTP Response</code>)</p>
-      <img src="images/l10.2/client-server-http.gif" alt="client-server-http" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/client-server-http.gif" alt="client-server-http" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
       <p><strong><code class="code">Живая аналогия</code></strong> :  представим что мы находимся в кафе (<code class="code">Client</code>), а кухня, где будет обрабатываться наш запрос это <code class="code">Server</code>.<br>В теории, нельзя по наглому взять и ворваться на кухню за едой. Обычно нужен официант, который примет заказ (<code class="code">Запрос</code> <code class="code">HTTP Request</code>), отправит его на кухню (<code class="code">Server</code>) и после принесет готовое блюдо (<code class="code">HTTP Response</code>)</p>
       <p>В контексте разработки, официант является <strong><code class="code">HTTP (HyperText Transfer Protocol)</code></strong><br><code class="code">Протокол</code> это набор правил, по которым устройства в сети общаются друг с другом.</p>
       <p><em>Пытаемся ворваться на кухню</em></p>
-      <img src="images/l10.2/client-server-http2.gif" alt="client-server-http2" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/client-server-http2.gif" alt="client-server-http2" style="display: block; margin: 20px auto; max-width: 100%;">
       <p><em>Используем культурный протокол</em></p>
-      <img src="images/l10.2/client-server-http3.gif" alt="client-server-http3" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/client-server-http3.gif" alt="client-server-http3" style="display: block; margin: 20px auto; max-width: 100%;">
     </section>
 
     <section id="section-4" class="lesson-section">
@@ -191,7 +191,7 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
       </blockquote>
       <p>Если перейти в любой браузер и ввести в строку поиска <code class="code">URL адрес</code> <code class="code">https://jsonplaceholder.typicode.com/posts/1</code> , то увидим данные в формате <code class="code">json</code> внутри браузера (плагин для chrome <code class="code">jsonify</code>)</p>
       <p><strong>Обычно такими данными в современной разработке обмениваются клиент и сервер.</strong></p>
-      <img src="images/l10.2/API.gif" alt="API" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/API.gif" alt="API" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
 
       <h3>Что такое <code class="code">URL</code> адрес</h3>
       <blockquote>
@@ -249,7 +249,7 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
       </ul>
 
       <h3>Схематичная работа <code class="code">Http Request</code> и <code class="code">Http Response</code></h3>
-      <img src="images/l10.2/request-response.gif" alt="request-response" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/request-response.gif" alt="request-response" style="display: block; margin: 20px auto; max-width: 100%;">
 
       <h3>Структура <code class="code">Http Request</code></h3>
       <p>Когда происходит <code class="code">GET-запрос</code> по адресу <code class="code">https://jsonplaceholder.typicode.com/posts/1</code> через приложение написанное на Dart <code class="code">структура HTTP-запроса</code> будет следующей:</p>
@@ -258,8 +258,8 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
         <li>Заголовки запроса (<code class="code">Request Headers</code>)</li>
         <li>Тело запроса (<code class="code">Request Body</code>)</li>
       </ol>
-      <img src="images/l10.2/image.png" alt="request-structure-1" style="display: block; margin: 20px auto; max-width: 100%;">
-      <img src="images/l10.2/image (1).png" alt="request-structure-2" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/image.png" alt="request-structure-1" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/image (1).png" alt="request-structure-2" style="display: block; margin: 20px auto; max-width: 100%;">
       <div class="code-block-header">
         <h5 class="code-block-title">HTTP</h5>
         <div class="code-block-controls">
@@ -307,7 +307,7 @@ Connection: keep-alive
         <li>Заголовки ответа (<code class="code">Response Headers</code>)</li>
         <li>Тело ответа (<code class="code">Response Body</code>)</li>
       </ol>
-      <img src="images/l10.2/image (2).png" alt="response-structure" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.2/image (2).png" alt="response-structure" style="display: block; margin: 20px auto; max-width: 100%;">
       <div class="code-block-header">
         <h5 class="code-block-title">HTTP</h5>
         <div class="code-block-controls">

@@ -25,7 +25,7 @@
       
       <p><strong>Разработка погодного приложения</strong></p>
       
-      <img src="images/l10.7/Pasted image 20250613110536.png" alt="Weather App" width="200" style="display: block; margin: 20px auto; max-width: 100%;">
+      <img src="images/l8.7/Pasted image 20250613110536.png" alt="Weather App" width="200" style="display: block; margin: 20px auto; max-width: 100%;">
       
       <p><strong>Используемый стек технологий:</strong></p>
       <ul>
@@ -47,7 +47,7 @@
             <li>На главной панели вы увидите ваш <strong>API Key</strong>. Скопируйте его. Он понадобится в коде.</li>
           </ol>
           
-          <img src="images/l10.7/chrome_DikhdKvjtO.png" alt="WeatherAPI Key" style="display: block; margin: 20px auto; max-width: 100%;">
+          <img src="images/l8.7/chrome_DikhdKvjtO.png" alt="WeatherAPI Key" style="display: block; margin: 20px auto; max-width: 100%;">
           
           <div class="note-block">
             <p><strong>ВАЖНО:</strong> Всегда храните API ключ в секрете.</p>
@@ -63,8 +63,8 @@
           <li><strong>Создайте новый проект Flutter</strong> через <code class="code">VSCode</code> или <code class="code">AndroidStudio</code></li>
         </ol>
         
-        <img src="images/l10.7/Code_VmxQ3D75fE.png" alt="Create Project 1" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
-        <img src="images/l10.7/Code_aJJ3woASyB.png" alt="Create Project 2" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Code_VmxQ3D75fE.png" alt="Create Project 1" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Code_aJJ3woASyB.png" alt="Create Project 2" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <ol start="2">
           <li><strong>Добавьте зависимости</strong> в файл <code class="code">pubspec.yaml</code>. Понадобятся <code class="code">dio</code> для сетевых запросов и <code class="code">provider</code> для управления состоянием.</li>
@@ -106,7 +106,7 @@ dev_dependencies:
         <p>Также добавим <strong>Service (Сервис)</strong> - это вспомогательный класс, который будет напрямую общаться с <code class="code">WeatherAPI</code>. ViewModel будет использовать этот сервис, чтобы не заниматься "лишней" работой по формированию HTTP-запросов.</p>
         
         <p><em>Структура папок и файлов</em></p>
-        <img src="images/l10.7/chrome_uZyvyANa0g.png" alt="Project Structure" width="300" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/chrome_uZyvyANa0g.png" alt="Project Structure" width="300" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <section id="section-4" class="lesson-section">
@@ -157,7 +157,7 @@ dev_dependencies:
   }  
 }</code></pre>
         
-        <img src="images/l10.7/chrome_lAEuRLNTfA.png" alt="WeatherAPI Response" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/chrome_lAEuRLNTfA.png" alt="WeatherAPI Response" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <p>Для формирования запроса будем использовать конкретные координаты (например, город Бийск: широта <code class="code">52.53</code>, долгота <code class="code">85.20</code>)</p>
         
@@ -346,10 +346,10 @@ class WeatherViewModel with ChangeNotifier {
 
       <section id="section-7" class="lesson-section">
         <h2><strong>Шаг 5.1: Инфографика. Объяснение работы кода</strong></h2>
-        <img src="images/l10.7/Pasted image 20250614093344.png" alt="Infographic 1" style="display: block; margin: 20px auto; max-width: 100%;">
-        <img src="images/l10.7/Pasted image 20250614093353.png" alt="Infographic 2" style="display: block; margin: 20px auto; max-width: 100%;">
-        <img src="images/l10.7/Pasted image 20250614093407.png" alt="Infographic 3" style="display: block; margin: 20px auto; max-width: 100%;">
-        <img src="images/l10.7/Pasted image 20250614093416.png" alt="Infographic 4" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Pasted image 20250614093344.png" alt="Infographic 1" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Pasted image 20250614093353.png" alt="Infographic 2" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Pasted image 20250614093407.png" alt="Infographic 3" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Pasted image 20250614093416.png" alt="Infographic 4" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <section id="section-8" class="lesson-section">
@@ -523,7 +523,7 @@ class MyApp extends StatelessWidget {
           <li>При успешном получении данных отображается погода</li>
         </ul>
         
-        <img src="images/l10.7/weather_b.gif" alt="Weather App Working" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/weather_b.gif" alt="Weather App Working" style="display: block; margin: 20px auto; max-width: 100%;">
         
         <ul>
           <li>Допустим отключили интернет</li>
@@ -532,7 +532,7 @@ class MyApp extends StatelessWidget {
           <li>Отображается ошибка</li>
         </ul>
         
-        <img src="images/l10.7/Weather_Error 2.gif" alt="Weather App Error" style="display: block; margin: 20px auto; max-width: 100%;">
+        <img src="images/l8.7/Weather_Error 2.gif" alt="Weather App Error" style="display: block; margin: 20px auto; max-width: 100%;">
       </section>
 
       <button id="scrollToTop" title="Наверх"></button>
