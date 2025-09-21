@@ -1,0 +1,445 @@
+<h1><img alt="" height="150" name="UI.png" src="https://ucarecdn.com/986b4e74-01c0-4ab9-a06d-6bfedd65575c/" width="150" />&nbsp;Flutter. Установка и настройка окружения</h1>
+
+<p><code>➡️&nbsp;<a href="https://stepik.org/media/attachments/lesson/1814437/1_Flutter._%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_Flutter.pptx" rel="noopener noreferrer nofollow"><span style="color:#065a9d">Скачать презентацию. Flutter установка и настройка</span></a></code></p>
+
+<h2>Что такое Flutter?</h2>
+
+<p>Это мощный&nbsp;<code><span style="color:#065a9d">UI фреймворк</span></code>&nbsp;от компании&nbsp;<code><span style="color:#065a9d">Google</span></code>, который позволяет создавать&nbsp;<code><span style="color:#065a9d">кроссплатформенные</span></code>&nbsp;и&nbsp;<code><span style="color:#065a9d">мультиплатформенные</span></code>&nbsp;приложения, используя одну и ту же кодовую базу.</p>
+
+<p><img alt="" height="96" name="image.png" src="https://ucarecdn.com/6ee58882-8470-4929-9924-8b5a50427eb4/" width="330" /></p>
+
+<p>Это означает, что можно создавать приложения, которые работают на платформах:</p>
+
+<ul>
+	<li><code><span style="color:#065a9d">Android</span></code>,&nbsp;<code><span style="color:#065a9d">iOS</span></code>,&nbsp;<code><span style="color:#065a9d">Аврора ОС</span></code></li>
+	<li><code><span style="color:#065a9d">Windows</span></code>,&nbsp;<code><span style="color:#065a9d">macOS</span></code>,&nbsp;<code><span style="color:#065a9d">Linux</span></code></li>
+	<li><code><span style="color:#065a9d">Web</span></code></li>
+</ul>
+
+<p>При сильном желании можно запустить на&nbsp;<code><span style="color:#065a9d">cмарт-часы</span></code>,&nbsp;<code><span style="color:#065a9d">навигаторы</span></code>&nbsp;и&nbsp;<code><span style="color:#065a9d">smart TV</span></code></p>
+
+<p style="text-align:center"><img alt="" height="397" name="Снимок экрана 2025-06-29 в 22.40.37 1.png" src="https://ucarecdn.com/17e89bdb-22cf-4f84-be66-5739b997a3c8/" width="700" /></p>
+
+<h3>Software Development Toolkit&nbsp;<code><span style="color:#065a9d">SDK</span></code></h3>
+
+<p>Это&nbsp;<code><span style="color:#065a9d">готовый набор инструментов</span></code>&nbsp;для разработки программного обеспечения</p>
+
+<h3>Нативная разработка</h3>
+
+<p>Без такого кроссплатформенного решения, для&nbsp;<code><span style="color:#065a9d">каждой отдельной платформы</span></code>&nbsp;приходится писать приложения на своих&nbsp;<code><span style="color:#065a9d">родных</span></code>&nbsp;(<code><span style="color:#065a9d">нативных</span></code>) технологиях.</p>
+
+<h4>&nbsp;</h4>
+
+<h2>Как работает Flutter?</h2>
+
+<p>Особенность Flutter заключается в том, что приложения для разных платформ могут использовать один и тот же код. Конечно, некоторые части кода необходимо адаптировать под конкретную операционную систему, например, iOS, но большая часть кода остается неизменной.</p>
+
+<p>Это позволяет разработчикам значительно экономить время и ресурсы при создании приложений. Благодаря сверхбыстрому рендерингу, Flutter-приложения работают так же быстро, как нативные приложения (обещают до&nbsp;<code><span style="color:#065a9d">120fps</span></code>)</p>
+
+<p>Функции Flutter не зависят от нативных функций, так как при разработке используются собственные элементы UI называемые&nbsp;<code><span style="color:#065a9d">виджетами</span></code>. Flutter умеет работать с нативным кодом, если есть в этом необходимость.</p>
+
+<h3>Функция&nbsp;<code>hot reload</code></h3>
+
+<p>Киллер фича для разработчиков&nbsp;<code><span style="color:#065a9d">hot reload</span></code>&nbsp;- запущенное приложение автоматически обновляется с изменениями кода и его сохранении! Без постоянной пересборки (<code><span style="color:#065a9d">build</span></code>) приложения и бесконечного ожидания!</p>
+
+<h3>Декларативный стиль разработки</h3>
+
+<p>Разработка на&nbsp;<code><span style="color:#065a9d">Flutter</span></code>&nbsp;представляет собой&nbsp;<code><span style="color:#065a9d">декларативный стиль</span></code>&nbsp;- это очень похоже на веб-разработку, например&nbsp;<code><span style="color:#065a9d">HTML</span></code>&nbsp;<code><span style="color:#065a9d">CSS</span></code>&nbsp;<code><span style="color:#065a9d">XML</span></code></p>
+
+<p>Другие декларативные фреймворки&nbsp;<code><span style="color:#065a9d">React</span></code>&nbsp;,&nbsp;<code><span style="color:#065a9d">Jetpack Compose</span></code>&nbsp;,&nbsp;<code><span style="color:#065a9d">SwiftUI</span></code></p>
+
+<h3>Язык программирования Dart</h3>
+
+<ul>
+	<li>Для разработки под&nbsp;<code><span style="color:#065a9d">Flutter</span></code>&nbsp;мощный и современный язык программирования&nbsp;<code><span style="color:#065a9d">Dart</span></code>.</li>
+	<li>Он легок в освоении и позволяет создавать эффективные приложения.</li>
+	<li>Dart использует виртуальную машину (<code><span style="color:#065a9d">VM</span></code>)</li>
+	<li>Благодаря этому мы используем крутую фичу -&nbsp;<code><span style="color:#065a9d">горячую перезагрузку</span></code>.</li>
+</ul>
+
+<p><img alt="" height="105" name="image.png" src="https://ucarecdn.com/6a455e61-9e23-44a7-b5e6-9ee9c1d06745/" width="330" /></p>
+
+<h3>&nbsp;</h3>
+
+<h3>Виртуальная машина (VM)</h3>
+
+<p>Это программное обеспечение, которое создает виртуальную среду для запуска программ, как если бы они работали на реальном устройстве.</p>
+
+<p>Она используется для выполнения кода независимо от операционной системы.</p>
+
+<h3>Инструменты для разработки</h3>
+
+<p>Для написания кода можно использовать любой текстовый редактор, который вам нравится. Затем с помощью утилит командной строки из <code><span style="color:#065a9d">Flutter SDK</span></code> вы можете компилировать приложение. Однако для таких сред, как&nbsp;<code><span style="color:#065a9d">Android Studio</span></code>,&nbsp;<code><span style="color:#065a9d">IntelliJ IDEA</span></code>&nbsp;и&nbsp;<code><span style="color:#065a9d">Visual Studio Code</span></code>, Google предлагает специальные плагины, которые значительно упрощают процесс разработки.</p>
+
+<h3>Visual Studio Code</h3>
+
+<p>Мы в этом курсе будем пользоваться&nbsp;<code><span style="color:#065a9d">Visual Studio Code</span></code><br />
+Скачать по&nbsp;<a href="https://code.visualstudio.com/Download" rel="noopener noreferrer nofollow" target="_blank">ссылке</a></p>
+
+<p>&nbsp;</p>
+
+<h3>Примеры приложений</h3>
+
+<p style="text-align:center"><img alt="" height="397" name="Снимок экрана 2025-06-29 в 22.44.13 1.png" src="https://ucarecdn.com/809a45d4-96a7-409b-97ae-9b499e45d0f1/" width="700" /></p>
+
+<ol>
+	<li><em>DNS</em></li>
+	<li><em>Яндекс Go</em></li>
+	<li><em>Магнит</em></li>
+	<li><em>Все сервисы Google</em></li>
+</ol>
+
+<h3>Историческая справка</h3>
+
+<p>Изначально&nbsp;<code><span style="color:#065a9d">Flutter</span></code>&nbsp;был создан с целью повышения производительности веб-приложений.</p>
+
+<p>Для разработки на Flutter разработчики выбрали язык Dart, также разработанный компанией Google, благодаря его высокой производительности и скорости, а также наличию виртуальной машины. Dart имеет строгую типизацию, поддерживает объектно-ориентированное, реактивное и асинхронное программирование, что даёт ему значительные преимущества перед JavaScript.</p>
+
+<p>Важную роль играет графический движок&nbsp;<code>Skia</code>, ещё один открытый проект от Google.<br />
+Skia работает напрямую с GPU через Vulkan на Android и Metal на iOS, что обеспечивает быструю и стабильную графику на мобильных устройствах. Этот API позволяет виджетам Flutter быстро и стабильно отображаться на любой платформе.</p>
+
+<p>В настоящее время Flutter переходит на новый движок &mdash; Impeller, который обеспечивает ещё более высокую производительность и стабильность. Начиная с версии Flutter 3.10, Impeller используется по умолчанию для всех iOS-приложений.</p>
+<h1><img alt="" height="150" name="UI.png" src="https://ucarecdn.com/986b4e74-01c0-4ab9-a06d-6bfedd65575c/" width="150">&nbsp;Flutter. Установка и настройка окружения</h1>
+
+<p><code>➡️&nbsp;<a href="https://stepik.org/media/attachments/lesson/1814437/1_Flutter._%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_Flutter.pptx" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">Скачать презентацию. Flutter установка и настройка</span></a></code></p>
+
+<h2>Установка Flutter SDK на Windows</h2>
+
+<p>Чтобы начать разработку с использованием Flutter, необходимо установить SDK. Вот как это сделать на Windows:</p>
+
+<p><strong>1. Установка Git for Windows</strong>:</p>
+
+<ul>
+	<li>Перейдите на сайт&nbsp;<code><a href="https://git-scm.com/download/win" target="_blank" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">https://git-scm.com/download/win</span></a></code>&nbsp;и скачайте <code><span style="color:#065a9d;">Git for Windows</span></code>.</li>
+	<li>Установите <code><span style="color:#065a9d;">Git</span></code>, следуя инструкциям на экране.</li>
+</ul>
+
+<p><strong>2. Установка Android SDK</strong>:</p>
+
+<ul>
+	<li>Самый&nbsp;простой способ&nbsp;установить <code><span style="color:#065a9d;">Android SDK</span></code> — это&nbsp;установить <code><span style="color:#065a9d;">Android Studio</span></code>, которая включает все необходимые инструменты.</li>
+	<li><code><a href="https://developer.android.com/studio?hl=ru" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">https://developer.android.com/studio?hl=ru</span></a></code></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p style="text-align:center;"><img alt="" height="396" name="image.png" src="https://ucarecdn.com/ac8c3703-953b-4b3e-a45d-ee22a128d2be/" width="700"></p>
+
+<p><strong>3. Загрузка Flutter SDK</strong>:</p>
+
+<ul>
+	<li>Перейдите на страницу&nbsp;<code><a href="https://flutter.dev/docs/get-started/install/windows" target="_blank" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">https://flutter.dev/docs/get-started/install/windows</span></a></code></li>
+	<li>Найдите ссылку на zip-архив с Flutter SDK в секции&nbsp;<code><span style="color:#065a9d;">Install the Flutter SDK</span></code></li>
+	<li>Скачайте и распакуйте архив в папку&nbsp;<code><span style="color:#065a9d;">C:\flutter</span></code>
+	<p style="text-align:center;"><img alt="" height="363" name="image.png" src="https://ucarecdn.com/4da69351-cfb9-4100-8df8-183e11ebb9cc/" width="600"></p>
+	</li>
+</ul>
+
+<ol>
+	<li>
+	<p><strong>Добавление Flutter в переменные среды</strong>:</p>
+
+	<p style="text-align:center;"><img alt="" height="500" name="image.png" src="https://ucarecdn.com/c38a2588-fafb-4c72-b8ef-41047769ce3e/" width="305"></p>
+
+	<p style="text-align:center;"><img alt="" height="467" name="image.png" src="https://ucarecdn.com/3c907c7f-b708-4295-91b2-f16f71527ff6/" width="400"></p>
+
+	<p style="text-align:center;"><img alt="" height="455" name="image.png" src="https://ucarecdn.com/7346e880-fca9-4bea-9055-cb4ef7ab9940/" width="400"></p>
+
+	<p>Пишем путь до директории где находится <code><span style="color:#065a9d;">Flutter</span></code> в данном случае <code><span style="color:#065a9d;">c:\flutter\bin</span></code>&nbsp;</p>
+
+	<p style="text-align:center;"><img alt="" height="381" name="image.png" src="https://ucarecdn.com/6ba5d07e-93d5-4eab-bcf7-1bb5ab14a45c/" width="400"></p>
+
+	<ul>
+		<li>Откройте “<code><span style="color:#065a9d;">Изменение переменных среды текущего пользователя</span></code>” через поиск.</li>
+		<li>В окне переменных среды найдите переменную&nbsp;<code><span style="color:#065a9d;">Path</span></code>&nbsp;и нажмите “<code><span style="color:#065a9d;">Изменить</span></code>”.</li>
+		<li>Нажмите “<code><span style="color:#065a9d;">Создать</span></code>” и введите путь к папке&nbsp;<code><span style="color:#065a9d;">bin</span></code>&nbsp;в Flutter SDK, например,&nbsp;<code><span style="color:#065a9d;">C:\flutter\bin</span></code></li>
+	</ul>
+	</li>
+	<li>
+	<p><strong>Проверка установки</strong>:</p>
+
+	<ul>
+		<li>Откройте командную строку и введите команду&nbsp;<code><span style="color:#065a9d;">flutter</span></code>.</li>
+	</ul>
+	</li>
+</ol>
+
+<p>Если Windows распознает команду и выводит справочную информацию, Flutter установлен и настроен правильно.</p>
+
+<p style="text-align:center;"><img alt="" height="284" name="image.png" src="https://ucarecdn.com/8efd3677-5c77-4bfa-8e55-07d13daba324/" width="500"></p>
+
+<h3>Обновление Flutter SDK</h3>
+
+<p><code><span style="color:#065a9d;">flutter upgrade</span></code>&nbsp;- команда в консоли для обновления Flutter. Поскольку он активно развивается, то лучше обновляться регулярно.</p>
+
+<p style="text-align:center;"><img alt="" height="314" name="image.png" src="https://ucarecdn.com/742fe6b9-8b63-484f-b96b-86ae815f78e0/" width="500"></p>
+
+<p><code><span style="color:#065a9d;">flutter doctor</span></code>&nbsp;- проверить окружение на правильную настройку</p>
+
+<p style="text-align:center;"><img alt="" height="240" name="image.png" src="https://ucarecdn.com/6fda9689-e26f-42f5-bb83-a1c830c8b642/" width="500"></p>
+
+<h2>Настройка VS Code</h2>
+
+<p>Открываем пустой проект в&nbsp;<code><span style="color:#065a9d;"><strong>VS Code</strong></span></code>. Сначала нужно установить все&nbsp;<code><span style="color:#065a9d;"><strong>расширения</strong></span></code>&nbsp;для работы, если они ещё не установлены</p>
+
+<p><img alt="" height="312" name="image.png" src="https://ucarecdn.com/c2e909c2-3e8a-4ce0-8b07-7cc3574d0aff/" style="float:left;" width="222"></p>
+
+<p><em>Flutter<br>
+Dart<br>
+Flutter Widget Snippets<br>
+Awesome Flutter Snippets<br>
+Pubspec Assist<br>
+Error Lens</em></p>
+
+<blockquote>
+<p>Редактор кода&nbsp;<code>VS Code</code>&nbsp;мы уже установили и работали в нём в курсе по изучению&nbsp;<code>Dart</code>.<br>
+Если&nbsp;&nbsp;<code>VS Code</code>&nbsp;не установлен или вы не проходили курс по&nbsp;<code>Dart</code>, то вернитесь и<br>
+пройдите гайд по установке и настройке&nbsp;<code>VS Code</code></p>
+</blockquote><h1><img alt="" height="150" name="UI.png" src="https://ucarecdn.com/986b4e74-01c0-4ab9-a06d-6bfedd65575c/" width="150">&nbsp;Flutter. Установка и настройка окружения</h1>
+
+<p><code>➡️&nbsp;<a href="https://stepik.org/media/attachments/lesson/1814437/1_Flutter._%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_Flutter.pptx" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">Скачать презентацию. Flutter установка и настройка</span></a></code></p>
+
+<h2>Создание и запуск нового Flutter проекта</h2>
+
+<p><strong>Создать Flutter проект можно несколькими способами, разберем их все.<br>
+Вы в итоге пользуйтесь тем который больше понравится.</strong></p>
+
+<h3>Создание проекта через&nbsp;<code><span style="color:#065a9d;">Терминал</span></code></h3>
+
+<ul>
+	<li>Сначала нужно создать папку на компьютере, где вы будете хранить все Flutter проекты. Например в корне диска&nbsp;<code>С:</code>&nbsp;или на рабочем столе. Называем папку&nbsp;<code>Dev</code></li>
+	<li>Открываем любой терминал, которым вы пользуетесь: стандартный windows, Git console, терминал через VS Code, iTerm и т.д.</li>
+	<li>Переходим в терминале с помощью команды&nbsp;<code>cd</code>&nbsp;в созданную вами папку&nbsp;<code>Dev</code></li>
+</ul>
+
+<p><img alt="" height="151" name="image.png" src="https://ucarecdn.com/2470d073-6e79-41af-a87f-2ae0b22bfaba/" width="300"></p>
+
+<ul>
+	<li>Пишем в терминале такую команду для создания нового&nbsp;<code>Flutter проекта</code></li>
+</ul>
+
+<pre><code>flutter create flutter_course
+</code></pre>
+
+<p><img alt="" height="153" name="image.png" src="https://ucarecdn.com/7bf4e148-9590-4c59-928b-9756abbf87c2/" width="500"></p>
+
+<ul>
+	<li>Немного ждём пока создается проект, после переходит в папку созданного проекта и открываем проект внутри&nbsp;<code>VS Code</code>&nbsp;с помощью этих команд</li>
+</ul>
+
+<pre><code>cd flutter_course
+code .
+</code></pre>
+
+<p><img alt="" height="143" name="image.png" src="https://ucarecdn.com/b161e649-a814-406a-b3c5-4bbefb7eeb18/" width="500"></p>
+
+<ul>
+	<li>В итоге откроется&nbsp;<code>VS Code</code>&nbsp;с только что созданным новым&nbsp;<code>Flutter</code>&nbsp;проектом</li>
+</ul>
+
+<p style="text-align:center;"><img alt="" height="542" name="image.png" src="https://ucarecdn.com/9683c25f-9773-44b6-9eba-e01083e2891b/" width="700"></p>
+
+<h3>Создание проекта через&nbsp;<code><span style="color:#065a9d;">VS Code</span></code></h3>
+
+<ul>
+	<li>Открываем пустой&nbsp;<code>VS Code</code></li>
+	<li>Находим в верхнем меню команду&nbsp;<code>View</code>&nbsp;--&gt;&nbsp;<code>Command Pallete…</code></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p style="text-align:center;"><img alt="" height="460" name="image.png" src="https://ucarecdn.com/1f60ffd9-7997-4d34-8885-eb911b779fdb/" width="700"></p>
+
+<ul>
+	<li>Пишем слово&nbsp;<code>flutter</code>&nbsp;и выбираем пункт&nbsp;<code>Flutter: New Project</code></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p style="text-align:center;"><img alt="" height="460" name="image.png" src="https://ucarecdn.com/c74df571-23d5-441b-8f45-cfe326607e90/" width="700"></p>
+
+<ul>
+	<li>Выбираем&nbsp;<code>тип приложения</code>, в данном случае нажимаем на&nbsp;<code>Application</code></li>
+</ul>
+
+<p><code>​​​​​​</code></p>
+
+<p style="text-align:center;"><img alt="" height="402" name="image.png" src="https://ucarecdn.com/4e5b7e55-829e-4119-b693-17ad36e565af/" width="700"></p>
+
+<ul>
+	<li>Указываем папку, где будет хранится проект</li>
+	<li>Нажимаем на кнопку&nbsp;<code>Select a folder to create the project in</code></li>
+	<li>Далее указываем название нашего приложения, например&nbsp;<code>flutter_course</code></li>
+	<li>В итоге будет создан новый Flutter проект</li>
+</ul>
+
+<h3>Первый запуск Flutter проекта</h3>
+
+<p>Можно заметить, что был сгенерирован целый демонстрационный проект. Прежде чем разбираться со структурой проекта, который видно с левой стороны, где куча папок и файлов, давайте проверим запускается ли наш проект.</p>
+
+<p>Для этого сначала нужного выбрать целевую платформу, на которой будем запускать приложение.</p>
+
+<p><strong>Выбор целевой платформы</strong></p>
+
+<p>В самой нижней панели редактора нужно найти строчку, где написано название устройства или платформы, например, как на изображении.</p>
+
+<p><img alt="" height="79" name="image.png" src="https://ucarecdn.com/7e31dc9e-73dc-4cf6-aa43-0dcfed312795/" width="353"><br>
+<br>
+Нужно нажать на это название и сверху редактора появится список с возможными платформами.</p>
+
+<p><img alt="" height="270" name="image.png" src="https://ucarecdn.com/85c9b580-9a2a-41e5-a271-acb5444bfa1d/" width="593"></p>
+
+<p>Сейчас нам достаточно&nbsp;<code>Chrome (web)</code>&nbsp;или&nbsp;<code>Android эмулятора</code><br>
+Выбираем&nbsp;<code>Android</code>&nbsp;- эмулятор (&nbsp;<em>Pixel</em>&nbsp;)</p>
+
+<p>Далее, слева в списке файлов, находим папку&nbsp;<code>lib</code>, раскрываем её, кликаем на файле&nbsp;<code>main.dart</code>&nbsp;чтобы открыть исходный код проекта</p>
+
+<p><img alt="" height="295" name="image.png" src="https://ucarecdn.com/891ec959-52e9-4e4d-b8d2-06a81b3b9d13/" width="323"></p>
+
+<h3>Запуск приложения</h3>
+
+<p>Чтобы запустить приложение, нужно</p>
+
+<ul>
+	<li>либо нажать клавишу&nbsp;<code><span style="color:#065a9d;">F5</span></code>&nbsp;на клавиатуре</li>
+	<li>либо на верхней панели меню пункт&nbsp;<code><span style="color:#065a9d;">run</span></code>, там запуск в дебаг режиме и запуск без дебаг режима</li>
+	<li>либо найти в коде функцию&nbsp;<code><span style="color:#065a9d;">main()</span></code>, над ней три кнопки&nbsp;<code><span style="color:#065a9d;">Run</span></code>&nbsp;|&nbsp;<code><span style="color:#065a9d;">Debug</span></code>&nbsp;|&nbsp;<code><span style="color:#065a9d;">Profile</span></code>&nbsp;Нажимаем&nbsp;<code><span style="color:#065a9d;">Run</span></code></li>
+	<li>либо нажать на кнопку треугольник сверху-справа</li>
+	<li>либо открыть терминал и набрать команду&nbsp;<code><span style="color:#065a9d;">flutter run</span></code></li>
+</ul>
+
+<p><img alt="" height="173" name="image.png" src="https://ucarecdn.com/df00fdda-468f-43fd-a401-97dbcf378e57/" width="309"><code>​​​​​​​</code></p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+<p>Если запускаем приложение на устройстве&nbsp;<code>Android</code>&nbsp;в&nbsp;<code>самый первый</code>&nbsp;раз, то придётся некоторое время подождать пока соберется и настроится&nbsp;<code>Gradle</code>&nbsp;проект!<br>
+Последующие запуски будут проходить намного быстрее.</p>
+</blockquote>
+
+<blockquote>
+<p>Ради интереса можно запустить тот же проект в chrome, сборка будет намного быстрее, и проект откроется в браузере как web-приложение.</p>
+</blockquote>
+
+<p>Демонстрационный проект представляет из себя простой кликер. Жмём на кнопку и счётчик увеличивается на 1</p>
+
+<p><img alt="" height="553" name="image.png" src="https://ucarecdn.com/f707e01a-1e1e-4686-a466-d28fc103baa9/" width="277"></p>
+
+<p>&nbsp;</p>
+
+<p>Испробуем сразу возможности&nbsp;<code><span style="color:#065a9d;">Hot Reload</span></code><br>
+Найдите в коде строку текста</p>
+
+<pre><code>Text(
+  "You have pushed the button this many times:",
+),
+</code></pre>
+
+<p>Замените его на любой другой текст и нажмите&nbsp;<code><span style="color:#065a9d;">ctrl + s</span></code>&nbsp;для сохранения файла, изменения мгновенно отобразятся в запущенном приложении! Фантастика!</p>
+
+<p>&nbsp;</p>
+
+<h3>Панель управления</h3>
+
+<p>Обратите внимание! Когда мы запускаем на выполнение приложение, внутри <code><span style="color:#065a9d;">VSCode</span></code> появляется такая дебаг панель, с помощью которой удобно осуществлять управление:</p>
+
+<p><img alt="" height="71" name="image.png" src="https://ucarecdn.com/c57e25d8-e658-405e-a975-3172becb8122/" width="379"></p>
+
+<ul>
+	<li>Иконка молнии это&nbsp;<code><span style="color:#065a9d;">HOT RELOAD</span></code></li>
+	<li>Иконка зеленой стрелки это&nbsp;<code><span style="color:#065a9d;">HOT RESTART</span></code></li>
+	<li>Иконка красного квадрата это&nbsp;<code><span style="color:#065a9d;">остановка работы</span></code>&nbsp;приложения</li>
+	<li>Иконка синей лупы это&nbsp;<code><span style="color:#065a9d;">инспектор виджетов</span></code></li>
+	<li>Первые четыре иконки которые сейчас серые, нужны для&nbsp;<code><span style="color:#065a9d;">дебага приложения</span></code></li>
+</ul><h1><img alt="" height="150" name="UI.png" src="https://ucarecdn.com/986b4e74-01c0-4ab9-a06d-6bfedd65575c/" width="150" />&nbsp;Flutter. Установка и настройка окружения</h1>
+
+<p><code>➡️&nbsp;<a href="https://stepik.org/media/attachments/lesson/1814437/1_Flutter._%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_Flutter.pptx" rel="noopener noreferrer nofollow"><span style="color:#065a9d">Скачать презентацию. Flutter установка и настройка</span></a></code></p>
+
+<h2>Документация</h2>
+
+<p>Flutter и Dart обладает супер подробной и удобной официальной документацией!<br />
+Поэтому пользуемся!</p>
+
+<p><code><a href="https://docs.flutter.dev/" rel="noopener noreferrer nofollow" target="_blank"><span style="color:#065a9d">https://docs.flutter.dev/</span></a></code><br />
+<code><a href="https://dart.dev/language" rel="noopener noreferrer nofollow" target="_blank"><span style="color:#065a9d">https://dart.dev/language</span></a></code></p>
+<h1><img alt="" height="150" name="UI.png" src="https://ucarecdn.com/986b4e74-01c0-4ab9-a06d-6bfedd65575c/" width="150">&nbsp;Flutter. Установка и настройка окружения</h1>
+
+<p><code>➡️&nbsp;<a href="https://stepik.org/media/attachments/lesson/1814437/1_Flutter._%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_Flutter.pptx" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">Скачать презентацию. Flutter установка и настройка</span></a></code></p>
+
+<h2><strong>Структура Flutter проекта</strong></h2>
+
+<p>Когда мы создали новый Flutter проект, то слева появились просто куча непонятных файлов и папок. Главное сейчас не испугаться этого :) Там всё на самом деле просто. Сейчас сделаем обзор на структуру проекта</p>
+
+<p><img alt="" height="499" name="image.png" src="https://ucarecdn.com/6d85c90d-8c22-40b5-9504-c7eae9f37803/" width="285"></p>
+
+<p>Обзор структуры Flutter проекта</p>
+
+<ul>
+	<li><code>android</code>,&nbsp;<code>ios</code>,&nbsp;<code>linux</code>,&nbsp;<code>macos</code>,&nbsp;<code>web</code>,&nbsp;<code>windows</code>&nbsp;– директории со стартовыми настройками и кодом для запуска приложения на одной из этих платформ.</li>
+	<li><code>build</code>&nbsp;– соответственно билды (готовые приложения для запуска) и кэш проектов</li>
+	<li><code>test</code>&nbsp;– тесты для проекта</li>
+	<li><code>lib</code>&nbsp;– наша основная рабочая директория, в ней находятся исходники с кодом на языке dart, которые мы будем писать.</li>
+	<li>Файл&nbsp;<code>pubspec.yaml</code>&nbsp;– конфигурационный файл проекта, содержит различные настройки проекта.</li>
+</ul>
+
+<p>Откроем файл&nbsp;<code><span style="color:#065a9d;">pubspec.yaml</span></code>&nbsp;здесь находится мета информация о нашем проекте и самое главное зависимости (<code>dependencies</code>), которые мы можем устанавливать в наш проект, т.е. это код от других разработчиков.</p>
+
+<pre><code>name: flutter_kvant_app
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+# Версия языка программирования Dart
+environment:
+  sdk: 3.6.1
+
+# Зависимости - дополнительные сторонние библиотеки
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+# Зависимости только на время разработки
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 5.0.0
+
+# Настройка flutter пакетов (доступ к material иконкам, изображениям, шрифтам)
+flutter:
+  uses-material-design: true
+</code></pre>
+
+<p><strong>Важно запомнить!</strong></p>
+
+<p>Обязательное условие, для правильной работы конфигурационного файла, делать отступы в&nbsp;<code><span style="color:#065a9d;">2 пробела</span></code>&nbsp;для вложенных элементов</p>
+
+<p style="text-align:center;"><img alt="" height="396" name="Снимок экрана 2025-06-29 в 22.53.38 1.png" src="https://ucarecdn.com/0bbec618-9d0d-40f9-acbf-68269036ed6c/" width="700"></p><h1><img alt="" height="150" name="UI.png" src="https://ucarecdn.com/986b4e74-01c0-4ab9-a06d-6bfedd65575c/" width="150">&nbsp;Flutter. Установка и настройка окружения</h1>
+
+<p><code>➡️&nbsp;<a href="https://stepik.org/media/attachments/lesson/1814437/1_Flutter._%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_Flutter.pptx" rel="noopener noreferrer nofollow"><span style="color:#065a9d;">Скачать презентацию. Flutter установка и настройка</span></a></code></p>
+
+<h2><strong>Будем работать с Git + GitFlic (GitHub)</strong></h2>
+
+<p style="text-align:center;"><img alt="" height="394" name="GIT.gif" src="https://ucarecdn.com/132e5de6-a268-42a1-99e7-7e408cda27b8/" width="700"></p>
+
+<p>1. Откройте терминал в корне проекта и введите следущие команды</p>
+
+<pre><code>git config --global user.name "ТВОЙ USERNAME"
+git config --global user.email "ТВОЙ EMAIL"</code></pre>
+
+<p>Вместо <code><span style="color:#065a9d;">ТВОЙ USERNAME</span></code> пишем свой реальный user.name<br>
+Вместо&nbsp;<code><span style="color:#065a9d;">ТВОЙ EMAIL</span></code>&nbsp;пишем свой реальную почту</p>
+
+<pre><code>git init
+git add .
+git commit -m "Initial commit"</code></pre>
+
+<p>2. Создаём новый репозиторий на <code><span style="color:#065a9d;">GitFlic</span></code> или <code><span style="color:#065a9d;">GitHub</span></code></p>
+
+<p>Подлючаем его в свой проект и делаем пуш</p>
+
+<pre><code>git remote add origin https://gitflic.ru/project/ТВОЙ_АККАУНТ/course_2025.git
+git push -u origin master</code></pre>
+
+<p>Эту ссылку <code>origin <a href="https://gitflic.ru/project/ТВОЙ_АККАУНТ/course_2025.git" rel="noopener noreferrer nofollow">https://gitflic.ru/project/ТВОЙ_АККАУНТ/course_2025.git</a></code>&nbsp;вы должны получить сами на сайте&nbsp;<code><span style="color:#065a9d;">GitFlic</span></code> или <code><span style="color:#065a9d;">GitHub</span></code></p>
