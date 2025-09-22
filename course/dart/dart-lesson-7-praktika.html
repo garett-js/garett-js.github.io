@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 7: Циклы</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-6.html" class="back-link">←</a> Практика: Урок 7</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 7: Циклы</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Flutter шикарен</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Напишите программу, которая выводит в консоль строку <code class="code">Flutter шикарен</code> 100500 раз.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Flutter шикарен
+Flutter шикарен
+Flutter шикарен
+...
+(100500 раз)</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте цикл <code class="code">for</code> с диапазоном от 1 до 100500.</p>
+            </div>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Степени чисел</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Есть переменная <code class="code">value = 10</code> и переменная <code class="code">exp = 3</code>. Для каждого из чисел от <code class="code">0 до value</code> нужно вывести в консоль текст в формате:</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Число 0 в степени 3 равно 0
+Число 1 в степени 3 равно 1
+Число 2 в степени 3 равно 8
+Число 3 в степени 3 равно 27
+Число 4 в степени 3 равно 64
+Число 5 в степени 3 равно 125
+Число 6 в степени 3 равно 216
+Число 7 в степени 3 равно 343
+Число 8 в степени 3 равно 512
+Число 9 в степени 3 равно 729
+Число 10 в степени 3 равно 1000</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте цикл <code class="code">for</code> и функцию <code class="code">pow()</code> для возведения в степень.</p>
+            </div>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Нечетные и четные числа</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>1. Нужно вывести в консоль только <strong>нечетные числа</strong> из диапазона <code class="code">от 1 до 5000</code></p>
+            <p>2. Нужно вывести в консоль <strong>сумму всех четных чисел</strong> из диапазона <code class="code">от 1 до 5000</code></p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Нечетные числа:
+1
+3
+5
+7
+9
+...
+4999
+
+Сумма всех четных чисел от 1 до 5000: 6252500</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте оператор остатка от деления <code class="code">%</code> для проверки четности. Для суммы четных чисел используйте переменную-накопитель.</p>
+            </div>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Звёздный треугольник</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Есть переменная <code class="code">n</code> – катет прямоугольного равнобедренного треугольника. Напишите программу, которая выводит <strong>звёздный треугольник</strong>.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите размер треугольника: 5
+*
+**
+***
+****
+*****</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте вложенные циклы - внешний для строк, внутренний для количества звёзд в строке.</p>
+            </div>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Обратный порядок цифр</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐⭐</p>
+            <p>Дано целое число. Напишите программу, которая меняет порядок цифр числа на обратный. Используйте цикл <code class="code">while</code>.</p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Введите число: 123654987
+Исходное число: 123654987
+Обратное число: 789456321
+
+Введите число: 12345
+Исходное число: 12345
+Обратное число: 54321</code></pre>
+            
+            <div class="note">
+                <p><strong>Подсказка:</strong> Используйте операторы деления <code class="code">/</code> и остатка от деления <code class="code">%</code> для извлечения цифр. Накапливайте результат в переменной.</p>
+            </div>
+        </section>
+
+        
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html> 
