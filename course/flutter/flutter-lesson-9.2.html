@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список Задач + SharedPreference (задачи)</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Список Задач + SharedPreference (задачи)</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Список Задач + SharedPreference (задачи)</h1>
+
+        <p><code class="code">➡️<a
+                    href="https://gitflic.ru/project/igarett/course_flutter_todo_app?branch=9.2-SharedPreference_%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8"
+                    rel="noopener noreferrer nofollow"><span style="color:#065a9d">Ссылка на репозиторий с кодом этого
+                        урока</span></a></code></p>
+        <section class="lesson-section" id="section-1">
+            <h2>Локальное хранилище</h2>
+
+            <p style="text-align:center;"><img alt="" height="356" name="todo.gif" src="images/l9.2/todo.gif"
+                    width="320" /></p>
+
+            <p>Теперь добавим возможность&nbsp;<code class="code"><strong>сохранять</strong></code>,&nbsp;<code
+                    class="code"><strong>получать</strong></code>,&nbsp;<code
+                    class="code"><strong>обновлять</strong></code>&nbsp;и&nbsp;<code
+                    class="code"><strong>удалять</strong></code>&nbsp;задачи с помощью локального хранилища</p>
+
+        </section>
+        <section class="lesson-section" id="section-2">
+            <h2><strong>1. Добавляем модель Task</strong></h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">models/task.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class Task {  
+  final int id;  
+  String text;  
+  bool isDone;  
+  
+  Task({  
+    required this.id,  
+    required this.text,  
+    this.isDone = false,  
+  });  
+  
+  // Фабричный конструктор для создания Task из Map (JSON)  
+  factory Task.fromJson(Map&lt;String, dynamic&gt; json) {  
+    return Task(  
+      id: json['id'],  
+      text: json['text'],  
+      isDone: json['isDone'],  
+    );  
+  }  
+  
+  // Метод для преобразования Task в Map (JSON)  
+  Map&lt;String, dynamic&gt; toJson() {  
+    return {  
+      'id': id,  
+      'text': text,  
+      'isDone': isDone,  
+    };  
+  }  
+  
+  // Метод для копирования объекта с определенными значениями  
+  Task copyWith({  
+    int? id,  
+    String? text,  
+    bool? isDone,  
+  }) {  
+    return Task(  
+      id: id ?? this.id,  
+      text: text ?? this.text,  
+      isDone: isDone ?? this.isDone,  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+        <section class="lesson-section" id="section-3">
+            <h2><strong>2. Добавляем сервис хранения StorageService</strong></h2>
+
+            <p>Функционал работы сервиса по работе с данными списка задач будет значительно интересней, потому что это
+                более сложная структура и такие данные лучше хранить в более продвинутых хранилищах, например в базе
+                данных, но мы выполним этот челендж в академических целях 😎</p>
+
+            <p>Задачи будем сохранять в следующем виде</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ключ</th>
+                        <th>Значение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code class="code">todo_1</code></td>
+                        <td><code class="code">{"id":1, "text":"Выучить Python", "isDone": false}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="code">todo_2</code></td>
+                        <td><code class="code">{"id":2, "text":"Поспать", "isDone": true}</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><code class="code">Ключ</code>&nbsp;и&nbsp;<code class="code">ID</code>&nbsp;будем автоматически
+                генерировать</p>
+
+            <p><img alt="" height="118" name="image.png" src="images/l9.2/image.png" width="400" /></p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">services/storage_service.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'dart:convert';  
+import 'package:shared_preferences/shared_preferences.dart';  
+import '../models/task.dart';  
+  
+  
+class StorageService {  
+  static const taskPrefix = 'todo_'; // префикс для ключей задач  
+  static const themeKey = 'isDarkMode'; // ключ для цветовой темы  
+  
+  /// Сохранить значение цветовой темы  
+  Future&lt;void&gt; saveThemeMode(bool isDarkMode) async {  
+    try {  
+      final prefs = await SharedPreferences.getInstance();  
+      await prefs.setBool(themeKey, isDarkMode);  
+    } catch (e) {  
+      throw Exception('Ошибка при сохранении темы: $e');  
+    }  
+  }  
+  
+  /// Получить значение сохранённой цветовой темы  
+  Future&lt;bool&gt; getThemeMode() async {  
+    try {  
+      final prefs = await SharedPreferences.getInstance();  
+      // Возвращаем сохранённое значение или false, если ничего не найдено  
+      return prefs.getBool(themeKey) ?? false;  
+    } catch (e) {  
+      throw Exception('Ошибка при загрузке темы: $e');  
+    }  
+  }  
+  
+  // МЕТОДЫ ДЛЯ РАБОТЫ СО СПИСКОМ ЗАДАЧ  
+  
+  /// Получить список всех задач  
+  Future&lt;List&lt;Task&gt;&gt; getAllTasks() async {  
+    try {  
+      final prefs = await SharedPreferences.getInstance();  
+      // Получить все ключи из хранилища  
+      final allKeys = prefs.getKeys();  
+      // Найти ключи которые относятся к задачам  
+      final taskKeys = allKeys.where((key) =&gt; key.startsWith(taskPrefix));  
+  
+      final List&lt;Task&gt; tasks = [];  
+      // 1 Перебираем ключи задач в цикле  
+      // 2 По ключу получаем значение задачи из хранилища
+	  // 3 Декодируем JSON обратно в Map и создаём объект Task
+	  // 4 Добавляем объект Task в список и потом возвращаем его
+	  for (final key in taskKeys) {  
+        final taskJsonString = prefs.getString(key);  
+        if (taskJsonString != null) {  
+          // Декодируем JSON обратно в Map  
+          final taskMap = jsonDecode(taskJsonString);  
+          // Создаем объект Task из Map и добавляем в список  
+          tasks.add(Task.fromJson(taskMap));  
+        }  
+      }  
+      return tasks;  
+    } catch (e) {  
+      throw Exception('Ошибка при загрузке всех задач: $e');  
+    }  
+  }  
+  
+  // Вспомогательный метод для генерации ключа по ID задачи  
+  String _getTaskKey(int id) =&gt; '$taskPrefix$id';  
+  
+  /// Создать новую задачу  
+  Future&lt;Task&gt; createTask(String text) async {  
+    try {  
+      // Получаем список всех задач  
+      final allTasks = await getAllTasks();  
+      int maxId = 0;  
+      // Находим максимальный ID  
+      for (var task in allTasks) {  
+        if (task.id &gt; maxId) {  
+          maxId = task.id;  
+        }  
+      }  
+      // Генерируем новый ID, если список задач пуст то id = 1  
+      final newId = allTasks.isNotEmpty ? maxId + 1 : 1;  
+  
+      // Создаем новую задачу с заданным ID  
+      final newTask = Task(id: newId, text: text, isDone: false);  
+  
+      // Сохраняем новую задачу в хранилище  
+      final prefs = await SharedPreferences.getInstance();  
+      final key = _getTaskKey(newTask.id);  
+      final taskJson = jsonEncode(newTask.toJson());  
+      await prefs.setString(key, taskJson);  
+  
+      return newTask;  
+    } catch (e) {  
+      throw Exception('Ошибка при создании задачи: $e');  
+    }  
+  }  
+  
+  /// Обновить существующую задачу  
+  Future&lt;void&gt; updateTask(Task task) async {  
+    try {  
+      final prefs = await SharedPreferences.getInstance();  
+      // Фомируем ключ для локального хранилища  
+      final key = _getTaskKey(task.id);  
+      // Кодируем обновлённый объект Task в JSON  
+      final taskJson = jsonEncode(task.toJson());  
+      // Перезаписываем значение по существующему ключу  
+      await prefs.setString(key, taskJson);  
+    } catch (e) {  
+      throw Exception('Ошибка при обновлении задачи с ID ${task.id}: $e');  
+    }  
+  }  
+  
+  /// Удалить задачу по её ID  
+  Future&lt;void&gt; deleteTask(int id) async {  
+    try {  
+      final prefs = await SharedPreferences.getInstance();  
+      final key = _getTaskKey(id);  
+      await prefs.remove(key);  
+    } catch (e) {  
+      throw Exception('Ошибка при удалении задачи с ID $id: $e');  
+    }  
+  }  
+  
+}
+</code></pre>
+
+            <p>Можно подумать, что каждый вызов&nbsp;<code class="code">await
+                    SharedPreferences.getInstance()</code>&nbsp;в каждом методе заново читает весь файл с настройками
+                с диска, что было бы медленно. Но это не так.</p>
+
+            <p>Плагин&nbsp;<code class="code">shared_preferences</code>&nbsp;работает очень грамотно:</p>
+
+            <ol>
+                <li>
+                    <p><strong>Кэширование экземпляра</strong>: Первый вызов&nbsp;<code
+                            class="code">getInstance()</code>&nbsp;действительно выполняет асинхронную операцию: он
+                        связывается с нативной частью (Swift/Kotlin), чтобы получить доступ к хранилищу (<code
+                            class="code">NSUserDefaults</code>&nbsp;на iOS,&nbsp;<code
+                            class="code">SharedPreferences</code>&nbsp;на Android).</p>
+                </li>
+                <li>
+                    <p><strong>Возврат из кэша</strong>: Все последующие вызовы&nbsp;<code
+                            class="code">getInstance()</code>&nbsp;в рамках одного запуска приложения почти мгновенны.
+                        Плагин кэширует полученный экземпляр и просто возвращает ссылку на него. Повторной &ldquo;дорогой&rdquo;
+                        операции не происходит.</p>
+                </li>
+            </ol>
+
+            <h3><strong>Объяснение работы всех методов сервиса</strong></h3>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title"><code class="code">getAllTasks()</code>&nbsp;Получить список всех задач</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <ul>
+                <li>Получает доступ к локальному хранилищу <code class="code">SharedPreferences</code>.</li>
+                <li>Извлекает все ключи, которые начинаются с префикса&nbsp;<code class="code">todo_</code>&nbsp;- это
+                    ключи, под которыми хранятся задачи.</li>
+                <li>Для каждого такого ключа получает строку в формате JSON.</li>
+                <li>Декодирует JSON в объект Map.</li>
+                <li>Создаёт объект&nbsp;<code class="code">Task</code>&nbsp;из Map с помощью конструктора&nbsp;<code
+                        class="code">Task.fromJson</code>.</li>
+                <li>Собирает все объекты&nbsp;<code class="code">Task</code>&nbsp;в список и возвращает его.</li>
+            </ul>
+
+            <pre><code class="language-dart">Future&lt;List&lt;Task&gt;&gt; getAllTasks() async {  
+  try {  
+    final prefs = await SharedPreferences.getInstance();  
+    // Получить все ключи из хранилища  
+    final allKeys = prefs.getKeys();  
+    // Найти ключи которые относятся к задачам  
+    final taskKeys = allKeys.where((key) =&gt; key.startsWith(taskPrefix));  
+  
+    final List&lt;Task&gt; tasks = [];  
+    // 1 Перебираем ключи задач в цикле  
+    // 2 По ключу получаем значение задачи из хранилища
+	// 3 Декодируем JSON обратно в Map и создаём объект Task
+	// 4 Добавляем объект Task в список и потом возвращаем его
+	for (final key in taskKeys) {  
+      final taskJsonString = prefs.getString(key);  
+      if (taskJsonString != null) {  
+        // Декодируем JSON обратно в Map  
+        final taskMap = jsonDecode(taskJsonString);  
+        // Создаем объект Task из Map и добавляем в список  
+        tasks.add(Task.fromJson(taskMap));  
+      }  
+    }  
+    return tasks;  
+  } catch (e) {  
+    throw Exception('Ошибка при загрузке всех задач: $e');  
+  }  
+}
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title"><code class="code">createTask(String text)</code>&nbsp;Создать новую задачу</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+
+            <ul>
+                <li>Сначала получает список всех текущих задач, чтобы определить максимальный существующий ID.</li>
+                <li>Генерирует новый ID для задачи:<br>
+                    если задач нет ID будет 1, иначе максимальный ID + 1.</li>
+                <li>Создаёт новый объект&nbsp;<code class="code">Task</code>&nbsp;с этим ID, переданным текстом и
+                    статусом&nbsp;<code class="code">isDone = false</code>.</li>
+                <li>Преобразует объект задачи в JSON-строку.</li>
+                <li>Сохраняет JSON в SharedPreferences под ключом&nbsp;<code class="code">todo_&lt;newId&gt;</code>.
+                </li>
+                <li>Возвращает созданный объект задачи.</li>
+            </ul>
+
+            <pre><code class="language-dart">Future&lt;Task&gt; createTask(String text) async {  
+  try {  
+    // Получаем список всех задач  
+    final allTasks = await getAllTasks();  
+    int maxId = 0;  
+    // Находим максимальный ID  
+    for (var task in allTasks) {  
+      if (task.id &gt; maxId) {  
+        maxId = task.id;  
+      }  
+    }  
+    // Генерируем новый ID, если список задач пуст то id = 1  
+    final newId = allTasks.isNotEmpty ? maxId + 1 : 1;  
+  
+    // Создаем новую задачу с заданным ID  
+    final newTask = Task(id: newId, text: text, isDone: false);  
+  
+    // Сохраняем новую задачу в хранилище  
+    final prefs = await SharedPreferences.getInstance();  
+    final key = _getTaskKey(newTask.id);  
+    final taskJson = jsonEncode(newTask.toJson());  
+    await prefs.setString(key, taskJson);  
+  
+    return newTask;  
+  } catch (e) {  
+    throw Exception('Ошибка при создании задачи: $e');  
+  }  
+}
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title"><code class="code">updateTask(Task task)</code>&nbsp;Обновить существующую
+                    задачу</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <ul>
+                <li>Получает доступ к SharedPreferences.</li>
+                <li>Формирует ключ задачи по её ID &nbsp;<code class="code">todo_&lt;id&gt;</code>.</li>
+                <li>Кодирует обновлённый объект задачи в JSON.</li>
+                <li>Перезаписывает значение по ключу в SharedPreferences.</li>
+                <li>Если возникнет ошибка - выбрасывает исключение с описанием.</li>
+            </ul>
+
+            <pre><code class="language-dart">Future&lt;void&gt; updateTask(Task task) async {  
+  try {  
+    final prefs = await SharedPreferences.getInstance();  
+    // Фомируем ключ для локального хранилища  
+    final key = _getTaskKey(task.id);  
+    // Кодируем обновлённый объект Task в JSON  
+    final taskJson = jsonEncode(task.toJson());  
+    // Перезаписываем значение по существующему ключу  
+    await prefs.setString(key, taskJson);  
+  } catch (e) {  
+    throw Exception('Ошибка при обновлении задачи с ID ${task.id}: $e');  
+  }  
+}
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title"><code class="code">deleteTask(int id)</code>&nbsp;Удалить задачу по её ID</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <ul>
+                <li>Получает доступ к SharedPreferences.</li>
+                <li>Формирует ключ задачи по ID —&nbsp;<code class="code">todo_&lt;id&gt;</code>.</li>
+                <li>Удаляет запись из SharedPreferences по этому ключу.</li>
+                <li>Если удаление не удалось, выбрасывает исключение с описанием.</li>
+            </ul>
+
+            <pre><code class="language-dart">Future&lt;void&gt; deleteTask(int id) async {  
+  try {  
+    final prefs = await SharedPreferences.getInstance();  
+    final key = _getTaskKey(id);  
+    await prefs.remove(key);  
+  } catch (e) {  
+    throw Exception('Ошибка при удалении задачи с ID $id: $e');  
+  }  
+}
+</code></pre>
+
+        </section>
+        <section class="lesson-section" id="section-4">
+
+            <h2><strong>3. Добавляем ViewModel для управления экраном</strong></h2>
+
+            <p><code class="code">ViewModel</code>&nbsp;будет управлять состоянием и всей логикой работы экрана. Она
+                будет использовать&nbsp;<code class="code">StorageService</code>&nbsp;для работы с данными в локальном
+                хранилище.</p>
+
+            <h3><img alt="" height="120" src="images/l9.2/image1.png"
+                    style="float:left;" width="180"></h3>
+
+            <p><br>
+                Для корректной работы реактивной системы и своевременного обновления UI необходимо соблюдать следующие
+                правила при работе с коллекцией задач&nbsp;<code class="code">_tasks</code></p>
+
+            <p>&nbsp;</p>
+
+            <ol>
+                <li>Каждая задача&nbsp;<code class="code">Task</code>, должна иметь уникальный&nbsp;<code
+                        class="code">ID</code><br>
+                    Сделаем простую генерацию ID&nbsp;<code class="code">id: _tasks.isNotEmpty ? _tasks.last.id+1 :
+                        0,</code></li>
+                <li>Механизм Реактивности и Принцип Иммутабельности</li>
+            </ol>
+
+            <ul>
+                <li>Подписчики (виджеты) реагируют на изменение состояния&nbsp;<code class="code">_tasks</code>&nbsp;только в том
+                    случае, если изменяется ссылка на сам объект списка.</li>
+                <li>Система управления состоянием отслеживает изменения путем сравнения ссылок, а не глубокого анализа
+                    содержимого объектов.</li>
+                <li>Подписчики будут реагировать на конкретное изменение состояния&nbsp;<code class="code">_tasks</code>
+                </li>
+            </ul>
+
+            <ol>
+                <li>Либо когда список полностью обновляется новым</li>
+                <li>Либо когда в список добавляется или удаляется значение</li>
+                <li><code class="code">НО!</code>&nbsp;Оповещение об изменении&nbsp;<code class="code">не
+                        сработает</code>, если изменить внутренние состояние объекта списка!</li>
+            </ol>
+
+            <p>Например&nbsp;<code class="code">_tasks[index].isDone = !_tasks[index].isDone</code>&nbsp;<strong><code
+                        class="code">не сработает</code></strong>!!!<br>
+                Нужно менять&nbsp;<code class="code">полностью весь список</code>&nbsp;или&nbsp;<code class="code">полностью
+                    элемент списка</code>!!!</p>
+
+            <p><img alt="" height="118" name="image.png" src="images/l9.2/image2.png" width="600"></p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">viewsmodel/todo_viewmodel.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import '../models/task.dart';  
+import '../services/storage_service.dart';  
+  
+class ToDoViewModel extends ChangeNotifier {  
+  // Получаем доступ к сервису хранилища  
+  final StorageService _storageService = StorageService();  
+  
+  // Добавляем TextEditingController в ViewModel  
+  final TextEditingController textEditingController = TextEditingController();  
+  
+  bool _isDarkMode = false;  
+  bool get isDarkMode =&gt; _isDarkMode;  
+  
+  // Состояние для списка задач  
+  List&lt;Task&gt; _tasks = [];  
+  List&lt;Task&gt; get tasks =&gt; _tasks;  
+  
+  ToDoViewModel() {  
+    // При создании ViewModel сразу загружаем задачи  
+    loadTasks();  
+  }  
+  
+  /// Переключение цветовой темы  
+  void toggleTheme() {  
+    // Изменяем состояние  
+    _isDarkMode = !_isDarkMode;  
+    // Сохраняем значение в SharedPreferences  
+    _storageService.saveThemeMode(_isDarkMode);  
+    // Уведомляем слушателей, чтобы они перестраивались  
+    notifyListeners();  
+  }  
+  
+  /// Загрузить все задачи из сервиса  
+  Future&lt;void&gt; loadTasks() async {  
+    _tasks = await _storageService.getAllTasks();  
+    _isDarkMode = await _storageService.getThemeMode();  
+    // Уведомляем UI, что данные изменились и нужно перерисоваться  
+    notifyListeners();  
+  }  
+  
+  /// Добавить новую задачу.  
+  Future&lt;void&gt; addTask(String text) async {  
+    if (text.isEmpty) return;  
+  
+    // Создаём новую задачу, сохраняем в хранилище  
+    final newTask = await _storageService.createTask(text);  
+    // Добавляем в список _tasks для отображения в UI  
+    _tasks.add(newTask);  
+    // Уведомляем UI, что данные изменились и нужно перерисоваться  
+    notifyListeners();  
+  }  
+  
+  /// Обновить статус выполнения задачи  
+  Future&lt;void&gt; updateTaskStatus(int id, bool isDone) async {  
+    // Находим правильный индекс задачи в списке  
+    final taskIndex = _tasks.indexWhere((task) =&gt; task.id == id);  
+    // Создаём копию задачи с обновленным статусом  
+    final updatedTask = _tasks[taskIndex].copyWith(isDone: isDone);  
+  
+    await _storageService.updateTask(updatedTask);  
+    _tasks[taskIndex] = updatedTask;  
+    notifyListeners();  
+  }  
+  
+  /// Удалить задачу по ID.  
+  Future&lt;void&gt; deleteTask(int id) async {  
+    // Удаляем задачу из списка для отображения UI  
+    _tasks.removeWhere((task) =&gt; task.id == id);  
+    notifyListeners();  
+  
+    // Удаляем задачу по ID из хранилища  
+    await _storageService.deleteTask(id);  
+  }  
+}
+</code></pre>
+        </section>
+        <section class="lesson-section" id="section-5">
+            <h2><strong>4. Вёрстка Экрана ToDoScreen</strong></h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">views/todo_screen.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import '../models/task.dart';  
+import '../viewmodels/todo_viewmodel.dart';  
+  
+class ToDoScreen extends StatelessWidget {  
+  const ToDoScreen({super.key});    
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // Получаем экземпляр ViewModel и подписываемся на изменения  
+    final viewModel = context.watch&lt;ToDoViewModel&gt;();  
+  
+    return Scaffold(  
+      appBar: AppBar(  
+        title: const Text('Список Задач'),  
+        actions: [  
+          Center(  
+            child: Text(viewModel.isDarkMode ? 'Темная тема' : 'Светлая тема'),  
+          ),  
+          Switch(  
+            // Используем ViewModel для управления состоянием переключателя  
+            value: viewModel.isDarkMode,  
+            onChanged: (_) =&gt; viewModel.toggleTheme(),  
+          ),  
+          const SizedBox(width: 8),  
+        ],  
+      ),  
+      body: ListView.builder(  
+        itemCount: viewModel.tasks.length,  
+        itemBuilder: (context, index) {  
+          final task = viewModel.tasks[index]; // Получаем задачу  
+          return TaskItem(task: task);  
+        },  
+      ),  
+      floatingActionButton: FloatingActionButton.extended(  
+        // Показать диалоговое окно  
+        onPressed: () =&gt; _showAddTaskDialog(context),  
+        label: const Text('Добавить'),  
+        icon: const Icon(Icons.add),  
+      ),  
+    );  
+  }
+  
+  /// Показать диалоговое окно для добавления задачи  
+  void _showAddTaskDialog(BuildContext context) {  
+    final viewModel = context.read&lt;ToDoViewModel&gt;();  
+  
+    // Показываем диалоговое окно  
+    showDialog(  
+      context: context,  
+      builder: (context) {  
+        return AlertDialog(  
+          title: const Text('Добавить задачу'),  
+          content: TextField(  
+            controller: viewModel.textEditingController,  
+            autofocus: true,  
+            decoration: InputDecoration(hintText: "Введите текст задачи"),  
+          ),  
+          actions: [  
+            TextButton(  
+              onPressed: () =&gt; Navigator.of(context).pop(),  
+              child: const Text('Отмена'),  
+            ),  
+            TextButton(  
+              onPressed: () {  
+                // Добавление задачи  
+                viewModel.addTask(viewModel.textEditingController.text);  
+                viewModel.textEditingController.clear();  
+                Navigator.of(context).pop();  
+              },  
+              child: const Text('Добавить'),  
+            ),  
+          ],  
+        );  
+      },  
+    );  
+  }
+}  
+  
+/// Карточка задачи  
+class TaskItem extends StatelessWidget {  
+  final Task task;  
+  const TaskItem({super.key, required this.task});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return Container(  
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),  
+      decoration: BoxDecoration(  
+        border: Border.all(color: Colors.grey),  
+        borderRadius: BorderRadius.circular(8),  
+      ),  
+      child: ListTile(  
+        leading: Checkbox(  
+          value: task.isDone, // Получаем состояние задачи  
+          onChanged: (value) =&gt; context.read&lt;ToDoViewModel&gt;().updateTaskStatus(  
+            task.id,  
+            value ?? false,  
+          ),  
+        ),  
+        title: Row(  
+          children: [  
+            Text("${task.id}"),  
+            SizedBox(width: 8),  
+            Text(  
+              task.text,  
+              style: TextStyle(  
+                decoration: task.isDone  
+                    ? TextDecoration.lineThrough  
+                    : TextDecoration.none,  
+              ),  
+            ),  
+          ],  
+        ),  
+        trailing: IconButton(  
+          icon: const Icon(Icons.delete_outline, color: Colors.cyan),  
+          // Удаление задачи  
+          onPressed: () =&gt; context.read&lt;ToDoViewModel&gt;().deleteTask(task.id),  
+        ),  
+      ),  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+
+        <section class="lesson-section" id="section-6">
+            <h2><strong>5. Собираем всё в main</strong></h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import 'viewmodels/todo_viewmodel.dart';  
+import 'views/todo_screen.dart';  
+  
+void main() {  
+  runApp(  
+    // Оборачиваем приложение в ChangeNotifierProvider  
+    // Создаём экземпляр ViewModel и передаём вниз по дереву
+	ChangeNotifierProvider(  
+      create: (context) =&gt; ToDoViewModel(),  
+      child: const ToDoApp(),  
+    ),  
+  );  
+}  
+  
+class ToDoApp extends StatelessWidget {  
+  const ToDoApp({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // Используем Consumer  
+    // MaterialApp будет перестраиваться при смене цветовой темы
+	return Consumer&lt;ToDoViewModel&gt;(  
+      builder: (context, viewModel, child) {  
+        return MaterialApp(  
+          title: "Список Дел",  
+          theme: ThemeData(  
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),  
+            brightness: Brightness.light,  
+          ),  
+          darkTheme: ThemeData(  
+            brightness: Brightness.dark,  
+          ),  
+          // Используем ViewModel для управления состоянием темы  
+          // В зависимости от isDarkMode, выбираем тёмную или светлую тему       
+          themeMode: viewModel.isDarkMode ? ThemeMode.dark : ThemeMode.light,  
+          debugShowCheckedModeBanner: false,  
+          home: const ToDoScreen(),  
+        );  
+      },  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+        <section class="lesson-section" id="section-7">
+            <h2><strong>6. Демонстрация работы приложения</strong></h2>
+
+            <p style="text-align:center;"><img alt="" height="533" name="todo.gif" src="images/l9.2/todo2.gif"
+                    width="300"></p>
+
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+
+</html>

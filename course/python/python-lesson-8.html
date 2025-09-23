@@ -133,37 +133,6 @@ print(images[-1])  # Последний элемент: Картинка-3.png
                      Это значит, что <code class="code">images[0]</code> — первый элемент, <code class="code">images[1]</code> — второй и так далее.</p>
             </div>
 
-            <h3>Создание пустого списка</h3>
-            <p>Иногда нужно создать пустой список, чтобы потом заполнить его элементами. Это можно сделать двумя способами:</p>
-            <div class="code-block-header">
-                <h5 class="code-block-title">Python - Создание пустого списка</h5>
-                <div class="code-block-controls">
-                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-                </div>
-            </div>
-            <pre><code class="language-python"># Способ 1: Пустые квадратные скобки
-player_inventory = []
-
-# Способ 2: Встроенная функция list()
-enemy_types = list()
-</code></pre>
-
-            <h3>Вывод списка</h3>
-            <p>Чтобы увидеть весь список целиком, используем знакомую функцию <code class="code">print()</code>:</p>
-            <div class="code-block-header">
-                <h5 class="code-block-title">Python - Вывод списка</h5>
-                <div class="code-block-controls">
-                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-                </div>
-            </div>
-            <pre><code class="language-python">weapons = ["Меч", "Лук", "Посох"]
-print(weapons)  # ['Меч', 'Лук', 'Посох']
-</code></pre>
-
-            <h3>Встроенная функция list()</h3>
-            <p>Функция <code class="code">list()</code> не только создаёт пустые списки, но и может преобразовывать другие типы данных в списки. Это очень полезно!</p>
             
             <h4>Создание списка с помощью range()</h4>
             <p>Помните функцию <code class="code">range()</code>? Она создаёт последовательность чисел, которую можно превратить в список:</p>
@@ -196,12 +165,12 @@ print(odd_levels)  # [1, 3, 5, 7, 9]
                     <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
                 </div>
             </div>
-            <pre><code class="language-python">player_name = "Артур"
+            <pre><code class="language-python">player_name = "Python"
 name_letters = list(player_name)
-print(name_letters)  # ['А', 'р', 'т', 'у', 'р']
+print(name_letters)  # ['P', 'y', 't', 'h', 'o', 'n']
 
 # Можно проверить, сколько букв в имени
-print(len(name_letters))  # 5
+print(len(name_letters))  # 6
 </code></pre>
 
         </section>

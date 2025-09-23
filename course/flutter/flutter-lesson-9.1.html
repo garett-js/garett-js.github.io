@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Локальное хранилище. SharedPreferences</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Локальное хранилище. SharedPreferences</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Локальное хранилище. SharedPreferences</h1>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Локальное хранилище</h2>
+
+            Скачаем себе проект по ссылке <a href="https://gitflic.ru/project/igarett/course_2025_todo_app">Скачать "Todo App"</a>
+
+            <p style="text-align:center"><img alt="" height="529" name="Pasted image 20250614213733.png"
+                    src="images/l9.1/l9.1-1.png" width="500" /></p>
+
+            <p>У этого приложения есть&nbsp;<code class="code"><strong>существенный
+                                недостаток!</strong></span></code><br /><br />
+                <strong>Все добавленные задачи и выбранная цветовая тема <code class="code"><span
+                            style="color:#065a9d">исчезают</span></code> при перезапуске приложения!</strong></p>
+
+            <p>Так происходит потому, что все данные хранятся только в оперативной памяти во время работы приложения.<br />
+                Для решения этой проблемы, данные нужно научиться сохранять в память устройства, в локальное хранилище.
+            </p>
+
+            <p><strong>Зачем нужно локальное хранилище?</strong></p>
+
+            <ul>
+                <li><code class="code">Сохранение пользовательских данных</code>: заметки, списки дел, всё что создаёт пользователь
+                    приложения.</li>
+                <li><code class="code">Запоминание настроек</code>: выбора цветовой темы, язык, уведомления.</li>
+                <li><code class="code">Офлайн-режим</code>: сохранить данные на устройстве, чтобы пользоваться им в отсутствии
+                    интернета и иметь возможность синхронизировать эти данные с сервером позже.</li>
+            </ul>
+
+            <h3><code class="code">shared_preferences</code></h3>
+
+            <p>Инструмент для сохранения и использования простых данных, например, небольшие списки или настройки.<br />
+                Он хранит данные в виде пар&nbsp;<code class="code">Ключ</code>&nbsp;&rarr;&nbsp;<code class="code">Значение</code></p>
+
+            <p>На этом занятии доработаем&nbsp;<code class="code">СПИСОК ЗАДАЧ</code></p>
+
+            <ul>
+                <li>Добавим простую архитектуру&nbsp;<code class="code">MVVM</code></li>
+                <li>Добавим&nbsp;<code class="code">Provider</code>&nbsp;для управления состоянием</li>
+                <li>Добавим&nbsp;<code class="code">shared_preferences</code>&nbsp;для сохранения задач и темы</li>
+                <li>Реализуем <code class="code">удаление</code> задач</li>
+            </ul>
+
+            <p><img alt="" height="118" name="image.png" src="images/l9.1/l9.1-2.png" width="600" /></p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>1. Подготовка</h2>
+
+            <ul>
+                <li>Скачаем себе прошлый проект по ссылке&nbsp;<code class="code">👉&nbsp;</span><a
+                            href="https://gitflic.ru/project/igarett/course_2025_todo_app"
+                            rel="noopener noreferrer nofollow" target="_blank">Ссылка на репозиторий с кодом приложения
+                            Список Задач</a></code></li>
+                <li><strong>Добавим в&nbsp;<code class="code">pubspec.yaml</code>&nbsp;зависимостей</strong></li>
+                <li>Выполним в консоли команду</li>
+            </ul>
+
+            <pre><code class="code">flutter pub add provider shared_preferences</code></pre>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">pubspec.yaml</code></h5>
+            </div>
+            <pre><code class="code">dependencies:  
+  flutter:  
+    sdk: flutter  
+   
+  cupertino_icons: ^1.0.8  
+  provider: ^6.1.5  
+  shared_preferences: ^2.5.3
+</code></pre>
+        </section>
+        <section id="section-3" class="lesson-section">
+            <h2><strong>2. Новая структура проекта для архитектуры&nbsp;<code class="code">MVVM</code></strong></h2>
+
+            <p>Добавим новую структуру папок и файлов в директории&nbsp;<code class="code">lib</span></code>
+            </p>
+
+            <ul>
+                <li><code class="code">models</span></code>&nbsp;- для моделей данных</li>
+                <li><code class="code">views</span></code>&nbsp;- для виджетов экранов</li>
+                <li><code class="code">viewmodels</span></code>&nbsp;- для вьюмоделей которые управляют
+                    экранами</li>
+                <li><code class="code">services</span></code>&nbsp;- сервисы по работе с данными
+                    (локальное хранилище)</li>
+            </ul>
+
+            <pre><code class="language-dart">📦 lib/
+├── 📂 models/
+│   └──📄 task.dart
+├── 📂 views/
+│   └──📄 todo_screen.dart
+├── 📂 viewmodels/
+│   └──📄 todo_viewmodel.dart
+├── 📂 services/
+│   └──📄 storage_service.dart
+└──📄 main.dart
+</code></pre>
+        </section>
+        <section id="section-4" class="lesson-section">
+            <h2><strong>3. Смена темы и сохранение настроек</strong></h2>
+
+            <p>Для начала добавим в приложение переключатель между тёмной и светлой темы и самое главное реализуем
+                возможность сохранить эту настройку в память телефона.</p>
+
+            <h3><strong>Добавляем сервис для управлениями данными</strong></h3>
+
+            <p>Это будет отдельный класс отвечающий за чтение и запись в локальное
+                хранилище&nbsp;<code class="code">shared_preferences</span></code></p>
+
+            <p>Методы доступа к&nbsp;<code class="code">shared_preferences</span></code></p>
+
+            <ol>
+                <li>Получаем экземпляр&nbsp;<code class="code">SharedPreferences.getInstance()</span></code>
+                </li>
+                <li>Сохраняем данные&nbsp;<code class="code">setBool</code>,&nbsp;<code class="code">setInt</code>,&nbsp;<code class="code">setString</code>,&nbsp;<code class="code">setStringList</code>,&nbsp;<code class="code">...</code>
+                </li>
+                <li>Получаем
+                    данные&nbsp;<code class="code">getBool</code>,&nbsp;<code class="code">getInt</code>,&nbsp;<code class="code">getString</code>,&nbsp;<code class="code">getStringList</code>,&nbsp;<code class="code">...</code>
+                </li>
+            </ol>
+
+            <p>В данном случае будет&nbsp;<code class="code">setBool('isDarkMode', false)</code></p>
+
+            <ul>
+                <li><code class="code">'isDarkMode'</code>&nbsp;- Ключ</li>
+                <li><code class="code">false</code>&nbsp;- Значение</li>
+            </ul>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">services/storage_service.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre>
+<code class="language-dart">import 'package:shared_preferences/shared_preferences.dart';  
+  
+class StorageService {  
+  
+  // Значение ключа для сохранения настроек цветовой темы  
+  static const themeKey = 'isDarkMode';  
+  
+  /// Сохранить значение цветовой темы  
+  Future&lt;void&gt; saveThemeMode(bool isDarkMode) async {  
+    try {  
+      final prefs = await SharedPreferences.getInstance();  
+      // Сохранить значение в SharedPreferences по ключу  
+      await prefs.setBool(themeKey, isDarkMode);  
+    } catch (e) {  
+      throw Exception('Ошибка при сохранении темы: $e');  
+    }  
+  }  
+  
+  /// Получить значение сохранённой цветовой темы  
+  Future&lt;bool&gt; getThemeMode() async {  
+    try {  
+      // Получить экземпляр SharedPreferences  
+      final prefs = await SharedPreferences.getInstance();  
+      // Получить значение сохранённой цветовой темы по ключу  
+      return prefs.getBool(themeKey) ?? false;  
+    } catch (e) {  
+      throw Exception('Ошибка при загрузке темы: $e');  
+    }  
+  }  
+}
+</code></pre>
+        </section>
+        <section id="section-5" class="lesson-section">
+            <h2><strong>4. Добавляем ViewModel для управления экраном</strong></h2>
+
+            <p><code class="code">ViewModel</span></code>&nbsp;будет управлять состоянием и всей логикой
+                работы экрана. Она будет использовать&nbsp;<code class="code">StorageService</code>&nbsp;для работы с данными в
+                локальном хранилище.</p>
+
+            <h3><strong><code class="code">Внимательно читайте <span style="color:#065a9d">комментарии</span> к коду!</code></strong></h3>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">viewmodels/todo_viewmodel.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre>
+<code class="language-dart">import 'package:flutter/material.dart';  
+import '../services/storage_service.dart';  
+  
+  
+class ToDoViewModel extends ChangeNotifier {  
+  // Получаем доступ к сервису хранилища  
+  final StorageService _storageService = StorageService();  
+  
+  bool _isDarkMode = false;  
+  bool get isDarkMode =&gt; _isDarkMode;  
+  
+  /// Переключение цветовой темы  
+  void toggleTheme() {  
+    // Изменяем состояние  
+    _isDarkMode = !_isDarkMode;  
+    // Сохраняем значение в SharedPreferences  
+    _storageService.saveThemeMode(_isDarkMode);  
+    // Уведомляем слушателей, чтобы они перестраивались  
+    notifyListeners();  
+  }  
+}
+</code></pre>
+        </section>
+        <section id="section-6" class="lesson-section">
+            <h2><strong>5. Вёрстка Экрана ToDoScreen</strong></h2>
+
+            <p>Вся логика работы приложения вынесена в отдельные слои, теперь слой&nbsp;<code class="code">View</code>&nbsp;будет
+                отвечать только за вёрстку&nbsp;<code class="code">UI</code></p>
+
+            <h3><strong><code class="code">Внимательно читайте <span style="color:#065a9d">комментарии</span> к коду!</code></strong></h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">views/todo_screen.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre>
+<code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import '../viewmodels/todo_viewmodel.dart';  
+  
+class ToDoScreen extends StatelessWidget {  
+  const ToDoScreen({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // Получаем экземпляр ViewModel и подписываемся на изменения  
+    final viewModel = context.watch&lt;ToDoViewModel&gt;();  
+  
+    return Scaffold(  
+      appBar: AppBar(  
+        title: const Text('Список Задач'),  
+        actions: [  
+          Center(  
+            child: Text(viewModel.isDarkMode ? 'Темная тема' : 'Светлая тема'),  
+          ),  
+          Switch(  
+            // Используем ViewModel для управления состоянием переключателя  
+            value: viewModel.isDarkMode,  
+            onChanged: (_) =&gt; viewModel.toggleTheme(),  
+          ),  
+          const SizedBox(width: 8),  
+        ],  
+      ),  
+      body: ListView.builder(  
+        // Пока что заглушка  
+        itemCount: 5,  
+        itemBuilder: (context, index) {  
+          return ListTile(  
+            leading: Checkbox(value: false, onChanged: (_) {}),  
+            title: Text('Задача $index'),  
+          );  
+        },  
+      ),  
+      floatingActionButton: FloatingActionButton.extended(  
+        // Показать диалоговое окно  
+        onPressed: () =&gt; _showAddTaskDialog(context),  
+        label: const Text('Добавить'),  
+        icon: const Icon(Icons.add),  
+      ),  
+    );  
+  }  
+  
+  /// Показать диалоговое окно для добавления задачи  
+  void _showAddTaskDialog(BuildContext context) {  
+    // Показываем диалоговое окно  
+    showDialog(  
+      context: context,  
+      builder: (context) {  
+        return AlertDialog(  
+          title: const Text('Добавить задачу'),  
+          content: TextField(  
+            autofocus: true,  
+            decoration: InputDecoration(hintText: "Введите текст задачи"),  
+          ),  
+          actions: [  
+            TextButton(  
+              onPressed: () =&gt; Navigator.of(context).pop(),  
+              child: const Text('Отмена'),  
+            ),  
+            TextButton(  
+              onPressed: () {  
+                // TODO: Реализовать добавление задачи  
+              },  
+              child: const Text('Добавить'),  
+            ),  
+          ],  
+        );  
+      },  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+        <section id="section-7" class="lesson-section">
+            <h2><strong>6. Собираем всё в main</strong></h2>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon"
+                            src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon"
+                            src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre>
+<code class="language-dart">import 'package:flutter/material.dart';  
+import 'package:provider/provider.dart';  
+import 'viewmodels/todo_viewmodel.dart';  
+import 'views/todo_screen.dart';  
+  
+void main() {  
+  runApp(  
+    // Оборачиваем приложение в ChangeNotifierProvider  
+    // Создаём экземпляр ViewModel и передаём вниз по дереву    
+    ChangeNotifierProvider(  
+      create: (context) =&gt; ToDoViewModel(),  
+      child: const ToDoApp(),  
+    ),  
+  );  
+}  
+  
+class ToDoApp extends StatelessWidget {  
+  const ToDoApp({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // Используем Consumer  
+    // MaterialApp будет перестраиваться при смене цветовой темы
+	return Consumer&lt;ToDoViewModel&gt;(  
+      builder: (context, viewModel, child) {  
+        return MaterialApp(  
+          title: "Список Дел",  
+          theme: ThemeData(  
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),  
+            brightness: Brightness.light,  
+          ),  
+          darkTheme: ThemeData(  
+            brightness: Brightness.dark,  
+          ),  
+          // Используем ViewModel для управления состоянием темы  
+          // В зависимости от isDarkMode, выбираем тёмную или светлую тему
+		  themeMode: viewModel.isDarkMode ? ThemeMode.dark : ThemeMode.light,  
+          debugShowCheckedModeBanner: false,  
+          home: const ToDoScreen(),  
+        );  
+      },  
+    );  
+  }  
+}
+</code></pre>
+
+            <h3><strong>Внимание!</strong><br />
+                Если при сборке приложения возникает <code class="code"><span style="color:#ff4363">ошибка</span></code></h3>
+
+            <pre>
+<code class="code">Your project is configured with Android NDK 26.3.11579264, but the following plugin(s) depend on a different Android NDK version:
+
+- shared_preferences_android requires Android NDK 27.0.12077973
+Fix this issue by using the highest Android NDK version (they are backward compatible).
+
+android {
+  ndkVersion = "27.0.12077973"
+  ...
+}
+</code></pre>
+
+            <p>Нужно зайти в конфиги <code class="code">Android</span></code> и вручную прописать
+                версию <code class="code">NDK</span></code></p>
+
+            <p style="text-align:center"><img alt="" height="326" name="studio64_dV6Jf1hQrk.png"
+                    src="images/l9.1/l9.1-3.png" width="700" /></p>
+        </section>
+        <section id="section-8" class="lesson-section">
+            <h2><strong>7. Демонстрация работы приложения</strong></h2>
+
+            <ul>
+                <li>По нажатию на переключатель, меняется цветовая тема и название переключателя</li>
+                <li>Если поменять цвет темы и полностью закрыть приложение, а потом снова его запустить, цвет выбранной
+                    темы сохранится</li>
+            </ul>
+
+            <p style="text-align:center"><img alt="" height="684" name="todo5.gif" src="images/l9.1/l9.1-4.gif"
+                    width="310" /></p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+
+</html>

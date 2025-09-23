@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оптимизация приложения</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Оптимизация приложения</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Оптимизация приложения</h1>
+
+        <section id="section-1" class="lesson-section">
+            <p>Прежде чем перейти к реализации сервиса через&nbsp;<code class="code">SQLite</code>, хочется немного улучшить <span style="color:#065a9d">производительность</span> приложения.</p>
+            <p>Если, добавить&nbsp;<code class="code">дебаг принты</code>&nbsp;в конструкторы экрана и элемента списка, то можно заметить одну очень не приятную картину.</p>
+            
+            <h2 style="display: inline;"><strong>Проблема. Виджеты <code class="code">часто</code> перестраиваются</strong></h2>
+            <p>Например, при выборе&nbsp;<code class="code">чекбоса</code>&nbsp;только у одного элемента зачем - то перестраиваются <span style="color:#065a9d">все остальные</span> элемента списка! При увеличении количества виджетов, это заметно повлияет на скорость работы UI.</p>
+            <p>При каждом изменении чекбокса, перестраивается весь экран&nbsp;<code class="code">ToDoScreen</code>&nbsp;и каждый из виджетов&nbsp;<code class="code">TaskItem</code>&nbsp;(в данном случае в списке 4 задачи)</p>
+            <p><strong>Дополнительно добавили <span style="color:#065a9d">для каждого виджета</span> в метод <span style="color:#065a9d">build()</span> вывод <span style="color:#065a9d">print</span> c сообщением.<br />
+            Для того чтобы увидеть сколько раз происходит перерисовка виджетов.</strong></p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Вывод в консоль</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code>I/flutter (10255): 🔴 ToDoScreen build
+I/flutter (10255): 🔴 TaskItem build
+I/flutter (10255): 🔴 TaskItem build
+I/flutter (10255): 🔴 TaskItem build
+I/flutter (10255): 🔴 TaskItem build
+</code></pre>
+            <p style="text-align:center"><img alt="Демонстрация проблемы с производительностью" src="images/l9.3/todo3.gif" width="300" /></p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Решение. Улучшаем производительность</strong></h2>
+            
+            <h3><strong>0. Файлы моделей, вьюмоделей и сервиса без изменений</strong></h3>
+            
+            <h3><strong>1. Добавим для каждого&nbsp;<code class="code">TaskItem</code>&nbsp;ключ</strong></h3>
+            <p>Добавим для каждого&nbsp;<code class="code">TaskItem</code>&nbsp;ключ <code class="code">ValueKey(task.id)</code></p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Добавление ключа в TaskItem</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">TaskItem(
+  key: ValueKey(task.id), // 👉 Добавляем уникальный ключ
+  task: task
+);   
+</code></pre>
+        </section>
+        
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>2. Для виджета ToDoScreen добавим <code class="code">Selector</code> и <code class="code">Consumer</code></strong></h2>
+            <p><strong><code class="code">Selector</code>&nbsp;для размера списка&nbsp;<code class="code">tasks.length</code>&nbsp;внутри модели&nbsp;<code class="code">ToDoViewModel</code></strong></p>
+            <ul>
+                <li>Для того чтобы каждый раз не перестраивать весь список задач через&nbsp;<code class="code">ListView.builder</code>&nbsp;подпишемся на изменение&nbsp;<strong>ТОЛЬКО</strong>&nbsp;длины списка с задачи&nbsp;<strong>tasks</strong></li>
+                <li>То есть список с задачами&nbsp;<code class="code">ListView.builder</code>&nbsp;будет перестраиваться только когда в него добавляется или удаляется задача (изменяется размер списка)</li>
+            </ul>
+            <p><strong><code class="code">Consumer</code>&nbsp;для переключателя темы</strong></p>
+            <ul>
+                <li>Для того чтобы лишний раз не перестраивать всё что есть на экране при переключении&nbsp;<code class="code">Switch</code>&nbsp;будем перестраивать только этот&nbsp;<code class="code">Switch</code>&nbsp;и&nbsp;<code class="code">Text</code></li>
+            </ul>
+            <p><img alt="Использование Selector" src="images/l9.3/comments.png" width="500" /></p>
+            
+            <p>Файл&nbsp;<strong>todo_screen.dart</strong></p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">todo_screen.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class ToDoScreen extends StatelessWidget {  
+  const ToDoScreen({super.key});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    // Следим только за количеством задач  
+    // Чтобы каждый раз не перестраивать ListView
+    final taskCount = context.select&lt;ToDoViewModel, int&gt;(  
+      (vm) =&gt; vm.tasks.length,  
+    );  
+  
+    return Scaffold(  
+      appBar: AppBar(  
+        title: const Text('Список Задач'),  
+        actions: [  
+          // Используем Consumer, чтобы лишний раз не перестраивать ListView  
+          Consumer&lt;ToDoViewModel&gt;(  
+            builder: (context, vm, child) =&gt; Row(  
+              children: [  
+                Center(  
+                  child: Text(vm.isDarkMode ? 'Темная тема' : 'Светлая тема'),  
+                ),  
+                Switch(  
+                  value: vm.isDarkMode,  
+                  // Используем context.read для вызова метода без подписки  
+                  onChanged: (_) =&gt; context.read&lt;ToDoViewModel&gt;().toggleTheme(),  
+                ),  
+                const SizedBox(width: 8),  
+              ],  
+            ),  
+          ),  
+        ],  
+      ),  
+      body: ListView.builder(  
+          itemCount: taskCount,  
+          itemBuilder: (context, index) {  
+            // Используем context.read, чтобы получить задачу без подписки на изменения
+            final viewModel = context.read&lt;ToDoViewModel&gt;();
+            final task = viewModel.tasks[index];
+            return TaskItem(
+              key: ValueKey(task.id), // 👉 Добавляем уникальный ключ
+              taskId: task.id // Передаем только ID, а не весь объект
+            );  
+          },  
+        ),   
+  
+      floatingActionButton: FloatingActionButton.extended(  
+        onPressed: () =&gt; _showAddTaskDialog(context),  
+        label: const Text('Добавить'),  
+        icon: const Icon(Icons.add),  
+      ),  
+    );  
+  }  
+
+  void _showAddTaskDialog(BuildContext context) {  
+    // Здесь код без изменений
+  } 
+}
+</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>3. Для виджета <code class="code">TaskItem</code> добавим <code class="code">Selector</code></strong></h2>
+            <p>Используем&nbsp;<code class="code">Selector</code>, чтобы подписаться на изменения&nbsp;<strong>ТОЛЬКО</strong>&nbsp;<strong>ОДНОЙ</strong> задачи&nbsp;<code class="code">Task</code></p>
+            <ul>
+                <li><code class="code">selector</code>&nbsp;извлекает конкретную задачу по&nbsp;<code class="code">ID</code></li>
+                <li><code class="code">builder</code>&nbsp;будет вызван только если объект этой задачи изменился, в данном случае&nbsp;<code class="code">isDone</code></li>
+            </ul>
+            <p>Используем&nbsp;<code class="code">context.read&lt;ToDoViewModel&gt;()</code>&nbsp;чтобы только вызвать методы&nbsp;<code class="code">toggleTaskStatus</code>&nbsp;и&nbsp;<code class="code">deleteTask</code>&nbsp;без подписки на изменения.</p>
+            <p><img alt="Использование Selector" src="images/l9.3/comments.png" width="500" /></p>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">task_item.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">class TaskItem extends StatelessWidget {  
+  final int taskId;  
+  const TaskItem({super.key, required this.taskId});  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    debugPrint("🔴 TaskItem build");  
+    // Используем Selector, чтобы подписаться на изменения ТОЛЬКО одной задачи.  
+    // selector извлекает конкретную задачу по ID.
+    // builder будет вызван только если объект этой задачи изменился
+    return Selector&lt;ToDoViewModel, Task&gt;(  
+      // 1. Выбирает конкретный объект Task из списка по заданному ID  
+      selector: (_, viewModel) =&gt;  
+          viewModel.tasks.firstWhere((task) =&gt; task.id == taskId),  
+      // 2.Взывается только тогда, когда выбранный Task изменился  
+      builder: (context, task, child) {  
+        // 3. Используется для вызова методов, не подписываясь на обновления.  
+        final vm = context.read&lt;ToDoViewModel&gt;();  
+  
+        return Container(  
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),  
+          decoration: BoxDecoration(  
+            border: Border.all(color: Colors.grey),  
+            borderRadius: BorderRadius.circular(8),  
+          ),  
+          child: ListTile(  
+            leading: Checkbox(  
+              value: task.isDone,  
+              onChanged: (value) {  
+                vm.updateTaskStatus(task.id, value ?? false);  
+              },  
+            ),  
+            title: Row(  
+              children: [  
+                Text("${task.id}"),  
+                SizedBox(width: 8),  
+                Text(  
+                  task.text,  
+                  style: TextStyle(  
+                    decoration: task.isDone  
+                        ? TextDecoration.lineThrough  
+                        : TextDecoration.none,  
+                  ),  
+                ),  
+              ],  
+            ), 
+            trailing: IconButton(  
+              icon: const Icon(Icons.delete_outline, color: Colors.cyan),  
+              onPressed: () {  
+                vm.deleteTask(task.id);  
+              },  
+            ),  
+          ),  
+        );  
+      },  
+    );  
+  }  
+}
+</code></pre>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>4. Демонстрация работы оптимизированного приложения</strong></h2>
+            <ul>
+                <li>При изменении чекбокса, теперь перестраивается только эта задача</li>
+                <li>При добавлении и удалении задачи, экран обновляется один раз</li>
+                <li>При изменении темы, конечно перестраивается весь интерфейс</li>
+            </ul>
+            <p style="text-align:center"><img alt="Демонстрация работы оптимизированного приложения" src="images/l9.3/todo4.gif" width="300" /></p>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>
