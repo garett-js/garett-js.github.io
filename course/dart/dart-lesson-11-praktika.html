@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 11: Set</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-11.html" class="back-link">←</a> Практика: Урок 11</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 11: Set</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Анализ активности пользователей на веб-сайте</h2>
+            <p>У вас есть несколько списков идентификаторов пользователей (<code class="code">int</code>), которые посещали разные страницы веб-сайта в течение дня. Ваша задача — выполнить следующие операции, используя <code class="code">Set</code>:</p>
+            
+            <ol>
+                <li>Найти всех <strong>уникальных</strong> пользователей, которые посетили <strong>хотя бы одну</strong> из страниц.</li>
+                <li>Найти пользователей, которые посетили <strong>и главную страницу, и страницу с продуктами</strong>.</li>
+                <li>Найти пользователей, которые посетили <strong>главную страницу, но не посещали страницу с контактами</strong>.</li>
+                <li>Определить, <strong>есть ли</strong> среди посетителей страницы "О нас" пользователь с ID 101.</li>
+            </ol>
+
+            <h4>Входные данные:</h4>
+            <pre><code class="language-dart">Set&lt;int&gt; homepageVisitors = {101, 102, 103, 104, 105};
+Set&lt;int&gt; productPageVisitors = {103, 105, 106, 107};
+Set&lt;int&gt; aboutUsPageVisitors = {102, 104, 108, 109};
+Set&lt;int&gt; contactPageVisitors = {101, 107, 109, 110};
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">--- Анализ активности пользователей ---
+Уникальные пользователи за день: {101, 102, 103, 104, 105, 106, 107, 108, 109, 110}
+Пользователи, посетившие и главную, и продуктовую страницу: {103, 105}
+Пользователи, посетившие главную, но не страницу контактов: {102, 103, 104, 105}
+Пользователь с ID 101 посещал страницу "О нас": false
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

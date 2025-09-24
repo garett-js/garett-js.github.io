@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 10: Map</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-10.html" class="back-link">←</a> Практика: Урок 10</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 10: Map</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Анализ частоты слов</h2>
+            <p>Дана строка текста, задача — посчитать, сколько раз каждое слово встречается в тексте.</p>
+            
+            <h4>Требования:</h4>
+            <ol>
+                <li>Создайте <code class="code">Map&lt;String, int&gt;</code> для хранения слов и их частоты.</li>
+                <li>Разделите текст на слова (игнорируя регистр и знаки препинания).
+                    <div class="code-block-header">
+                        <h5 class="code-block-title">Пример</h5>
+                    </div>
+                    <pre><code class="bash">"Привет, мир! Привет всем." -> "привет", "мир", "привет", "всем"</code></pre>
+                </li>
+                <li>Для каждого слова:
+                    <ul>
+                        <li>Если слово уже есть в Map, увеличьте его счетчик.</li>
+                        <li>Если слова нет, добавьте его со счетчиком 1.</li>
+                    </ul>
+                </li>
+                <li>Выведите слова и их частоту в отсортированном по алфавиту порядке.</li>
+            </ol>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">Исходный текст: "Привет, мир! Привет всем."
+--- Частота слов ---
+всем: 1
+мир: 1
+привет: 2
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
