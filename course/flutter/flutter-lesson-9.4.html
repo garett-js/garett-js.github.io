@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifting State Up и Provider</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <link rel="stylesheet" href="../../css/interactive-code.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Lifting State Up и Provider</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Урок: Lifting State Up и Provider</h1>
+
+        <section id="section-1" class="lesson-section">
+            <h2 style="display: inline;"><strong>Проблема Lifting State Up</strong></h2>
+
+            <div class="note-block">
+                <p>В реальных приложениях данные хранятся централизованно: в базе данных, модели, сервисе. Когда каждое вложенное представление само хранит и обновляет своё состояние, приложение быстро превращается в хаос: повторяющиеся данные, сложная отладка и постоянные перерисовки.</p>
+            </div>
+
+            <p>Чтобы синхронизировать состояние по иерархии Flutter-виджетов, приходится поднимать данные выше и передавать их через конструкторы. Такой процесс называют <strong>Lifting State Up</strong>.</p>
+
+            <ul>
+                <li>Все состояния (например, <code class="code">title</code>, <code class="code">author</code>, <code class="code">isFavorite</code>) живут на самом верхнем уровне.</li>
+                <li>Обработчики (callbacks) тоже прописываются наверху и пробрасываются вниз.</li>
+                <li>Каждый виджет обязан принять нужные параметры и передать дальше.</li>
+            </ul>
+
+            <p>Посмотрим, как выглядит ручное поднятие состояния.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2 style="display: inline;"><strong>Поднимаем состояние вручную</strong></h2>
+
+            <p><strong>Шаг 1.</strong> Делаем корневой виджет <code class="code">MyApp</code> stateful и храним в нём состояние карточки.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">main.dart</code> — состояние в корне</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Тёмная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:flutter_application_1/1_stateless_widget.dart';
+
+void main() =&gt; runApp(const MyApp());
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State&lt;MyApp&gt; createState() =&gt; _MyAppState();
+}
+
+class _MyAppState extends State&lt;MyApp&gt; {
+  String title = "Flutter Course 2025";
+  String author = "IT-Квантум";
+  bool isFavorite = false;
+
+  void onLike() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Flutter Course 2025",
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        fontFamily: "Montserrat",
+      ),
+      home: Scaffold(
+        body: HomeWidget(
+          title: title,
+          author: author,
+          isFavorite: isFavorite,
+          onLike: onLike,
+        ),
+      ),
+    );
+  }
+}
+
+class HomeWidget extends StatelessWidget {
+  final String title;
+  final String author;
+  final bool isFavorite;
+  final VoidCallback onLike;
+
+  const HomeWidget({
+    super.key,
+    required this.title,
+    required this.author,
+    required this.isFavorite,
+    required this.onLike,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("💛HomeWidget build");
+
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFFBFF098), Color(0xFF6FD6FF)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(64.0),
+            child: TrackCard(
+              title: title,
+              author: author,
+              isFavorite: isFavorite,
+              onLike: onLike,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+
+            <p><strong>Шаг 2.</strong> Каждый дочерний виджет принимает свои параметры и пробрасывает их дальше.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">1_stateless_widget.dart</code> — проброс параметров</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Тёмная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';
+
+class TrackCard extends StatelessWidget {
+  final String title;
+  final String author;
+  final bool isFavorite;
+  final VoidCallback onLike;
+
+  const TrackCard({
+    super.key,
+    required this.title,
+    required this.author,
+    required this.isFavorite,
+    required this.onLike,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("💛TrackCard build");
+
+    return Card(
+      color: Colors.white,
+      child: ListTile(
+        leading: Image.asset("assets/images/s.png"),
+        title: TitleWidget(title: title),
+        subtitle: SubtitleWidget(author: author),
+        trailing: LikeButton(
+          isFavorite: isFavorite,
+          onLike: onLike,
+        ),
+      ),
+    );
+  }
+}
+
+class TitleWidget extends StatelessWidget {
+  final String title;
+
+  const TitleWidget({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("💛TitleWidget build");
+    return Text(
+      title,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    );
+  }
+}
+
+class SubtitleWidget extends StatelessWidget {
+  final String author;
+
+  const SubtitleWidget({super.key, required this.author});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("💛SubtitleWidget build");
+    return Text(author.toUpperCase());
+  }
+}
+
+class LikeButton extends StatelessWidget {
+  final bool isFavorite;
+  final VoidCallback onLike;
+
+  const LikeButton({
+    super.key,
+    required this.isFavorite,
+    required this.onLike,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("💛LikeButton build");
+
+    return IconButton(
+      onPressed: onLike,
+      icon: isFavorite
+          ? const Icon(Icons.favorite, color: Colors.red)
+          : const Icon(Icons.favorite_border),
+    );
+  }
+}
+</code></pre>
+
+            <p>Теперь всё работает, но каждый уровень иерархии знает слишком много о состоянии. Нужно постоянно передавать одинаковые параметры, а при каждом изменении состояния Flutter перестраивает всю цепочку.</p>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2 style="display: inline;"><strong>Почему это неудобно</strong></h2>
+
+            <p>Любое изменение <code class="code">isFavorite</code> заставляет перестраиваться все виджеты, даже те, кто не использует это состояние. Чем больше приложение, тем заметнее удар по производительности.</p>
+
+            <div class="warning-block">
+                <h4>Минусы ручного поднятия состояния</h4>
+                <ul>
+                    <li>Много «прокладок» в конструкторе у каждого виджета.</li>
+                    <li>Сложно масштабировать и переиспользовать компоненты.</li>
+                    <li>Все уровни подписаны на одно и то же обновление — происходит массовый rebuild.</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="images/l9.4/lifting-state.gif" width="500" alt="Все виджеты постоянно перерисовываются">
+                <p style="margin-top: 10px;">Массовые перерисовки при ручном Lifting State Up</p>
+            </div>
+
+            <img src="images/l9.4/lifting_state_up.gif" width="500" alt="Работа приложения с Provider">
+
+            <p>Хотим управлять состоянием в одном месте и перерисовывать только те виджеты, которые действительно зависят от данных. Поможет популярный пакет <strong>provider</strong>.</p>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2 style="display: inline;"><strong>Устанавливаем Provider</strong></h2>
+
+            <p><strong>Шаг 1.</strong> Находим пакет на <a href="https://pub.dev/packages/provider" target="_blank" rel="noopener">pub.dev</a>.</p>
+
+            <div class="image-grid" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <img src="images/l9.4/Pasted%20image%2020250924112401.png" alt="Страница поиска provider" style="max-width: 320px; border-radius: 12px;">
+                <img src="images/l9.4/Pasted%20image%2020250924112525.png" alt="Карточка пакета provider" style="max-width: 320px; border-radius: 12px;">
+                <img src="images/l9.4/Pasted%20image%2020250924112646.png" alt="Вкладка Installing" style="max-width: 320px; border-radius: 12px;">
+            </div>
+
+            <p><strong>Шаг 2.</strong> Добавляем зависимость в <code class="code">pubspec.yaml</code>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">pubspec.yaml</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Тёмная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-yaml">dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.5+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+</code></pre>
+
+            <div class="note-block">
+                <p>После обновления зависимостей запустите <code class="code">flutter pub get</code>, чтобы скачать пакет.</p>
+            </div>
+
+            <p><strong>Шаг 3.</strong> Организуем код в папках:</p>
+            <ul>
+                <li><code class="code">lib/models</code></li>
+                <li><code class="code">lib/providers</code></li>
+                <li><code class="code">lib/views</code></li>
+            </ul>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2 style="display: inline;"><strong>Готовим провайдер данных</strong></h2>
+
+            <p>Создадим <code class="code">TrackProvider</code>, который будет хранить, менять и оповещать слушателей об изменении состояния.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">lib/providers/track_provider.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Тёмная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/foundation.dart';
+
+class TrackProvider extends ChangeNotifier {
+  final String _author;
+  final String _title;
+  bool _isFavorite = false;
+
+  TrackProvider(this._author, this._title);
+
+  String get title =&gt; _title;
+  String get author =&gt; _author;
+  bool get isFavorite =&gt; _isFavorite;
+
+  void toggleFavorite() {
+    _isFavorite = !_isFavorite;
+    notifyListeners();
+  }
+}
+</code></pre>
+
+            <div class="note-block">
+                <p>Метод <code class="code">notifyListeners()</code> сообщит всем подписчикам, что данные изменились, и нужно перерисовать только их.</p>
+            </div>
+        </section>
+
+        <section id="section-6" class="lesson-section">
+            <h2 style="display: inline;"><strong>Используем Provider в виджетах</strong></h2>
+
+            <p>Теперь можем оставить все виджеты stateless. Они будут брать данные напрямую из провайдера через <code class="code">context.read</code> или <code class="code">context.watch</code>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">lib/views/track_card.dart</code></h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Тёмная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/track_provider.dart';
+import 'package:provider/provider.dart';
+
+class TrackCard extends StatelessWidget {
+  const TrackCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("💛TrackCard build");
+
+    return Card(
+      color: Colors.white,
+      child: ListTile(
+        leading: Image.asset("assets/images/s.png"),
+        title: const TitleWidget(),
+        subtitle: const SubtitleWidget(),
+        trailing: const LikeButton(),
+      ),
+    );
+  }
+}
+
+class TitleWidget extends StatelessWidget {
+  const TitleWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final title = context.read&lt;TrackProvider&gt;().title;
+    debugPrint("💛TitleWidget build");
+
+    return Text(
+      title,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    );
+  }
+}
+
+class SubtitleWidget extends StatelessWidget {
+  const SubtitleWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final author = context.read&lt;TrackProvider&gt;().author;
+    debugPrint("💛SubtitleWidget build");
+    return Text(author.toUpperCase());
+  }
+}
+
+class LikeButton extends StatelessWidget {
+  const LikeButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isFavorite = context.watch&lt;TrackProvider&gt;().isFavorite;
+    debugPrint("💛LikeButton build");
+
+    return IconButton(
+      onPressed: () =&gt; context.read&lt;TrackProvider&gt;().toggleFavorite(),
+      icon: isFavorite
+          ? const Icon(Icons.favorite, color: Colors.red)
+          : const Icon(Icons.favorite_border),
+    );
+  }
+}
+</code></pre>
+
+            <p><code class="code">context.watch</code> подписывает кнопку на изменения. Остальные виджеты используют <code class="code">context.read</code> и не перерисовываются при каждом лайке.</p>
+        </section>
+
+        <section id="section-7" class="lesson-section">
+            <h2 style="display: inline;"><strong>Подключаем Provider в приложении</strong></h2>
+
+            <p>Обернём приложение в <code class="code">ChangeNotifierProvider</code>, чтобы передать провайдер во всё дерево виджетов.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Файл <code class="code">lib/main.dart</code> — итоговая схема</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Тёмная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/track_provider.dart';
+import 'package:flutter_application_1/views/track_card.dart';
+import 'package:provider/provider.dart';
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) =&gt; TrackProvider("IT-Квантум", "Flutter Course 2025"),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Flutter Course 2025",
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        fontFamily: "Montserrat",
+      ),
+      home: const Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(64.0),
+              child: TrackCard(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="margin-top: 10px;">Provider заставляет перерисовываться только LikeButton</p>
+            </div>
+        </section>
+
+        <section id="section-8" class="lesson-section">
+            <h2 style="display: inline;"><strong>Итоги</strong></h2>
+
+            <ul>
+                <li><strong>Ручной Lifting State Up</strong> помогает быстро наладить обмен данными, но перегружает иерархию.</li>
+                <li><strong>Provider</strong> выносит состояние в отдельный класс и уведомляет только нужные виджеты.</li>
+                <li>Виджеты остаются <strong>Stateless</strong>, а производительность растёт за счёт точечной подписки.</li>
+            </ul>
+
+            <p>Используйте provider (или похожие решения), когда данные нужны многим компонентам. Так вы уменьшите количество дублирования и получите масштабируемую архитектуру.</p>
+        </section>
+    </div>
+
+    <button id="scrollToTop" title="Наверх"></button>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+    <script src="../../js/interactive-code.js"></script>
+    <script src="../../js/interactive-snapshots.js"></script>
+
+</body>
+</html>
+
