@@ -40,7 +40,7 @@
             </div>
             <pre><code class="language-dart">void main() {
   List<String> students = ['Аня', 'Боря', 'Наташа', 'Глеб', 'Даша'];
-  List<List<int>> studentGrades = [
+  List&lt;List&lt;int&gt;&gt; studentGrades = [
     [5, 4, 5], // Оценки Ани по Математике, Физике, Информатике
     [3, 5, 4], // Оценки Бори
     [5, 5, 5], // Оценки Наташи
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <pre><code class="language-dart">void main() {
-  List<List<dynamic>> students = [
+  List&lt;List&lt;dynamic&gt;&gt; students = [
     ['Аня', [5, 4, 5]],
     ['Боря', [3, 5, 4]],
     ['Наташа', [5, 5, 5]],
@@ -156,7 +156,7 @@
                 </div>
             </div>
             <pre><code class="language-dart">void main() {
-  Map<String, List<int>> students = {
+  Map&lt;String, List&lt;int&gt;&gt; students = {
     'Аня': [5, 4, 5],
     'Боря': [3, 5, 4],
     'Наташа': [5, 5, 5],
@@ -230,7 +230,7 @@
             <pre><code class="language-dart">void main() {
 
   // Имя (ключ) : Номер телефона (значение)
-  Map<String, String> phoneBook = {
+  Map&lt;String, String&gt; phoneBook = {
     'Маша': '+7 911 987 65 43',
     'Артём': '+7 922 555 11 22',
   };
@@ -440,7 +440,7 @@ print(user.values); // (Юля, 18)</code></pre>
                 </div>
             </div>
             <pre><code class="language-dart">void main() {
-  Map<String, int> mathGrades = {
+  Map&lt;String, int&gt; mathGrades = {
     'Юля': 5, 
     'Максим': 4,
   };
@@ -554,7 +554,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
             </div>
             <pre><code class="language-dart">void main() {
 
-  Map<String, String> settings = {
+  Map&lt;String, String&gt; settings = {
     'sound': 'on', 
     'vibrate': 'on', 
     'notifications': 'off',
@@ -583,7 +583,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
                 </div>
             </div>
             <pre><code class="language-dart">void main() {
-  Map<String, int> students = {
+  Map&lt;String, int&gt; students = {
     'Маша': 17, 
     'Юля': 20, 
     'Артём': 15, 
@@ -611,7 +611,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
             </div>
             <pre><code class="language-dart">main() {
 
-  Map<String, int> students = {
+  Map&lt;String, int&gt; students = {
     'Маша': 17, 
     'Юля': 20, 
     'Артём': 15, 
@@ -646,7 +646,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
             </div>
             <pre><code class="language-dart">void main(List<String> args) {
 
-  Map<String, int> students = {
+  Map&lt;String, int&gt; students = {
     'Маша': 17,
     'Юля': 20,
     'Артём': 15,
@@ -680,7 +680,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
             </div>
             <pre><code class="language-dart">void main(List<String> args) {
 
-  Map<String, int> students = {'Маша': 17, 'Юля': 20, 'Артём': 15, 'Антон': 21};
+  Map&lt;String, int&gt; students = {'Маша': 17, 'Юля': 20, 'Артём': 15, 'Антон': 21};
 
   for (var entry in students.entries) {
     print('Ключ: ${entry.key}, Значение: ${entry.value}');
@@ -731,7 +731,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
             </div>
             <pre><code class="language-dart">void main(List<String> args) {
 
-  Map<String, int> students = {'Маша': 17, 'Юля': 20, 'Артём': 15, 'Антон': 21};
+  Map&lt;String, int&gt; students = {'Маша': 17, 'Юля': 20, 'Артём': 15, 'Антон': 21};
 
   print(students.length); // 4 пары
   print(students.isEmpty); // false
@@ -768,7 +768,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
             </div>
             <pre><code class="language-dart">void main() {
   // Обычный завтрак
-  final Map<String, int> basicBreakfast = {
+  final Map&lt;String, int&gt; basicBreakfast = {
     'Молоко': 1,
     'Хлопья': 1,
   };
@@ -777,7 +777,7 @@ print(prices); // {milk: 4, bread: 6, eggs: 8}</code></pre>
   final bool isHoliday = true; 
 
   // Делаем "супер-завтрак"!
-  final Map<String, int> superBreakfast = {
+  final Map&lt;String, int&gt; superBreakfast = {
     ...basicBreakfast, // Развернём сюда данные из другой Map
     'Ягоды': 5, // Добавим ягоды
     
