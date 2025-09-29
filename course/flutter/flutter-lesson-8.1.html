@@ -23,11 +23,14 @@
     <div id="main-content">
       <h1>Основы Future и EventLoop</h1>
       
-      <p>Асинхронное программирование стало неотъемлемой частью современной разработки, особенно важной для создания отзывчивых пользовательских интерфейсов и эффективной обработки данных.</p>
-      <p>Dart, будучи однопоточным языком, эффективно справляется с долгими операциями, не блокируя пользовательский интерфейс. Мы изучим ключевые концепции, такие как <code class="code">Future</code>, <code class="code">async/await</code>, <code class="code">Stream</code> и <code class="code">Isolate</code>.</p>
+
       
       <section id="section-1" class="lesson-section">
           <h2><strong>1. Процессы и Потоки</strong></h2>
+
+          <p>Асинхронное программирование стало неотъемлемой частью современной разработки, особенно важной для создания отзывчивых пользовательских интерфейсов и эффективной обработки данных.</p>
+          <p>Dart, будучи однопоточным языком, эффективно справляется с долгими операциями, не блокируя пользовательский интерфейс. Мы изучим ключевые концепции, такие как <code class="code">Future</code>, <code class="code">async/await</code>, <code class="code">Stream</code> и <code class="code">Isolate</code>.</p>
+
           <p>Чтобы понять асинхронность, сначала нужно разобраться с двумя базовыми понятиями: <strong>Процесс</strong> и <strong>Поток</strong>.</p>
           <ul>
             <li style="margin-bottom: 10px;"><strong>Процесс</strong> (Process) — это запущенная программа в операционной системе (например, ваш браузер, текстовый редактор или Flutter-приложение). Каждый процесс имеет свою собственную, <strong>изолированную память</strong>. Это значит, что один процесс не может напрямую получить доступ к данным другого. Однако они могут общаться между собой через системные сообщения. Например, при HTTP-запросе наш процесс обращается к процессу операционной системы, чтобы она загрузила данные из интернета.</li>
@@ -43,6 +46,7 @@
         <p><strong>Аналогия с загрузкой картинки</strong>: Представьте, что вы начинаете загружать большую картинку из интернета. В синхронном случае ваше приложение “замирает” и ждет завершения загрузки, прежде чем выполнить следующую строку кода. В асинхронном случае загрузка картинки передается операционной системе и помещается в специальную очередь Event Loop, а ваш код продолжает выполняться. Когда ОС завершит загрузку и подойдет очередь в Event Loop, картинка станет доступной для использования.</p>
         
         <div class="code-block-header">
+          <h5 class="code-block-title">Dart - Асинхронная загрузка картинки</h5>
             <div class="code-block-controls">
                 <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
                 <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
@@ -63,14 +67,15 @@ print('hello');
 getData(); // * Синхронная операция
 print('Ok');
 
-// В синхронном случае, на экран попадёт 'hello' и начнётся обработка получения изображений с сервера. 
+// В синхронном случае, на экран попадёт 'hello' и начнётся обработка получения с сервера. 
 // Всё приложение замирает и ждёт конца выполнения. И только потом на экран попадёт 'Ok'
 
 print('hello');
 getDataAsync() // * Асинхронная операция
 print('Ok');
 
-// В Асинхронном случае, на экран сразу попадёт 'hello' 'Ok', а выполнение тяжелой операции выполняется в фоне и приложение не зависает
+// В Асинхронном случае, на экран сразу попадёт 'hello' 'Ok'
+// А выполнение тяжелой операции выполняется в фоне и приложение не зависает
 </code></pre>
 
         <p><strong>Рассмотрим пример работы синхронной и асинхронной операции в приложении.</strong></p>
@@ -342,13 +347,62 @@ void eventLoop() {
         </ul>
 
         <h3><strong>Как это работает вместе</strong></h3>
+
+
+        <div class="slideshow-container" data-width="800px">
+          <div class="slideshow-wrapper">
+              <div class="slideshow">
+                  <div class="slide active">
+                    <img src="images/l8.1/event-loop-1.png" alt="event-loop-1">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-2.png" alt="event-loop-2">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-3.png" alt="event-loop-3">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-4.png" alt="event-loop-4">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-5.png" alt="event-loop-5">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-6.png" alt="event-loop-6">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-7.png" alt="event-loop-7">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-8.png" alt="event-loop-8">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-9.png" alt="event-loop-9">
+                  </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-10.png" alt="event-loop-10">
+                  </div>
+              </div>
+            </div>
+            <div class="slideshow-controls">
+              <button class="slideshow-btn prev-btn">‹</button>
+              <div class="dots-container"></div>
+              <button class="slideshow-btn next-btn">›</button>
+          </div>
+        </div>
+
+
         <ol>
             <li><strong>Начало:</strong> Повар (основной поток) начинает выполнять рецепт (функцию <code class="code">main()</code>).<br>
                 <img src="images/l8.1/event-loop-1.png" alt="event-loop-1" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+
             <li><strong>Запуск асинхронной задачи:</strong> Пункт "сварить картошку". Он дает команду плите, ставит таймер на 15 минут (<code class="code">Future</code>) и <strong>сразу же идет дальше по рецепту</strong>. Он не ждет перед плитой пока сварится картошка</li>
+
             <li>Тоже самое для пункта "Сварить яйца"<br>
                 <img src="images/l8.1/event-loop-2.png" alt="event-loop-2" style="display: block; margin: 20px auto; max-width: 100%;">
                 <img src="images/l8.1/event-loop-3.png" alt="event-loop-3" style="display: block; margin: 20px auto; max-width: 100%;"></li>
+
+
             <li><strong>Выполнение синхронного кода:</strong> Теперь поток свободен, и повар начинает резать огурцы и лук (выполняет синхронный код, который идет после вызова асинхронной функции).<br>
                 <img src="images/l8.1/event-loop-4.png" alt="event-loop-4" style="display: block; margin: 20px auto; max-width: 100%;">
                 <img src="images/l8.1/event-loop-5.png" alt="event-loop-5" style="display: block; margin: 20px auto; max-width: 100%;"></li>

@@ -58,7 +58,41 @@
       <p><em>Пытаемся ворваться на кухню</em></p>
       <img src="images/l8.2/client-server-http2.gif" alt="client-server-http2" style="display: block; margin: 20px auto; max-width: 100%;">
       <p><em>Используем культурный протокол</em></p>
-      <img src="images/l8.2/client-server-http3.gif" alt="client-server-http3" style="display: block; margin: 20px auto; max-width: 100%;">
+
+
+      
+      <div class="slideshow-container" data-width="800px">
+        <div class="slideshow-wrapper">
+            <div class="slideshow">
+                <div class="slide active">
+                  <img src="images/l8.2/Untitled.png" alt="event-loop-1">
+                </div>
+                <div class="slide">
+                  <img src="images/l8.2/Untitled-1.png" alt="event-loop-2">
+                </div>
+                <div class="slide">
+                  <img src="images/l8.2/Untitled-2.png" alt="event-loop-3">
+                </div>
+                <div class="slide">
+                  <img src="images/l8.2/Untitled-3.png" alt="event-loop-4">
+                </div>
+                <div class="slide">
+                  <img src="images/l8.2/Untitled-4.png" alt="event-loop-5">
+                </div>
+                <div class="slide">
+                  <img src="images/l8.2/Untitled-5.png" alt="event-loop-6">
+                </div>
+                <div class="slide">
+                  <img src="images/l8.2/Untitled-6.png" alt="event-loop-7">
+                </div>
+            </div>
+          </div>
+          <div class="slideshow-controls">
+            <button class="slideshow-btn prev-btn">‹</button>
+            <div class="dots-container"></div>
+            <button class="slideshow-btn next-btn">›</button>
+        </div>
+      </div>
     </section>
 
     <section id="section-4" class="lesson-section">
@@ -72,17 +106,20 @@
         <li><code class="code">API</code></li>
       </ul>
       <p>Чтобы продемонстрировать работу с <code class="code">HTTP</code> нужно, чтобы был готовый сервер, на сервере чтобы была база данных, а ещё чтобы этот сервер предоставлял <code class="code">API</code> для доступа к данным.</p>
-      <blockquote>
-        <p><code class="code">[!NOTE]</code> <code class="code">API</code> - <code class="code">Application Programming Interface</code></p>
+      <div class="note">
+        <p><strong><code class="code">API</code> - <code class="code">Application Programming Interface</code></strong></p>
         <p>Программный Интерфейс. Это набор инструкций, которые позволяют разным программам удобно взаимодействовать друг с другом.</p>
         <p>Правила API описывают возможные запросы к серверу и ответы сервера на эти запросы.</p>
-      </blockquote>
+      </div>
       <p>Учиться создавать готовый сервер и работать с СУБД мы будем не в этом разделе курса, поэтому удобней и эффективней воспользоваться готовыми решениями.</p>
       <p>Для начала, воспользуемся самым простым сервисом <a href="https://jsonplaceholder.typicode.com/" target="_blank">https://jsonplaceholder.typicode.com/</a><br>Он предоставляет готовый <code class="code">API</code> для доступа к постам блога и комментариям. Это не настоящие данные, они нужны только для тестирования и учёбы, их обычно называют <code class="code">Mock</code> данные.</p>
       <ul>
         <li>Используем <code class="code">HTTP</code> метод <code class="code">GET</code> чтобы получить данные</li>
         <li>Для работы с <code class="code">HTTP</code> в стандартной библиотеке <code class="code">dart:io</code> есть класс <code class="code">HttpClient</code></li>
       </ul>
+    </section>
+    <section class="lesson-section">
+      <h2>Первый запрос с `HttpClient`</h2>
       <div class="code-block-header">
         <h5 class="code-block-title">Dart</h5>
         <div class="code-block-controls">
@@ -159,19 +196,20 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
 ]
 </code></pre>
 
-      <h3>Что такое <code class="code">JSON</code></h3>
+      <section class="lesson-section">
+      <h2>Что такое <code class="code">JSON</code></h2>
       <ul>
         <li>В первом случае получаем один объект c данными</li>
         <li>Во втором случае получаем массив этих объектов</li>
       </ul>
       <p>На что похожи эти данные? На структуру словаря <code class="code">Map</code>, там есть <code class="code">ключ</code> и <code class="code">значение</code>.<br>На самом деле это очень популярный формат для передачи данных <code class="code">JSON</code></p>
-      <blockquote>
-        <p><code class="code">[!NOTE]</code> <strong><code class="code">JSON</code></strong></p>
-        <p><code class="code">JavaScript Object Notation</code> - это формат обмена данными, который стал стандартом.</p>
-      </blockquote>
+      <div class="note">
+        <p><strong><code class="code">JSON</code> - <code class="code">JavaScript Object Notation</code></strong></p>
+        <p>Это формат обмена данными, который стал стандартом.</p>
+      </div>
       <p>Данные, передаваемые по <code class="code">HTTP</code>, могут иметь любой формат, но чаще всего используется формат <code class="code">JSON</code>. Он не зависит от языка программирования и очень простой.</p>
-      <blockquote>
-        <p><code class="code">[!NOTE]</code> <code class="code">Важно запомнить</code></p>
+      <div class="note">
+        <p><strong><code class="code">Важно запомнить</code></strong></p>
         <p><strong><code class="code">Ключи</code></strong>&nbsp;- строковые переменные<br><strong><code class="code">Значения</code></strong>&nbsp;- строки, числа, булевы значения, объекты, массивы, null.</p>
         <p>- Функции и&nbsp;даты в&nbsp;обычном <code class="code">JSON</code> не&nbsp;поддерживаются.<br>- После последней пары <code class="code">запятая не&nbsp;ставится</code>&nbsp;это распространённая ошибка.<br>- Для хранения данных используются две структуры&nbsp;<code class="code">объекты</code> и&nbsp;<code class="code">массивы</code>.</p>
         <div class="code-block-header">
@@ -188,17 +226,19 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
   "Key3": ["Dart", "Swift", "Kotlin", "Python"]
 }
 </code></pre>
-      </blockquote>
+      </div>
       <p>Если перейти в любой браузер и ввести в строку поиска <code class="code">URL адрес</code> <code class="code">https://jsonplaceholder.typicode.com/posts/1</code> , то увидим данные в формате <code class="code">json</code> внутри браузера (плагин для chrome <code class="code">jsonify</code>)</p>
       <p><strong>Обычно такими данными в современной разработке обмениваются клиент и сервер.</strong></p>
       <img src="images/l8.2/API.gif" alt="API" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
 
-      <h3>Что такое <code class="code">URL</code> адрес</h3>
-      <blockquote>
-        <p><code class="code">[!NOTE]</code> <code class="code">URL</code></p>
-        <p> <code class="code">Uniform Resource Locator</code> - это строка, определяющая расположение ресурса (например, веб-страницы, текстовых данных, изображения, видео) в Интернете.</p>
+      <section class="lesson-section">
+      <h2>Что такое <code class="code">URL</code> адрес</h2>
+      <div class="note">
+        <p><strong><code class="code">URL</code> - <code class="code">Uniform Resource Locator</code></strong></p>
+        <p>Это строка, определяющая расположение ресурса (например, веб-страницы, текстовых данных, изображения, видео) в Интернете.</p>
         <p> В контексте протокола&nbsp;<code class="code">HTTP</code>, <code class="code">URL</code> называют <code class="code">веб-адресом</code> или <code class="code">сылкой</code></p>
-      </blockquote>
+      </div>
       <p><strong>Например <code class="code">https://jsonplaceholder.typicode.com/posts/1</code></strong></p>
       <ul>
         <li><code class="code">https://</code> - это протокол, в данном случае защищенный <strong><code class="code">HTTP Secure</code></strong></li>
@@ -216,8 +256,10 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
           </ul>
         </li>
       </ul>
+      </section>
 
-      <h3>Что такое <code class="code">статус коды</code></h3>
+      <section class="lesson-section">
+      <h2>Что такое <code class="code">статус коды</code></h2>
       <p><code class="code">Коды состояния</code> <code class="code">Status Code</code>  используются, чтобы сообщить клиенту статус его запроса. <code class="code">HTTP-сервер</code> возвращает код, который принадлежит одной из пяти категорий кодов </p>
       <ol>
         <li><a href="https://developer.mozilla.org/ru/docs/Web/HTTP/Reference/Status#%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%8B" target="_blank">Информационные ответы</a>&nbsp;(<code class="code">100</code>&nbsp;–&nbsp;<code class="code">199</code>)</li>
@@ -231,8 +273,10 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
       <code class="code">400 Bad Request</code>&nbsp;- в запросе ошибка<br>
       <code class="code">404</code> <code class="code">Not Found</code> - cервер не может найти запрошенный ресурс<br>
       <code class="code">500 Internal Error</code>&nbsp;- на сервере произошла ошибка, он не может обработать запрос</p>
+      </section>
 
-      <h3>Что такое <code class="code">Http</code> Методы</h3>
+      <section class="lesson-section">
+      <h2>Что такое <code class="code">Http</code> Методы</h2>
       <p><code class="code">HTTP</code> определяет множество&nbsp;<strong><code class="code">методов запроса</code></strong>, которые указывают, какое желаемое действие выполнится для данного ресурса.</p>
       <ol>
         <li><code class="code">GET</code> для получения данных</li>
@@ -247,11 +291,15 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
         <li><code class="code">PUT /posts/1</code>&nbsp;- обновить пост.</li>
         <li><code class="code">DELETE /posts/1</code> - удалить пост.</li>
       </ul>
+      </section>
 
-      <h3>Схематичная работа <code class="code">Http Request</code> и <code class="code">Http Response</code></h3>
+      <section class="lesson-section">
+      <h2>Схематичная работа <code class="code">Http Request</code> и <code class="code">Http Response</code></h2>
       <img src="images/l8.2/request-response.gif" alt="request-response" style="display: block; margin: 20px auto; max-width: 100%;">
+      </section>
 
-      <h3>Структура <code class="code">Http Request</code></h3>
+      <section class="lesson-section">
+      <h2>Структура <code class="code">Http Request</code></h2>
       <p>Когда происходит <code class="code">GET-запрос</code> по адресу <code class="code">https://jsonplaceholder.typicode.com/posts/1</code> через приложение написанное на Dart <code class="code">структура HTTP-запроса</code> будет следующей:</p>
       <ol>
         <li>Строка запроса (<code class="code">Request Line</code>)</li>
@@ -299,8 +347,10 @@ Connection: keep-alive
           </ul>
         </li>
       </ol>
-
-      <h3>Структура <code class="code">Http Response</code></h3>
+      </section>
+      
+      <section class="lesson-section">
+      <h2>Структура <code class="code">Http Response</code></h2>
       <p>Классическая структура ответа следующая:</p>
       <ol>
         <li>Строка состояния (<code class="code">Status Line</code>)</li>
