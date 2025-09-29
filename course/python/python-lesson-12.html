@@ -23,6 +23,212 @@
         <h1>Множества (Set) в Python</h1>
 
         <section class="lesson-section">
+            <h2 style="display: inline;">Главная фишка: только уникальные элементы</h2>
+            <p>Представьте, что вы составляете список покупок. Если вы дважды добавите в него «молоко», вам всё равно нужно купить только одну упаковку. Множества в Python работают по тому же принципу: они автоматически избавляются от дубликатов.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Список с повторяющимися товарами
+shopping_list = ['молоко', 'хлеб', 'яйца', 'молоко', 'масло', 'хлеб']
+print(f"Обычный список: {shopping_list}")
+
+# Превращаем список в множество, чтобы убрать дубликаты
+unique_items = set(shopping_list)
+print(f"Уникальные товары (множество): {unique_items}")
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Вывод</h5>
+            </div>
+            <pre><code class="bash">Обычный список: ['молоко', 'хлеб', 'яйца', 'молоко', 'масло', 'хлеб']
+Уникальные товары (множество): {'масло', 'хлеб', 'яйца', 'молоко'}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Основные операции (CRUD)</h2>
+            <p>Работать с множествами просто. Вот как выполнять базовые действия: создать, прочитать, обновить и удалить элементы.</p>
+
+            <h3>C - Create (Создание множества)</h3>
+            <p>Сначала посмотрим на проблему дублирования в обычном списке, а затем решим её с помощью множества:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Список с повторяющимися играми
+games_list = ['Minecraft', 'Dota 2', 'CS:GO', 'Minecraft', 'Valorant', 'CS:GO']
+print(f"Список с дубликатами: {games_list}")
+
+# Создаём множество из списка - дубликаты автоматически удаляются
+games = set(games_list)
+print(f"Множество (без дубликатов): {games}")
+
+# Или создаём множество напрямую
+favorite_games = {'Minecraft', 'Dota 2', 'CS:GO'}
+print(f"Создали множество напрямую: {favorite_games}")
+</code></pre>
+
+            <h3>R - Read (Чтение из множества)</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Проверяем, есть ли игра в множестве
+if 'Minecraft' in games:
+    print("✅ Игра 'Minecraft' есть в коллекции!")
+else:
+    print("❌ Игры 'Minecraft' нет в коллекции")
+
+# Проверяем количество игр
+print(f"Всего уникальных игр: {len(games)}")
+
+# Перебираем все игры в множестве
+print("Все игры в коллекции:")
+for game in games:
+    print(f"🎮 {game}")
+</code></pre>
+
+            <h3>U - Update (Обновление множества)</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Добавляем одну игру
+games.add('Valorant')
+print(f"Добавили 'Valorant': {games}")
+
+# Пытаемся добавить игру, которая уже есть (ничего не произойдёт)
+games.add('Minecraft')
+print(f"Попытались добавить 'Minecraft' снова: {games}")
+
+# Добавляем несколько игр сразу
+new_games = ['Cyberpunk 2077', 'The Witcher 3', 'Minecraft']
+games.update(new_games)
+print(f"Добавили несколько игр: {games}")
+
+# Можно также объединить с другим множеством
+indie_games = {'Hollow Knight', 'Celeste', 'Hades'}
+games.update(indie_games)
+print(f"Добавили инди-игры: {games}")
+</code></pre>
+
+            <h3>D - Delete (Удаление из множества)</h3>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># remove() - удаляет элемент, но выдаёт ошибку, если его нет
+games.remove('CS:GO')
+print(f"Удалили 'CS:GO': {games}")
+
+# discard() - удаляет элемент, но НЕ выдаёт ошибку, если его нет
+games.discard('Fortnite')  # Этой игры нет в множестве, но ошибки не будет
+print(f"Попытались удалить 'Fortnite' (безопасно): {games}")
+
+# pop() - удаляет и возвращает случайный элемент
+removed_game = games.pop()
+print(f"Удалили случайную игру '{removed_game}': {games}")
+
+# clear() - очищает всё множество
+games_copy = games.copy()  # Сначала сделаем копию
+games_copy.clear()
+print(f"Очистили копию множества: {games_copy}")
+print(f"Оригинальное множество осталось: {games}")
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Вывод</h5>
+            </div>
+            <pre><code class="bash">Создали множество игр: {'CS:GO', 'Dota 2', 'Minecraft'}
+Игра 'Minecraft' есть в коллекции!
+Все игры в коллекции:
+- CS:GO
+- Dota 2
+- Minecraft
+Добавили игру: {'Valorant', 'CS:GO', 'Dota 2', 'Minecraft'}
+Добавили еще несколько: {'Valorant', 'CS:GO', 'Dota 2', 'Minecraft', 'Cyberpunk 2077'}
+Удалили игру: {'Valorant', 'Dota 2', 'Minecraft', 'Cyberpunk 2077'}
+Попытались удалить 'Fortnite': {'Valorant', 'Dota 2', 'Minecraft', 'Cyberpunk 2077'}
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Основные операции над множествами</h2>
+            <p>Множества очень удобны для сравнения коллекций. Например, чтобы узнать, в какие игры играют ваши друзья.</p>
+
+            <h3>Объединение (|) - Все игры вместе</h3>
+            <p>Объединяет две коллекции игр в одну, убирая все дубликаты.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">my_games = {'CS:GO', 'Dota 2', 'Minecraft'}
+friend_games = {'Cyberpunk 2077', 'Minecraft', 'The Witcher 3'}
+all_games = my_games | friend_games
+print(f"Все игры вместе: {all_games}")</code></pre>
+
+            <h3>Пересечение (&) - Общие игры</h3>
+            <p>Находит игры, которые есть у обоих игроков.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">my_games = {'CS:GO', 'Dota 2', 'Minecraft'}
+friend_games = {'Cyberpunk 2077', 'Minecraft', 'The Witcher 3'}
+common_games = my_games & friend_games
+print(f"Общие игры: {common_games}")</code></pre>
+
+            <h3>Разность (-) - Игры, которые есть только у меня</h3>
+            <p>Показывает игры, которые есть у вас, но нет у вашего друга.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">my_games = {'CS:GO', 'Dota 2', 'Minecraft'}
+friend_games = {'Cyberpunk 2077', 'Minecraft', 'The Witcher 3'}
+unique_to_me = my_games - friend_games
+print(f"Игры, которые есть только у меня: {unique_to_me}")</code></pre>
+
+            <h3>Симметрическая разность (^) - Уникальные игры для каждого</h3>
+            <p>Находит игры, которые есть только у одного из вас (но не у обоих сразу).</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">my_games = {'CS:GO', 'Dota 2', 'Minecraft'}
+friend_games = {'Cyberpunk 2077', 'Minecraft', 'The Witcher 3'}
+exclusive_games = my_games ^ friend_games
+print(f"Уникальные игры для каждого: {exclusive_games}")</code></pre>
+        </section>
+
+        <!-- <section class="lesson-section">
             <h2 style="display: inline;">Введение в множества (Set)</h2>
             <p>Коллекция <code class="code">set</code> (множество) в <strong>Python</strong> — это структура данных, которая хранит <strong>только уникальные элементы</strong>.  
             Если вы попытаетесь добавить один и тот же элемент несколько раз, <code class="code">set</code> сохранит его только один раз.  
@@ -361,7 +567,7 @@ print(in_both)  # {'Юля'}
              <div class="note">
                 <p>В Python множества — один из самых удобных инструментов для работы с уникальными коллекциями и быстрого анализа данных.</p>
             </div>
-        </section>
+        </section> -->
 
 
         <button id="scrollToTop" title="Наверх"></button>

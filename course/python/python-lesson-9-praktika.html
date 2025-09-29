@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 9: Срезы (Slice)</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Практика: Урок 9</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 9: Срезы (Slice)</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.py</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-0" class="lesson-section">
+            <h2>Задача № 0: Базовые срезы</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Дан список <code class="code">numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code>. Используя срезы, получите и выведите:</p>
+            <ul>
+                <li>Первые 4 элемента.</li>
+                <li>Элементы с 3-го по 6-й (включительно).</li>
+                <li>Последние 3 элемента.</li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Исходный список: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Первые 4 элемента: [0, 1, 2, 3]
+Элементы с 3 по 6: [3, 4, 5, 6]
+Последние 3 элемента: [7, 8, 9]</code></pre>
+        </section>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Срезы строк</h2>
+            <p><strong>Уровень сложности:</strong> ⭐</p>
+            <p>Дана строка <code class="code">"Hello, Python world!"</code>. Используя срезы, выполните следующие действия:</p>
+            <ul>
+                <li>Получите слово <code class="code">"Python"</code>.</li>
+                <li>Получите всю строку, кроме последнего символа (восклицательного знака).</li>
+                <li>Получите первые 5 символов.</li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Слово 'Python': Python
+Строка без последнего символа: Hello, Python world
+Первые 5 символов: Hello</code></pre>
+            
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Срезы с шагом</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Дан список <code class="code">data = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']</code>. Используя срезы с шагом:</p>
+            <ul>
+                <li>Получите каждый второй элемент списка.</li>
+                <li>Переверните строку <code class="code">"racecar"</code> и проверьте, является ли она палиндромом.</li>
+                <li>Получите каждый третий элемент из списка <code class="code">numbers</code> из первой задачи в обратном порядке.</li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Каждый второй элемент: ['a', 'c', 'e', 'g']
+Перевернутая строка 'racecar': racecar
+Каждый третий элемент списка numbers в обратном порядке: [9, 6, 3, 0]</code></pre>
+        
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Отрицательные индексы</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐</p>
+            <p>Дан список <code class="code">letters = ['p', 'y', 't', 'h', 'o', 'n']</code>. Используя отрицательные индексы в срезах:</p>
+            <ul>
+                <li>Получите последние 4 элемента.</li>
+                <li>Получите все элементы, кроме первых двух.</li>
+                <li>Получите все элементы, кроме последнего.</li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Последние 4 элемента: ['t', 'h', 'o', 'n']
+Все, кроме первых двух: ['t', 'h', 'o', 'n']
+Все, кроме последнего: ['p', 'y', 't', 'h', 'o']</code></pre>
+        </section>
+
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Изменение списка с помощью срезов</h2>
+            <p><strong>Уровень сложности:</strong> ⭐⭐⭐</p>
+            <p>Дан список <code class="code">items = [10, 20, 30, 40, 50]</code>.</p>
+            <ul>
+                <li>Замените элементы с индексами от 1 до 3 (включительно) на список <code class="code">[25, 35]</code>.</li>
+                <li>Удалите первые два элемента с помощью среза и оператора <code class="code">del</code>.</li>
+                <li>Вставьте в начало списка элементы <code class="code">[1, 2, 3]</code>, используя срез.</li>
+            </ul>
+            
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод</h5>
+            </div>
+            <pre><code class="bash">Исходный список: [10, 20, 30, 40, 50]
+После замены: [10, 25, 35, 50]
+После удаления: [35, 50]
+После вставки в начало: [1, 2, 3, 35, 50]</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
