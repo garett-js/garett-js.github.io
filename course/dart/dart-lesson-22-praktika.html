@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 22: Методы коллекций</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-22.html" class="back-link">←</a> Практика: Урок 22</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 22: Методы коллекций</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Фильтрация и подсчет студентов</h2>
+            <p>Дан список студентов с их оценками. Найдите количество студентов, у которых средний балл выше 4.0, и выведите их имена в алфавитном порядке.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Исходные данные</h5>
+            </div>
+            <pre><code class="language-dart">class Student {
+  String name;
+  List&lt;double&gt; grades;
+  Student(this.name, this.grades);
+
+  double get averageGrade {
+    // Написать свою логику работы 
+  }
+}
+
+void main() {
+  final students = [
+    Student('Анна', [5.0, 4.5, 4.8, 4.2]),
+    Student('Борис', [3.5, 3.8, 3.2, 3.9]),
+    Student('Вера', [4.8, 4.9, 5.0, 4.6]),
+    Student('Денис', [4.2, 4.1, 4.3, 4.0]),
+    Student('Елена', [3.8, 3.5, 3.9, 3.6]),
+    Student('Максим', [4.5, 4.7, 4.3, 4.8]),
+  ];
+}
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">Студенты с баллом выше 4.0:
+- Анна
+- Вера
+- Денис
+- Максим
+Всего: 4
+</code></pre>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Обработка списка покупок</h2>
+            <p>Дан список покупок. Посчитайте общую стоимость всех товаров, цена которых ниже 100.0. Также создайте новый список, содержащий только названия этих "скидочных" товаров в верхнем регистре.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Исходные данные</h5>
+            </div>
+            <pre><code class="language-dart">final products = [
+  {'name': 'Молоко', 'price': 80.0},
+  {'name': 'Хлеб', 'price': 40.0},
+  {'name': 'Сыр', 'price': 150.0},
+  {'name': 'Яблоки', 'price': 95.0},
+  {'name': 'Говядина', 'price': 450.0},
+  {'name': 'Сок', 'price': 120.0},
+];
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">Товары со скидкой: [МОЛОКО, ХЛЕБ, ЯБЛОКИ]
+Общая стоимость товаров со скидкой: 215.0
+</code></pre>
+        </section>
+        
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Анализ игровых достижений</h2>
+            <p>Дан список игровых достижений игрока. Необходимо найти первое достижение с очками больше 1000, проверить, все ли достижения имеют положительные очки, и вычислить общий счёт игрока (бонусы минус штрафы).</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Исходные данные</h5>
+            </div>
+            <pre><code class="language-dart">class Achievement {
+  final double points;
+  final String type; // 'bonus' или 'penalty'
+  Achievement(this.points, this.type);
+
+  @override
+  String toString() => "Achievement(Очки: $points, Тип: $type)";
+}
+
+final achievements = [
+  Achievement(1200.0, 'bonus'),
+  Achievement(350.50, 'penalty'),
+  Achievement(800.0, 'bonus'),
+  Achievement(150.0, 'penalty'),
+  Achievement(2000.0, 'bonus'),
+  Achievement(950.75, 'penalty'),
+];
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">Первое крупное достижение (>1000): Achievement(Очки: 1200.0, Тип: bonus)
+Все очки положительные: true
+Общий счёт игрока: 2548.75
+</code></pre>
+        </section>
+
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

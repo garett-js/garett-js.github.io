@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 16: Интерфейсы</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-16.html" class="back-link">←</a> Практика: Урок 16</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 16: Интерфейсы</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача: Интерфейсы</h2>
+            <p>Представь виды транспорта, такие как <strong>Автомобиль (<code class="code">Car</code>), Велосипед (<code class="code">Bicycle</code>) и Поезд (<code class="code">Train</code>)</strong>.</p>
+            <p>Все транспортные средства имеют <strong>метод <code class="code">move()</code></strong>, который отвечает за движение. Но у разных видов транспорта есть свои особенности:</p>
+            <ul>
+                <li><strong>Автомобиль</strong> может включать двигатель перед движением.</li>
+                <li><strong>Велосипед</strong> просто начинает двигаться, без необходимости включать что-либо.</li>
+                <li><strong>Поезд</strong> перед движением должен открыть ворота на переезде.</li>
+            </ul>
+            <p>Чтобы обеспечить гибкость и использовать <strong>полиморфизм</strong>, нужно использовать <strong>интерфейс <code class="code">Transport</code></strong>.</p>
+            <p>Дополни интерфейс <strong>методом <code class="code">stop()</code></strong>, который реализуют все виды транспорта. Пусть каждый вид транспорта останавливается по-своему (например, у поезда может быть торможение поезда, у велосипеда — плавная остановка и т. д.).</p>
+            
+            <h3>Шаги решения:</h3>
+            <ol>
+                <li><strong>Создай интерфейс</strong> <code class="code">Transport</code> с методом <code class="code">void move();</code>.</li>
+                <li><strong>Реализуй интерфейс</strong> <code class="code">Transport</code> в классах <code class="code">Car</code>, <code class="code">Bicycle</code> и <code class="code">Train</code>.</li>
+                <li><strong>В методах <code class="code">move</code> добавь реализацию</strong>, которая отображает особенности каждого типа транспорта.</li>
+                <li><strong>Создай список <code class="code">List&lt;Transport&gt; fleet</code></strong>, в котором будут храниться все виды транспорта.</li>
+                <li><strong>Используй цикл, чтобы вызвать <code class="code">move()</code> у каждого объекта без проверки типов!</strong></li>
+            </ol>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

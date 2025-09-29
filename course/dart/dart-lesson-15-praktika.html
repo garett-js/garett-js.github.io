@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 15: Наследование</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="dart-lesson-15.html" class="back-link">←</a> Практика: Урок 15</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 15: Наследование</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.dart</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Наследование и добавление функциональности</h2>
+            <p>Создайте базовый класс <code class="code">Phone</code> со следующими свойствами и методами:</p>
+            <ul>
+                <li><strong>Поля:</strong>
+                    <ul>
+                        <li><code class="code">brand</code> (бренд телефона);</li>
+                        <li><code class="code">model</code> (модель телефона);</li>
+                        <li><code class="code">batteryLevel</code> (заряд батареи в процентах).</li>
+                    </ul>
+                </li>
+                <li><strong>Методы:</strong>
+                    <ul>
+                        <li><code class="code">chargeBattery(int amount)</code> — увеличивает уровень заряда, но не более 100%.</li>
+                        <li><code class="code">useBattery(int amount)</code> — уменьшает заряд, но не менее 0%.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Создайте подкласс <code class="code">Smartphone</code>, который наследует класс <code class="code">Phone</code> и добавляет:</p>
+            <ul>
+                <li><strong>Поля:</strong>
+                    <ul>
+                        <li><code class="code">os</code> (операционная система телефона);</li>
+                        <li><code class="code">appsInstalled</code> (список приложений).</li>
+                    </ul>
+                </li>
+                <li><strong>Методы:</strong>
+                    <ul>
+                        <li><code class="code">installApp(String appName)</code> — добавляет приложение в список.</li>
+                        <li><code class="code">useApp(String appName, int batteryCost)</code> — проверяет, установлено ли приложение, и если да, уменьшает заряд батареи.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Задание:</strong> Создайте объект <code class="code">Smartphone</code>, установите начальные значения, установите несколько приложений, используйте одно из них, а затем выведите всю информацию о смартфоне.</p>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Базовый класс и инкапсуляция</h2>
+            <p>Создайте класс <code class="code">Phone</code>, который содержит:</p>
+            <ul>
+                <li><strong>Приватные поля:</strong>
+                    <ul>
+                        <li><code class="code">_brand</code> (бренд телефона);</li>
+                        <li><code class="code">_model</code> (модель телефона);</li>
+                        <li><code class="code">_batteryLevel</code> (уровень заряда в процентах).</li>
+                    </ul>
+                </li>
+                <li><strong>Геттеры и сеттеры:</strong>
+                    <ul>
+                        <li>Запретите устанавливать значение заряда ниже 0% и выше 100%.</li>
+                        <li>Сделайте метод <code class="code">displayInfo</code>, который возвращает информацию о телефоне в виде строки: "Brand: {бренд}, Model: {модель}, Battery: {заряд}%".</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Задание:</strong> Создайте объект класса <code class="code">Phone</code>, установите значения через сеттеры и выведите информацию с помощью метода <code class="code">displayInfo</code>.</p>
+        </section>
+
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 23: Spread и Rest операторы</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок 23: Spread и Rest операторы</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Spread и Rest операторы</h1>
+
+        <section class="lesson-section">
+            <h2>Введение</h2>
+            <p>Spread (`...`) и Rest операторы - это мощные инструменты в Dart, которые значительно упрощают работу с коллекциями. Они позволяют "разворачивать" элементы одной коллекции в другую, создавать копии, объединять коллекции и многое другое.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>1. Spread оператор (`...`)</h2>
+            <p>Spread оператор позволяет "развернуть" элементы коллекции в другую коллекцию.</p>
+            
+            <h3>1.1 Базовый синтаксис</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Объединение списков</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List&lt;int&gt; numbers1 = [1, 2, 3];
+List&lt;int&gt; numbers2 = [4, 5, 6];
+
+// Объединение списков с помощью spread оператора
+List&lt;int&gt; combined = [...numbers1, ...numbers2];
+print(combined); // [1, 2, 3, 4, 5, 6]
+</code></pre>
+
+            <h3>1.2 Создание копий коллекций</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Копирование списка</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">// Создание поверхностной копии списка
+List&lt;String&gt; original = ['a', 'b', 'c'];
+List&lt;String&gt; copy = [...original];
+
+// Изменение копии не влияет на оригинал
+copy.add('d');
+print('Оригинал: $original'); // [a, b, c]
+print('Копия: $copy');        // [a, b, c, d]
+</code></pre>
+
+            <h3>1.3 Добавление элементов при создании</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Добавление элементов</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List&lt;int&gt; base = [2, 3, 4];
+List&lt;int&gt; extended = [1, ...base, 5, 6];
+print(extended); // [1, 2, 3, 4, 5, 6]
+
+// Можно добавлять элементы в любое место
+List&lt;String&gt; fruits = ['яблоко', 'банан'];
+List&lt;String&gt; menu = ['завтрак:', ...fruits, 'обед:', 'суп', 'салат'];
+print(menu); // [завтрак:, яблоко, банан, обед:, суп, салат]
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>2. Null-aware Spread оператор (`...?`)</h2>
+            <p>Этот оператор безопасно работает с nullable коллекциями.</p>
+
+            <h3>2.1 Базовое использование</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Null-aware Spread</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List&lt;int&gt;? nullableList = null;
+List&lt;int&gt; numbers = [1, 2];
+
+// Без null-aware оператора было бы исключение
+List&lt;int&gt; safe = [...numbers, ...?nullableList, 3];
+print(safe); // [1, 2, 3]
+
+// Если список не null, элементы добавляются
+nullableList = [10, 20];
+List&lt;int&gt; withValues = [...numbers, ...?nullableList, 3];
+print(withValues); // [1, 2, 10, 20, 3]
+</code></pre>
+
+            <h3>2.2 Практический пример с API данными</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - API Response</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class ApiResponse {
+  List&lt;String&gt;? data;
+  List&lt;String&gt;? errors;
+  
+  ApiResponse({this.data, this.errors});
+}
+
+void processApiResponse(ApiResponse response) {
+  // Безопасное объединение данных и ошибок
+  List&lt;String&gt; allMessages = [
+    'Обработка запроса:',
+    ...?response.data,
+    'Ошибки:',
+    ...?response.errors,
+    'Обработка завершена'
+  ];
+  
+  print(allMessages);
+}
+
+// Тестирование
+var response1 = ApiResponse(data: ['Данные получены', 'Валидация пройдена']);
+var response2 = ApiResponse(errors: ['Ошибка сети', 'Таймаут']);
+var response3 = ApiResponse(); // null данные
+
+processApiResponse(response1);
+processApiResponse(response2);
+processApiResponse(response3);
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>3. Spread с разными типами коллекций</h2>
+            
+            <h3>3.1 Работа с Set</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Spread с Set</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">Set&lt;int&gt; set1 = {1, 2, 3};
+Set&lt;int&gt; set2 = {3, 4, 5};
+
+// Объединение множеств (дубликаты автоматически удаляются)
+Set&lt;int&gt; combinedSet = {...set1, ...set2};
+print(combinedSet); // {1, 2, 3, 4, 5}
+
+// Преобразование в список
+List&lt;int&gt; listFromSets = [...set1, ...set2];
+print(listFromSets); // [1, 2, 3, 3, 4, 5] - дубликаты сохраняются
+</code></pre>
+
+            <h3>3.2 Работа с Map</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Spread с Map</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">Map&lt;String, int&gt; scores1 = {'Анна': 95, 'Борис': 87};
+Map&lt;String, int&gt; scores2 = {'Вера': 92, 'Денис': 88};
+
+// Объединение карт
+Map&lt;String, int&gt; allScores = {...scores1, ...scores2};
+print(allScores); // {Анна: 95, Борис: 87, Вера: 92, Денис: 88}
+
+// При совпадении ключей последнее значение побеждает
+Map&lt;String, int&gt; updated = {...scores1, 'Анна': 98, ...scores2};
+print(updated['Анна']); // 98
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>4. Практические примеры использования</h2>
+
+            <h3>4.1 Создание конфигурационных объектов</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Конфигурация БД</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class DatabaseConfig {
+  final Map&lt;String, dynamic&gt; config;
+  
+  DatabaseConfig({required this.config});
+  
+  // Создание конфигурации с базовыми настройками
+  factory DatabaseConfig.withDefaults(Map&lt;String, dynamic&gt; userConfig) {
+    const defaultConfig = {
+      'host': 'localhost',
+      'port': 5432,
+      'timeout': 30,
+      'ssl': false,
+    };
+    
+    return DatabaseConfig(
+      config: {...defaultConfig, ...userConfig}
+    );
+  }
+}
+
+// Использование
+var dbConfig = DatabaseConfig.withDefaults({
+  'host': 'production-db.com',
+  'ssl': true,
+  'username': 'admin'
+});
+
+print(dbConfig.config);
+// {host: production-db.com, port: 5432, timeout: 30, ssl: true, username: admin}
+</code></pre>
+
+            <h3>4.2 Объединение результатов поиска</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Сервис поиска</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class SearchService {
+  List&lt;String&gt; searchInDatabase(String query) {
+    // Имитация поиска в БД
+    return ['db_result_1', 'db_result_2'];
+  }
+  
+  List&lt;String&gt; searchInCache(String query) {
+    // Имитация поиска в кэше
+    return ['cache_result_1'];
+  }
+  
+  List&lt;String&gt;? searchInExternal(String query) {
+    // Может вернуть null если внешний сервис недоступен
+    return query.length > 5 ? ['external_result'] : null;
+  }
+  
+  List&lt;String&gt; performSearch(String query) {
+    return [
+      'Результаты поиска для: $query',
+      ...searchInCache(query),
+      ...searchInDatabase(query),
+      ...?searchInExternal(query), // Безопасное добавление
+      'Поиск завершен'
+    ];
+  }
+}
+
+// Тестирование
+var searchService = SearchService();
+print(searchService.performSearch('dart'));
+print(searchService.performSearch('programming'));
+</code></pre>
+
+            <h3>4.3 Построение меню приложения</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Построитель меню</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">class MenuItem {
+  final String title;
+  final String? icon;
+  
+  MenuItem(this.title, {this.icon});
+  
+  @override
+  String toString() => icon != null ? '$icon $title' : title;
+}
+
+class MenuBuilder {
+  static List&lt;MenuItem&gt; buildMainMenu({
+    required bool isAdmin,
+    required bool isLoggedIn,
+    List&lt;MenuItem&gt;? customItems
+  }) {
+    // Базовые элементы меню
+    const baseItems = [
+      MenuItem('Главная', icon: '🏠'),
+      MenuItem('О нас', icon: 'ℹ️'),
+    ];
+    
+    // Элементы для авторизованных пользователей
+    const userItems = [
+      MenuItem('Профиль', icon: '👤'),
+      MenuItem('Настройки', icon: '⚙️'),
+    ];
+    
+    // Элементы для администраторов
+    const adminItems = [
+      MenuItem('Панель администратора', icon: '🛠️'),
+      MenuItem('Пользователи', icon: '👥'),
+    ];
+    
+    return [
+      ...baseItems,
+      if (isLoggedIn) ...userItems,
+      if (isAdmin) ...adminItems,
+      ...?customItems, // Пользовательские элементы (могут быть null)
+      MenuItem('Выход', icon: '🚪'),
+    ];
+  }
+}
+
+// Использование
+print('Меню для гостя:');
+var guestMenu = MenuBuilder.buildMainMenu(isAdmin: false, isLoggedIn: false);
+guestMenu.forEach(print);
+
+print('\nМеню для пользователя:');
+var userMenu = MenuBuilder.buildMainMenu(isAdmin: false, isLoggedIn: true);
+userMenu.forEach(print);
+
+print('\nМеню для администратора:');
+var adminMenu = MenuBuilder.buildMainMenu(
+  isAdmin: true, 
+  isLoggedIn: true,
+  customItems: [MenuItem('Отчеты', icon: '📊'), MenuItem('Логи', icon: '📋')]
+);
+adminMenu.forEach(print);
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2>5. Spread с условными выражениями</h2>
+
+            <h3>5.1 Условное добавление элементов</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Список покупок</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List&lt;String&gt; buildShoppingList({
+  required bool needMilk,
+  required bool needBread,
+  required bool isWeekend,
+  List&lt;String&gt;? specialItems
+}) {
+  return [
+    'Список покупок:',
+    '- Яйца',
+    if (needMilk) '- Молоко',
+    if (needBread) '- Хлеб',
+    if (isWeekend) ...['- Пицца', '- Мороженое'], // Разворачиваем список
+    ...?specialItems,
+  ];
+}
+
+// Тестирование
+print(buildShoppingList(
+  needMilk: true,
+  needBread: false,
+  isWeekend: true,
+  specialItems: ['- Торт', '- Свечи']
+));
+</code></pre>
+
+            <h3>5.2 Фильтрация при объединении</h3>
+            <div class="code-block-header"> <h4 class="code-block-title">Dart - Фильтрация чисел</h4> <div class="code-block-controls"> <span class="code-block-control" onclick="toggleTheme('github')"> <img class="icon" src="images/light.png" alt="Светлая тема"> </span> <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"> <img class="icon" src="images/dark.png" alt="Темная тема"> </span> </div> </div>
+            <pre><code class="language-dart">List&lt;int&gt; combinePositiveNumbers(List&lt;List&lt;int&gt;&gt; numberLists) {
+  List&lt;int&gt; result = [];
+  
+  for (var list in numberLists) {
+    // Добавляем только положительные числа
+    result.addAll([
+      ...list.where((n) => n > 0)
+    ]);
+  }
+  
+  return result;
+}
+
+// Альтернативный способ с использованием expand
+List&lt;int&gt; combinePositiveNumbersV2(List&lt;List&lt;int&gt;&gt; numberLists) {
+  return [
+    ...numberLists.expand((list) => list.where((n) => n > 0))
+  ];
+}
+
+// Тестирование
+var lists = [
+  [1, -2, 3],
+  [-4, 5, 6],
+  [7, -8, -9, 10]
+];
+
+print(combinePositiveNumbers(lists)); // [1, 3, 5, 6, 7, 10]
+print(combinePositiveNumbersV2(lists)); // [1, 3, 5, 6, 7, 10]
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
