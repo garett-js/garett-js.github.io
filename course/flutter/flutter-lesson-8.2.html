@@ -163,6 +163,12 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
   }  
 }
 </code></pre>
+</section>
+
+
+
+    <section class="lesson-section">
+      <h2>Что такое <code class="code">JSON</code></h2>
 
       <div class="code-block-header">
         <h5 class="code-block-title">JSON</h5>
@@ -195,9 +201,6 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
   }
 ]
 </code></pre>
-
-      <section class="lesson-section">
-      <h2>Что такое <code class="code">JSON</code></h2>
       <ul>
         <li>В первом случае получаем один объект c данными</li>
         <li>Во втором случае получаем массив этих объектов</li>
@@ -230,9 +233,9 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
       <p>Если перейти в любой браузер и ввести в строку поиска <code class="code">URL адрес</code> <code class="code">https://jsonplaceholder.typicode.com/posts/1</code> , то увидим данные в формате <code class="code">json</code> внутри браузера (плагин для chrome <code class="code">jsonify</code>)</p>
       <p><strong>Обычно такими данными в современной разработке обмениваются клиент и сервер.</strong></p>
       <img src="images/l8.2/API.gif" alt="API" width="500" style="display: block; margin: 20px auto; max-width: 100%;">
-      </section>
+    </section>
 
-      <section class="lesson-section">
+    <section class="lesson-section">
       <h2>Что такое <code class="code">URL</code> адрес</h2>
       <div class="note">
         <p><strong><code class="code">URL</code> - <code class="code">Uniform Resource Locator</code></strong></p>
@@ -256,9 +259,9 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
           </ul>
         </li>
       </ul>
-      </section>
+    </section>
 
-      <section class="lesson-section">
+    <section class="lesson-section">
       <h2>Что такое <code class="code">статус коды</code></h2>
       <p><code class="code">Коды состояния</code> <code class="code">Status Code</code>  используются, чтобы сообщить клиенту статус его запроса. <code class="code">HTTP-сервер</code> возвращает код, который принадлежит одной из пяти категорий кодов </p>
       <ol>
@@ -273,9 +276,9 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
       <code class="code">400 Bad Request</code>&nbsp;- в запросе ошибка<br>
       <code class="code">404</code> <code class="code">Not Found</code> - cервер не может найти запрошенный ресурс<br>
       <code class="code">500 Internal Error</code>&nbsp;- на сервере произошла ошибка, он не может обработать запрос</p>
-      </section>
+    </section>
 
-      <section class="lesson-section">
+    <section class="lesson-section">
       <h2>Что такое <code class="code">Http</code> Методы</h2>
       <p><code class="code">HTTP</code> определяет множество&nbsp;<strong><code class="code">методов запроса</code></strong>, которые указывают, какое желаемое действие выполнится для данного ресурса.</p>
       <ol>
@@ -291,14 +294,14 @@ Future&lt;void&gt; fetchData({String id = ""}) async {
         <li><code class="code">PUT /posts/1</code>&nbsp;- обновить пост.</li>
         <li><code class="code">DELETE /posts/1</code> - удалить пост.</li>
       </ul>
-      </section>
+    </section>
 
-      <section class="lesson-section">
+    <section class="lesson-section">
       <h2>Схематичная работа <code class="code">Http Request</code> и <code class="code">Http Response</code></h2>
       <img src="images/l8.2/request-response.gif" alt="request-response" style="display: block; margin: 20px auto; max-width: 100%;">
-      </section>
+    </section>
 
-      <section class="lesson-section">
+    <section class="lesson-section">
       <h2>Структура <code class="code">Http Request</code></h2>
       <p>Когда происходит <code class="code">GET-запрос</code> по адресу <code class="code">https://jsonplaceholder.typicode.com/posts/1</code> через приложение написанное на Dart <code class="code">структура HTTP-запроса</code> будет следующей:</p>
       <ol>
@@ -347,9 +350,9 @@ Connection: keep-alive
           </ul>
         </li>
       </ol>
-      </section>
+    </section>
       
-      <section class="lesson-section">
+    <section class="lesson-section">
       <h2>Структура <code class="code">Http Response</code></h2>
       <p>Классическая структура ответа следующая:</p>
       <ol>
