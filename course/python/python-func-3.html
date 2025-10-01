@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Локальные и глобальные переменные в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок: Локальные и глобальные переменные</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Локальные и глобальные переменные</h1>
+
+        <section class="lesson-section">
+            <p>Локальными называются переменные, объявленные внутри функции и доступные только ей самой. Код за пределами функции к ним доступа не имеет.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Локальные переменные</h2>
+            <p>Рассмотрим функцию <code class="code">print_texas()</code>, которая выводит информацию о количестве птиц в Техасе.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Локальная переменная</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_texas():
+    birds = 5000
+    print('В Техасе обитает', birds, 'птиц.')
+</code></pre>
+
+            <div class="note">
+                <p>Переменная <code class="code">birds</code> создаётся внутри функции — это локальная переменная. К ней имеет доступ только код этой функции.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Локальные переменные невидимы снаружи</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Нет доступа к локальной переменной другой функции</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_texas():
+    birds = 5000
+    print('В Техасе обитает', birds, 'птиц.')
+
+def print_california():
+    print('В Калифорнии обитает', birds, 'птиц.')
+
+# NameError: name 'birds' is not defined
+</code></pre>
+            <p>Функция <code class="code">print_california()</code> пытается обратиться к локальной переменной <code class="code">birds</code> из другой функции — возникает <code class="code">NameError</code>.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Одинаковые имена в разных функциях</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Локальные одноимённые переменные</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_texas():
+    birds = 5000
+    print('В Техасе обитает', birds, 'птиц.')
+
+def print_california():
+    birds = 9000
+    print('В Калифорнии обитает', birds, 'птиц.')
+</code></pre>
+            <p>Каждая функция видит только свою локальную <code class="code">birds</code>.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Область видимости переменной</h2>
+            <p>Область видимости — часть программы, в которой переменная доступна. Для локальной переменной — это функция, где она создана.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Обращение до присваивания</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_texas():
+    print('В Техасе обитает', birds, 'птиц.')
+    birds = 5000
+# UnboundLocalError: local variable 'birds' referenced before assignment
+</code></pre>
+            <p>Нельзя использовать локальную переменную до того, как ей присвоено значение.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметры — тоже локальные</h2>
+            <p>Параметры функции доступны только внутри неё.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Параметрические переменные</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def draw_box(height, width):
+    for i in range(height):
+        print('*' * width)
+# height, width — параметры; i — локальная переменная цикла
+</code></pre>
+
+            <div class="note">
+                <p>Память под локальные переменные выделяется на время выполнения функции (в стеке) и освобождается после её завершения.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Глобальные переменные</h2>
+            <p>Глобальные переменные объявляются вне функций и доступны и основной программе, и функциям.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Доступ к глобальной</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">birds = 5000  # глобальная переменная
+
+def print_texas():
+    print('В Техасе обитает', birds, 'птиц.')
+
+def print_california():
+    print('В Калифорнии обитает', birds, 'птиц.')
+
+print_texas()
+print_california()
+# В Техасе обитает 5000 птиц.
+# В Калифорнии обитает 5000 птиц.
+</code></pre>
+
+            <p>Если внутри функции создать локальную переменную с тем же именем, она «затенит» глобальную.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Затенение глобальной</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">birds = 5000  # глобальная переменная
+
+def print_texas():
+    birds = 1000  # локальная
+    print('В Техасе обитает', birds, 'птиц.')
+
+def print_california():
+    birds = 7000  # локальная
+    print('В Калифорнии обитает', birds, 'птиц.')
+
+print_texas()
+print_california()
+# В Техасе обитает 1000 птиц.
+# В Калифорнии обитает 7000 птиц.
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Глобальные переменные — осторожно</h2>
+            <div class="note warning">
+                <p><strong>Почему лучше избегать</strong></p>
+                <ul>
+                    <li>Сложнее отлаживать: значение может менять любой участок кода.</li>
+                    <li>Снижается переиспользуемость функций.</li>
+                    <li>Ухудшается читаемость: зависимость от скрытого состояния.</li>
+                </ul>
+            </div>
+            <p>Предпочитайте локальные переменные и передачу данных через параметры/возврат значений.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Глобальные константы</h2>
+            <p>Глобальные константы допустимы. В Python их имитируют именами в <code class="code">UPPER_SNAKE_CASE</code> и не меняют в коде.</p>
+            <div class="note">
+                <p>Например, модуль <code class="code">math</code> содержит <code class="code">math.pi</code> и <code class="code">math.e</code>.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Ключевое слово global</h2>
+            <p>Чтобы присвоить значение глобальной переменной внутри функции, объявите её через <code class="code">global</code>.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Изменение глобальной из функции</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_texas():
+    global birds
+    birds = 5000
+    print('В Техасе обитает', birds, 'птиц.')
+
+def print_california():
+    print('В Калифорнии обитает', birds, 'птиц.')
+
+print_texas()
+print_california()
+# В Техасе обитает 5000 птиц.
+# В Калифорнии обитает 5000 птиц.
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

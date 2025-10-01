@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функции в Python 1</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+    
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок: Функции 1</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Функции в Python 1</h1>
+
+        <section class="lesson-section active">
+            <h2 style="display: inline;">Зачем нужны функции</h2>
+
+            <div class="slideshow-container" >
+                <div class="slideshow-wrapper">
+                    <div class="slideshow">
+                        <div class="slide active">
+                            <img src="images/l13/1.png" alt="Переменная - шаг 1">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/2.png" alt="Переменная - шаг 2">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/3.png" alt="Переменная - шаг 3">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/4.png" alt="Переменная - шаг 4">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/5.png" alt="Переменная - шаг 5">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/6.png" alt="Переменная - шаг 6">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/7.png" alt="Переменная - шаг 7">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/8.png" alt="Переменная - шаг 8">
+                        </div>
+                        <div class="slide">
+                            <img src="images/l13/9.png" alt="Переменная - шаг 9">
+                        </div>
+                    </div>
+                </div>
+                <div class="slideshow-controls">
+                    <button class="slideshow-btn prev-btn">‹</button>
+                    <div class="dots-container"></div>
+                    <button class="slideshow-btn next-btn">›</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <p>В предыдущих уроках мы использовали встроенные в Python функции <code class="code">print()</code>, <code class="code">input()</code>, <code class="code">int()</code>, <code class="code">str()</code>, <code class="code">len()</code> и многие другие. Пришло время начать писать свои собственные функции.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Мотивация: печать прямоугольника</h2>
+            <p>В начале курса нужно было вывести звёздный прямоугольник 5×7 (5 строк и 7 столбцов).</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Наивный подход</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print('*******')
+print('*******')
+print('*******')
+print('*******')
+print('*******')
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Повторение строки</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">print('*' * 7)
+print('*' * 7)
+print('*' * 7)
+print('*' * 7)
+print('*' * 7)
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Цикл</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for _ in range(5):
+    print('*' * 7)
+</code></pre>
+
+            <p>Если нужно вывести три таких прямоугольника:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Три прямоугольника</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">for _ in range(5):
+    print('*' * 7)
+
+print()
+
+for _ in range(5):
+    print('*' * 7)
+
+print()
+
+for _ in range(5):
+    print('*' * 7)
+</code></pre>
+
+            <div class="note">
+                <p>Код работает, но повторяется. Изменение размера потребует правок в нескольких местах.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Вынос в функцию</h2>
+            <p>Вынесем печать прямоугольника в функцию и будем вызывать её столько раз, сколько нужно.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Объявление и вызов</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def draw_box():
+    for _ in range(5):
+        print('*' * 7)
+
+# Вызов функции
+draw_box()
+
+# Три прямоугольника
+draw_box()
+print()
+draw_box()
+print()
+draw_box()
+</code></pre>
+
+            <div class="note">
+                <p>Код стал короче и читабельнее. При необходимости достаточно изменить логику внутри <code class="code">draw_box()</code>.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Именование функций</h2>
+            <p>Имена функций назначаются как и имена переменных. Используйте описательные глаголы в стиле <code class="code">lower_case_with_underscores</code>.</p>
+            <ul>
+                <li><code class="code">draw_box()</code> — рисует прямоугольник</li>
+                <li><code class="code">print_check()</code> — печатает чек</li>
+                <li><code class="code">calculate_gross_pay()</code> — вычисляет зарплату до удержаний</li>
+            </ul>
+
+            <div class="note">
+                <p>Допустимы только латинские буквы, цифры и подчёркивание; имя не начинается с цифры; регистр важен.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Объявление функции</h2>
+            <p>Функции объявляются с помощью ключевого слова <code class="code">def</code>. После имени идут круглые скобки и двоеточие. Тело функции — блок с отступом.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Скелет функции</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_message():
+    print('Я - Артур,')
+    print('король британцев.')
+
+# Вызов функции
+print_message()
+</code></pre>
+
+            <div class="note">
+                <p>Объявление должно предшествовать вызову. Не забывайте вызывать функцию: просто определить — недостаточно.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Типичные ошибки</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Вызов до объявления</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Вызов функции до объявления
+print_message()
+
+def print_message():
+    print('Я - Артур,')
+    print('король британцев.')
+# NameError: name 'print_message' is not defined
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Ошибка отступов</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_greeting():
+    print('Доброе утро!')
+
+print('Сегодня мы будем изучать функции.')
+    print('Это очень важная тема!')
+# IndentationError: unexpected indent
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Заглушка функции</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def do_nothing():
+    pass
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

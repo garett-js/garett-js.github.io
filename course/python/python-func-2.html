@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функции с параметрами в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок: Функции с параметрами</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Функции с параметрами</h1>
+
+        <section class="lesson-section">
+            <div class="note">
+                <p><strong>Аннотация</strong></p>
+                <p>Создание пользовательских функций с параметрами. Аргументы и параметры, влияние изменений параметров внутри функции.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Зачем параметры</h2>
+            <p>В прошлом уроке мы определили <code class="code">draw_box()</code>, печатающую прямоугольник 5×7. Хотим управлять размерами при вызове.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Базовая версия</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def draw_box():
+    for i in range(5):
+        print('*' * 7)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Синтаксис параметров</h2>
+            <p>Функции с параметрами объявляются как и без параметров, но имена параметров указываются в круглых скобках.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Общий вид</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def название_функции(параметры):
+    блок_кода
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметризуем draw_box</h2>
+            <p>Передадим высоту и ширину как параметры.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Параметры height и width</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def draw_box(height, width):
+    for i in range(height):
+        print('*' * width)
+
+# 5 × 7
+draw_box(5, 7)
+
+# 10 × 15
+draw_box(10, 15)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Несколько вызовов</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Разные размеры</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">draw_box(3, 3)
+print()
+draw_box(5, 5)
+print()
+draw_box(4, 10)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Аргументы как переменные</h2>
+            <p>Можно передавать не только константы, но и значения переменных.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Передача переменных</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">n = 3
+m = 9
+draw_box(n, m)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Ещё примеры</h2>
+            <p>Функции могут принимать сколько угодно параметров. Ниже — два примера.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Печать N раз</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_hello(n: int) -> None:
+    print('Hello' * n)
+
+print_hello(3)
+print_hello(5)
+times = 2
+print_hello(times)
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Печать произвольного текста N раз</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def print_text(txt: str, n: int) -> None:
+    print(txt * n)
+
+print_text('Hello', 5)
+print_text('A', 10)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Параметры vs аргументы</h2>
+            <p><strong>Аргумент</strong> — данные, которые передаются в функцию при вызове. <strong>Параметр</strong> — переменная внутри определения функции, которая принимает значение аргумента.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Параметры функции</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def draw_box(height, width):
+    for i in range(height):
+        print('*' * width)
+
+# height и width — параметры
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Аргументы вызова</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">height = 10
+draw_box(height, 9)
+# height и 9 — аргументы
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Изменения параметров внутри функции</h2>
+            <p>Изменение значений параметров внутри функции не влияет на аргументы, переданные при вызове (для неизменяемых типов).</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Переопределение параметров</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def draw_box(height, width):
+    height = 2
+    width = 10
+    for i in range(height):
+        print('*' * width)
+
+n = 5
+m = 7
+draw_box(n, m)
+print(n, m)  # 5 7
+</code></pre>
+
+            <div class="note">
+                <p>Параметры — локальные имена функции. Их изменение не изменяет аргументы снаружи.</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Примечания</h2>
+            <div class="note">
+                <p><strong>Важно</strong></p>
+                <ul>
+                    <li>Функции в Python могут принимать сколько угодно параметров.</li>
+                    <li>Термины: «формальные параметры» (в определении) и «фактические параметры» (аргументы вызова).</li>
+                </ul>
+            </div>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>

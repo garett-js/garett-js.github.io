@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функции с возвратом значения в Python</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="index.html" class="back-link">←</a> Урок: Функции с возвратом значения</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Функции с возвратом значения</h1>
+
+        <section class="lesson-section">
+            <div class="note">
+                <p><strong>Идея</strong></p>
+                <p>Функция может вернуть значение в место вызова. Возвращённое значение можно присвоить переменной, вывести или использовать в выражении.</p>
+            </div>
+            <ul>
+                <li><code class="code">int()</code> — возвращает целое</li>
+                <li><code class="code">float()</code> — возвращает вещественное</li>
+                <li><code class="code">range()</code> — возвращает последовательность</li>
+                <li><code class="code">abs()</code> — модуль числа</li>
+                <li><code class="code">len()</code> — длину последовательности</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Синтаксис return</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Общий вид</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def название_функции():
+    блок_кода
+    return выражение
+</code></pre>
+            <p>Выражение после <code class="code">return</code> вычисляется и его значение возвращается вызывающей стороне.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Пример: Фаренгейт → Цельсий</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Версия с промежуточной переменной</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def convert_to_celsius(temp):
+    result = (5 / 9) * (temp - 32)
+    return result
+
+temp = float(input('Введите градусы по Фаренгейту: '))
+celsius = convert_to_celsius(temp)
+print(celsius)
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Возврат сразу выражения</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def convert_to_celsius(temp):
+    return (5 / 9) * (temp - 32)
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Несколько return</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Конвертация оценки</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def convert_grade(grade: int) -> int:
+    if grade >= 90:
+        return 5
+    elif grade >= 80:
+        return 4
+    elif grade >= 70:
+        return 3
+    elif grade >= 60:
+        return 2
+    else:
+        return 1
+
+grade = int(input('Введите вашу отметку по 100-балльной системе: '))
+print(convert_grade(grade))
+</code></pre>
+
+            <div class="note">
+                <p>Срабатывает только первый достигнутый <code class="code">return</code>. Остальной код в функции не выполняется.</p>
+            </div>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Первый return «побеждает»</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_grade():
+    return 10
+    return 20
+
+print(get_grade())  # 10
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Если ничего не вернуть</h2>
+            <p>Если функция не возвращает значение явно, возвращается <code class="code">None</code>.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Неявный None</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_middle_number(a, b, c):
+    mx = max(a, b, c)
+    mn = min(a, b, c)
+    mid = a + b + c - mx - mn
+
+print(get_middle_number(4, 7, 2))  # None
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Практика: задачи</h2>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Гипотенуза</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def compute_hypotenuse(a: float, b: float) -> float:
+    return (a ** 2 + b ** 2) ** 0.5
+
+print(compute_hypotenuse(3, 4))
+print(compute_hypotenuse(5, 12))
+print(compute_hypotenuse(1, 1))
+
+x = int(input())
+y = int(input())
+print(compute_hypotenuse(x, y))
+# В модуле math есть аналог: math.hypot(x, y)
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Расстояние между точками</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_distance(x1: float, y1: float, x2: float, y2: float) -> float:
+    return compute_hypotenuse(x1 - x2, y1 - y2)
+
+x1, y1 = float(input()), float(input())
+x2, y2 = float(input()), float(input())
+print(get_distance(x1, y1, x2, y2))
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Сумма цифр</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def sum_digits(n: int) -> int:
+    result = 0
+    while n > 0:
+        result += n % 10
+        n //= 10
+    return result
+
+num = int(input())
+print(sum_digits(num))
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Среднее по списку</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def compute_average(numbers: list[float]) -> float:
+    return sum(numbers) / len(numbers)
+
+numbers = [1, 3, 5, 1, 6, 8, 10, 2]
+print(compute_average(numbers))  # 4.5
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Булевы функции</h2>
+            <p>Функции могут возвращать любые типы, в том числе логические значения.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Проверка чётности</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def is_even(number: int) -> bool:
+    return number % 2 == 0
+
+n = int(input())
+print('Это число чётное.' if is_even(n) else 'Это число нечётное.')
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Валидация ввода</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def is_invalid(model: int) -> bool:
+    return model not in (100, 200, 300)
+
+model = int(input())
+while is_invalid(model):
+    print('Допустимыми номерами моделей являются 100, 200 и 300.')
+    model = int(input())
+</code></pre>
+        </section>
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Несколько возвращаемых значений</h2>
+            <p>Через запятую можно вернуть несколько выражений. Они упакуются в кортеж и могут быть распакованы в переменные.</p>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Возврат трёх степеней</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def get_powers(num: int) -> tuple[int, int, int]:
+    return num**2, num**3, num**4
+
+a, b, c = get_powers(2)
+print(a)
+print(b)
+print(c)
+</code></pre>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python — Несовпадение количества</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/l2/light_theme.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/l2/dark_theme.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">def foo():
+    return 10, 20, 30
+
+a, b = foo()  # ValueError: too many values to unpack (expected 2)
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
