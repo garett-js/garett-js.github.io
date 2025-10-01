@@ -1,0 +1,3511 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://stepik.org/lesson/1770216/step/3?unit=1795734 -->
+<html prefix="og: http://ogp.me/ns#
+              video: http://ogp.me/ns/video#
+              ya:ovs: http://webmaster.yandex.ru/schemas/video" class="no-js flexbox-gap" lang="ru" data-whatinput="keyboard" data-whatintent="mouse"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <link rel="search" type="application/opensearchdescription+xml" href="https://stepik.org/static/opensearch.xml?v2" title="Stepik">
+  <link rel="dns-prefetch" href="https://ajax.googleapis.com/">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com/">
+  <link rel="dns-prefetch" href="https://stepik.azureedge.net/">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf_cookie_name" content="csrftoken">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="p:domain_verify" content="6e51efa10a4869846bae0b408c5aefcd">
+  <title>Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik</title>
+
+  
+  
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://cdn.stepik.net/static/classic/ico/favicon_152.png?1759153451">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cdn.stepik.net/static/classic/ico/favicon_144.png?1759153451">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://cdn.stepik.net/static/classic/ico/favicon_120.png?1759153451">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://cdn.stepik.net/static/classic/ico/favicon_72.png?1759153451">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://cdn.stepik.net/static/classic/ico/favicon_57.png?1759153451">
+    <link rel="apple-touch-startup-image" href="https://cdn.stepik.net/static/classic/ico/startup-splash.png?1759153451">
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_16.png?1759153451" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_32.png?1759153451" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_57.png?1759153451" sizes="57x57">
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_72.png?1759153451" sizes="72x72">
+    
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_96.png?1759153451" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_120.png?1759153451" sizes="120x120">
+    
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_128.png?1759153451" sizes="128x128">
+    
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_144.png?1759153451" sizes="144x144">
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_152.png?1759153451" sizes="152x152">
+    
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_195.png?1759153451" sizes="195x195">
+    
+    <link rel="icon" type="image/png" href="https://cdn.stepik.net/static/classic/ico/favicon_228.png?1759153451" sizes="228x228">
+    
+    <meta name="msapplication-TileColor" content="#66cc66">
+    <meta name="msapplication-TileImage" content="https://cdn.stepik.net/static/classic/ico/favicon_144.png?1759153451">
+  
+  <link rel="icon" type="image/svg+xml" href="https://stepik.org/static/classic/ico/favicon.svg">
+  <link rel="shortcut icon" type="image/x-icon" href="https://stepik.org/static/classic/ico/favicon.ico" sizes="16x16 24x24 32x32 48x48 64x64">
+  <link rel="canonical" href="https://stepik.org/lesson/1814488/step/1?unit=1840271">
+
+  
+    
+  
+
+  <meta property="og:site_name" content="Stepik: online education">
+  <meta property="og:url" content="https://stepik.org/lesson/1814488/step/1?unit=1840271">
+  <meta name="twitter:site" content="@stepikorg">
+  <meta name="fb:app_id" content="171127739724012">
+  <meta name="fb:admins" content="764047960">
+
+  
+  
+<meta name="stepic/config/environment" content="%7B%22modulePrefix%22%3A%22stepic%22%2C%22environment%22%3A%22production%22%2C%22backendEnvironment%22%3A%22local%22%2C%22fastboot%22%3A%7B%22hostWhitelist%22%3A%5B%7B%7D%5D%7D%2C%22TRACK_USER_ORDER%22%3A1%2C%22CLIENT_ALLOWED_TIME_DELTA%22%3A60%2C%22PLATFORM_NEWS_FETCH_DELAY%22%3A5000%2C%22CSRF_COOKIE_NAME%22%3A%22csrftoken%22%2C%22API_NAME%22%3A%22self%22%2C%22PROFILE_PREVIEW_MODE_QP_NAME%22%3A%22profile-preview%22%2C%22ANALYTICS%22%3A%7B%22STUB_MODE%22%3Afalse%2C%22STUB_MODE_DEBUG%22%3A%22%22%2C%22YM_ENABLED%22%3Atrue%2C%22AM_ENABLED%22%3Afalse%2C%22FB_ENABLED%22%3Afalse%2C%22VK_ENABLED%22%3Atrue%2C%22YM_GLOBAL_NAME%22%3A%22ym%22%2C%22AM_GLOBAL_NAME%22%3A%22amplitude%22%2C%22FB_GLOBAL_NAME%22%3A%22fbq%22%2C%22VK_GLOBAL_NAME%22%3A%22VK%22%2C%22YM_KEY%22%3A%2230810146%22%2C%22AM_KEY%22%3A%2208041923a0649603910d54d9b55bf2d0%22%2C%22FB_KEY%22%3A%222632341313760664%22%2C%22VK_KEY%22%3A%22VK-RTRG-947663-fiEAi%22%7D%2C%22STATS%22%3A%7B%22IS_ENABLED%22%3Atrue%2C%22SEND_INTERVAL%22%3A20000%2C%22QUEUE_LEN_WARNING%22%3A1000%2C%22GAVEUP_INTERVAL%22%3A3600000%7D%2C%22SOCKS%22%3A%7B%22ENABLED%22%3Atrue%7D%2C%22STATIC_URL%22%3A%22static%2F%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22auto%22%2C%22contentSecurityPolicy%22%3A%7B%22font-src%22%3A%22&#39;self&#39;%20data%3A%20fonts.gstatic.com%22%2C%22connect-src%22%3A%22&#39;self&#39;%22%2C%22style-src%22%3A%22&#39;self&#39;%20&#39;unsafe-inline&#39;%20fonts.googleapis.com%22%2C%22img-src%22%3A%22&#39;self&#39;%20play.google.com%20images.unsplash.com%20ucarecdn.com%22%7D%2C%22stripe_lib_url%22%3A%22https%3A%2F%2Fcheckout.stripe.com%2Fcheckout.js%22%2C%22firebase_lib_url%22%3A%22https%3A%2F%2Fwww.gstatic.com%2Ffirebasejs%2F4.5.0%2Ffirebase.js%22%2C%22kotlin_playground_url%22%3A%22https%3A%2F%2Funpkg.com%2Fkotlin-playground%401%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Afalse%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22LOG_RESOLVER%22%3Afalse%2C%22LOG_ACTIVE_GENERATION%22%3Afalse%2C%22LOG_TRANSITIONS%22%3Afalse%2C%22LOG_TRANSITIONS_INTERNAL%22%3Afalse%2C%22LOG_VIEW_LOOKUPS%22%3Afalse%2C%22name%22%3A%22stepic%22%2C%22version%22%3A%220.0.0%2Bc4730dbf%22%7D%2C%22ab_experiments%22%3A%7B%22SPRINT_ID%22%3A%22SPRINT_133%22%2C%22ACTIVE_EXPERIMENTS%22%3A%7B%7D%2C%22ACCEPTED_EXPERIMENTS%22%3A%7B%7D%2C%22REJECTED_EXPERIMENTS%22%3A%7B%7D%7D%2C%22ember-href-to%22%3A%7B%22ignore%22%3A%5B%22catch_all%22%5D%7D%2C%22ember-g-recaptcha%22%3A%7B%22sitekey%22%3A%226Lf-_uIkAAAAACjdKRlg4lXEuUd-fI1WRl5iNRGm%22%2C%22hl%22%3A%22ru%22%7D%2C%22pageTitle%22%3A%7B%22separator%22%3A%22%20%E2%80%93%20%22%7D%2C%22%40sentry%2Fember%22%3A%7B%22disablePerformance%22%3Atrue%2C%22disableInstrumentComponents%22%3Atrue%2C%22disableRunloopPerformance%22%3Atrue%2C%22ignoreEmberOnErrorWarning%22%3Atrue%2C%22sentry%22%3A%7B%7D%7D%2C%22ember-backstop%22%3A%7B%22disableBackstop%22%3Atrue%2C%22screenshotsOnly%22%3Afalse%7D%2C%22exportApplicationGlobal%22%3Afalse%7D">
+<!-- EMBER_CLI_FASTBOOT_TITLE --><!-- EMBER_CLI_FASTBOOT_HEAD -->
+
+  
+  
+  <meta name="fragment" content="!">
+
+
+
+  
+
+  
+
+  
+    
+    <meta property="og:type" content="website">
+    
+    
+    <link rel="alternate" type="application/json+oembed" href="https://stepik.org/oembed/?url=https://stepik.org/lesson/1814488/step/1?unit=1840271&amp;format=json" title="Список Задач + SharedPreference (настройки)">
+    <link rel="alternate" type="application/xml+oembed" href="https://stepik.org/oembed/?url=https://stepik.org/lesson/1814488/step/1?unit=1840271&amp;format=xml" title="Список Задач + SharedPreference (настройки)">
+    
+      <meta property="og:image" content="https://ucarecdn.com/5f55ec38-8239-4bbb-bcb8-21883ea73459/-/scale_crop/180x180/center/">
+      <link rel="image_src" href="https://ucarecdn.com/5f55ec38-8239-4bbb-bcb8-21883ea73459/-/scale_crop/180x180/center/">
+    
+    
+  
+
+  
+    <script async="" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/tag.js.Без названия"></script><script>
+  var STEPIC_LOAD_ANALYTICS = function() {
+    var initializers = {};
+
+    initializers.ym = function() {
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    };
+
+    initializers.am = function() {
+      (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+      ;r.type="text/javascript";r.async=true
+      ;r.src="https://cdn.amplitude.com/libs/amplitude-4.4.0-min.gz.js"
+      ;r.onload=function(){if(e.amplitude.runQueuedFunctions){
+      e.amplitude.runQueuedFunctions()}else{
+      console.log("[Amplitude] Error: could not load SDK")}}
+      ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
+      ;function s(e,t){e.prototype[t]=function(){
+      this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+      var o=function(){this._q=[];return this}
+      ;var a=["add","append","clearAll","prepend","set","setOnce","unset"]
+      ;for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[]
+      ;return this}
+      ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
+      ;for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c
+      ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
+      ;function v(e){function t(t){e[t]=function(){
+      e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
+      for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
+      e=(!e||e.length===0?"$default_instance":e).toLowerCase()
+      ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
+      ;e.amplitude=n})(window,document);
+    };
+
+    initializers.fb = function() {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    };
+
+    initializers.vk = function(key) {
+      !function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init(key),VK.Retargeting.Hit()},document.head.appendChild(t)}();
+    };
+
+    return initializers;
+  };
+</script>
+
+  
+
+  <link rel="preload" as="fetch" crossorigin="anonymous" href="https://cdn.stepik.net/static/frontend-build/translations/ru.json?1759153451">
+  <link rel="preload" as="image" href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/avatar.png">
+
+  
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <![endif]-->
+  
+  <script type="text/javascript">
+    window.STEPIC_MAIN_CSS_URL = "https://cdn.stepik.net/static/frontend-build/stepic.css?1759153451";
+  </script>
+  <link rel="preload" as="style" href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/critical.css">
+  <link rel="stylesheet" href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/fonts.css">
+  <link rel="stylesheet" href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/vendor.css">
+  <link href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/katex.css" rel="stylesheet"><link rel="stylesheet" href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/critical.css">
+  <link rel="stylesheet" href="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/stepic.css">
+
+<script type="text/javascript" async="" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/openapi.js.Без названия"></script>  <meta name="ember-cli-head-start" content="">    <meta class="ember-view" content="Образовательная платформа – Stepik" property="og:title"></meta>
+
+    <meta class="ember-view" content="Образовательная платформа — Stepik. Выберите подходящий вам онлайн-курс из более чем 20 тысяч и начните получать востребованные навыки." name="description"></meta>
+
+    <meta class="ember-view" content="Образовательная платформа — Stepik. Выберите подходящий вам онлайн-курс из более чем 20 тысяч и начните получать востребованные навыки." property="og:description"></meta>
+
+
+<meta name="ember-cli-head-end" content="">
+<script src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/katex.js.Без названия"></script><script src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/highlight.pack.js.Без названия"></script></head>
+<body class="ember-application" data-socks-connected="" data-route="step.index" style="--computed-header-height: 50px; --no-initial-animate-duration: initial;">
+
+
+  <!-- EMBER_CLI_FASTBOOT_BODY -->
+
+  <script type="text/javascript">
+    try {
+      window.STEPIC_IS_EMBEDDED = window.self !== window.top;
+    } catch (e) {
+      // old IE and FF fails with "same origin" errors
+      window.STEPIC_IS_EMBEDDED = true;
+    }
+
+    if (window.STEPIC_IS_EMBEDDED) {
+      // Apply some css styles eagerly until frontend app is initialized.
+      document.body.setAttribute('data-embedded', '');
+      document.body.setAttribute('data-zen', '');
+    }
+  </script>
+
+  <script>
+    STEPIC_BUILD_VERSION = 1759153451;
+    STEPIC_BUILD_TAG = '423.0.2812';
+    STEPIC_SENTRY_DSN = 'https://02512a17a855726842111df1db18cf51@sentry.stepik.net/3';
+    STEPIC_SENTRY_ENVIRONMENT = 'stepik.org';
+    UPLOADCARE_PUBLIC_KEY = 'e7a075ad8dc9e3a1ec61';
+
+    // Condition must be the same as for isInProfilePreviewMode in global-state service.
+    
+      __stepik_shoebox__ = JSON.parse('{\u0022stepics\u0022: [{\u0022id\u0022: 1, \u0022total_quizzes\u0022: 4127849, \u0022total_active\u0022: 9000, \u0022total_submissions\u0022: 1553424492, \u0022user\u0022: 68161388, \u0022profile\u0022: 68161388, \u0022config\u0022: {\u0022project_name\u0022: \u0022Stepik\u0022, \u0022language\u0022: null, \u0022supported_languages\u0022: [\u0022en\u0022, \u0022ru\u0022, \u0022be\u0022, \u0022de\u0022, \u0022es\u0022, \u0022pt\u0022, \u0022uk\u0022, \u0022zh\u002Dhans\u0022], \u0022favicon\u0022: \u0022/static/classic/ico/favicon.ico\u0022, \u0022favicon_svg\u0022: \u0022/static/classic/ico/favicon.svg\u0022, \u0022topbar_logo\u0022: \u0022/static/frontend/topbar_logo.svg\u0022, \u0022topbar_logo_small\u0022: \u0022/static/frontend/topbar_logo_small.svg\u0022, \u0022footer_logo\u0022: \u0022\u0022, \u0022index_logo\u0022: \u0022\u0022, \u0022index_text\u0022: \u0022\u0022, \u0022is_standard_footer\u0022: true, \u0022is_standard_index\u0022: true, \u0022is_full_profile\u0022: true, \u0022is_lessons_disable_pro_features\u0022: true, \u0022has_extra_favicons\u0022: true, \u0022has_language_selector\u0022: true, \u0022has_lessons_in_navbar\u0022: true, \u0022has_registration_link\u0022: true, \u0022has_course_review_tab\u0022: true, \u0022has_activity_graph\u0022: true, \u0022has_mobile_apps_banner\u0022: false, \u0022has_email_verification_alert\u0022: true, \u0022has_social_sharing\u0022: true, \u0022login_link\u0022: \u0022/login\u0022, \u0022is_public_social_accounts\u0022: true, \u0022can_set_password\u0022: true, \u0022can_change_name\u0022: true, \u0022can_change_email\u0022: true, \u0022can_change_language\u0022: true, \u0022can_change_city\u0022: true, \u0022cdn_url\u0022: \u0022https://cdn.stepik.net\u0022, \u0022course_reviews_passed_percent\u0022: 80, \u0022courses_default_publicity\u0022: true, \u0022telegram_bot_name\u0022: \u0022StepicBot\u0022, \u0022is_public_telegram_bot\u0022: true, \u0022stripe_api_public_key\u0022: \u0022pk_live_vTMgNYTvMxpmKA0pN0ZQYoHT\u0022, \u0022paddle_vendor_id\u0022: \u002234377\u0022, \u0022project_help_center_url\u0022: \u0022https://help.stepik.org\u0022, \u0022project_support_request_url\u0022: \u0022https://welcome.stepik.org/new\u002Dsupport\u002Drequest\u0022, \u0022project_default_payout\u0022: \u0022ru\u0022, \u0022project_domain\u0022: \u0022stepik.org\u0022, \u0022project_main_instance_url\u0022: \u0022https://stepik.org/\u0022, \u0022project_support_email\u0022: \u0022help@stepik.org\u0022, \u0022email_verify_warn_delay\u0022: 259200, \u0022classes_description_urls\u0022: {\u0022ru\u0022: \u0022http://welcome.stepik.org/ru/class\u0022, \u0022en\u0022: \u0022https://welcome.stepik.org/en/classroom\u0022}, \u0022courses_update_price_period\u0022: 30, \u0022mobile_app_stores\u0022: {\u0022app_store\u0022: {\u0022text\u0022: \u0022\u005Cu0423\u005Cu0441\u005Cu0442\u005Cu0430\u005Cu043d\u005Cu043e\u005Cu0432\u005Cu0438\u005Cu0442\u005Cu044c \u005Cu0441 Apple Store\u0022, \u0022url\u0022: \u0022https://redirect.appmetrica.yandex.com/serve/168884546916387946\u0022, \u0022image_url\u0022: \u0022/static/emails/default/app_store_ru.png\u0022}, \u0022google_play\u0022: {\u0022text\u0022: \u0022\u005Cu0423\u005Cu0441\u005Cu0442\u005Cu0430\u005Cu043d\u005Cu043e\u005Cu0432\u005Cu0438\u005Cu0442\u005Cu044c \u005Cu0441 Google Play\u0022, \u0022url\u0022: \u0022https://redirect.appmetrica.yandex.com/serve/312999733398396995\u0022, \u0022image_url\u0022: \u0022/static/emails/default/ru\u002Dplay\u002Dbadge.png\u0022}, \u0022ru_store\u0022: {\u0022text\u0022: \u0022\u005Cu0423\u005Cu0441\u005Cu0442\u005Cu0430\u005Cu043d\u005Cu043e\u005Cu0432\u005Cu0438\u005Cu0442\u005Cu044c \u005Cu0432 RuStore\u0022, \u0022url\u0022: \u0022https://redirect.appmetrica.yandex.com/serve/748983718370164418\u0022, \u0022image_url\u0022: \u0022/static/emails/default/ru\u002Drustore\u002Dbadge.png\u0022}}, \u0022social_networks\u0022: {\u0022vk\u0022: {\u0022text\u0022: \u0022VK\u0022, \u0022url\u0022: \u0022https://vk.com/rustepik\u0022, \u0022image_url\u0022: \u0022/static/emails/default/icon_vk.png\u0022}, \u0022telegram\u0022: {\u0022text\u0022: \u0022Telegram\u0022, \u0022url\u0022: \u0022https://t.me/stepik_courses\u0022, \u0022image_url\u0022: \u0022/static/emails/default/icon_tg.png\u0022}, \u0022dzen\u0022: {\u0022text\u0022: \u0022\u005Cu0414\u005Cu0437\u005Cu0435\u005Cu043d\u0022, \u0022url\u0022: \u0022https://dzen.ru/rustepik\u0022, \u0022image_url\u0022: \u0022/static/emails/default/icon_dzen.png\u0022}}}, \u0022server_time\u0022: 1759225019.015812}], \u0022users\u0022: [{\u0022id\u0022: 68161388, \u0022profile\u0022: 68161388, \u0022is_private\u0022: false, \u0022is_active\u0022: true, \u0022is_guest\u0022: false, \u0022is_organization\u0022: false, \u0022is_author\u0022: true, \u0022short_bio\u0022: \u0022\u005Cu041f\u005Cu0440\u005Cu0435\u005Cu043f\u005Cu043e\u005Cu0434\u005Cu0430\u005Cu044e IT\u002D\u005Cu0434\u005Cu0438\u005Cu0441\u005Cu0446\u005Cu0438\u005Cu043f\u005Cu043b\u005Cu0438\u005Cu043d\u005Cu044b \u005Cu0441\u005Cu0442\u005Cu0443\u005Cu0434\u005Cu0435\u005Cu043d\u005Cu0442\u005Cu0430\u005Cu043c \u005Cu0438 \u005Cu0441\u005Cu0442\u005Cu0430\u005Cu0440\u005Cu0448\u005Cu0435\u005Cu043a\u005Cu043b\u005Cu0430\u005Cu0441\u005Cu0441\u005Cu043d\u005Cu0438\u005Cu043a\u005Cu0430\u005Cu043c.\u005Cn\u005Cu0411\u005Cu043e\u005Cu043b\u005Cu0435\u005Cu0435 15 \u005Cu043b\u005Cu0435\u005Cu0442 \u005Cu043e\u005Cu0442\u005Cu0440\u005Cu0430\u005Cu0431\u005Cu043e\u005Cu0442\u005Cu0430\u005Cu043b \u005Cu0432 \u005Cu043e\u005Cu0431\u005Cu043b\u005Cu0430\u005Cu0441\u005Cu0442\u005Cu0438 IT.\u005Cn\u005Cu0421\u005Cu0435\u005Cu0439\u005Cu0447\u005Cu0430\u005Cu0441 \u005Cu0441 \u005Cu0431\u005Cu043e\u005Cu043b\u005Cu044c\u005Cu0448\u005Cu043e\u005Cu0439 \u005Cu043b\u005Cu044e\u005Cu0431\u005Cu043e\u005Cu0432\u005Cu044c\u005Cu044e \u005Cu0437\u005Cu0430\u005Cu043d\u005Cu0438\u005Cu043c\u005Cu0430\u005Cu044e\u005Cu0441\u005Cu044c \u005Cu0440\u005Cu0430\u005Cu0437\u005Cu0440\u005Cu0430\u005Cu0431\u005Cu043e\u005Cu0442\u005Cu043a\u005Cu043e\u005Cu0439 \u005Cu043e\u005Cu0431\u005Cu0440\u005Cu0430\u005Cu0437\u005Cu043e\u005Cu0432\u005Cu0430\u005Cu0442\u005Cu0435\u005Cu043b\u005Cu044c\u005Cu043d\u005Cu044b\u005Cu0445 \u005Cu043f\u005Cu0440\u005Cu043e\u005Cu0433\u005Cu0440\u005Cu0430\u005Cu043c\u005Cu043c \u005Cu0438 \u005Cu043a\u005Cu0443\u005Cu0440\u005Cu0441\u005Cu043e\u005Cu0432, \u005Cu0438\u005Cu0437\u005Cu0443\u005Cu0447\u005Cu0430\u005Cu044e \u005Cu043e\u005Cu0431\u005Cu043b\u005Cu0430\u005Cu0441\u005Cu0442\u005Cu044c AI LLM.\u005Cn\u005Cu0411\u005Cu0435\u005Cu0437\u005Cu0433\u005Cu0440\u005Cu0430\u005Cu043d\u005Cu0438\u005Cu0447\u005Cu043d\u005Cu043e \u005Cu043e\u005Cu0431\u005Cu043e\u005Cu0436\u005Cu0430\u005Cu044e Flutter \u005Cud83d\u005Cudc99 \u005Cu0440\u005Cu0430\u005Cu0437\u005Cu0440\u005Cu0430\u005Cu0431\u005Cu043e\u005Cu0442\u005Cu043a\u005Cu0443 \u005Cu0438 Game Dev.\u0022, \u0022details\u0022: \u0022IT\u002D\u005Cu0421\u005Cu044d\u005Cu043d\u005Cu0441\u005Cu0435\u005Cu0439\u0022, \u0022first_name\u0022: \u0022\u005Cu0420\u005Cu043e\u005Cu043c\u005Cu0430\u005Cu043d\u0022, \u0022last_name\u0022: \u0022\u005Cu0421\u005Cu0435\u005Cu0440\u005Cu0433\u005Cu0438\u005Cu0435\u005Cu043d\u005Cu043a\u005Cu043e\u0022, \u0022full_name\u0022: \u0022\u005Cu0420\u005Cu043e\u005Cu043c\u005Cu0430\u005Cu043d \u005Cu0421\u005Cu0435\u005Cu0440\u005Cu0433\u005Cu0438\u005Cu0435\u005Cu043d\u005Cu043a\u005Cu043e\u0022, \u0022alias\u0022: null, \u0022avatar\u0022: \u0022https://cdn.stepik.net/media/users/68161388/1751934557\u002DsMSNgwl/avatar.png\u0022, \u0022cover\u0022: null, \u0022city\u0022: null, \u0022knowledge\u0022: 136, \u0022knowledge_rank\u0022: 1209303, \u0022reputation\u0022: 34, \u0022reputation_rank\u0022: 61097, \u0022join_date\u0022: \u00222018\u002D11\u002D22T02:19:57Z\u0022, \u0022social_profiles\u0022: [], \u0022solved_steps_count\u0022: 136, \u0022created_courses_count\u0022: 1, \u0022created_lessons_count\u0022: 131, \u0022issued_certificates_count\u0022: 0, \u0022followers_count\u0022: 45}], \u0022profiles\u0022: [{\u0022id\u0022: 68161388, \u0022first_name\u0022: \u0022\u005Cu0420\u005Cu043e\u005Cu043c\u005Cu0430\u005Cu043d\u0022, \u0022last_name\u0022: \u0022\u005Cu0421\u005Cu0435\u005Cu0440\u005Cu0433\u005Cu0438\u005Cu0435\u005Cu043d\u005Cu043a\u005Cu043e\u0022, \u0022full_name\u0022: \u0022\u005Cu0420\u005Cu043e\u005Cu043c\u005Cu0430\u005Cu043d \u005Cu0421\u005Cu0435\u005Cu0440\u005Cu0433\u005Cu0438\u005Cu0435\u005Cu043d\u005Cu043a\u005Cu043e\u0022, \u0022is_private\u0022: false, \u0022avatar\u0022: \u0022https://cdn.stepik.net/media/users/68161388/1751934557\u002DsMSNgwl/avatar.png\u0022, \u0022language\u0022: \u0022ru\u0022, \u0022city\u0022: null, \u0022short_bio\u0022: \u0022\u005Cu041f\u005Cu0440\u005Cu0435\u005Cu043f\u005Cu043e\u005Cu0434\u005Cu0430\u005Cu044e IT\u002D\u005Cu0434\u005Cu0438\u005Cu0441\u005Cu0446\u005Cu0438\u005Cu043f\u005Cu043b\u005Cu0438\u005Cu043d\u005Cu044b \u005Cu0441\u005Cu0442\u005Cu0443\u005Cu0434\u005Cu0435\u005Cu043d\u005Cu0442\u005Cu0430\u005Cu043c \u005Cu0438 \u005Cu0441\u005Cu0442\u005Cu0430\u005Cu0440\u005Cu0448\u005Cu0435\u005Cu043a\u005Cu043b\u005Cu0430\u005Cu0441\u005Cu0441\u005Cu043d\u005Cu0438\u005Cu043a\u005Cu0430\u005Cu043c.\u005Cn\u005Cu0411\u005Cu043e\u005Cu043b\u005Cu0435\u005Cu0435 15 \u005Cu043b\u005Cu0435\u005Cu0442 \u005Cu043e\u005Cu0442\u005Cu0440\u005Cu0430\u005Cu0431\u005Cu043e\u005Cu0442\u005Cu0430\u005Cu043b \u005Cu0432 \u005Cu043e\u005Cu0431\u005Cu043b\u005Cu0430\u005Cu0441\u005Cu0442\u005Cu0438 IT.\u005Cn\u005Cu0421\u005Cu0435\u005Cu0439\u005Cu0447\u005Cu0430\u005Cu0441 \u005Cu0441 \u005Cu0431\u005Cu043e\u005Cu043b\u005Cu044c\u005Cu0448\u005Cu043e\u005Cu0439 \u005Cu043b\u005Cu044e\u005Cu0431\u005Cu043e\u005Cu0432\u005Cu044c\u005Cu044e \u005Cu0437\u005Cu0430\u005Cu043d\u005Cu0438\u005Cu043c\u005Cu0430\u005Cu044e\u005Cu0441\u005Cu044c \u005Cu0440\u005Cu0430\u005Cu0437\u005Cu0440\u005Cu0430\u005Cu0431\u005Cu043e\u005Cu0442\u005Cu043a\u005Cu043e\u005Cu0439 \u005Cu043e\u005Cu0431\u005Cu0440\u005Cu0430\u005Cu0437\u005Cu043e\u005Cu0432\u005Cu0430\u005Cu0442\u005Cu0435\u005Cu043b\u005Cu044c\u005Cu043d\u005Cu044b\u005Cu0445 \u005Cu043f\u005Cu0440\u005Cu043e\u005Cu0433\u005Cu0440\u005Cu0430\u005Cu043c\u005Cu043c \u005Cu0438 \u005Cu043a\u005Cu0443\u005Cu0440\u005Cu0441\u005Cu043e\u005Cu0432, \u005Cu0438\u005Cu0437\u005Cu0443\u005Cu0447\u005Cu0430\u005Cu044e \u005Cu043e\u005Cu0431\u005Cu043b\u005Cu0430\u005Cu0441\u005Cu0442\u005Cu044c AI LLM.\u005Cn\u005Cu0411\u005Cu0435\u005Cu0437\u005Cu0433\u005Cu0440\u005Cu0430\u005Cu043d\u005Cu0438\u005Cu0447\u005Cu043d\u005Cu043e \u005Cu043e\u005Cu0431\u005Cu043e\u005Cu0436\u005Cu0430\u005Cu044e Flutter \u005Cud83d\u005Cudc99 \u005Cu0440\u005Cu0430\u005Cu0437\u005Cu0440\u005Cu0430\u005Cu0431\u005Cu043e\u005Cu0442\u005Cu043a\u005Cu0443 \u005Cu0438 Game Dev.\u0022, \u0022details\u0022: \u0022IT\u002D\u005Cu0421\u005Cu044d\u005Cu043d\u005Cu0441\u005Cu0435\u005Cu0439\u0022, \u0022subscribed_for_mail\u0022: true, \u0022notification_email_delay\u0022: \u00225m\u0022, \u0022notification_status\u0022: 68161388, \u0022is_staff\u0022: false, \u0022is_guest\u0022: false, \u0022is_creator\u0022: true, \u0022is_beta\u0022: false, \u0022can_add_lesson\u0022: true, \u0022can_add_course\u0022: true, \u0022can_add_group\u0022: false, \u0022can_submit\u0022: true, \u0022subscribed_for_marketing\u0022: false, \u0022subscribed_for_partners\u0022: false, \u0022subscribed_for_news_en\u0022: true, \u0022subscribed_for_news_ru\u0022: true, \u0022bit_field\u0022: 2, \u0022level_abilities\u0022: [], \u0022has_password\u0022: true, \u0022social_accounts\u0022: [], \u0022email_addresses\u0022: [1725987], \u0022is_email_verified\u0022: true, \u0022is_trusted\u0022: true, \u0022telegram_bot_url\u0022: \u0022https://telegram.me/StepicBot?start\u003DTmpneE5qRXpPRGc6MXYzV241OlhFZzFkd1o3NFppLWhQVlFPZ2xoajd0YU50TQ\u0022, \u0022subscription_plan\u0022: null, \u0022experiment_choices\u0022: {}, \u0022allowed_pro_courses_count\u0022: 0, \u0022is_web_push_enabled\u0022: true, \u0022is_vote_notifications_enabled\u0022: true, \u0022last_login\u0022: \u00222025\u002D09\u002D28T02:43:29Z\u0022, \u0022ww_is_approved\u0022: false, \u0022ru_is_approved\u0022: true}], \u0022features\u0022: [{\u0022id\u0022: 2, \u0022name\u0022: \u0022CloudPayments\u0022, \u0022parameters\u0022: {\u0022defaultPaymentMethod\u0022: \u0022random\u0022, \u0022showCheckbox\u0022: true, \u0022dolyame\u0022: true, \u0022courses\u0022: []}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 3, \u0022name\u0022: \u0022CourseTags\u0022, \u0022parameters\u0022: {}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 8, \u0022name\u0022: \u0022Rubricator\u0022, \u0022parameters\u0022: {\u0022cacheFile\u0022: \u0022https://cdn.stepik.net/media/files/rubricator_prod_20250915_2.json\u0022, \u0022truncation\u0022: \u00225\u0022, \u0022onboarding\u0022: false, \u0022feedback\u0022: false}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 10, \u0022name\u0022: \u0022Catalog\u0022, \u0022parameters\u0022: {\u0022isUnfiltered\u0022: true}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 13, \u0022name\u0022: \u0022Catalog::DiscountFilter\u0022, \u0022parameters\u0022: {}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 15, \u0022name\u0022: \u0022VideoUploader\u0022, \u0022parameters\u0022: {\u0022exclude\u0022: [\u0022youtube\u0022, {\u0022regex\u0022: \u0022disk.360\u0022, \u0022message\u0022: \u0022\u005Cu0410\u005Cu0434\u005Cu0440\u005Cu0435\u005Cu0441 disk.360.yandex.ru \u005Cu043d\u005Cu0435\u005Cu0434\u005Cu043e\u005Cu0441\u005Cu0442\u005Cu0443\u005Cu043f\u005Cu0435\u005Cu043d \u005Cu0434\u005Cu043b\u005Cu044f \u005Cu0441\u005Cu043a\u005Cu0430\u005Cu0447\u005Cu0438\u005Cu0432\u005Cu0430\u005Cu043d\u005Cu0438\u005Cu044f, \u005Cu0438\u005Cu0437\u005Cu043c\u005Cu0435\u005Cu043d\u005Cu0438\u005Cu0442\u005Cu0435 \u005Cu0441\u005Cu0441\u005Cu044b\u005Cu043b\u005Cu043a\u005Cu0443 \u005Cu043d\u005Cu0430 disk.yandex.ru\u0022}]}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 16, \u0022name\u0022: \u0022PaymentMethods::YandexSplit\u0022, \u0022parameters\u0022: {\u0022limits\u0022: {\u0022RUB\u0022: {\u0022min\u0022: 2000, \u0022max\u0022: 150000}}}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 18, \u0022name\u0022: \u0022PaymentMethods\u0022, \u0022parameters\u0022: {}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 19, \u0022name\u0022: \u0022PaymentMethods::CloudPayments\u0022, \u0022parameters\u0022: {\u0022showCheckbox\u0022: true, \u0022courses\u0022: []}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 21, \u0022name\u0022: \u0022PaymentMethods::YandexPay\u0022, \u0022parameters\u0022: {}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 22, \u0022name\u0022: \u0022PaymentMethods::Dolyame\u0022, \u0022parameters\u0022: {\u0022limits\u0022: {\u0022RUB\u0022: {\u0022min\u0022: 2000, \u0022max\u0022: 70000}}}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 23, \u0022name\u0022: \u0022PaymentMethods::YooMoney\u0022, \u0022parameters\u0022: {}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 24, \u0022name\u0022: \u0022ImageOptimization\u0022, \u0022parameters\u0022: {\u0022comments\u0022: {\u0022optimize\u0022: false, \u0022lqipLoading\u0022: false}}, \u0022can_choice_user\u0022: true}, {\u0022id\u0022: 25, \u0022name\u0022: \u0022Tags\u0022, \u0022parameters\u0022: {\u0022cacheFile\u0022: \u0022https://cdn.stepik.net/media/files/tags_tree_20250825.json\u0022, \u0022truncation\u0022: \u00225\u0022}, \u0022can_choice_user\u0022: true}]}');
+    
+  </script>
+
+  <script>
+/*! modernizr 3.6.0 (Custom Build) | MIT *
+ * https://modernizr.com/download/?-cssall-cssgrid_cssgridlegacy-fetch-olreversed !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,s,i,l;for(var a in g)if(g.hasOwnProperty(a)){if(e=[],n=g[a],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,s=0;s<e.length;s++)i=e[s],l=i.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),S.push((o?"":"no-")+l.join("-"))}}function s(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):_?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function i(e,n){return!!~(""+e).indexOf(n)}function l(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function a(e,n){return function(){return e.apply(n,arguments)}}function u(e,n,t){var o;for(var s in e)if(e[s]in n)return t===!1?e[s]:(o=n[e[s]],r(o,"function")?a(o,t||n):o);return!1}function f(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function d(n,t,r){var o;if("getComputedStyle"in e){o=getComputedStyle.call(e,n,t);var s=e.console;if(null!==o)r&&(o=o.getPropertyValue(r));else if(s){var i=s.error?"error":"log";s[i].call(s,"getComputedStyle returning null, its possible modernizr test results are inaccurate")}}else o=!t&&n.currentStyle&&n.currentStyle[r];return o}function c(){var e=n.body;return e||(e=s(_?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,l,a,u,f="modernizr",d=s("div"),p=c();if(parseInt(r,10))for(;r--;)a=s("div"),a.id=o?o[r]:f+(r+1),d.appendChild(a);return i=s("style"),i.type="text/css",i.id="s"+f,(p.fake?p:d).appendChild(i),p.appendChild(d),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),d.id=f,p.fake&&(p.style.background="",p.style.overflow="hidden",u=w.style.overflow,w.style.overflow="hidden",w.appendChild(p)),l=t(d,e),p.fake?(p.parentNode.removeChild(p),w.style.overflow=u,w.offsetHeight):d.parentNode.removeChild(d),!!l}function m(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(f(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var s=[];o--;)s.push("("+f(n[o])+":"+r+")");return s=s.join(" or "),p("@supports ("+s+") { #modernizr { position: absolute; } }",function(e){return"absolute"==d(e,null,"position")})}return t}function y(e,n,o,a){function u(){d&&(delete b.style,delete b.modElem)}if(a=r(a,"undefined")?!1:a,!r(o,"undefined")){var f=m(e,o);if(!r(f,"undefined"))return f}for(var d,c,p,y,v,h=["modernizr","tspan","samp"];!b.style&&h.length;)d=!0,b.modElem=s(h.shift()),b.style=b.modElem.style;for(p=e.length,c=0;p>c;c++)if(y=e[c],v=b.style[y],i(y,"-")&&(y=l(y)),b.style[y]!==t){if(a||r(o,"undefined"))return u(),"pfx"==n?y:!0;try{b.style[y]=o}catch(g){}if(b.style[y]!=v)return u(),"pfx"==n?y:!0}return u(),!1}function v(e,n,t,o,s){var i=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+T.join(i+" ")+i).split(" ");return r(n,"string")||r(n,"undefined")?y(l,n,o,s):(l=(e+" "+z.join(i+" ")+i).split(" "),u(l,n,t))}function h(e,n,r){return v(e,t,t,n,r)}var g=[],C={_version:"3.6.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){g.push({name:e,fn:n,options:t})},addAsyncTest:function(e){g.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=C,Modernizr=new Modernizr,Modernizr.addTest("fetch","fetch"in e);var w=n.documentElement;Modernizr.addTest("cssall","all"in w.style);var S=[],_="svg"===w.nodeName.toLowerCase();Modernizr.addTest("olreversed","reversed"in s("ol"));var x="Moz O ms Webkit",T=C._config.usePrefixes?x.split(" "):[];C._cssomPrefixes=T;var z=C._config.usePrefixes?x.toLowerCase().split(" "):[];C._domPrefixes=z;var P={elem:s("modernizr")};Modernizr._q.push(function(){delete P.elem});var b={style:P.elem.style};Modernizr._q.unshift(function(){delete b.style}),C.testAllProps=v,C.testAllProps=h,Modernizr.addTest("cssgridlegacy",h("grid-columns","10px",!0)),Modernizr.addTest("cssgrid",h("grid-template-rows","none",!0)),o(),delete C.addTest,delete C.addAsyncTest;for(var E=0;E<Modernizr._q.length;E++)Modernizr._q[E]();e.Modernizr=Modernizr}(window,document);
+/* isLegacyBrowser flag */
+/* olreversed & cssall - is needed to detect edge18 */
+!function(w){var m=w.Modernizr;w.isLegacyBrowser=!m.fetch||(!m.cssgrid&&!m.cssgridlegacy)||!m.olreversed||!m.cssall}(window);
+</script>
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  <script defer="" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/vendor.js.Без названия"></script>
+  <script src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/chunk.188.904fd075ed05de5c9b22.js.Без названия" defer=""></script>
+<script src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/chunk.143.92c4cd2dbc34d9a93a06.js.Без названия" defer=""></script>
+  <script defer="" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/stepic.js.Без названия"></script>
+
+  <script>
+UPLOADCARE_LOCALE = "en";
+UPLOADCARE_LIVE = false;
+UPLOADCARE_TABS = "file url dropbox facebook vk gdrive box skydrive instagram evernote";
+UPLOADCARE_AUTOSTORE = true;
+UPLOADCARE_CDN_BASE = 'https://ucarecdn.com/';
+UPLOADCARE_MANUAL_START = true;
+UPLOADCARE_EFFECTS = ['crop', 'rotate', 'mirror', 'flip', 'enhance'];
+
+</script>
+
+
+
+<!---->
+
+
+<div id="ember512" class="loading-slider ember-view"></div>
+
+<div id="ember513" class="woof-container ember-view"><!----></div>
+
+<header id="main-header" class="main-header no-print">
+  <!---->
+
+  <div id="custom-navbar-slot"></div>
+
+  <nav id="main-navbar" class="navbar" aria-label="Общая навигация по сайту">
+    <a href="https://stepik.org/catalog" id="ember514" class="ember-view navbar__logo-link">
+      <picture>
+        <source srcset="/static/frontend/topbar_logo_small.svg" media="(max-width: 1024px)">
+        <img class="navbar__logo" alt="Stepik" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/topbar_logo.svg">
+      </picture>
+    </a>
+
+<!---->
+    <ul class="navbar__links">
+        <li class="navbar__menu-item" data-navbar-item="catalog">
+            <div id="ember515" class="drop-down ember-view drop-down-empty rubricator-dropdown navbar__rubricator">
+    <div aria-expanded="false" aria-haspopup="true" id="ember516" class="drop-down__toggler drop-down-toggler drop-down-toggler--auto-toggle ember-view">  
+      <button class="st-button_style_none rubricator-dropdown__toggler" aria-label="Rubricator" type="button">
+        Каталог
+        <span id="ember517" class="svg-icon down-arrow_icon ember-view navbar__down-arrow rubricator-dropdown__icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#down-arrow"></use>
+  </svg></span>
+      </button>
+    
+</div>
+
+  <!---->
+
+
+<!----></div>
+        </li>
+
+        <li class="navbar__menu-item" data-navbar-item="learn">
+          <a href="https://stepik.org/learn" id="ember518" class="ember-view navbar__link st-link">
+            Моё обучение
+          </a>
+        </li>
+
+        <li class="navbar__menu-item" data-navbar-item="teach">
+            <a href="https://stepik.org/teach" id="ember519" class="ember-view navbar__link st-link">
+              Преподавание
+            </a>
+        </li>
+    </ul>
+
+    <div id="main-navbar-body-slot">      <div class="player-topbar__panel">
+          <div class="player-topbar__step-pins">
+              <div data-step-position="1" data-is-attempted="" data-is-passed="" id="ember4695" class="m-step-pin ember-view player__step-pin"><a href="https://stepik.org/lesson/1770216/step/1?unit=1795734" id="ember4696" class="ember-view m-step-pin__link">
+  <span class="m-step-pin__pin">
+    <div id="ember4697" class="step-pin-icon ember-view m-step-pin__icon"><span id="ember4698" class="svg-icon null_icon ember-view step-pin-icon__icon"><!----></span>
+
+<!----></div>
+  </span>
+
+<!----></a>
+</div>
+              <div data-step-position="2" data-is-attempted="" data-is-passed="" id="ember4699" class="m-step-pin ember-view player__step-pin"><a href="https://stepik.org/lesson/1770216/step/2?unit=1795734" id="ember4700" class="ember-view m-step-pin__link">
+  <span class="m-step-pin__pin">
+    <div id="ember4701" class="step-pin-icon ember-view m-step-pin__icon"><span id="ember4702" class="svg-icon null_icon ember-view step-pin-icon__icon"><!----></span>
+
+<!----></div>
+  </span>
+
+<!----></a>
+</div>
+              <div data-step-position="3" data-is-attempted="" data-is-passed="" id="ember4703" class="m-step-pin ember-view player__step-pin" data-is-active=""><a href="https://stepik.org/lesson/1770216/step/3?unit=1795734" id="ember4704" class="active ember-view m-step-pin__link">
+  <span class="m-step-pin__pin">
+    <div id="ember4705" class="step-pin-icon ember-view m-step-pin__icon"><span id="ember4706" class="svg-icon null_icon ember-view step-pin-icon__icon"><!----></span>
+
+<!----></div>
+  </span>
+
+<!----></a>
+</div>
+              <div data-step-position="4" data-is-attempted="" data-is-passed="" id="ember4707" class="m-step-pin ember-view player__step-pin"><a href="https://stepik.org/lesson/1770216/step/4?unit=1795734" id="ember4708" class="ember-view m-step-pin__link">
+  <span class="m-step-pin__pin">
+    <div id="ember4709" class="step-pin-icon ember-view m-step-pin__icon"><span id="ember4710" class="svg-icon null_icon ember-view step-pin-icon__icon"><!----></span>
+
+<!----></div>
+  </span>
+
+<!----></a>
+</div>
+          </div>
+
+          <div class="player-topbar__user-controls">
+<!---->          </div>
+      </div>
+</div>
+
+    <div class="navbar__spacer"></div>
+
+      <form class="navbar__search-form" data-ember-action="" data-ember-action-520="520">
+        <div id="ember521" class="ember-view"><span id="ember522" class="with-autocomplete ember-view"><div id="ember523" class="drop-down drop-down-menu ember-view with-autocomplete__drop-down ">
+  <div aria-expanded="false" aria-haspopup="true" id="ember524" class="drop-down__toggler drop-down-toggler ember-view">  
+    <div class="with-autocomplete__content">
+      
+  <div class="navbar__search-wrapper st-input-wrapper st-input-wrapper_border-none st-input-wrapper_type-search">
+    <input class="navbar__search-input st-input st-input_border_none" aria-label="Search" placeholder="Поиск…" type="search">
+  </div>
+
+    </div>
+  
+</div>
+
+<!---->
+
+<!----></div>
+
+<!----></span></div>
+      </form>
+
+        <div id="ember525" class="drop-down drop-down-menu ember-view language-selector">
+    <div aria-expanded="false" aria-haspopup="true" id="ember526" class="drop-down__toggler drop-down-toggler drop-down-toggler--auto-toggle ember-view">  
+      <button class="navbar__submenu-toggler st-button_style_none" type="button">
+        <span id="ember527" class="svg-icon lang_icon svg-icon_inline ember-view navbar__submenu-toggler-icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#lang"></use>
+  </svg></span>
+        Русский
+        <span id="ember528" class="svg-icon down-arrow_icon ember-view navbar__down-arrow"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#down-arrow"></use>
+  </svg></span>
+      </button>
+    
+</div>
+
+    <!---->
+  
+
+<!----></div>
+
+
+      <div class="navbar__divider"></div>
+
+      <div id="ember529" class="drop-down ember-view drop-down-empty learn-last-activity-dropdown navbar__activity">
+  <div aria-expanded="false" aria-haspopup="true" id="ember530" class="drop-down__toggler drop-down-toggler drop-down-toggler--auto-toggle ember-view">  
+    <button class="st-button_style_none learn-last-activity-dropdown__toggler" aria-label="Activity" type="button">
+        <span id="ember585" class="svg-icon streak-outlined_icon ember-view learn-last-activity-card-icon learn-last-activity-dropdown__icon" alt="User activity"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#streak-outlined"></use>
+  </svg></span>
+
+
+      <span class="learn-last-activity-dropdown__counter">0</span>
+    </button>
+  
+</div>
+
+  <!---->
+
+
+<!----></div>
+
+      <div id="ember531" class="drop-down drop-down-menu ember-view navbar__profile">
+        <div aria-expanded="false" aria-haspopup="true" id="ember532" class="drop-down__toggler drop-down-toggler drop-down-toggler--auto-toggle ember-view">  
+          <button class="navbar__profile-toggler st-button_style_none" aria-label="Profile" aria-describedby="profile-notifications-badge platform-news-badge" type="button">
+            <img class="navbar__profile-img" alt="User avatar" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/avatar.png">
+
+<!---->
+              <span id="profile-notifications-badge" class="navbar__profile-notifications-badge" aria-label="0 notifications" data-count="0">
+                0
+              </span>
+
+<!---->          </button>
+        
+</div>
+
+        <!---->
+      
+
+<!----></div>
+  </nav>
+
+<!----></header>
+
+<!---->
+
+
+<div id="breadcrumbs" class="breadcrumbs-row"></div>
+
+<main class="main-content">
+  
+
+<div data-step-type="text" id="ember534" class="lesson-modern__main lesson-wrapper in-course ember-view">
+  <div id="ember535" class="ember-view"><!----></div>
+
+  <div class="lesson-modern__body">
+      <div data-pinned="" id="ember540" class="lesson-sidebar ember-view player-lesson-sidebar player__lesson-sidebar"><button class="lesson-sidebar__expand-sidebar" aria-label="Expand course contents sidebar" type="button">
+  <span class="lesson-sidebar__expand-sidebar-content">
+    <span id="ember541" class="svg-icon arrow-right_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#arrow-right"></use>
+  </svg></span>
+    <span>Содержание</span>
+  </span>
+</button>
+
+<div class="lesson-sidebar__wrapper">
+  <div class="lesson-sidebar__body">
+    
+      <div class="lesson-sidebar__header">
+          <a title="Flutter Разработка (2025). От 🐣 базы до 😎 вайб кодинга" href="https://stepik.org/course/208780" id="ember542" class="ember-view lesson-sidebar__course-title">
+            Flutter Разработка (2025). От 🐣 базы до 😎 вайб кодинга
+          </a>
+
+          <button class="st-button_style_none lesson-sidebar__pin-sidebar" aria-label="Unpin course contents sidebar" type="button" data-ember-action="" data-ember-action-543="543">
+            <span id="ember544" class="svg-icon pin_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#pin"></use>
+  </svg></span>
+          </button>
+
+            <div class="lesson-sidebar__course-progress-wrap">
+              <p class="lesson-sidebar__course-progress">Прогресс по курсу:
+                <span>&nbsp;14/14</span>
+              </p>
+              <span aria-valuemax="14" aria-valuemin="0" aria-valuenow="14" role="progressbar" id="ember587" class="progress-line ember-view lesson-sidebar__progress-line">  <svg height="8px" width="214px">
+    <line class="progress-line__full-line" x1="4px" y1="4px" x2="210px" y2="4px" stroke-width="4px" stroke-linecap="round"></line>
+      <line class="progress-line__progress" x1="4px" y1="4px" x2="210px" y2="4px" stroke-width="4px" stroke-linecap="round"></line>
+
+<!---->  </svg>
+<span aria-hidden="true" class="progress-line__numbers ">
+  14 / 14
+</span></span>
+
+<!---->            </div>
+      </div>
+
+      <div class="lesson-sidebar__content custom-scrollbar custom-scrollbar_dark">
+        <nav id="ember545" class="toc-sections ember-view lesson-sidebar__toc" aria-label="Навигация по курсу">    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="546554" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 98%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        1&nbsp;&nbsp;Dart базовый
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="546554">
+        
+          <div data-unit="1839780" id="ember722" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1813995?unit=1839780" id="ember3341" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.1&nbsp;&nbsp;Язык программирования Dart
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839782" id="ember724" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1813997?unit=1839782" id="ember3342" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.2&nbsp;&nbsp;Переменные и константы
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839784" id="ember726" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1813999?unit=1839784" id="ember3288" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.3&nbsp;&nbsp;Типы данных
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839785" id="ember728" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814000?unit=1839785" id="ember3289" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.4&nbsp;&nbsp;Логика
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839786" id="ember730" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814001?unit=1839786" id="ember3290" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.5&nbsp;&nbsp;Условные конструкции
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839787" id="ember732" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814002?unit=1839787" id="ember3323" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.6&nbsp;&nbsp;Остаток от деления. Инкремент и Декремент
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839788" id="ember734" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814003?unit=1839788" id="ember3324" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.7&nbsp;&nbsp;Циклы
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839790" id="ember736" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814005?unit=1839790" id="ember3325" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.8&nbsp;&nbsp;Списки List
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839791" id="ember738" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814006?unit=1839791" id="ember3326" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.9&nbsp;&nbsp;Строки String
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1811902" id="ember740" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1786228?unit=1811902" id="ember3240" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.10&nbsp;&nbsp;Словари Map
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839792" id="ember742" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814007?unit=1839792" id="ember3241" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.11&nbsp;&nbsp;Можества Set
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839793" id="ember744" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814008?unit=1839793" id="ember3242" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.12&nbsp;&nbsp;Функции
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839794" id="ember746" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814009?unit=1839794" id="ember3243" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.13&nbsp;&nbsp;NullSafety
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839795" id="ember748" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814010?unit=1839795" id="ember3265" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.14&nbsp;&nbsp;ООП Часть 1
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839796" id="ember750" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814011?unit=1839796" id="ember3266" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.15&nbsp;&nbsp;ООП Часть 2
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839797" id="ember752" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814012?unit=1839797" id="ember3267" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.16&nbsp;&nbsp;ООП Часть 3
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839798" id="ember754" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814013?unit=1839798" id="ember3190" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.17&nbsp;&nbsp;ООП Часть 4
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839799" id="ember756" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814014?unit=1839799" id="ember3191" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.18&nbsp;&nbsp;ООП Часть 5
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1871928" id="ember758" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846736?unit=1871928" id="ember3198" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.19&nbsp;&nbsp;ООП Часть 6 - Ссылочная модель
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1871929" id="ember760" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846737?unit=1871929" id="ember3173" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.20&nbsp;&nbsp;ООП Часть 7 - Обобщённые типы (Generics)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1871930" id="ember762" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846738?unit=1871930" id="ember3143" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.21&nbsp;&nbsp;Разница между dynamic, Object, var
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839800" id="ember764" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814015?unit=1839800" id="ember3144" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 50%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          1.22&nbsp;&nbsp;Продвинутые методы работы с коллекциями
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552744" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        2&nbsp;&nbsp;Основы Git
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552744">
+        
+          <div data-unit="1840211" id="ember766" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814428?unit=1840211" id="ember3132" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.1&nbsp;&nbsp;Git. Установка. Настройка
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840212" id="ember768" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814429?unit=1840212" id="ember3133" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.2&nbsp;&nbsp;Работа с Git Коммиты
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840213" id="ember770" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814430?unit=1840213" id="ember3121" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.3&nbsp;&nbsp;Работа с Git Ветки
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840214" id="ember772" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814431?unit=1840214" id="ember3122" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.4&nbsp;&nbsp;Работа с GitFlic GitHub
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840215" id="ember774" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814432?unit=1840215" id="ember3123" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.5&nbsp;&nbsp;VSCode + Git Коммиты
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840217" id="ember776" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814434?unit=1840217" id="ember3178" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.6&nbsp;&nbsp;VSCode + Git Ветки
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840219" id="ember778" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814436?unit=1840219" id="ember3165" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          2.7&nbsp;&nbsp;Pull Request
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="429505" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        3&nbsp;&nbsp;Flutter. Вёрстка
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="429505">
+        
+          <div data-unit="1840220" id="ember780" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814437?unit=1840220" id="ember3166" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.1&nbsp;&nbsp;Flutter. Установка и настройка окружения
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840222" id="ember782" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814439?unit=1840222" id="ember3167" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.2&nbsp;&nbsp;Виджеты. Что это?
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840223" id="ember784" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814440?unit=1840223" id="ember3105" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.3&nbsp;&nbsp;Виджеты. Цветовая тема приложения. ThemeData
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840224" id="ember786" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814441?unit=1840224" id="ember3106" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.4&nbsp;&nbsp;Виджеты. Декомпозиция. Иконка приложения
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840225" id="ember788" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814442?unit=1840225" id="ember3107" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.5&nbsp;&nbsp;Виджеты. Column Row Container
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840226" id="ember790" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814443?unit=1840226" id="ember3108" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.6&nbsp;&nbsp;Виджеты. Text Image Icon
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840231" id="ember792" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814448?unit=1840231" id="ember3070" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.7&nbsp;&nbsp;Виджеты. Color Border
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840232" id="ember794" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814449?unit=1840232" id="ember3071" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.8&nbsp;&nbsp;Виджеты. Способы скругления изображений
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840233" id="ember796" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814450?unit=1840233" id="ember3055" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.9&nbsp;&nbsp;Виджеты. Container Особенности
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840234" id="ember798" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814451?unit=1840234" id="ember3056" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.10&nbsp;&nbsp;Виджеты. Spacer Expanded
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840235" id="ember800" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814452?unit=1840235" id="ember3041" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.11&nbsp;&nbsp;Виджеты. Card
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840236" id="ember802" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814453?unit=1840236" id="ember3042" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.12&nbsp;&nbsp;Виджеты. ListView GridView
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840237" id="ember804" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814454?unit=1840237" id="ember2982" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          3.13&nbsp;&nbsp;Figma. Практика по вёрстке
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552746" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        4&nbsp;&nbsp;Flutter. Состояние State
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552746">
+        
+          <div data-unit="1840238" id="ember806" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814455?unit=1840238" id="ember3002" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.1&nbsp;&nbsp;Виджеты. Stateless и Stateful
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840239" id="ember808" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814456?unit=1840239" id="ember3003" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.2&nbsp;&nbsp;Виджеты. Buttons GestureDetector
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840243" id="ember810" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814460?unit=1840243" id="ember3004" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.3&nbsp;&nbsp;Виджеты. Stack и Positioned
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840244" id="ember812" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814461?unit=1840244" id="ember2941" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.4&nbsp;&nbsp;🔥 Виджеты. Checkbox FAB AlertDialog Switch
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1380377" id="ember814" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1364440?unit=1380377" id="ember2942" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.5&nbsp;&nbsp;Навигация между экранами
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840241" id="ember816" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814458?unit=1840241" id="ember2943" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.6&nbsp;&nbsp;Навигация. Передача данных. TextField
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840242" id="ember818" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814459?unit=1840242" id="ember2921" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.7&nbsp;&nbsp;🔥 Разработка приложения Sushi App. Часть 1
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1795734" id="ember820" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1770216?unit=1795734" id="ember2922" class="active ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.8&nbsp;&nbsp;Виджеты. Текстовые поля и Формы
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840247" id="ember822" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814464?unit=1840247" id="ember2923" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          4.9&nbsp;&nbsp;🔥 Разработка приложения Sushi App. Часть 2
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552747" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        5&nbsp;&nbsp;Ядро работы Flutter
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552747">
+        
+          <div data-unit="1840248" id="ember824" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814465?unit=1840248" id="ember2973" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.1&nbsp;&nbsp;Stateless Виджет
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840249" id="ember826" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814466?unit=1840249" id="ember2974" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.2&nbsp;&nbsp;Константные конструкторы
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840250" id="ember828" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814467?unit=1840250" id="ember2975" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.3&nbsp;&nbsp;Stateful Виджет
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840251" id="ember830" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814468?unit=1840251" id="ember3024" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.4&nbsp;&nbsp;Stateful. Как происходит обновление виджетов
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840252" id="ember832" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814469?unit=1840252" id="ember3025" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.5&nbsp;&nbsp;Stateful. Жизненный цикл виджета
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840253" id="ember834" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814470?unit=1840253" id="ember3026" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.6&nbsp;&nbsp;Context
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840254" id="ember836" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814471?unit=1840254" id="ember2955" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.7&nbsp;&nbsp;InheritedWidget. Проблема
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840255" id="ember838" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814472?unit=1840255" id="ember2956" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.8&nbsp;&nbsp;InheritedWidget. Решение
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840256" id="ember840" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814473?unit=1840256" id="ember2898" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.9&nbsp;&nbsp;InheritedModel
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840257" id="ember842" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814474?unit=1840257" id="ember2892" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          5.10&nbsp;&nbsp;InheritedNotifier и ChangeNotifier
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552748" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        6&nbsp;&nbsp;Ключи Keys
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552748">
+        
+          <div data-unit="1840258" id="ember844" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814475?unit=1840258" id="ember2885" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          6.1&nbsp;&nbsp;Keys + Stateless Widget
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840259" id="ember846" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814476?unit=1840259" id="ember2886" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          6.2&nbsp;&nbsp;Keys + Stateful Widget
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840260" id="ember848" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814477?unit=1840260" id="ember2856" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          6.3&nbsp;&nbsp;ValueKey. Виды ключей. Удаления элементов списка
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840261" id="ember850" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814478?unit=1840261" id="ember2857" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          6.4&nbsp;&nbsp;GlobalKey Глобальные ключи
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840262" id="ember852" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814479?unit=1840262" id="ember2858" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          6.5&nbsp;&nbsp;PageStorageKey + Прокручиваемые списки
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840263" id="ember854" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814480?unit=1840263" id="ember2840" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          6.6&nbsp;&nbsp;ReorderableListView + ValueKey
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552749" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        7&nbsp;&nbsp;Provider
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552749">
+        
+          <div data-unit="1840264" id="ember856" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814481?unit=1840264" id="ember2841" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          7.1&nbsp;&nbsp;Provider. Как управлять State
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840265" id="ember858" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814482?unit=1840265" id="ember2874" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          7.2&nbsp;&nbsp;MultiProvider. Управление несколькими провайдерами
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840266" id="ember860" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814483?unit=1840266" id="ember2875" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          7.3&nbsp;&nbsp;Provider и Navigation
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840267" id="ember862" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814484?unit=1840267" id="ember2876" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          7.4&nbsp;&nbsp;ProxyProvider
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552660" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        8&nbsp;&nbsp;Асинхронное программирование
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552660">
+        
+          <div data-unit="1839802" id="ember864" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814017?unit=1839802" id="ember1581" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.1&nbsp;&nbsp;Основы Future и EventLoop
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839803" id="ember866" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814018?unit=1839803" id="ember1582" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.2&nbsp;&nbsp;Подробней про Future
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839804" id="ember868" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814019?unit=1839804" id="ember1583" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.3&nbsp;&nbsp;Основы HTTP
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1839806" id="ember870" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814021?unit=1839806" id="ember1584" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.4&nbsp;&nbsp;Обработка ошибок
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1871997" id="ember872" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846805?unit=1871997" id="ember1585" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.5&nbsp;&nbsp;HTTP CRUD (HttpClient)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1871998" id="ember874" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846806?unit=1871998" id="ember1586" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.6&nbsp;&nbsp;HTTP CRUD (Пакет http)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1871999" id="ember876" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846807?unit=1871999" id="ember1587" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.7&nbsp;&nbsp;HTTP CRUD (Пакет Dio)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872000" id="ember878" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846808?unit=1872000" id="ember1588" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.8&nbsp;&nbsp;🔥 Flutter. Разработка погодного приложения
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872001" id="ember880" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846809?unit=1872001" id="ember1589" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          8.9&nbsp;&nbsp;🔥 Flutter. Разработка приложения с покемонами
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552751" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        9&nbsp;&nbsp;Flutter. Работа данными. Локальное хранилище
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552751">
+        
+          <div data-unit="1840271" id="ember882" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814488?unit=1840271" id="ember930" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          9.1&nbsp;&nbsp;Список Задач + SharedPreference (настройки)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840272" id="ember884" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814489?unit=1840272" id="ember981" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          9.2&nbsp;&nbsp;Список Задач + SharedPreference (задачи)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840273" id="ember886" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814490?unit=1840273" id="ember970" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          9.3&nbsp;&nbsp;Список Задач + Оптимизация приложения
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840274" id="ember888" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814491?unit=1840274" id="ember971" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          9.4&nbsp;&nbsp;Список Задач + Dependency Inversion Principle
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840275" id="ember890" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814492?unit=1840275" id="ember972" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          9.5&nbsp;&nbsp;Список Задач + SQLite + Interface + DI
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840276" id="ember892" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814493?unit=1840276" id="ember973" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          9.6&nbsp;&nbsp;Безопасное хранение. FlutterSecureStorage
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="560533" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        10&nbsp;&nbsp;Углубленные техники работы. Доделываем SushiApp
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="560533">
+        
+          <div data-unit="1872021" id="ember894" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846830?unit=1872021" id="ember1590" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          10.1&nbsp;&nbsp;Пакет json_serializable
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872022" id="ember896" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846831?unit=1872022" id="ember1591" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          10.2&nbsp;&nbsp;Pattern Matching (Сопоставление с образцом)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872023" id="ember898" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846832?unit=1872023" id="ember1592" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          10.3&nbsp;&nbsp;State Модель. Часть 1
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872024" id="ember900" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846833?unit=1872024" id="ember1593" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          10.4&nbsp;&nbsp;State Модель. Часть 2
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872026" id="ember902" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846835?unit=1872026" id="ember1594" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          10.5&nbsp;&nbsp;🔥 Разработка приложения Sushi App. Часть 3
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872029" id="ember904" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846838?unit=1872029" id="ember1595" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          10.6&nbsp;&nbsp;🔥 Разработка приложения Sushi App. Часть 4
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+    <div class="lesson-sidebar__module-header sidebar-module-header" data-section="552754" role="directory" aria-expanded="false">
+      <div class="line-progress-bar">&nbsp;</div>
+        <div class="line-progress-bar-green" style="height: 100%;">
+          &nbsp;
+        </div>
+<!---->      <div class="sidebar-module-header__title">
+        11&nbsp;&nbsp;Flutter AI LLM
+      </div>
+      
+    </div>
+
+    <div class="lesson-sidebar__toc-inner" data-section="552754">
+        
+          <div data-unit="1840283" id="ember906" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814500?unit=1840283" id="ember2238" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.1&nbsp;&nbsp;Что такое AI и LLM (много текста)
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840284" id="ember908" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814501?unit=1840284" id="ember2280" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.2&nbsp;&nbsp;Prompt Engineering. База общего промптинга
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840286" id="ember910" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814503?unit=1840286" id="ember2281" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.3&nbsp;&nbsp;Prompt Enginering. Программирование
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1840287" id="ember912" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1814504?unit=1840287" id="ember2243" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.4&nbsp;&nbsp;Prompt Engineering. Flutter
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872035" id="ember914" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846844?unit=1872035" id="ember2252" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.5&nbsp;&nbsp;🔥 Разработка погодного приложения через AI LLM
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872036" id="ember916" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846845?unit=1872036" id="ember2262" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.6&nbsp;&nbsp;Топ ИИ инструментов для IDE
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872037" id="ember918" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846846?unit=1872037" id="ember2263" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.7&nbsp;&nbsp;🔥 Windsurf для VS Code
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872038" id="ember920" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846847?unit=1872038" id="ember2295" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.8&nbsp;&nbsp;🔥 Cursor IDE + Rules + MCP
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872039" id="ember922" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846848?unit=1872039" id="ember2268" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.9&nbsp;&nbsp;Обзор Trae IDE
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872040" id="ember924" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846849?unit=1872040" id="ember2816" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.10&nbsp;&nbsp;Обзор Augment AI + Android Studio
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872041" id="ember926" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846850?unit=1872041" id="ember2822" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.11&nbsp;&nbsp;WEB Агенты - replit, lovable, v0
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+        
+          <div data-unit="1872042" id="ember928" class="with-lazy-loading toc-lesson ember-view"><div>
+      <a href="https://stepik.org/lesson/1846851?unit=1872042" id="ember2827" class="ember-view lesson-sidebar__lesson">
+        <div class="line-progress-bar">&nbsp;</div>
+
+          <div class="line-progress-bar-green" style="height: 100%;">
+            &nbsp;
+          </div>
+
+        <span class="lesson-sidebar__lesson-name">
+          11.12&nbsp;&nbsp;🔥 Разработка Flutter приложения «Умный помощник» с AI
+        </span>
+
+        
+      </a>
+</div>
+</div>
+        
+    </div>
+
+</nav>
+      </div>
+
+        <div class="lesson-sidebar__footer">
+          <ul class="lesson-controls" role="toolbar" aria-label="Настройки">
+            <li class="lesson-controls__item">
+              <button class="button_style_secondary" title="Полноэкранный режим" type="button" data-ember-action="" data-ember-action-546="546">
+                <span id="ember547" class="svg-icon fullscreen_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#fullscreen"></use>
+  </svg></span>
+              </button>
+            </li>
+
+              <li class="lesson-controls__item">
+                <a title="Редактировать" href="https://stepik.org/course/208780/edit" id="ember548" class="ember-view button button_style_secondary">
+                  <span id="ember549" class="svg-icon pencil_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#pencil"></use>
+  </svg></span>
+                </a>
+              </li>
+
+            <li class="lesson-controls__item">
+              <div>
+                <div id="ember550" class="drop-down drop-down-menu ember-view">
+                  <div aria-expanded="false" aria-haspopup="true" id="ember551" class="drop-down__toggler drop-down-toggler drop-down-toggler--auto-toggle ember-view">  
+                    <button class="button_style_secondary" type="button">
+                      <span id="ember552" class="svg-icon settings_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#settings"></use>
+  </svg></span>
+                    </button>
+                  
+</div>
+
+                  <!---->
+                
+
+<!----></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+    
+<span data-tippy-singleton-source="" hidden=""></span>
+  </div>
+</div>
+</div>
+
+    <div class="lesson-modern__wrapper">
+        <div id="ember553" class="lesson-modern__top-panel ember-view"><div class="top-tools page-fragment">
+  <div class="top-tools__lesson-name" title="Виджеты. Текстовые поля и Формы">
+      4.8
+    Виджеты. Текстовые поля и Формы
+  </div>
+      <div class="top-tools__progress">
+        <span>4</span>
+        из
+        <span>4 шагов</span>
+        пройдено
+      </div>
+<!---->  
+    <div class="top-tools__edit">
+      <a title="Редактировать" href="https://stepik.org/edit-lesson/1770216/step/3" id="ember554" class="ember-view top-tools__edit-link link_no-line">
+        <span id="ember555" class="svg-icon pencil_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#pencil"></use>
+  </svg></span>
+        <span class="top-tools__edit-sign">Редактировать</span>
+      </a>
+    </div>
+</div>
+</div>
+
+      <div class="lesson lesson-modern">
+<!---->
+<!----><!---->
+<!---->
+        
+
+<div class="lesson__player">
+  <div class="player-content-wrapper">
+          <article id="ember4747" class="step-show ember-view"><div class="step-dynamic-container">
+<!---->
+      <div id="ember4748" class="step-view step-view_material ember-view"><!----><div class="step-wrapper">
+  <div class="step-inner page-fragment">
+      <div class="html-content rich-text-viewer" id="html-content-ember4749" data-processed="">
+<!----><span><h1><img alt="" height="150" name="state.png" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/state.png" width="150">&nbsp;Виджеты. Текстовые поля и Формы</h1>
+
+<p><code>➡️<a href="https://gitflic.ru/project/igarett/course_2025?branch=4.8-TextForm" rel="noopener noreferrer nofollow" target="_blank"><span style="color:#065a9d;">Ссылка на репозиторий с кодом этого урока</span></a></code></p>
+
+<h2>Виджет&nbsp;<code>TextFormField</code></h2>
+
+<h4>Более серьезный вариант - это использование форм и виджета&nbsp;<code>TextFormField</code></h4>
+
+<p>В данных уроках много кода.Чтобы не перегружать вас текстом и сделать объяснения максимально понятными, каждый новый фрагмент кода подробно прокомментирован.</p>
+
+<p><img alt="" height="98" name="sfdgdhfgh.png" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/sfdgdhfgh.png" width="500"></p>
+
+<p>&nbsp;</p>
+
+<pre style="position: relative;"><code class="language-dart hljs" data-highlighted="yes"><span class="hljs-keyword">import</span> <span class="hljs-string">'package:flutter/material.dart'</span>;  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFieldFormExample</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>{  
+  <span class="hljs-keyword">const</span> TextFieldFormExample({<span class="hljs-keyword">super</span>.key});  
+  
+  <span class="hljs-meta">@override</span>  
+  State&lt;TextFieldFormExample&gt; createState() =&gt; _TextFieldFormExampleState();  
+}  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_TextFieldFormExampleState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">TextFieldFormExample</span>&gt; </span>{  
+  <span class="hljs-keyword">final</span> TextEditingController _textController = TextEditingController();  
+  
+  <span class="hljs-comment">// Ключи помогают Flutter эффективно обновлять дерево виджетов при изменениях  </span>
+  <span class="hljs-comment">// GlobalKey: Уникальны во всем приложении. </span>
+  <span class="hljs-comment">// Они позволяют получить доступ к состоянию или контексту виджета из любой точки приложения  </span>
+  <span class="hljs-comment">// Ключ для нашей формы - нужен для доступа к состоянию Form (для валидации/сохранения) </span>
+  <span class="hljs-comment">// В данном случаем ключ нужен для валидации формы и сброса состония формы  </span>
+  <span class="hljs-keyword">final</span> _formKey = GlobalKey&lt;FormState&gt;();   
+  
+  <span class="hljs-meta">@override</span>  
+  <span class="hljs-keyword">void</span> dispose() {  
+    _textController.dispose();  
+    <span class="hljs-keyword">super</span>.dispose();  
+  }  
+  
+  <span class="hljs-meta">@override</span>  
+  Widget build(BuildContext context) {  
+    <span class="hljs-keyword">return</span> ListView(  
+      padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">16.0</span>),  
+      children: [  
+        Text(  
+          <span class="hljs-string">"Форма с валидацией"</span>,  
+          style: TextStyle(fontSize: <span class="hljs-number">18</span>),  
+        ),  
+        Form(  
+          key: _formKey, <span class="hljs-comment">// Привязываем глобальный ключ к форме </span>
+           
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: &lt;Widget&gt;[  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: <span class="hljs-string">'Имя'</span>, 
+                  hintText: <span class="hljs-string">'Введите ваше имя'</span>,
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,   
+
+                onFieldSubmitted: (value) {  }  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+</code><button class="copy-code-btn st-button_style_none copy-code-btn__code-block" type="button" title="Скопировать код"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.2 3H10.2C9.2073 3 8.4 3.8073 8.4 4.8V8.4H4.8C3.8073 8.4 3 9.2073 3 10.2V19.2C3 20.1927 
+                      3.8073 21 4.8 21H13.8C14.7927 21 15.6 20.1927 15.6 19.2V15.6H19.2C20.1927 15.6 21 14.7927 21 13.8V4.8C21 3.8073 
+                      20.1927 3 19.2 3ZM4.8 19.2V10.2H13.8L13.8018 19.2H4.8ZM19.2 13.8H15.6V10.2C15.6 9.2073 14.7927 8.4 13.8 8.4H10.2V4.8H19.2V13.8Z" fill="#777777"></path>
+                  </svg>
+                  </button></pre>
+
+<p style="text-align:center;"><img alt="" height="549" name="image.png" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/image.png" width="250"></p>
+
+<h3>Добавляем обработку <code><strong>валидации</strong></code></h3>
+
+<ul>
+	<li>Этот код создаёт интерактивную форму.</li>
+	<li>Когда пользователь вводит имя, поле сразу же проверяется на соответствие правилам (имя не может быть пустым или слишком коротким).</li>
+	<li>Если пользователь пытается отправить форму с ошибками, он увидит подсказки под полями, а также общее сообщение.</li>
+	<li>Если всё введено правильно, пользователь получит уведомление об успешной валидации формы.</li>
+</ul>
+
+<pre style="position: relative;"><code class="language-dart hljs" data-highlighted="yes"><span class="hljs-keyword">import</span> <span class="hljs-string">'package:flutter/material.dart'</span>;  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFieldFormExample</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>{  
+  <span class="hljs-keyword">const</span> TextFieldFormExample({<span class="hljs-keyword">super</span>.key});  
+  
+  <span class="hljs-meta">@override</span>  
+  State&lt;TextFieldFormExample&gt; createState() =&gt; _TextFieldFormExampleState();  
+}  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_TextFieldFormExampleState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">TextFieldFormExample</span>&gt; </span>{  
+  <span class="hljs-keyword">final</span> TextEditingController _textController = TextEditingController();  
+  
+  <span class="hljs-keyword">final</span> _formKey = GlobalKey&lt;FormState&gt;();  
+  
+  <span class="hljs-meta">@override</span>  
+  <span class="hljs-keyword">void</span> dispose() {  
+    _textController.dispose();  
+    <span class="hljs-keyword">super</span>.dispose();  
+  }  
+  
+  <span class="hljs-comment">// --- ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ ---</span>
+  
+  <span class="hljs-comment">// Метод для обработки отправки формы с валидацией  </span>
+  <span class="hljs-keyword">void</span> _submitForm() {  
+    <span class="hljs-comment">// Проверяем валидность всех полей в форме, используя ключ  </span>
+    <span class="hljs-keyword">if</span> (_formKey.currentState!.validate()) {  
+      <span class="hljs-comment">// Если метод validate() вернул true (нет ошибок валидации), то  </span>
+      <span class="hljs-comment">// можно выполнять дальнейшие действия  </span>
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text(<span class="hljs-string">'Форма валидна!'</span>)),  
+      );  
+    } <span class="hljs-keyword">else</span> {  
+      <span class="hljs-comment">// Если validate() вернул false, ошибки уже отобразятся под полями  </span>
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text(<span class="hljs-string">'Пожалуйста, исправьте ошибки в форме'</span>)),  
+      );  
+    }  
+  }  
+  
+  <span class="hljs-meta">@override</span>  
+  Widget build(BuildContext context) {  
+    <span class="hljs-keyword">return</span> ListView(  
+      padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">16.0</span>),  
+      children: [  
+        Text(  
+          <span class="hljs-string">"Форма с валидацией"</span>,  
+          style: TextStyle(fontSize: <span class="hljs-number">18</span>),  
+        ),  
+        Form(  
+          key: _formKey, <span class="hljs-comment">// Привязываем глобальный ключ к форме  </span>
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: &lt;Widget&gt;[  
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: <span class="hljs-string">'Имя'</span>, <span class="hljs-comment">// Метка поля  </span>
+                  hintText: <span class="hljs-string">'Введите ваше имя'</span>, <span class="hljs-comment">// Подсказка  </span>
+                  border: OutlineInputBorder(), <span class="hljs-comment">// Граница  </span>
+                ),  
+                keyboardType: TextInputType.name, <span class="hljs-comment">// Тип клавиатуры для имени  </span>
+  
+                <span class="hljs-comment">// --- ДОБАВЛЯЕМ ВАЛИДАТОР ---</span>
+                validator: (value) {  
+                  <span class="hljs-comment">// Валидатор получает текущее значение поля (может быть null)  </span>
+                  <span class="hljs-keyword">if</span> (value == <span class="hljs-keyword">null</span> || value.trim().isEmpty || value.length &lt; <span class="hljs-number">2</span>) { 
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Укажите имя размером не менее 2 символа'</span>;  
+                  }  
+                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;  
+                },  
+  
+                <span class="hljs-comment">// При нажатии на Enter вызываем метод _submitForm  </span>
+                onFieldSubmitted: (value) { _submitForm(); }  
+  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+</code><button class="copy-code-btn st-button_style_none copy-code-btn__code-block" type="button" title="Скопировать код"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.2 3H10.2C9.2073 3 8.4 3.8073 8.4 4.8V8.4H4.8C3.8073 8.4 3 9.2073 3 10.2V19.2C3 20.1927 
+                      3.8073 21 4.8 21H13.8C14.7927 21 15.6 20.1927 15.6 19.2V15.6H19.2C20.1927 15.6 21 14.7927 21 13.8V4.8C21 3.8073 
+                      20.1927 3 19.2 3ZM4.8 19.2V10.2H13.8L13.8018 19.2H4.8ZM19.2 13.8H15.6V10.2C15.6 9.2073 14.7927 8.4 13.8 8.4H10.2V4.8H19.2V13.8Z" fill="#777777"></path>
+                  </svg>
+                  </button></pre>
+
+<p style="text-align:center;"><img alt="" height="672" name="text4.gif" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/text4.gif" width="305"></p>
+
+<p>&nbsp;</p>
+
+<details><summary><u>Подробное текстовое описание кода</u></summary>
+
+<ul>
+	<li>
+	<p><strong>Создаём виджет <code>TextFieldFormExample</code></strong>: Это базовый виджет, который будет содержать нашу форму. Он является <code>StatefulWidget</code>, потому что его состояние (например, введённый текст или состояние валидации) будет меняться.</p>
+	</li>
+	<li>
+	<p><strong>Контроллер текста (<code>_textController</code>)</strong>: Мы используем <code>TextEditingController</code>, чтобы получать доступ к тексту, который пользователь вводит в поле ввода (<code>TextFormField</code>).</p>
+	</li>
+	<li>
+	<p><strong>Глобальный ключ формы (<code>_formKey</code>)</strong>: Это очень важная часть! <code>GlobalKey&lt;FormState&gt;</code> позволяет нам взаимодействовать с формой в целом. Благодаря этому ключу мы можем вызвать метод <code>validate()</code> для всей формы и проверить все её поля одним разом.</p>
+	</li>
+	<li>
+	<p><strong>Очистка ресурсов (<code>dispose</code>)</strong>: Когда виджет больше не нужен, мы <strong>обязательно очищаем <code>_textController</code></strong> с помощью <code>_textController.dispose()</code>. Это помогает избежать утечек памяти.</p>
+	</li>
+	<li>
+	<p><strong>Метод <code>_submitForm()</code>: Отправка формы и валидация</strong>:</p>
+
+	<ul>
+		<li>Когда пользователь пытается отправить форму (например, нажимает Enter в поле ввода), вызывается этот метод.</li>
+		<li><code>_formKey.currentState!.validate()</code>: Это магический вызов! Он запускает проверку <strong>всех полей</strong> внутри нашей формы, которые имеют <code>validator</code>.</li>
+		<li><strong>Если <code>validate()</code> возвращает <code>true</code></strong>: Это значит, что все поля прошли проверку, ошибок нет. Мы показываем сообщение "Форма валидна!".</li>
+		<li><strong>Если <code>validate()</code> возвращает <code>false</code></strong>: Значит, есть ошибки. Flutter автоматически покажет сообщения об ошибках под соответствующими полями. Мы также покажем сообщение "Пожалуйста, исправьте ошибки в форме".</li>
+	</ul>
+	</li>
+	<li>
+	<p><strong>Построение интерфейса (<code>build</code>):</strong></p>
+
+	<ul>
+		<li><strong><code>Form</code> виджет</strong>: Это "контейнер" для наших полей ввода. Именно к нему мы привязываем наш <code>_formKey</code>.</li>
+		<li><strong><code>TextFormField</code></strong>: Это само поле ввода.
+		<ul>
+			<li><code>decoration</code>: Здесь мы настраиваем внешний вид поля: метку (<code>labelText</code>), подсказку (<code>hintText</code>) и рамку (<code>border</code>).</li>
+			<li><code>keyboardType</code>: Указывает, какую клавиатуру показывать пользователю (в данном случае, для ввода имени).</li>
+			<li><strong><code>validator</code></strong>: Это функция, которая <strong>проверяет введённое значение</strong>.
+			<ul>
+				<li>Она получает текущий <code>value</code> (текст, введённый пользователем).</li>
+				<li>Если <code>value</code> пустой, состоит только из пробелов или короче 2 символов, мы возвращаем текст ошибки.</li>
+				<li>Если ошибок нет, возвращаем <code>null</code>. Если валидатор возвращает <code>null</code>, это означает, что поле валидно.</li>
+			</ul>
+			</li>
+			<li><code>onFieldSubmitted</code>: Это колбэк, который срабатывает, когда пользователь нажимает "Готово" или "Enter" на клавиатуре. Здесь мы вызываем наш метод <code>_submitForm()</code>.</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ul>
+</details>
+
+<p>&nbsp;</p>
+
+<p>Теперь добавим второе поле ввода (для Email) и реализуем сохранение данных формы.<br>
+<strong>В коде ниже внимательно читаем комментарии!</strong></p>
+
+<pre style="position: relative;"><code class="language-dart hljs" data-highlighted="yes"><span class="hljs-keyword">import</span> <span class="hljs-string">'package:flutter/material.dart'</span>;  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFieldFormExample</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>{  
+  <span class="hljs-keyword">const</span> TextFieldFormExample({<span class="hljs-keyword">super</span>.key});  
+  
+  <span class="hljs-meta">@override</span>  
+  State&lt;TextFieldFormExample&gt; createState() =&gt; _TextFieldFormExampleState();  
+}  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_TextFieldFormExampleState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">TextFieldFormExample</span>&gt; </span>{  
+  <span class="hljs-keyword">final</span> TextEditingController _textController = TextEditingController();  
+  <span class="hljs-keyword">final</span> _formKey = GlobalKey&lt;FormState&gt;();  
+  
+  <span class="hljs-comment">// Переменные для хранения данных формы  </span>
+  <span class="hljs-built_in">String</span> _savedName = <span class="hljs-string">''</span>;  
+  <span class="hljs-built_in">String</span> _savedEmail = <span class="hljs-string">''</span>;  
+  
+  <span class="hljs-meta">@override</span>  
+  <span class="hljs-keyword">void</span> dispose() {  
+    _textController.dispose();  
+    <span class="hljs-keyword">super</span>.dispose();  
+  }  
+  
+  <span class="hljs-comment">// --- ДОБАВЛЯЕМ ОБРАБОТКУ ФОРМЫ И СОХРАНЕНИЕ ДАННЫХ ---  </span>
+  
+  <span class="hljs-comment">// Метод для обработки отправки формы с валидацией и сохранением данных  </span>
+  <span class="hljs-keyword">void</span> _submitForm() {  
+    <span class="hljs-keyword">if</span> (_formKey.currentState!.validate()) {  
+      <span class="hljs-comment">// Если все поля валидны, вызываем метод save() у формы  </span>
+      <span class="hljs-comment">// Это вызовет onSaved у каждого TextFormField в форме     </span>
+      _formKey.currentState!.save();  
+  
+      <span class="hljs-comment">// Теперь переменные _savedName и _savedEmail содержат введенные данные  </span>
+      <span class="hljs-comment">// Можно их использовать (например, отправить на сервер)      </span>
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content:  
+              Text(<span class="hljs-string">'Всё ок! Имя: <span class="hljs-subst">$_savedName</span>, Email: <span class="hljs-subst">$_savedEmail</span>'</span>),  
+        ),  
+      );  
+  
+      <span class="hljs-comment">// Очистить форму после успешной отправки  </span>
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = <span class="hljs-string">''</span>;  
+        _savedEmail = <span class="hljs-string">''</span>;  
+      });  
+    } <span class="hljs-keyword">else</span> {  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text(<span class="hljs-string">'Пожалуйста, исправьте ошибки в форме'</span>)),  
+      );  
+    }  
+  }  
+  
+  <span class="hljs-meta">@override</span>  
+  Widget build(BuildContext context) {  
+    <span class="hljs-keyword">return</span> ListView(  
+      padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">16.0</span>),  
+      children: [  
+        Text(  
+          <span class="hljs-string">"Форма с валидацией"</span>,  
+          style: TextStyle(fontSize: <span class="hljs-number">18</span>),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: &lt;Widget&gt;[ 
+             
+              <span class="hljs-comment">// ПОЛЕ ДЛЯ ИМЕНИ  </span>
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: <span class="hljs-string">'Имя'</span>,  
+                  hintText: <span class="hljs-string">'Введите ваше имя'</span>,  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  <span class="hljs-keyword">if</span> (value == <span class="hljs-keyword">null</span> ||  
+                      value.trim().isEmpty ||  
+                      value.length &lt; <span class="hljs-number">2</span>) {  
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Укажите имя размером не менее 2 символа'</span>;  
+                  }  
+                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;  
+                },  
+  
+                <span class="hljs-comment">// --- ДОБАВЛЯЕМ СОХРАНЕНИЕ ДАННЫХ ---</span>
+                onSaved: (newValue) {  
+                  <span class="hljs-comment">// Сохраняем значение в переменную состояния  </span>
+                  _savedName = newValue ?? <span class="hljs-string">''</span>;  
+                },               
+              ),  
+  
+              SizedBox(height: <span class="hljs-number">20</span>),  
+  
+              <span class="hljs-comment">// ПОЛЕ ДЛЯ EMAIL  </span>
+              TextFormField(  
+                decoration: InputDecoration(  
+                  labelText: <span class="hljs-string">'Email'</span>,  
+                  hintText: <span class="hljs-string">'Введите ваш email'</span>,  
+                  border: OutlineInputBorder(),  
+                  prefixIcon: Icon(Icons.email),  
+                ),  
+                keyboardType: TextInputType.emailAddress, 
+                 
+                validator: (value) {  
+                  <span class="hljs-keyword">if</span> (value == <span class="hljs-keyword">null</span> || value.isEmpty) {  
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Пожалуйста, введите email'</span>;  
+                  }  
+                  <span class="hljs-comment">// Простая проверка формата Email  </span>
+                  <span class="hljs-keyword">if</span> (!value.contains(<span class="hljs-string">'@'</span>) || !value.contains(<span class="hljs-string">'.'</span>)) {  
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Введите корректный email'</span>;  
+                  }  
+                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;  
+                },  
+                onSaved: (newValue) {  
+                  <span class="hljs-comment">// Сохраняем значение Email  </span>
+                  _savedEmail = newValue ?? <span class="hljs-string">''</span>;  
+                },  
+              ),  
+  
+              SizedBox(height: <span class="hljs-number">20</span>),  
+  
+              <span class="hljs-comment">// КНОПКА ДЛЯ ОТПРАВКИ ФОРМЫ  </span>
+              Center(  
+                child: ElevatedButton(  
+                  onPressed: _submitForm,  
+                  child: Text(<span class="hljs-string">'Отправить'</span>),  
+                ),  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+</code><button class="copy-code-btn st-button_style_none copy-code-btn__code-block" type="button" title="Скопировать код"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.2 3H10.2C9.2073 3 8.4 3.8073 8.4 4.8V8.4H4.8C3.8073 8.4 3 9.2073 3 10.2V19.2C3 20.1927 
+                      3.8073 21 4.8 21H13.8C14.7927 21 15.6 20.1927 15.6 19.2V15.6H19.2C20.1927 15.6 21 14.7927 21 13.8V4.8C21 3.8073 
+                      20.1927 3 19.2 3ZM4.8 19.2V10.2H13.8L13.8018 19.2H4.8ZM19.2 13.8H15.6V10.2C15.6 9.2073 14.7927 8.4 13.8 8.4H10.2V4.8H19.2V13.8Z" fill="#777777"></path>
+                  </svg>
+                  </button></pre>
+
+<p style="text-align:center;"><img alt="" height="672" name="text5.gif" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/text5.gif" width="305"></p>
+
+<h3>Управление фокусом</h3>
+
+<p>Добавим управление фокусом, чтобы улучшить взаимодействие пользователя с формой.</p>
+
+<pre style="position: relative;"><code class="language-dart hljs" data-highlighted="yes"><span class="hljs-keyword">import</span> <span class="hljs-string">'package:flutter/material.dart'</span>;  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFieldFormExample</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>{  
+  <span class="hljs-keyword">const</span> TextFieldFormExample({<span class="hljs-keyword">super</span>.key});  
+  
+  <span class="hljs-meta">@override</span>  
+  State&lt;TextFieldFormExample&gt; createState() =&gt; _TextFieldFormExampleState();  
+}  
+  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_TextFieldFormExampleState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">TextFieldFormExample</span>&gt; </span>{  
+  <span class="hljs-keyword">final</span> TextEditingController _textController = TextEditingController();  
+  <span class="hljs-keyword">final</span> _formKey = GlobalKey&lt;FormState&gt;();  
+  <span class="hljs-built_in">String</span> _savedName = <span class="hljs-string">''</span>;  
+  <span class="hljs-built_in">String</span> _savedEmail = <span class="hljs-string">''</span>;  
+  
+  <span class="hljs-comment">// --- ДОБАВИМ ФОКУС НОДЫ ---  </span>
+  
+  <span class="hljs-comment">// FocusNode для каждого поля, которым хотим управлять  </span>
+  <span class="hljs-keyword">final</span> FocusNode _nameFocusNode = FocusNode();  
+  <span class="hljs-keyword">final</span> FocusNode _emailFocusNode = FocusNode();  
+  
+  <span class="hljs-meta">@override</span>  
+  <span class="hljs-keyword">void</span> dispose() {  
+    _textController.dispose();  
+  
+    <span class="hljs-comment">// !!! Обязательно очищайте FocusNode, когда виджет удаляется  </span>
+    _nameFocusNode.dispose();  
+    _emailFocusNode.dispose();  
+  
+    <span class="hljs-keyword">super</span>.dispose();  
+  }  
+  
+  <span class="hljs-keyword">void</span> _submitForm() {  
+    <span class="hljs-keyword">if</span> (_formKey.currentState!.validate()) {  
+      _formKey.currentState!.save();  
+  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(  
+          content: Text(<span class="hljs-string">'Всё ок! Имя: <span class="hljs-subst">$_savedName</span>, Email: <span class="hljs-subst">$_savedEmail</span>'</span>),  
+        ),  
+      );  
+      _formKey.currentState!.reset();  
+      setState(() {  
+        _savedName = <span class="hljs-string">''</span>;  
+        _savedEmail = <span class="hljs-string">''</span>;  
+      });  
+    } <span class="hljs-keyword">else</span> {  
+      ScaffoldMessenger.of(context).showSnackBar(  
+        SnackBar(content: Text(<span class="hljs-string">'Пожалуйста, исправьте ошибки в форме'</span>)),  
+      );  
+    }  
+  }  
+  
+  <span class="hljs-meta">@override</span>  
+  Widget build(BuildContext context) {  
+    <span class="hljs-keyword">return</span> ListView(  
+      padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">16.0</span>),  
+      children: [  
+        Text(  
+          <span class="hljs-string">"Форма с валидацией"</span>,  
+          style: TextStyle(fontSize: <span class="hljs-number">18</span>),  
+        ),  
+        Form(  
+          key: _formKey,  
+          child: Column(  
+            crossAxisAlignment: CrossAxisAlignment.start,  
+            children: &lt;Widget&gt;[  
+            
+              <span class="hljs-comment">// ПОЛЕ ДЛЯ ИМЕНИ  </span>
+              TextFormField(  
+                <span class="hljs-comment">// --- ПРИВЯЗЫВАЕМ FocusNode к полю ---  </span>
+                focusNode: _nameFocusNode,  
+  
+                decoration: InputDecoration(  
+                  labelText: <span class="hljs-string">'Имя'</span>,  
+                  hintText: <span class="hljs-string">'Введите ваше имя'</span>,  
+                  border: OutlineInputBorder(),  
+                ),  
+                keyboardType: TextInputType.name,  
+                validator: (value) {  
+                  <span class="hljs-keyword">if</span> (value == <span class="hljs-keyword">null</span> ||  
+                      value.trim().isEmpty ||  
+                      value.length &lt; <span class="hljs-number">2</span>) {  
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Укажите имя размером не менее 2 символа'</span>;  
+                  }  
+                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;  
+                },  
+  
+                onSaved: (newValue) {  
+                  _savedName = newValue ?? <span class="hljs-string">''</span>;  
+                },  
+  
+                <span class="hljs-comment">// --- ПЕРЕКЛЮЧЕНИЕ ФОКУСА при нажатии Готово на клавиатуре ---  </span>
+                onFieldSubmitted: (_) {  
+                  <span class="hljs-comment">// Переключить фокус на поле Email  </span>
+                  FocusScope.of(context).requestFocus(_emailFocusNode);  
+                },  
+              ),  
+  
+              SizedBox(height: <span class="hljs-number">20</span>),  
+  
+              <span class="hljs-comment">// ПОЛЕ ДЛЯ EMAIL  </span>
+  
+              TextFormField(  
+                <span class="hljs-comment">// --- ПРИВЯЗЫВАЕМ FocusNode к полю ---  </span>
+                focusNode: _emailFocusNode,  
+  
+                decoration: InputDecoration(  
+                  labelText: <span class="hljs-string">'Email'</span>,  
+                  hintText: <span class="hljs-string">'Введите ваш email'</span>,  
+                  border: OutlineInputBorder(),  
+                  prefixIcon: Icon(Icons.email), <span class="hljs-comment">// Пример иконки в поле формы  </span>
+                ),  
+                keyboardType:  
+                    TextInputType.emailAddress, <span class="hljs-comment">// Тип клавиатуры для Email  </span>
+                validator: (value) {  
+                  <span class="hljs-keyword">if</span> (value == <span class="hljs-keyword">null</span> || value.isEmpty) {  
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Пожалуйста, введите ваш email'</span>;  
+                  }  
+                  <span class="hljs-keyword">if</span> (!value.contains(<span class="hljs-string">'@'</span>) || !value.contains(<span class="hljs-string">'.'</span>)) {  
+                    <span class="hljs-keyword">return</span> <span class="hljs-string">'Введите корректный email'</span>;  
+                  }  
+                  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;  
+                },  
+                onSaved: (newValue) {  
+                  _savedEmail = newValue ?? <span class="hljs-string">''</span>;  
+                },  
+  
+                <span class="hljs-comment">// --- СКРЫТЬ КЛАВИАТУРУ при нажатии Готово на последнем поле ---  </span>
+                onFieldSubmitted: (_) {  
+                  <span class="hljs-comment">// Убрать фокус с поля - скрыть клавиатуру  </span>
+                  _emailFocusNode.unfocus();  
+                  <span class="hljs-comment">// сразу отправить форму  </span>
+                  _submitForm();  
+                },  
+              ),  
+  
+              SizedBox(height: <span class="hljs-number">20</span>),  
+  
+              <span class="hljs-comment">// КНОПКА ДЛЯ ОТПРАВКИ ФОРМЫ  </span>
+              Center(  
+                child: ElevatedButton(  
+                  onPressed: _submitForm,  
+                  child: Text(<span class="hljs-string">'Отправить'</span>),  
+                ),  
+              ),  
+            ],  
+          ),  
+        ),  
+      ],  
+    );  
+  }  
+}
+</code><button class="copy-code-btn st-button_style_none copy-code-btn__code-block" type="button" title="Скопировать код"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.2 3H10.2C9.2073 3 8.4 3.8073 8.4 4.8V8.4H4.8C3.8073 8.4 3 9.2073 3 10.2V19.2C3 20.1927 
+                      3.8073 21 4.8 21H13.8C14.7927 21 15.6 20.1927 15.6 19.2V15.6H19.2C20.1927 15.6 21 14.7927 21 13.8V4.8C21 3.8073 
+                      20.1927 3 19.2 3ZM4.8 19.2V10.2H13.8L13.8018 19.2H4.8ZM19.2 13.8H15.6V10.2C15.6 9.2073 14.7927 8.4 13.8 8.4H10.2V4.8H19.2V13.8Z" fill="#777777"></path>
+                  </svg>
+                  </button></pre>
+
+<p style="text-align:center;"><img alt="" height="661" name="text6.gif" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/text6.gif" width="300"></p>
+
+<h3>Важные моменты для работы с вводом и формами</h3>
+
+<ul>
+	<li>Используйте&nbsp;<strong><code>TextField</code></strong>&nbsp;для простых полей ввода, не требующих валидации или сохранения в рамках&nbsp;<code>Form</code>.</li>
+	<li>Используйте&nbsp;<strong><code>TextFormField</code></strong>&nbsp;для полей ввода, являющихся частью&nbsp;<strong><code>Form</code></strong>, так как он поддерживает&nbsp;<code>validator</code>&nbsp;и&nbsp;<code>onSaved</code>.</li>
+	<li>Настраивайте внешний вид полей с помощью объекта&nbsp;<strong><code>InputDecoration</code></strong></li>
+	<li>Для программного доступа к содержимому поля используйте&nbsp;<strong><code>TextEditingController</code></strong>. Не забывайте очищать его в&nbsp;<code>dispose()</code>.</li>
+	<li>Реагируйте на пользовательский ввод с помощью колбэков&nbsp;<strong><code>onChanged</code></strong>&nbsp;и&nbsp;<strong><code>onSubmitted</code></strong>&nbsp;(или&nbsp;<code>onFieldSubmitted</code>&nbsp;для&nbsp;<code>TextFormField</code>).</li>
+	<li>Виджет&nbsp;<strong><code>Form</code></strong>&nbsp;группирует поля и предоставляет методы для централизованной валидации (<code>validate()</code>) и сохранения (<code>save()</code>) через&nbsp;<strong><code>GlobalKey&lt;FormState&gt;</code></strong>.</li>
+	<li>Определите правила валидации в колбэке&nbsp;<strong><code>validator</code></strong>&nbsp;каждого&nbsp;<code>TextFormField</code>.</li>
+	<li>Собирайте данные из полей в колбэке&nbsp;<strong><code>onSaved</code></strong>&nbsp;каждого&nbsp;<code>TextFormField</code>.</li>
+	<li>Для управления фокусом между полями используйте&nbsp;<strong><code>FocusNode</code></strong>&nbsp;и&nbsp;<strong><code>FocusScope.of(context).requestFocus()</code>&nbsp;/&nbsp;<code>unfocus()</code></strong>. Не забывайте очищать&nbsp;<code>FocusNode</code>&nbsp;в&nbsp;<code>dispose()</code>.</li>
+</ul></span></div>
+
+      </div>
+</div>
+</div>
+</div>
+</article>
+      
+      <!---->
+  </div>
+</div>
+
+<hr class="modern-lesson-divider">
+  <div class="lesson__footer no-print">
+  <div class="page-fragment lesson__footer-wrapper">
+      <div class="ui-vote lesson__likes-widget" data-is-liked="">
+    <button class="st-button_style_none ui-like ui-vote__like" title="Одобряю!" data-type="like" data-is-inactive="" tabindex="0" type="button">
+    <span id="ember557" class="svg-icon thumbs-up_icon ember-view ui-like__icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#thumbs-up"></use>
+  </svg></span>
+
+        <span class="ui-like__count">
+          1
+        </span>
+  </button>
+
+
+    <button class="st-button_style_none ui-like ui-vote__like" title="Не оценил." data-type="dislike" data-is-inactive="" tabindex="0" type="button">
+    <span id="ember558" class="svg-icon thumbs-up_icon ember-view ui-like__icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#thumbs-up"></use>
+  </svg></span>
+
+<!---->  </button>
+
+</div>
+
+        <span class="lesson__step-title">
+          Шаг 3
+        </span>
+
+        <div class="lesson__license-badge" title="Этот урок доступен ограниченному кругу лиц">
+          Приватный <span id="ember3874" class="svg-icon lock_icon ember-view lesson__license-icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#lock"></use>
+  </svg></span>
+        </div>
+      
+      <div class="lesson__update-date">
+        Последнее обновление:
+        14.07.2025
+      </div>
+
+    <div class="lesson__footer-nav-buttons">
+        <button class="lesson__next-btn button has-icon" type="button" data-ember-action="" data-ember-action-560="560">
+          <span>
+            Следующий шаг
+          </span>
+          <span data-mobile-caption="">
+            Дальше
+          </span>
+          <span id="ember561" class="svg-icon right-arrow_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#right-arrow"></use>
+  </svg></span>
+        </button>
+    </div>
+  </div>
+</div>
+
+  <div class="lesson__discussions-wrapper">
+    <div class="page-fragment">
+        <div id="ember562" class="discussions-list ember-view"> <div class="discussions__header" id="discussions">
+  <ul class="tab tab--border">
+    <li class="tab__item discussions__tab" data-active="">
+      <a href="https://stepik.org/lesson/1770216/step/3?unit=1795734" id="ember563" class="active ember-view">
+        <span class="tab__item-counter" data-value="1"></span>
+        Комментарий
+      </a>
+    </li>
+
+<!---->
+<!---->  </ul>
+</div>
+
+  <div class="discussions__community-rules">
+    Будьте вежливы и соблюдайте наши <a href="https://help.stepik.org/article/54715" target="_blank"> принципы сообщества</a>.
+      Пожалуйста, не оставляйте решения и подсказки в комментариях, для этого есть отдельный форум.
+  </div>
+
+  <div id="ember564" class="comment-widget-avatar ember-view discussions__comment-input"><div class="comment-widget-avatar__avatar-block">
+  <span id="ember565" class="user-avatar ember-view comment-widget-avatar__avatar">  <a href="https://stepik.org/users/68161388" id="ember566" class="ember-view user-avatar__link">
+    
+      <img src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/avatar.png" alt="User avatar" class="user-avatar__img user-avatar__img_shape_square" style="width: 35px; height: 35px;">
+
+<!---->  
+  </a>
+</span>
+</div>
+<div class="comment-widget-avatar__main">
+  
+    <div id="ember567" class="comment-input ember-view">    <div class="comment-input__bait" role="button" data-ember-action="" data-ember-action-568="568">
+      Оставить комментарий
+    </div>
+</div>
+  
+</div>
+</div>
+
+<div class="discussions__list">
+<!---->
+        <div data-animation-stop="" id="ember4753" class="comment-widget discussion_replies_hidden comment-widget_state_pinned ember-view discussions__comment-widget"><div id="ember4754" class="comment-widget-avatar ember-view"><div class="comment-widget-avatar__avatar-block">
+  <span id="ember4755" class="user-avatar ember-view comment-widget-avatar__avatar">  <a href="https://stepik.org/users/68161388" id="ember4756" class="ember-view user-avatar__link">
+    
+      <img src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/avatar.png" alt="User avatar" class="user-avatar__img user-avatar__img_shape_square" style="width: 35px; height: 35px;">
+
+<!---->  
+  </a>
+</span>
+</div>
+<div class="comment-widget-avatar__main">
+  
+  <div class="comment-widget__body">
+    <div class="comment-widget__header">
+      <div class="comment-widget__header-content">
+          <div class="comment-widget__pin-info">
+            <span title="этот комментарий закреплён (всегда показывается перед другими)" id="ember4757" class="svg-icon pinned_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#pinned"></use>
+  </svg></span>
+            Комментарий закреплён
+          </div>
+        <div class="comment-widget__titles">
+          <div class="comments-user-badge" data-role="teacher">
+  <a href="https://stepik.org/users/68161388" id="ember4758" class="ember-view comments-user-badge__name">
+    Роман Сергиенко
+
+      <div hidden="" class="comments-user-badge__tooltip"></div>
+  </a>
+</div>
+
+
+          <time datetime="2025-07-14T15:13:39.000Z" title="понедельник, 14 июля 2025 г. в 22:13 GMT+7" class="comment-widget__date">
+            3 месяца назад
+          </time>
+        </div>
+      </div>
+
+<!---->    </div>
+    <div class="comment-widget__content">
+            <div class="show-more" style="--max-height: 480;">
+    <div class="show-more__content">
+              <div class="html-content rich-text-viewer comment-widget__comment" id="html-content-ember4759" data-processed="">
+<!----><span><p><img alt="" height="143" name="image.png" src="https://ucarecdn.com/41a18c71-00dc-4a32-b1d5-05e4baa627d1/" width="400"></p></span></div>
+
+
+<!---->            </div>
+  </div>
+
+  
+              <!---->
+            
+
+
+<!---->    </div>
+  </div>
+
+  <div class="comment-widget__footer">
+    <div class="ui-vote comment-widget__votes">
+    <button class="st-button_style_none ui-like ui-vote__like" title="Одобряю!" data-type="like" data-is-inactive="" tabindex="0" type="button">
+    <span id="ember4760" class="svg-icon thumbs-up_icon ember-view ui-like__icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#thumbs-up"></use>
+  </svg></span>
+
+<!---->  </button>
+
+
+    <button class="st-button_style_none ui-like ui-vote__like" title="Не нравится" data-type="dislike" data-is-inactive="" tabindex="0" type="button">
+    <span id="ember4761" class="svg-icon thumbs-up_icon ember-view ui-like__icon"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#thumbs-up"></use>
+  </svg></span>
+
+<!---->  </button>
+
+</div>
+
+      <button class="comment-widget__reply comment-widget__footer-button btn-link link_no-static-line" title="ответить на этот комментарий" type="button" data-ember-action="" data-ember-action-4762="4762">
+        Ответить
+      </button>
+
+<!---->
+      <span class="comments-menu">
+  <div id="ember4763" class="drop-down drop-down-menu ember-view">
+    <div aria-expanded="false" aria-haspopup="true" id="ember4764" class="drop-down__toggler drop-down-toggler drop-down-toggler--auto-toggle ember-view">  
+      <button class="st-button_style_none comments-menu__menu-toggler" type="button">
+        <span id="ember4765" class="svg-icon menu-more_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#menu-more"></use>
+  </svg></span>
+      </button>
+    
+</div>
+
+    <!---->
+  
+
+<!----></div>
+</span>
+
+<!---->  </div>
+
+  <div class="comment-widget__replies">
+<!---->  </div>
+
+</div>
+</div>
+</div>
+
+<!----></div>
+
+<div data-theme="tak-confirm-danger" id="ember569" class="modal-popup ember-view"><!----></div>
+
+</div>
+    </div>
+  </div>
+
+  <div class="lesson__go-top-wrapper">
+    <button class="st-button_style_none lesson__go-top" type="button" data-ember-action="" data-ember-action-570="570">
+      <span id="ember571" class="svg-icon arrow2-up_icon ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#arrow2-up"></use>
+  </svg></span>
+    </button>
+  </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div data-theme="tak-exam" id="ember572" class="modal-popup ember-view"><!----></div>
+
+</main>
+
+<!---->
+
+<!---->
+  <footer id="ember573" class="page-footer page-footer-modern ember-view page_footer"><div class="page-footer__container">
+  <div class="page-footer__row">
+      <div class="page-footer__col page-footer__terms">
+        <div class="page-footer__years">
+          © 2013 — 2025. Stepik
+        </div>
+        <a href="https://welcome.stepik.org/ru/terms" target="_blank" rel="noopener noreferrer">Пользовательское соглашение</a><br> <a href="https://welcome.stepik.org/ru/privacy" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a>
+
+        <div class="page-footer__lang">
+          <button class="btn-link has-icon" type="button">
+            <span id="ember574" class="svg-icon lang_icon svg-icon_inline ember-view"><svg xmlns="http://www.w3.org/2000/svg">
+    <use xlink:href="/static/frontend-build/icons.svg?1759153451#lang"></use>
+  </svg></span>
+            <span>Switch to English</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="page-footer__col page-footer__lists">
+        <ul class="page-footer__col  page-footer__list">
+          <li>
+            <a href="https://teach.stepik.org/?utm_source=stepik_catalog&amp;utm_medium=stepik_teach&amp;utm_campaign=footer-2022-05" target="_blank" rel="noopener noreferrer">Авторам курсов</a>
+          </li>
+            <li>
+              <a href="https://welcome.stepik.org/courses-for-companies?utm_source=stepik_catalog&amp;utm_medium=stepik_companies&amp;utm_campaign=courses-for-companies" target="_blank" rel="noopener noreferrer">Компаниям</a>
+            </li>
+          <li>
+            <a href="https://help.stepik.org/" target="_blank" rel="noopener noreferrer">Помощь</a>
+          </li>
+          <li>
+            <a href="https://welcome.stepik.org/ru/contacts" target="_blank" rel="noopener noreferrer">Контакты</a>
+          </li>
+        </ul>
+
+        <ul class="page-footer__col page-footer__list">
+            <li>
+              <a href="https://welcome.stepik.org/ru/press" target="_blank" rel="noopener noreferrer">Партнёрство</a>
+            </li>
+          <li>
+            <a href="https://welcome.stepik.org/ru/about" target="_blank" rel="noopener noreferrer">О проекте</a>
+          </li>
+          <li>
+            <a href="https://welcome.stepik.org/ru/team" target="_blank" rel="noopener noreferrer">Команда</a>
+          </li>
+            <li>
+              <a href="https://welcome.stepik.org/ru/careers" target="_blank" rel="noopener noreferrer">Вакансии</a>
+            </li>
+        </ul>
+
+        <ul class="page-footer__col page-footer__counters  page-footer__list">
+          <li title="Общее количество отправленных решений на Stepik">
+            <strong>1&nbsp;553&nbsp;424&nbsp;492</strong> решения
+          </li>
+        </ul>
+      </div>
+
+      <div class="page-footer__col page-footer__contacts">
+        <div class="page-footer__social-links">
+          <a href="https://vk.com/rustepik" target="_blank" rel="noopener noreferrer" class="page-footer__social-link">
+            <img alt="VKontakte" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/footer-vk.svg">
+          </a>
+          <a href="https://t.me/stepik_courses" target="_blank" rel="noopener noreferrer" class="page-footer__social-link">
+            <img alt="Telegram" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/footer-tg.svg">
+          </a>
+          <a href="https://dzen.ru/rustepik" target="_blank" rel="noopener noreferrer" class="page-footer__social-link">
+            <img alt="Дзен" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/footer-dzen.svg">
+          </a>
+        </div>
+
+        <div class="page-footer__email">
+          <a href="mailto:help@stepik.org" rel="noopener noreferrer" target="_blank">
+            help@stepik.org
+          </a>
+        </div>
+      </div>
+  </div>
+
+    <div class="page-footer__row page-footer__row_order_second">
+      <div class="page-footer__col page-footer__apps">
+                <a class="page-footer__mobapp-link" target="_blank" rel="noopener noreferrer" href="https://redirect.appmetrica.yandex.com/serve/168884546916387946">
+                  <img alt="Get it on Apple Store" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/app-store-badge-ru.svg">
+                </a>
+                <a class="page-footer__mobapp-link" target="_blank" rel="noopener noreferrer" href="https://redirect.appmetrica.yandex.com/serve/312999733398396995">
+                  <img alt="Get it on Google Play" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/google-play-ru.svg">
+                </a>
+                      <a class="page-footer__mobapp-link" target="_blank" rel="noopener noreferrer" href="https://redirect.appmetrica.yandex.com/serve/1109271696193400372">
+          <img alt="Get it on RuStore" src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/rustore-ru.svg">
+        </a>
+      </div>
+
+      <div class="page-footer__col page-footer__CC-note">
+        Public user contributions licensed under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> license with attribution&nbsp;required
+      </div>
+
+      <a class="sk-link page-footer__col" href="https://sk.ru/" target="_blank" rel="noopener noreferrer">
+        <img src="./Шаг 3 – Виджеты. Текстовые поля и Формы – Stepik_files/sk_horizontal_ru.svg" alt="Skolkovo resident" height="34" width="116">
+      </a>
+    </div>
+
+    <div class="page-footer__build-info" aria-hidden="true" title="Build info:
+- tag 423.0.2812
+- date Mon, 29 Sep 2025 13:44:11 GMT
+- package 0.0.0+c4730dbf">
+      423.0.2812
+    </div>
+</div>
+
+<span class="page-footer__ab-group" aria-hidden="true">
+<!----><!----></span>
+</footer>
+
+<div id="ember575" class="loading-overlay-container ember-view"><!----></div>
+
+<!---->
+<div data-theme="confirm" id="ember576" class="modal-popup ember-view"><!----></div>
+
+<div id="ember577" class="modal-popup ember-view"><!----></div>
+
+<div id="ember578" class="modal-popup ember-view upgrade-course-modal-dialog"><!----></div>
+
+<!----></body></html>
