@@ -101,26 +101,34 @@ print('Ok');
                 <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
             </div>
         </div>
-        <pre><code class="language-dart">void main() {  
-  // Эта функция сразу вернет объект Future<Map> в состоянии "незавершенное".  
-  Future<Map<String, String>> fetchUserData() {  
-    // Через 5 секунд Future завершится со значением объекта Map.  
-    return Future.delayed(  
-        const Duration(seconds: 5), () => {'user': 'Роман', 'fav': 'Окрошка'});  
-  }  
+        <pre><code class="language-dart">void main() {
   
-  print('Запрос данных пользователя...');  
-  final userFuture = fetchUserData();  
-  print('Запрос отправлен. Future получен: $userFuture');  
-  // Выведет "Instance of 'Future<String>'"  
+  // "Тяжелая" асинхронная функция
+  // Эта функция сразу вернет объект Future в состоянии "незавершенное". 
+  Future<Map> fetchUserData() {
+    // Через 5 секунд Future завершится со значением объекта Map.
+    return Future.delayed(
+      Duration(seconds: 5),
+      () => {'name': 'Роман', 'fav': 'Окрошка'},
+    );
+  }
+          
+  // "Тяжелая" синхронная функция
+  syncFunc() {
+    for (var i = 0; i < 10000000000; i++) { var res = i * i * i * i; }
+  }
+          
+          
+  print('ДО вызова fetchUserData'); 
   
-  // Чтобы получить значение, нужно дождаться завершения Future  
-  userFuture.then((obj) {  
-    // Выполнится через 5 секунд  
-    print("Данные получены");  
-    print("Пользователь: ${obj['user']}");  
-    print("Любимое блюдо: ${obj['fav']}");  
-  });  
+  // Чтобы получить значение, нужно дождаться завершения Future
+  fetchUserData().then((userData) {
+    print('Имя: ${userData['name']}');
+    print('Любимое блюдо: ${userData['fav']}');
+  });
+          
+  print('ПОСЛЕ вызова fetchUserData'); 
+  print("Делаем что-то ещё... пока ждём данные...");
 }
 </code></pre>
         <img src="images/l8.1/then.gif" alt="then" style="display: block; margin: 20px auto; max-width: 100%;">
@@ -216,80 +224,7 @@ void main() {
       </section>
 
       <section id="section-5" class="lesson-section">
-        <h2><strong>5. Обработка ошибок</strong></h2>
-        <p>В асинхронном коде ошибки — обычное дело (например, нет интернет-соединения). Их нужно правильно обрабатывать.</p>
-        <h3><strong>1. С <code class="code">async / await</code> — блок <code class="code">try-catch</code></strong></h3>
-        <p>Cамый естественный и читаемый способ.</p>
-        <div class="code-block-header">
-            <h5 class="code-block-title">Dart</h5>
-            <div class="code-block-controls">
-                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-            </div>
-        </div>
-        <pre><code class="language-dart">Future<void> performTasksWithError() async {
-  try {
-    print('Начинаем...');
-    // Имитируем операцию, которая завершится ошибкой
-    String result = await Future.delayed(const Duration(seconds: 2), () {
-      throw Exception('Не удалось загрузить данные!');
-    });
-    print(result); // Эта строка никогда не выполнится
-  } catch (e) {
-    // Ловим ошибку, выброшенную из Future
-    print('Произошла ошибка: $e');
-  } finally {
-    // Этот блок выполнится всегда, независимо от ошибки
-    print('Операция завершена.');
-  }
-}
-</code></pre>
-        <div class="code-block-header">
-            <h5 class="code-block-title">Вывод</h5>
-            <div class="code-block-controls">
-                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-            </div>
-        </div>
-        <pre><code>Начинаем...
-Произошла ошибка: Exception: Не удалось загрузить данные!
-Операция завершена.
-</code></pre>
-
-        <h3><strong>2. С Future API — метод <code class="code">.catchError()</code></strong></h3>
-        <p>Aльтернатива для кода, написанного в стиле цепочек вызовов.</p>
-        <div class="code-block-header">
-            <h5 class="code-block-title">Dart</h5>
-            <div class="code-block-controls">
-                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-            </div>
-        </div>
-        <pre><code class="language-dart">void performTasksWithCatchError() {
-  print('Начинаем...');
-  Future.delayed(const Duration(seconds: 2), () {
-    throw Exception('Не удалось загрузить данные!');
-  })
-  .then((value) => print('Успех!')) // Этот блок будет пропущен
-  .catchError((e) => print('Произошла ошибка: $e'))
-  .whenComplete(() => print('Операция завершена.'));
-}
-</code></pre>
-        <div class="code-block-header">
-            <h5 class="code-block-title">Вывод</h5>
-            <div class="code-block-controls">
-                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
-                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
-            </div>
-        </div>
-        <pre><code>Начинаем...
-Произошла ошибка: Exception: Не удалось загрузить данные!
-Операция завершена.
-</code></pre>
-      </section>
-
-      <section id="section-6" class="lesson-section">
-        <h2><strong>6. Модель выполнения в Dart: Event Loop</strong></h2>
+        <h2><strong>5. Модель выполнения в Dart: Event Loop</strong></h2>
         <p>Вспомним подходы к приготовлению окрошки в наших прошлых примерах</p>
         <ol>
             <li><strong>Синхронный подход:</strong> Вы поставили вариться картошку и просто стоите у плиты все 15 минут, неотрывно наблюдая за кастрюлей. Вы больше ничего не делаете. В это время задачи по нарезке огурцов, лука и варке яиц <strong>простаивают</strong>. Весь процесс готовки заблокирован ожиданием одного — пока сварится картофель.</li>
@@ -382,6 +317,9 @@ void eventLoop() {
                   <div class="slide">
                     <img src="images/l8.1/event-loop-10.png" alt="event-loop-10">
                   </div>
+                  <div class="slide">
+                    <img src="images/l8.1/event-loop-11.png" alt="event-loop-10">
+                  </div>
               </div>
             </div>
             <div class="slideshow-controls">
@@ -433,6 +371,94 @@ void eventLoop() {
             </li>
         </ol>
         <p>Эта аналогия идеально ложится на модель Dart: один "повар" (поток) эффективно управляет множеством задач, делегируя долгие операции "плите" (ОС) и реагируя на "звонки таймеров" (<code class="code">Future</code>'ы, попадающие в Event Queue), в то время как в свободные промежутки выполняет быструю работу (синхронный код).</p>
+      </section>
+
+      <section id="section-5" class="lesson-section">
+        <h2><strong>6. Обработка ошибок</strong></h2>
+        <p>В асинхронном коде ошибки — обычное дело (например, нет интернет-соединения). Их нужно правильно обрабатывать.</p>
+        <h3><strong>1. С <code class="code">async / await</code> — блок <code class="code">try-catch</code></strong></h3>
+        <p>Cамый естественный и читаемый способ.</p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">Future boilPotatoesAsync() async {
+  try {
+    print('🥔 Пока картошка варится (таймер 15 мин)... делаем другие дела.');
+    await Future.delayed(Duration(milliseconds: 20000));
+    print('🔔 Сработал таймер! Картошка сварилась!');
+  } catch (e) {
+    print('Ошибка: $e');
+  } finally {
+    print('➡️ Не забудьте выключить плиту!');
+  }
+}
+
+Future boilPotatoesAsyncError() async {
+  try {
+    print('🥔 Пока картошка варится (таймер 15 мин)... делаем другие дела.');
+
+    // Имитируем операцию, которая завершится ошибкой
+    await Future.delayed(
+      Duration(milliseconds: 20000), 
+      () => throw 'Света нет! Картошка не сварилась!'
+    );
+    print('🔔 Сработал таймер! Картошка сварилась!');
+
+  } catch (e) {
+    // Ловим ошибку, выброшенную из Future
+    print('💥 Ошибка: $e');
+  } finally {
+    // Этот блок выполнится всегда, независимо от ошибки
+    print('➡️ Не забудьте выключить плиту!');
+  }
+}
+</code></pre>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Вывод</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code>🥔 Пока картошка вариться (таймер 15 мин)... делаем другие дела.
+💥 Ошибка: Света нет! Картошка не сварилась!
+➡️ Не забудьте выключить плиту!
+</code></pre>
+
+        <h3><strong>2. С Future API — метод <code class="code">.catchError()</code></strong></h3>
+        <p>Aльтернатива для кода, написанного в стиле цепочек вызовов.</p>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Dart</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code class="language-dart">void performTasksWithCatchError() {
+  print('Начинаем...');
+  Future.delayed(const Duration(seconds: 2), () {
+    throw Exception('Не удалось загрузить данные!');
+  })
+  .then((value) => print('Успех!')) // Этот блок будет пропущен
+  .catchError((e) => print('Произошла ошибка: $e'))
+  .whenComplete(() => print('Операция завершена.'));
+}
+</code></pre>
+        <div class="code-block-header">
+            <h5 class="code-block-title">Вывод</h5>
+            <div class="code-block-controls">
+                <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                <span class="code-block-control" onclick="toggleTheme('atom-one-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+            </div>
+        </div>
+        <pre><code>Начинаем...
+Произошла ошибка: Exception: Не удалось загрузить данные!
+Операция завершена.
+</code></pre>
       </section>
 
       <button id="scrollToTop" title="Наверх"></button>
