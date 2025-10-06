@@ -132,8 +132,66 @@ print(images[-1])  # Последний элемент: Картинка-3.png
                 <p>Индексы в списках начинаются с <strong><code class="code">0</code></strong>! <br>
                      Это значит, что <code class="code">images[0]</code> — первый элемент, <code class="code">images[1]</code> — второй и так далее.</p>
             </div>
+
+            
+            <h4>Создание списка с помощью range()</h4>
+            <p>Помните функцию <code class="code">range()</code>? Она создаёт последовательность чисел, которую можно превратить в список:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - list() и range()</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Создаём список уровней от 1 до 5
+levels = list(range(1, 6))
+print(levels)  # [1, 2, 3, 4, 5]
+
+# Список чётных очков опыта
+even_xp = list(range(0, 11, 2))
+print(even_xp)  # [0, 2, 4, 6, 8, 10]
+
+# Список нечётных уровней
+odd_levels = list(range(1, 10, 2))
+print(odd_levels)  # [1, 3, 5, 7, 9]
+</code></pre>
+
+            <h4>Преобразование строки в список</h4>
+            <p>Строку тоже можно превратить в список символов! Это может пригодиться для анализа никнейма игрока:</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Строка в список</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">player_name = "Python"
+name_letters = list(player_name)
+print(name_letters)  # ['P', 'y', 't', 'h', 'o', 'n']
+
+# Можно проверить, сколько букв в имени
+print(len(name_letters))  # 6
+</code></pre>
+
         </section>
 
+        <section class="lesson-section">
+            <h2>Списки в оперативной памяти</h2>
+            <p>Когда мы создаём переменные, для них выделяются ячейки в оперативной памяти. Эти ячейки могут быть расположены в разных местах памяти, в зависимости от того, где есть свободное пространство.</p>
+            <p>Такой подход может затруднить доступ к этим переменным, поскольку при работе с ними система должна находить адрес каждой переменной отдельно. Этот процесс может требовать дополнительных ресурсов для поиска и обращения к памяти.</p>
+
+            <img src="images/l8/list-in-memory-1.png" width="500" alt="">
+
+            <p>Когда мы создаём массив или список, операционная система обычно выделяет один непрерывный блок памяти для всех элементов. Это означает, что после первой ячейки для первого элемента все последующие элементы списка будут находиться последовательно в соседних ячейках памяти.</p>
+            <p>Такое размещение упрощает и ускоряет доступ к элементам, так как достаточно знать адрес первого элемента и шаг перехода к следующему элементу, чтобы обращаться к любому элементу списка напрямую.</p>
+
+            <img src="images/l8/list-in-memory-2.png" width="500" alt="">
+
+            <div class="note">
+                <p><strong>Примечание</strong></p>
+                <p>Существует множество структур данных, и рассмотренный выше пример актуален для простых массивов. Он показан для демонстрации и понимания основ работы с памятью. Например, такие структуры данных, как связанные списки и динамические списки, работают с памятью немного сложнее.</p>
+            </div>
+        </section>
 
         <section class="lesson-section">
             <h2 style="display: inline;">Операции CRUD со списками</h2>
@@ -384,9 +442,7 @@ print(menu) # ['🥬', '🧅']
                     <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
                 </div>
             </div>
-            <pre><code class="language-python">import random
-
-shawarmas = [
+            <pre><code class="language-python">shawarmas = [
     "Шаурма Королевская",
     "Шаурма Деревенская",
     "Шаурма Гавайская",
@@ -394,9 +450,8 @@ shawarmas = [
 
 print("Сегодня у нас в меню:")
 
-for shawa in shawarmas:
-    number = random.randint(100, 999)
-    print(f"Заказ: {shawa} № {number} готов! 😊")
+for shawarma in shawarmas:
+    print(f'Блюдо: {shawarma}')
 </code></pre>
             
             <h3>Цикл for с range()</h3>
@@ -448,6 +503,281 @@ for i in range(len(shawarmas)):
 </div>
         </section>
 
+        <section class="lesson-section">
+            <h2 style="display: inline;">Полезные методы ч1</h2>
+            <p>Списки в Python обладают множеством встроенных функций, которые делают работу с ними удобной и эффективной. Давайте рассмотрим самые важные из них.</p>
+
+            <h3>Оператор принадлежности <code class="code">in</code></h3>
+            <p>Часто возникает задача проверить, есть ли определённый элемент в списке. Вместо того чтобы перебирать список в цикле, можно использовать элегантный оператор <code class="code">in</code>. Он возвращает <code class="code">True</code>, если элемент найден, и <code class="code">False</code> — если нет.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Проверка наличия элемента</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">player_inventory = ["Меч", "Щит", "Зелье здоровья", "Карта"]
+
+# Проверяем, есть ли у игрока карта
+if "Карта" in player_inventory:
+    print("Отлично, у вас есть карта! Можно исследовать подземелье.")
+else:
+    print("Карты нет. Вы можете заблудиться.")
+
+# Проверяем, нет ли у игрока бесполезного предмета
+if "Старый ботинок" not in player_inventory:
+    print("Инвентарь в порядке, хлама нет.")
+</code></pre>
+
+            <h3>Конкатенация <code class="code">+</code> и умножение <code class="code">*</code></h3>
+            <p>Списки можно "складывать" (конкатенировать) и "умножать" на число, прямо как строки!</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Сложение и умножение списков</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Конкатенация: объединяем лут с двух монстров
+orc_loot = ["Топор", "Золото"]
+goblin_loot = ["Кинжал", "Золото", "Кольцо"]
+total_loot = orc_loot + goblin_loot
+print(f"Ваша добыча: {total_loot}")
+# Ваша добыча: ['Топор', 'Золото', 'Кинжал', 'Золото', 'Кольцо']
+
+# Умножение: создаём стартовый набор зелий
+starter_potions = ["Малое зелье здоровья"] * 3
+print(f"Стартовый набор: {starter_potions}") 
+# Стартовый набор: ['Малое зелье здоровья', 'Малое зелье здоровья', 'Малое зелье здоровья']
+</code></pre>
+
+<h3>Функции max() min() sum() </h3>
+<p>Python предоставляет несколько удобных встроенных функций для быстрой работы с <code class="code"> числовыми списками</code></p>
+<ul>
+    <li><code class="code">sum(list)</code> — возвращает сумму всех элементов списка.</li>
+    <li><code class="code">min(list)</code> — возвращает наименьший элемент в списке.</li>
+    <li><code class="code">max(list)</code> — возвращает наибольший элемент в списке.</li>
+</ul>
+<div class="note">
+    <p><strong>Внимание!</strong> Эти функции работают только со списками, содержащими совместимые типы данных (например, только числа). Попытка найти сумму в списке, где есть строки, приведёт к ошибке.</p>
+</div>
+
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Функции sum, min, max</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+        <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+    </div>
+</div>
+<pre><code class="language-python"># Список очков за раунды
+round_scores = [1250, 900, 1800, 700, 1550]
+
+# Считаем общую сумму очков за игру
+total_score = sum(round_scores)
+print(f"Всего очков за игру: {total_score}")  # Всего очков за игру: 6200
+
+# Находим лучший и худший раунд
+best_round = max(round_scores)
+worst_round = min(round_scores)
+print(f"Лучший раунд: {best_round} очков")   # Лучший раунд: 1800 очков
+print(f"Худший раунд: {worst_round} очков") # Худший раунд: 700 очков
+
+# min() и max() работают и со строками (в алфавитном порядке)
+defeated_monsters = ["Гоблин", "Орк", "Скелет", "Архидемон"]
+print(f"Первый монстр по алфавиту: {min(defeated_monsters)}") # Архидемон
+print(f"Последний монстр по алфавиту: {max(defeated_monsters)}") # Скелет
+</code></pre>
+</section>
+
+<section class="lesson-section">
+<h2 style="display: inline;">Полезные методы ч2</h2>
+<p>Помимо уже рассмотренных, у списков есть и другие методы, которые часто пригождаются на практике.</p>
+
+<h3>Сортировка: <code class="code">sort()</code> и функция <code class="code">sorted()</code></h3>
+<p>Для упорядочивания элементов списка есть два основных способа:</p>
+<ul>
+    <li><strong>Метод <code class="code">.sort()</code></strong>: Сортирует список <strong>на месте</strong> (in-place), то есть изменяет сам исходный список. Ничего не возвращает (точнее, возвращает <code class="code">None</code>).</li>
+    <li><strong>Функция <code class="code">sorted(list)</code></strong>: Создаёт и возвращает <strong>новый</strong>, отсортированный список, оставляя исходный список без изменений.</li>
+</ul>
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Сортировка списков</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+        <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+    </div>
+</div>
+<pre><code class="language-python"># Таблица лидеров (очки игроков)
+leaderboard = [1200, 850, 1500, 950, 1500]
+
+# Способ 1: .sort() для сортировки на месте
+# Сортируем по убыванию, чтобы лучшие были наверху
+leaderboard.sort(reverse=True)
+print(f"Таблица лидеров: {leaderboard}") # Таблица лидеров: [1500, 1500, 1200, 950, 850]
+
+# Способ 2: sorted() для создания новой копии
+inventory = ["Зелье маны", "Меч", "Щит", "Амулет"]
+sorted_inventory = sorted(inventory) # Сортировка по алфавиту
+print(f"Инвентарь по алфавиту: {sorted_inventory}") # Инвентарь по алфавиту: ['Амулет', 'Зелье маны', 'Меч', 'Щит']
+print(f"Исходный инвентарь: {inventory}") # Исходный инвентарь: ['Зелье маны', 'Меч', 'Щит', 'Амулет']
+</code></pre>
+
+<h3>Разворот списка: <code class="code">reverse()</code></h3>
+<p>Метод <code class="code">.reverse()</code> переворачивает порядок элементов в списке <strong>на месте</strong>. Как и <code class="code">.sort()</code>, он ничего не возвращает.</p>
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Разворот списка</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+        <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+    </div>
+</div>
+<pre><code class="language-python"># Игрок записал свой путь по комнатам подземелья
+path_taken = ["Вход", "Зал с колоннами", "Оружейная", "Сокровищница"]
+
+# Чтобы найти путь назад, нужно развернуть список
+path_taken.reverse()
+print(f"Путь назад: {path_taken}") # Путь назад: ['Сокровищница', 'Оружейная', 'Зал с колоннами', 'Вход']
+</code></pre>
+<div class="note">
+    <p><strong>Совет:</strong> Не путайте <code class="code">.reverse()</code> с параметром <code class="code">reverse=True</code> в методе <code class="code">.sort()</code>. Первый просто меняет порядок на обратный, а второй сортирует по убыванию.</p>
+</div>
+
+<h3>Подсчёт и удаление: <code class="code">count()</code> и <code class="code">clear()</code></h3>
+<ul>
+    <li><strong><code class="code">.count(x)</code></strong>: Считает, сколько раз элемент <code class="code">x</code> встречается в списке.</li>
+    <li><strong><code class="code">.clear()</code></strong>: Удаляет все элементы из списка, делая его пустым.</li>
+</ul>
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Подсчёт и удаление</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+        <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+    </div>
+</div>
+<pre><code class="language-python"># Инвентарь после битвы с гоблинами
+loot = ["Золото", "Кинжал", "Золото", "Кольцо", "Золото"]
+
+# Считаем, сколько золота мы получили
+gold_count = loot.count("Золото")
+print(f"Найдено золота: {gold_count} шт.") # Найдено золота: 3 шт.
+
+# Игрок продал все предметы торговцу
+loot.clear()
+print(f"Инвентарь после продажи: {loot}") # Инвентарь после продажи: []
+</code></pre>
+
+<h3>Копирование: <code class="code">copy()</code></h3>
+<p>Это один из самых важных методов! При простом присваивании (<code class="code">new_list = old_list</code>) вы не создаёте новый список, а лишь даёте старом списку новое имя. Изменения в одном "списке" отразятся и в другом, потому что это один и тот же объект в памяти. Метод <code class="code">.copy()</code> создаёт <strong>поверхностную копию</strong>, решая эту проблему.</p>
+<div class="code-block-header">
+    <h5 class="code-block-title">Python - Копирование списка</h5>
+    <div class="code-block-controls">
+        <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+        <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+    </div>
+</div>
+<pre><code class="language-python"># Неправильное копирование: симуляция боя
+player_health_bar = ["💚", "💚", "💚", "💚", "💚"]
+monster_attack = player_health_bar # Это не копия!
+monster_attack.pop() # Монстр наносит урон
+print(f"Здоровье после атаки: {monster_attack}")        # Здоровье после атаки: ['💚', '💚', '💚', '💚']
+print(f"Оригинал ИЗМЕНИЛСЯ!: {player_health_bar}") # Оригинал ИЗМЕНИЛСЯ!: ['💚', '💚', '💚', '💚']
+
+print("-" * 20)
+
+# Правильное копирование: создаем временную копию для расчета урона
+player_health_bar = ["💚", "💚", "💚", "💚", "💚"]
+simulation = player_health_bar.copy() # Создаем настоящую копию
+simulation.pop()
+print(f"Здоровье в симуляции: {simulation}")       # Здоровье в симуляции: ['💚', '💚', '💚', '💚']
+print(f"Оригинал не изменился: {player_health_bar}") # Оригинал не изменился: ['💚', '💚', '💚', '💚', '💚']
+</code></pre>
+        </section>
+        
+        <section class="lesson-section">
+            <h2 style="display: inline;">Срезы (Slices): Получение частей списка</h2>
+            <p>Представьте, что у вас есть длинный список, а вам нужна только его часть: первые три элемента, элементы с пятого по десятый или каждый второй элемент. Для таких задач существуют <strong>срезы</strong> — мощный и лаконичный инструмент.</p>
+            <p>Синтаксис среза выглядит так: <code class="code">my_list[start:stop:step]</code>.</p>
+            <ul>
+                <li><code class="code">start</code> — индекс, с которого начинается срез (включительно). Если опущен, срез начинается с начала списка.</li>
+                <li><code class="code">stop</code> — индекс, на котором срез заканчивается (<strong>не включительно!</strong>). Если опущен, срез идёт до конца списка.</li>
+                <li><code class="code">step</code> — шаг, с которым выбираются элементы. Если опущен, шаг равен 1.</li>
+            </ul>
+
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - Примеры срезов</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python">numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Получить первые 3 элемента
+first_three = numbers[0:3]  # или просто numbers[:3]
+print(f"Первые три: {first_three}")  # [0, 1, 2]
+
+# Элементы с индекса 2 по 5 (не включая 5)
+middle_part = numbers[2:5]
+print(f"Часть из середины: {middle_part}")  # [2, 3, 4]
+
+# Все элементы с индекса 6 и до конца
+from_six_to_end = numbers[6:]
+print(f"С 6-го до конца: {from_six_to_end}")  # [6, 7, 8, 9]
+
+# Получить каждый второй элемент
+every_second = numbers[::2]
+print(f"Каждый второй: {every_second}")  # [0, 2, 4, 6, 8]
+
+# Развернуть список с помощью среза!
+reversed_list = numbers[::-1]
+print(f"Развёрнутый список: {reversed_list}")  # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+</code></pre>
+            <div class="note">
+                <p><strong>Важно!</strong></p>
+                <p>Срез всегда создаёт <strong>новый</strong> список (поверхностную копию). Изменение среза не повлияет на исходный список, и наоборот.</p>
+            </div>
+        </section>
+
+
+        <section class="lesson-section">
+            <h2 style="display: inline;">Списочные выражения (List Comprehensions)</h2>
+            <p>Списочные выражения — Ещё одна фишка в Python. Они позволяют создавать списки на основе других последовательностей (например, других списков или <code class="code">range</code>) в одну строку, делая код короче и часто понятнее.</p>
+            <p>Представьте, что нам нужно создать список квадратов чисел от 0 до 9. Обычный способ выглядит так:</p>
+            <pre><code class="language-python"># Обычный способ
+squares = []
+for i in range(10):
+    squares.append(i * i)
+print(squares)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+            <p>А теперь посмотрим, как это делается с помощью списочного выражения:</p>
+            <pre><code class="language-python"># Способ с List Comprehension
+squares = [i * i for i in range(10)]
+print(squares)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+            <p>Магия, не правда ли? Структура такая: <code class="code">[выражение for элемент in последовательность]</code>.</p>
+
+            <h3>Добавляем условие</h3>
+            <p>В списочные выражения можно добавлять и условия <code class="code">if</code>, чтобы включать в новый список только нужные элементы.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Python - List Comprehension с условием</h5>
+                <div class="code-block-controls">
+                    <span class="code-block-control" onclick="toggleTheme('github')"><img class="icon" src="images/light.png" alt="Светлая тема"></span>
+                    <span class="code-block-control" onclick="toggleTheme('github-dark')"><img class="icon" src="images/dark.png" alt="Темная тема"></span>
+                </div>
+            </div>
+            <pre><code class="language-python"># Создать список только чётных чисел от 0 до 9
+even_numbers = [i for i in range(10) if i % 2 == 0]
+print(even_numbers)  # [0, 2, 4, 6, 8]
+
+# Создать список имён, которые начинаются на "А"
+names = ["Анна", "Борис", "Алиса", "Виктор"]
+a_names = [name for name in names if name.startswith("А")]
+print(a_names)  # ['Анна', 'Алиса']
+</code></pre>
+            <div class="note">
+                <p><strong>На заметку</strong></p>
+                <p>Списочные выражения — это мощный инструмент, но не стоит им злоупотреблять. Если логика становится слишком сложной (например, с вложенными циклами и множеством условий), лучше использовать обычный цикл <code class="code">for</code>, чтобы не жертвовать читаемостью кода.</p>
+            </div>
+        </section>
 
         <section class="lesson-section">
             <h2 style="display: inline;">Методы <code class="code">split</code> и <code class="code">join</code></h2>
@@ -496,24 +826,6 @@ print(full_path) # "Диск D/Секретные файлы/Genshin Фанфи�
 </code></pre>
              <div class="note">
                 <p><strong>Важно!</strong> Метод <code class="code">.join()</code> работает только со списком, содержащим <strong>строки</strong>. Если в списке будут числа или другие типы, вы получите ошибку.</p>
-            </div>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Списки в оперативной памяти</h2>
-            <p>Когда мы создаём переменные, для них выделяются ячейки в оперативной памяти. Эти ячейки могут быть расположены в разных местах памяти, в зависимости от того, где есть свободное пространство.</p>
-            <p>Такой подход может затруднить доступ к этим переменным, поскольку при работе с ними система должна находить адрес каждой переменной отдельно. Этот процесс может требовать дополнительных ресурсов для поиска и обращения к памяти.</p>
-
-            <img src="images/l8/list-in-memory-1.png" width="500" alt="">
-
-            <p>Когда мы создаём массив или список, операционная система обычно выделяет один непрерывный блок памяти для всех элементов. Это означает, что после первой ячейки для первого элемента все последующие элементы списка будут находиться последовательно в соседних ячейках памяти.</p>
-            <p>Такое размещение упрощает и ускоряет доступ к элементам, так как достаточно знать адрес первого элемента и шаг перехода к следующему элементу, чтобы обращаться к любому элементу списка напрямую.</p>
-
-            <img src="images/l8/list-in-memory-2.png" width="500" alt="">
-
-            <div class="note">
-                <p><strong>Примечание</strong></p>
-                <p>Существует множество структур данных, и рассмотренный выше пример актуален для простых массивов. Он показан для демонстрации и понимания основ работы с памятью. Например, такие структуры данных, как связанные списки и динамические списки, работают с памятью немного сложнее.</p>
             </div>
         </section>
 
