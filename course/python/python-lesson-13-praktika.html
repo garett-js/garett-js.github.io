@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практические задания - Урок 13: Функции</title>
+    <link rel="icon" type="image/png" href="images/ico.svg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" id="theme-style" href="../../lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="../../css/slideshow.css">
+    <script src="../../lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+
+    <nav id="side-menu">
+        <h3><a href="python-lesson-13.html" class="back-link">←</a> Практика: Урок 13</h3>
+        <ul>
+            <!-- Ссылки будут добавлены сюда динамически -->
+        </ul>
+    </nav>
+
+    <div id="main-content">
+        <h1>Практические задания - Урок 13: Функции</h1>
+
+        <div class="note">
+            <p><strong>Инструкция:</strong> Решите все задания по порядку. Создайте отдельный файл <code class="code">.py</code> для каждой задачи или решите все в одном файле, разделяя задачи комментариями.</p>
+        </div>
+
+        <section id="section-1" class="lesson-section">
+            <h2>Задача № 1: Простые математические функции</h2>
+            <p>Создайте несколько функций и вызовите их в блоке ``:</p>
+            <ul>
+                <li>Функция возвращает <strong>сумму</strong> 3-х значений.</li>
+                <li>Функция возвращает <strong>разность</strong> 2-х значений.</li>
+                <li>Функция находит <strong>максимальное значение</strong> из 2-х значений.</li>
+                <li>Функция находит <strong>минимальное значение</strong> из 3-х значений.</li>
+            </ul>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">--- Задача 1: Простые функции ---
+Сумма 10, 20, 30: 60
+Разность 100, 45: 55
+Максимальное из 15, 25: 25
+Минимальное из 5, 2, 8: 2
+</code></pre>
+        </section>
+
+        <section id="section-2" class="lesson-section">
+            <h2>Задача № 2: Рефакторинг кода</h2>
+            <p>Напишите функцию, которая принимает данные о названии города, температуре, ощущаемой температуре и шансе дождя, а затем выводит итоговую информацию. Ваша задача — исправить дублирование кода, представленного ниже, используя эту функцию.</p>
+            <div class="note">
+                <p><strong>Подсказка:</strong> Внутри `` должно остаться только четыре вызова вашей новой функции с передачей разных параметров.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Исходный код для рефакторинга</h5>
+            </div>
+            <pre><code class="language-python">
+    print("город: Бийск")
+    print("Температура: +10, А по ощущениям: +5")
+    print("Шанс дождя: 82%")
+    print("")
+
+    print("город: Новосибирск")
+    print("Температура: +5, А по ощущениям: 0")
+    print("Шанс дождя: 5%")
+    print("")
+
+    print("город: Сан-Франциско")
+    print("Температура: +20, А по ощущениям: +20")
+    print("Шанс дождя: 0%")
+    print("")
+
+    print("город: Токио")
+    print("Температура: +25, А по ощущениям: +20")
+    print("Шанс дождя: 90%")
+    print("")
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Ожидаемый вывод в консоли (должен остаться неизменным)</h5>
+            </div>
+            <pre><code class="bash">город: Бийск
+Температура: +10, А по ощущениям: +5
+Шанс дождя: 82%
+
+город: Новосибирск
+Температура: +5, А по ощущениям: 0
+Шанс дождя: 5%
+
+город: Сан-Франциско
+Температура: +20, А по ощущениям: +20
+Шанс дождя: 0%
+
+город: Токио
+Температура: +25, А по ощущениям: +20
+Шанс дождя: 90%
+
+</code></pre>
+        </section>
+
+        <section id="section-3" class="lesson-section">
+            <h2>Задача № 3: Функция со значениями по умолчанию</h2>
+            <p>Напишите функцию со значениями по умолчанию. Например, у персонажа из игры есть значение атаки по умолчанию, но также можно указать и критическое значение атаки.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Шаблон для реализации</h5>
+            </div>
+            <pre><code class="language-python">def attack(damage=10):
+    # Ваша реализация функции атаки
+    return damage
+
+
+    damage = attack()  # Используем значения по умолчанию
+    critical = attack(damage=25)  # Передаём именованный параметр
+    
+    print(f"Обычная атака: {damage}")
+    print(f"Критическая атака: {critical}")
+</code></pre>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">Обычная атака: 10
+Критическая атака: 25
+</code></pre>
+        </section>
+        
+        <section id="section-4" class="lesson-section">
+            <h2>Задача № 4: Палиндром</h2>
+            <p>Напишите функцию `is_palindrome(text)`, которая принимает в качестве аргумента строку `text` и возвращает значение `True`, если указанный текст является палиндромом, и `False` в противном случае.</p>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">is_palindrome("шалаш"): True
+is_palindrome("привет"): False
+</code></pre>
+        </section>
+
+        <section id="section-5" class="lesson-section">
+            <h2>Задача № 5: Правильная скобочная последовательность</h2>
+            <p>Напишите функцию `is_correct_bracket(text)`, которая принимает в качестве аргумента непустую строку `text`, состоящую из символов `(` и `)`, и возвращает `True`, если строка является правильной скобочной последовательностью, или `False` в противном случае.</p>
+            <div class="note">
+                <p><strong>Примечание:</strong> Правильной скобочной последовательностью называется строка, где каждой открывающей скобке соответствует парная закрывающая скобка, и открывающая скобка всегда находится левее своей пары.</p>
+            </div>
+            <div class="code-block-header">
+                <h5 class="code-block-title">Примерный вывод в консоли</h5>
+            </div>
+            <pre><code class="bash">is_correct_bracket("()(()())"): True
+is_correct_bracket(")(())("): False
+</code></pre>
+        </section>
+
+        <button id="scrollToTop" title="Наверх"></button>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="../../js/slideshow.js"></script>
+
+</body>
+</html>
